@@ -341,6 +341,9 @@ export default {
   padding: 0 6px 6px 6px;
   border: solid #d9d9d9;
   border-width: 1px 0;
+
+  /* Fix for rendering sticky positioned category labels on Chrome */
+  z-index: 0;
 }
 
 </style>
