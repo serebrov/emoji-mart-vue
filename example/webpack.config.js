@@ -21,6 +21,14 @@ module.exports = {
         ],
       },
       {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        include: [
+          path.resolve('src'),
+          path.resolve('example'),
+        ]
+      },
+      {
         test: /\.svg$/,
         loader: 'svg-inline',
         include: [
@@ -31,7 +39,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['', '.js', '.vue'],
   },
 
   plugins: [

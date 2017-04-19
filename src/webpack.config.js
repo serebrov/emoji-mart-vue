@@ -15,11 +15,11 @@ module.exports = {
   },
 
   externals: !TEST && [{
-    'react': {
-      root: 'React',
-      commonjs2: 'react',
-      commonjs: 'react',
-      amd: 'react',
+    'vue': {
+      root: 'Vue',
+      commonjs2: 'vue',
+      commonjs: 'vue',
+      amd: 'vue',
     },
   }],
 
@@ -34,6 +34,13 @@ module.exports = {
         ],
       },
       {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        include: [
+          path.resolve('src'),
+        ]
+      },
+      {
         test: /\.svg$/,
         loader: 'svg-inline?removeSVGTagAttrs=false',
         include: [
@@ -44,7 +51,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['', '.js', '.vue'],
   },
 
   plugins: [

@@ -2,7 +2,6 @@
   <head>
     <meta charset="utf-8">
     <title>Emoji Mart | One component to pick them all</title>
-    <link rel="stylesheet" href="../css/emoji-mart.css">
     <style>
       * {
         margin: 0; padding: 0;
@@ -14,36 +13,10 @@
         font-size: 16px;
         padding: 1em;
       }
-
-      button + button { margin-left: .5em }
-      button {
-        padding: .4em .6em;
-        border-radius: 5px;
-        border: 1px solid rgba(0, 0, 0, .1);
-        background: #fff;
-        outline: 0;
-        cursor: pointer;
-      }
-
-      button[disabled] {
-        border-color: #ae65c5;
-      }
-
-      .row {
-        margin-top: 1em;
-      }
-
-      .demo-title {
-        display: inline-block;
-      }
-
-      iframe {
-        margin-left: 1em;
-      }
     </style>
   </head>
   <body>
-    <div></div>
+    <div id="app"></div>
     <script src="./bundle.js"></script>
   </body>
 </html>
