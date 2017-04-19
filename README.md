@@ -1,21 +1,22 @@
+> This project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
+
 <div align="center">
-  <br><b>Emoji Mart</b> is a Slack-like customizable<br>emoji picker component for React
-  <br>[<a href="https://missive.github.io/emoji-mart">Demo</a>]
+  <br><b>Emoji Mart (Vue)</b> is a Slack-like customizable<br>emoji picker component for VueJS
+  <br>[<a href="https://jm-david.github.io/emoji-mart-vue">Demo</a>]
   <br><img src="https://cloud.githubusercontent.com/assets/436043/17186519/9e71e8fe-5403-11e6-9314-21365c56a601.png">
-  <br><a title="Team email, team chat, team tasks, one app" href="https://missiveapp.com"><img alt="Missive | Team email, team chat, team tasks, one app" src="https://cloud.githubusercontent.com/assets/436043/17186909/17f9cede-5405-11e6-988a-a7c2380af396.png"></a>
-  <br>Brought to you by the <a title="Team email, team chat, team tasks, one app" href="https://missiveapp.com">Missive</a> team
 </div>
 
 ## Components
 ### Picker
-```jsx
-import { Picker } from 'emoji-mart'
+```js
+import { Picker } from 'emoji-mart-vue'
+```
 
-<Picker set='emojione' />
-<Picker onClick={this.addEmoji} />
-<Picker title='Pick your emoji…' emoji='point_up' />
-<Picker style={{ position: 'absolute', bottom: '20px', right: '20px' }} />
-<Picker i18n={{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }} />
+```html
+<picker set="emojione"></picker>
+<picker @click="addEmoji"></picker>
+<picker title="Pick your emoji…" emoji="point_up"></picker>
+<picker :i18n="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }"></picker>
 ```
 
 | Prop | Required | Default | Description |
@@ -102,12 +103,14 @@ Sheets are served from [unpkg](https://unpkg.com), a global CDN that serves file
 ```
 
 ### Emoji
-```jsx
+```js
 import { Emoji } from 'emoji-mart'
+```
 
-<Emoji emoji={{ id: 'santa', skin: 3 }} />
-<Emoji emoji=':santa::skin-tone-3:' />
-<Emoji emoji='santa' set='emojione' />
+```html
+<emoji :emoji="{ id: 'santa', skin: 3 }"></emoji>
+<emoji emoji=":santa::skin-tone-3:"></emoji>
+<emoji emoji="santa" set="emojione"></emoji>
 ```
 
 | Prop | Required | Default | Description |
