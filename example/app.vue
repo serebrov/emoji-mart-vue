@@ -2,10 +2,10 @@
 
 <div>
   <div>
-    <h1 class="demo-title">Emoji Mart</h1>
+    <h1 class="demo-title">Emoji Mart Vue</h1>
 
     <iframe
-      src="https://ghbtns.com/github-btn.html?user=missive&repo=emoji-mart&type=star&count=true"
+      src="https://ghbtns.com/github-btn.html?user=jm-david&repo=emoji-mart-vue&type=star&count=true"
       frameBorder="0"
       scrolling="0"
       width="170px"
@@ -28,7 +28,7 @@
   </div>
 
   <pre>
-<syntax type="operator">import</syntax> &#123; Picker &#125; <syntax type="operator">from</syntax> <syntax type="string">'emoji-mart'</syntax>
+<syntax type="operator">import</syntax> &#123; Picker &#125; <syntax type="operator">from</syntax> <syntax type="string">'emoji-mart-vue'</syntax>
 
 <syntax type="operator">&lt;</syntax><syntax type="variable">picker</syntax>
   :emoji-size<syntax type="operator">=</syntax>"<syntax type="variable">{{ emojiSize }}</syntax>" <input type="range" min="16" max="64" v-model.number="emojiSize" />
@@ -36,7 +36,7 @@
   :skin<syntax type="operator">=</syntax>"<syntax type="variable">{{ skin }}</syntax>"        <input type="range" min="1" max="6" v-model.number="skin">
   :native<syntax type="operator">=</syntax>"<syntax type="variable">{{ native ? 'true' : 'false' }}</syntax>" {{ native ? ' ' : '' }} <input type='checkbox' v-model="native" />
   set<syntax type="operator">=</syntax><syntax type="string">"{{ activeSet }}"</syntax>
-  @click<syntax type="operator">=</syntax>"(<syntax type="variable">emoji</syntax>) => console.log(<syntax type="variable">emoji</syntax>)"&gt;
+  @click<syntax type="operator">=</syntax>"addEmoji"&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">picker</syntax>&gt;</syntax>
   </pre>
 
@@ -52,7 +52,7 @@
 
   <div>
     <pre>
-<syntax type="operator">import</syntax> &#123; Emoji &#125; <syntax type="operator">from</syntax> <syntax type="string">'emoji-mart'</syntax>
+<syntax type="operator">import</syntax> &#123; Emoji &#125; <syntax type="operator">from</syntax> <syntax type="string">'emoji-mart-vue'</syntax>
 
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
   emoji<syntax type="operator">=</syntax><syntax type="string">"thumbsup"</syntax>
