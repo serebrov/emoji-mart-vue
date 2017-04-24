@@ -2,7 +2,7 @@
 
 <div align="center">
   <br><b>Emoji Mart (Vue)</b> is a Slack-like customizable<br>emoji picker component for VueJS
-  <br>[<a href="https://jm-david.github.io/emoji-mart-vue">Demo</a>]
+  <br><a href="https://jm-david.github.io/emoji-mart-vue">Demo</a> • <a href="https://github.com/jm-david/emoji-mart-vue/releases">Changelog</a>
   <br><img src="https://cloud.githubusercontent.com/assets/436043/17186519/9e71e8fe-5403-11e6-9314-21365c56a601.png">
 </div>
 
@@ -24,8 +24,8 @@ import { Picker } from 'emoji-mart-vue'
 | **autoFocus** | | `false` | Auto focus the search input when mounted |
 | **color** | | `#ae65c5` | The top bar anchors select and hover color |
 | **emoji** | | `department_store` | The emoji shown when no emojis are hovered |
-| **include** | | `['People', 'Flags']` | Only load included categories |
-| **exclude** | | `['Animals', 'Objects']` | Don't load excluded catagories |
+| **include** | | `[]` | Only load included categories. Accepts [I18n categories keys](#i18n). Order will be respected, except for the `recent` category which will always be the first. |
+| **exclude** | | `[]` | Don't load excluded categories. Accepts [I18n categories keys](#i18n). |
 | **emojiSize** | | `24` | The emoji width and height |
 | **onClick** | | | Params: `(emoji, event) => {}` |
 | **perLine** | | `9` | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. This will set *Frequently Used* length as well (`perLine * 4`) |
@@ -33,7 +33,7 @@ import { Picker } from 'emoji-mart-vue'
 | **native** | | `false` | Renders the native unicode emoji |
 | **set** | | `apple` | The emoji set: `'apple', 'google', 'twitter', 'emojione'` |
 | **sheetSize** | | `64` | The emoji [sheet size](#sheet-sizes): `16, 20, 32, 64` |
-| **backgroundImageFn** | | ```((set, sheetSize) => `https://unpkg.com/emoji-datasource@2.4.4/sheet_${set}_${sheetSize}.png`)``` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
+| **backgroundImageFn** | | ```((set, sheetSize) => …)``` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
 | **emojisToShowFilter** | | ```((unicode) => true)``` | A Fn to choose whether an emoji should be displayed or not based on its unicode |
 | **skin** | | `1` | Default skin color: `1, 2, 3, 4, 5, 6` |
 | **style** | | | Inline styles applied to the root element. Useful for positioning |
@@ -42,6 +42,7 @@ import { Picker } from 'emoji-mart-vue'
 #### I18n
 ```js
 search: 'Search',
+notfound: 'No Emoji Found',
 categories: {
   search: 'Search Results',
   recent: 'Frequently Used',

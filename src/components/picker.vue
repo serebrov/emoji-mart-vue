@@ -16,6 +16,9 @@
       ref="search"
       :i18n="i18n"
       :emojis-to-show-filter="emojisToShowFilter"
+      :include="include"
+      :exclude="exclude"
+      :auto-focus="autoFocus"
       @search="onSearch">
     </search>
     <category
@@ -73,6 +76,7 @@ let CATEGORIES = [];
 
 const I18N = {
   search: 'Search',
+  notfound: 'No Emoji Found',
   categories: {
     search: 'Search Results',
     recent: 'Frequently Used',
@@ -129,16 +133,17 @@ export default {
       default: 64
     },
     emojisToShowFilter: {
-      type: Function,
-      default: function() {
-        return true
-      }
+      type: Function
     },
     include: {
       type: Array
     },
     exclude: {
       type: Array
+    },
+    autoFocus: {
+      type: Boolean,
+      default: false
     },
     i18n: {
       type: Object,
@@ -150,7 +155,7 @@ export default {
   data() {
     return {
       activeSkin: store.get('skin') || this.skin,
-      activeCategory: RECENT_CATEGORY,
+      activeCategory: null,
       categories: [],
       previewEmoji: null,
       searchEmojis: null
@@ -182,42 +187,47 @@ export default {
     }
   },
   created() {
-    let filteredCategories = [];
+    this.categories = []
 
-    for (let hash of data.categories) {
-      let isIncluded = true,
-          isExcluded = false
+    for (let category of data.categories) {
+      let isIncluded = this.include == undefined ? true : this.include.indexOf(category.name.toLowerCase()) > -1
+      let isExcluded = this.exclude == undefined ? false : this.exclude.indexOf(category.name.toLowerCase()) > -1
+      if (!isIncluded || isExcluded) { continue }
 
-      if (this.include) {
-        isIncluded = this.include.indexOf(hash.name) > -1
-      }
+      if (this.emojisToShowFilter) {
+        let newEmojis = []
 
-      if (this.exclude) {
-        isExcluded = this.exclude.indexOf(hash.name) > -1
-      }
+        for (let emoji of category.emojis) {
+          let unified = data.emojis[emoji].unified
 
-      if (!isIncluded || isExcluded) { continue; }
-
-      let new_emojis = []
-      for (let emoji of hash.emojis) {
-        let unified = data.emojis[emoji].unified
-        if (this.emojisToShowFilter(unified)) {
-          new_emojis.push(emoji)
+          if (this.emojisToShowFilter(unified)) {
+            newEmojis.push(emoji)
+          }
         }
-      }
 
-      if (new_emojis.length) {
-        let new_hash = {
-          emojis: new_emojis,
-          name: hash.name
+        if (newEmojis.length) {
+          let newCategory = {
+            emojis: newEmojis,
+            name: category.name
+          }
+
+          this.categories.push(newCategory)
         }
-        filteredCategories.push(new_hash);
+      } else {
+        this.categories.push(category)
       }
     }
 
-    this.categories = [
-      RECENT_CATEGORY
-    ].concat(filteredCategories)
+    let includeRecent = this.include == undefined ? true : this.include.indexOf('recent') > -1
+    let excludeRecent = this.exclude == undefined ? false : this.exclude.indexOf('recent') > -1
+    if (includeRecent && !excludeRecent) {
+      this.categories.unshift(RECENT_CATEGORY)
+    }
+
+    if (this.categories[0]) {
+      this.categories[0].first = true
+      this.activeCategory = this.categories[0]
+    }
   },
   methods: {
     onScroll() {
@@ -252,7 +262,7 @@ export default {
             if (component) {
               let top = component.$el.offsetTop
 
-              if (category.name == 'Recent') {
+              if (category.first) {
                 top = 0
               }
 

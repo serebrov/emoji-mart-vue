@@ -1,6 +1,6 @@
 <template>
 
-<div class="emoji-mart-category" v-show="filteredEmojis.length > 0">
+<div :class="{ 'emoji-mart-category': true, 'emoji-mart-no-results': !hasResults }" v-if="isVisible">
   <div class="emoji-mart-category-label">
     <span>{{ i18n.categories[name.toLowerCase()] }}</span>
   </div>
@@ -20,11 +20,9 @@
     @mouseleave="emojiProps.onLeave">
   </emoji>
 
-  <div class="emoji-mart-no-results" v-show="!filteredEmojis.length">
-    <emoji :size="22" emoji="sleuth_or_spy"></emoji>
-    <span class="emoji-mart-no-results-labe">
-      No emoji found
-    </span>
+  <div v-show="!hasResults">
+    <emoji :size="38" emoji="sleuth_or_spy"></emoji>
+    <div class="emoji-mart-no-results-label">{{ i18n.notfound }}</div>
   </div>
 </div>
 
@@ -42,10 +40,7 @@ export default {
       required: true
     },
     emojis: {
-      type: Array,
-      default() {
-        return []
-      }
+      type: Array
     },
     hasStickyPosition: {
       type: Boolean,
@@ -74,11 +69,13 @@ export default {
         }
       }
 
-      if (this.emojis) {
-        return this.emojis.slice(0)
-      }
-
-      return []
+      return this.emojis
+    },
+    isVisible() {
+      return !!this.filteredEmojis
+    },
+    hasResults() {
+      return this.filteredEmojis && this.filteredEmojis.length > 0
     }
   },
   components: {
@@ -138,9 +135,16 @@ export default {
   color: #858585;
 }
 
-.emoji-mart-no-results span {
-  display: inline-block;
-  vertical-align: middle;
+.emoji-mart-no-results .emoji-mart-category-label {
+  display: none;
+}
+
+.emoji-mart-no-results .emoji-mart-no-results-label {
+  margin-top: .2em;
+}
+
+.emoji-mart-no-results .emoji-mart-emoji:hover:before {
+  content: none;
 }
 
 </style>

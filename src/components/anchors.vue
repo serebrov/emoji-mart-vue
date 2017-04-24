@@ -1,7 +1,7 @@
 <template>
 
 <div class="emoji-mart-anchors">
-  <template v-for="(category, i) in categoriesWithoutAnchor">
+  <template v-for="category in categories">
     <span
       :class="{ 'emoji-mart-anchor': true, 'emoji-mart-anchor-selected': category.name == activeCategory.name }"
       :style="{ 'color': (category.name == activeCategory.name ? color : '') }"
@@ -30,23 +30,18 @@ export default {
     },
     categories: {
       type: Array,
-      default() {
-        return []
-      }
+      required: true
     },
     activeCategory: {
       type: Object,
-      required: true
+      default() {
+        return {}
+      }
     }
   },
   data() {
     return {
       assets: { svgs }
-    }
-  },
-  computed: {
-    categoriesWithoutAnchor() {
-      return this.categories.filter(category => !category.anchor)
     }
   }
 }

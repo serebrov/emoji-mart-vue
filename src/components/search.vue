@@ -18,23 +18,36 @@ export default {
       type: Number,
       default: 75
     },
-    emojisToShowFilter: {
-      type: Function,
-      default: function() {
-        return true
-      }
-    },
     autoFocus: {
       type: Boolean,
       default: false
+    },
+    emojisToShowFilter: {
+      type: Function
+    },
+    include: {
+      type: Function
+    },
+    exclude: {
+      type: Function
     }
   },
   methods: {
     onInput(e) {
-      this.$emit('search', emojiIndex.search(e.target.value, this.emojisToShowFilter, this.maxResults))
+      this.$emit('search', emojiIndex.search(e.target.value, {
+        emojisToShowFilter: this.emojisToShowFilter,
+        maxResults: this.maxResults,
+        include: this.include,
+        exclude: this.exclude
+      }))
     },
     clear() {
       this.$el.value = ''
+    }
+  },
+  mounted() {
+    if (this.autoFocus) {
+      this.$el.focus()
     }
   }
 }
