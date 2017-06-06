@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import emojiIndex from '../utils/emoji-index'
 
 export default class Search extends React.Component {
@@ -11,6 +12,7 @@ export default class Search extends React.Component {
       maxResults: this.props.maxResults,
       include: this.props.include,
       exclude: this.props.exclude,
+      custom: this.props.custom,
     }))
   }
 
@@ -21,22 +23,23 @@ export default class Search extends React.Component {
   render() {
     var { i18n, autoFocus } = this.props
 
-    return <input
-      ref='input'
-      type='text'
-      onChange={this.handleChange.bind(this)}
-      placeholder={i18n.search}
-      className='emoji-mart-search'
-      autoFocus={autoFocus}
-    />
+    return <div className='emoji-mart-search'>
+      <input
+        ref='input'
+        type='text'
+        onChange={this.handleChange.bind(this)}
+        placeholder={i18n.search}
+        autoFocus={autoFocus}
+      />
+    </div>
   }
 }
 
 Search.propTypes = {
-  onSearch: React.PropTypes.func,
-  maxResults: React.PropTypes.number,
-  emojisToShowFilter: React.PropTypes.func,
-  autoFocus: React.PropTypes.bool,
+  onSearch: PropTypes.func,
+  maxResults: PropTypes.number,
+  emojisToShowFilter: PropTypes.func,
+  autoFocus: PropTypes.bool,
 }
 
 Search.defaultProps = {

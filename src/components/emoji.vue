@@ -1,7 +1,7 @@
 <template>
 
-<span class="emoji-mart-emoji" @mouseover="onMouseOver" @mouseleave="onMouseLeave" @click="onClick">
-  <span class="emoji-native" v-if="native" :style="this.nativeEmojiStyles">{{ nativeEmoji }}</span>
+<span class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
+  <span class="emoji-native" v-if="isNative && !isCustom" :style="this.nativeEmojiStyles">{{ nativeEmoji }}</span>
   <span class="emoji-fallback" v-else :style="this.fallbackEmojiStyles"></span>
 </span>
 
@@ -12,14 +12,14 @@
 import data from '../../data'
 import { getData, getSanitizedData, unifiedToNative } from '../utils'
 
-const SHEET_COLUMNS = 41
+const SHEET_COLUMNS = 49
 
 export default {
   props: {
     backgroundImageFn: {
       type: Function,
       default: function(set, sheetSize) {
-        return `https://unpkg.com/emoji-datasource@${EMOJI_DATASOURCE_VERSION}/sheet_${set}_${sheetSize}.png`
+        return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets/${sheetSize}.png`
       }
     },
     native: {
@@ -58,6 +58,12 @@ export default {
     sanitizedData() {
       return getSanitizedData(this.emoji, this.skin, this.set)
     },
+    isNative() {
+      return this.native
+    },
+    isCustom() {
+      return this.data.custom
+    },
     nativeEmoji() {
       if (this.data.unified) {
         return unifiedToNative(this.data.unified)
@@ -77,6 +83,10 @@ export default {
       return styles
     },
     fallbackEmojiStyles() {
+      if (this.isCustom) {
+        return this.customEmojiStyles
+      }
+
       return {
         display: 'inline-block',
         width: this.size + 'px',
@@ -84,6 +94,15 @@ export default {
         backgroundImage: 'url(' + this.backgroundImageFn(this.set, this.sheetSize) + ')',
         backgroundSize: (100 * SHEET_COLUMNS) + '%',
         backgroundPosition: this.getPosition()
+      }
+    },
+    customEmojiStyles() {
+      return {
+        display: 'inline-block',
+        width: this.size + 'px',
+        height: this.size + 'px',
+        backgroundImage: 'url(' + this.data.imageUrl + ')',
+        backgroundSize: '100%',
       }
     }
   },
@@ -98,8 +117,8 @@ export default {
     onClick() {
       this.$emit('click', this.sanitizedData)
     },
-    onMouseOver() {
-      this.$emit('mouseover', this.sanitizedData)
+    onMouseEnter() {
+      this.$emit('mouseenter', this.sanitizedData)
     },
     onMouseLeave() {
       this.$emit('mouseleave', this.sanitizedData)

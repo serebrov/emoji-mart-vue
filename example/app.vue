@@ -14,10 +14,8 @@
   </div>
 
   <div class="row">
-    <template v-for="set in ['apple', 'google', 'twitter', 'emojione']">
-      <button @click="activeSet = set" :disabled="activeSet == set">
-        <emoji :set="set" :size="24" emoji="grinning"></emoji>
-      </button>
+    <template v-for="set in ['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook']">
+      <button @click="activeSet = set" :disabled="activeSet == set">{{ set }}</button>
     </template>
   </div>
 
@@ -34,9 +32,25 @@
   :emoji-size<syntax type="operator">=</syntax>"<syntax type="variable">{{ emojiSize }}</syntax>" <input type="range" min="16" max="64" v-model.number="emojiSize" />
   :per-line<syntax type="operator">=</syntax>"<syntax type="variable">{{ perLine }}</syntax>" {{ perLine < 10 ? '  ' : ' ' }} <input type="range" min="7" max="16" v-model.number="perLine" />
   :skin<syntax type="operator">=</syntax>"<syntax type="variable">{{ skin }}</syntax>"        <input type="range" min="1" max="6" v-model.number="skin">
-  :native<syntax type="operator">=</syntax>"<syntax type="variable">{{ native ? 'true' : 'false' }}</syntax>" {{ native ? ' ' : '' }} <input type='checkbox' v-model="native" />
+  :native<syntax type="operator">=</syntax>"<syntax type="variable">{{ native ? 'true' : 'false' }}</syntax>" {{ native ? ' ' : '' }} <input type="checkbox" v-model="native" />
   set<syntax type="operator">=</syntax><syntax type="string">"{{ activeSet }}"</syntax>
-  @click<syntax type="operator">=</syntax>"addEmoji"&gt;
+  :custom<syntax type="operator">=</syntax>"<syntax type="variable">[&hellip;]</syntax>"
+  :auto-focus<syntax type="operator">=</syntax>"<syntax type="variable">{{ autoFocus ? 'true' : 'false' }}</syntax>" <input type="checkbox" v-model="autoFocus" />
+  :include<syntax type="operator">=</syntax>"<syntax type="variable">[</syntax>
+  <div class="categories">
+    <label v-for="category in categories">
+      <input type="checkbox" :checked="isIncluded(category)" @change="onChangeInclude(category)" :disabled="exclude.length > 0"> <syntax type="string">"{{ category }}"</syntax>
+    </label>
+  </div>
+  <syntax type="variable">]</syntax>"
+  :exclude<syntax type="operator">=</syntax>"<syntax type="variable">[</syntax>
+  <div class="categories">
+    <label v-for="category in categories">
+      <input type="checkbox" :checked="isExcluded(category)" @change="onChangeExclude(category)" :disabled="include.length > 0"> <syntax type="string">"{{ category }}"</syntax>
+    </label>
+  </div>
+  <syntax type="variable">]</syntax>"
+  @click<syntax type="operator">=</syntax>"<syntax type="variable">addEmoji</syntax>"&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">picker</syntax>&gt;</syntax>
   </pre>
 
@@ -47,6 +61,10 @@
     :skin="skin"
     :native="native"
     :set="activeSet"
+    :custom="custom"
+    :auto-focus="autoFocus"
+    :include="include"
+    :exclude="exclude"
     @click="onClick">
   </picker>
 
@@ -55,14 +73,14 @@
 <syntax type="operator">import</syntax> &#123; Emoji &#125; <syntax type="operator">from</syntax> <syntax type="string">'emoji-mart-vue'</syntax>
 
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
-  emoji<syntax type="operator">=</syntax><syntax type="string">"thumbsup"</syntax>
+  emoji<syntax type="operator">=</syntax><syntax type="string">"{{ currentEmoji }}"</syntax>
   :size<syntax type="operator">=</syntax>"<syntax type="variable">64</syntax>"&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">emoji</syntax><syntax type="operator">&gt;</syntax>
     </pre>
 
     <span :style="{ display: 'inline-block', marginTop: 60 }">
       <emoji
-        emoji="thumbsup"
+        :emoji="currentEmoji"
         :size="64"
         :set="activeSet"
       />
@@ -72,14 +90,14 @@
   <div>
     <pre>
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
-  emoji<syntax type="operator">=</syntax><syntax type="string">":thumbsup:"</syntax>
+  emoji<syntax type="operator">=</syntax><syntax type="string">":{{ currentEmoji }}:"</syntax>
   :size<syntax type="operator">=</syntax>"<syntax type="variable">64</syntax>"&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">emoji</syntax><syntax type="operator">&gt;</syntax>
     </pre>
 
     <span :style="{ display: 'inline-block', marginTop: 40 }">
       <emoji
-        emoji=":thumbsup:"
+        :emoji="`:${currentEmoji}:`"
         :size="64"
         :set="activeSet">
       </emoji>
@@ -89,14 +107,14 @@
   <div>
     <pre>
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
-  emoji<syntax type="operator">=</syntax><syntax type="string">":thumbsup::skin-tone-3:"</syntax>
+  emoji<syntax type="operator">=</syntax><syntax type="string">":{{ currentEmoji }}::skin-tone-3:"</syntax>
   :size<syntax type="operator">=</syntax>"<syntax type="variable">64</syntax>"&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">emoji</syntax><syntax type="operator">&gt;</syntax>
     </pre>
 
     <span :style="{ display: 'inline-block', marginTop: 40 }">
       <emoji
-        emoji=":thumbsup::skin-tone-3:"
+        :emoji="`:${currentEmoji}::skin-tone-3:`"
         :size="64"
         :set="activeSet">
       </emoji>
@@ -106,7 +124,7 @@
   <div>
     <pre>
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
-  emoji<syntax type="operator">=</syntax><syntax type="string">':thumbsup::skin-tone-3:'</syntax>
+  emoji<syntax type="operator">=</syntax><syntax type="string">':{{ currentEmoji }}::skin-tone-3:'</syntax>
   :size<syntax type="operator">=</syntax>"<syntax type="variable">64</syntax>"
   native&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">emoji</syntax><syntax type="operator">&gt;</syntax>
@@ -114,7 +132,7 @@
 
     <span :style="{ display: 'inline-block', marginTop: 60 }">
       <emoji
-        emoji=":thumbsup::skin-tone-3:"
+        :emoji="`:${currentEmoji}::skin-tone-3:`"
         :size="64"
         native>
       </emoji>
@@ -129,6 +147,21 @@
 import Syntax from './syntax'
 import { Picker, Emoji } from '../src'
 
+const CUSTOM_EMOJIS = [
+  {
+    name: 'Octocat',
+    short_names: ['octocat'],
+    keywords: ['github'],
+    imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
+  },
+  {
+    name: 'Squirrel',
+    short_names: ['shipit', 'squirrel'],
+    keywords: ['github'],
+    imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/shipit.png?v7'
+  }
+]
+
 export default {
   data() {
     return {
@@ -137,12 +170,38 @@ export default {
       skin: 1,
       native: false,
       activeSet: 'apple',
-      hidden: false
+      custom: CUSTOM_EMOJIS,
+      currentEmoji: 'thumbsup',
+      autoFocus: false,
+      include: [],
+      exclude: [],
+      hidden: false,
+      categories: ['recent', 'people', 'nature', 'foods', 'activity', 'places', 'objects', 'symbols', 'flags', 'custom']
     }
   },
   methods: {
     onClick(emoji) {
-      console.log(emoji)
+      this.currentEmoji = emoji.id
+    },
+    onChangeInclude(category) {
+      if (this.isIncluded(category)) {
+        this.include.splice(this.include.indexOf(category), 1)
+      } else {
+        this.include.push(category)
+      }
+    },
+    onChangeExclude(category) {
+      if (this.isExcluded(category)) {
+        this.exclude.splice(this.exclude.indexOf(category), 1)
+      } else {
+        this.exclude.push(category)
+      }
+    },
+    isIncluded(category) {
+      return this.include.indexOf(category) >= 0
+    },
+    isExcluded(category) {
+      return this.exclude.indexOf(category) >= 0
     }
   },
   components: {
@@ -188,6 +247,21 @@ pre {
   vertical-align: top;
   margin: 1em;
   width: 460px;
+}
+
+.categories {
+  margin-left: 40px;
+  width: 400px;
+  white-space: normal;
+}
+
+.categories label {
+  display: inline-block;
+  width: 200px;
+}
+
+.categories input:disabled + span {
+  opacity: .5;
 }
 
 </style>

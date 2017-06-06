@@ -94,6 +94,7 @@ export default {
 
 .emoji-mart-anchors svg {
   fill: currentColor;
+  max-height: 18px;
 }
 
 </style>

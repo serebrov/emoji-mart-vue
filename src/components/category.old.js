@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import frequently from '../utils/frequently'
 import { Emoji } from '.'
@@ -71,10 +72,19 @@ export default class Category extends React.Component {
     var { name, emojis, perLine } = this.props
 
     if (name == 'Recent') {
-      let frequentlyUsed = frequently.get(perLine * 4)
+      let { custom } = this.props
+      let frequentlyUsed = frequently.get(perLine)
 
       if (frequentlyUsed.length) {
-        emojis = frequentlyUsed
+        emojis = frequentlyUsed.map((id) => {
+          for (let emoji of custom) {
+            if (emoji.id === id) {
+              return emoji
+            }
+          }
+
+          return id
+        })
       }
     }
 
@@ -124,24 +134,23 @@ export default class Category extends React.Component {
       </div>
 
       {emojis && emojis.map((emoji) =>
-        <Emoji
-          key={emoji.id || emoji}
-          emoji={emoji}
-          {...emojiProps}
-        />
+        Emoji({
+          emoji: emoji,
+          ...emojiProps
+        })
       )}
 
       {emojis && !emojis.length &&
         <div>
           <div>
-            <Emoji
-              {...emojiProps}
-              size={38}
-              emoji='sleuth_or_spy'
-              onOver={null}
-              onLeave={null}
-              onClick={null}
-            />
+          {Emoji({
+            ...emojiProps,
+            size: 38,
+            emoji: 'sleuth_or_spy',
+            onOver: null,
+            onLeave: null,
+            onClick: null,
+          })}
           </div>
 
           <div className='emoji-mart-no-results-label'>
@@ -154,12 +163,12 @@ export default class Category extends React.Component {
 }
 
 Category.propTypes = {
-  emojis: React.PropTypes.array,
-  hasStickyPosition: React.PropTypes.bool,
-  name: React.PropTypes.string.isRequired,
-  native: React.PropTypes.bool.isRequired,
-  perLine: React.PropTypes.number.isRequired,
-  emojiProps: React.PropTypes.object.isRequired,
+  emojis: PropTypes.array,
+  hasStickyPosition: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  native: PropTypes.bool.isRequired,
+  perLine: PropTypes.number.isRequired,
+  emojiProps: PropTypes.object.isRequired,
 }
 
 Category.defaultProps = {

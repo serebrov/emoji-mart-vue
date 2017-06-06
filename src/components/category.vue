@@ -1,13 +1,14 @@
 <template>
 
-<div :class="{ 'emoji-mart-category': true, 'emoji-mart-no-results': !hasResults }" v-if="isVisible">
+<div :class="{ 'emoji-mart-category': true, 'emoji-mart-no-results': !hasResults }" v-if="isVisible && (isSearch || hasResults)">
   <div class="emoji-mart-category-label">
     <span>{{ i18n.categories[name.toLowerCase()] }}</span>
   </div>
 
   <emoji
     v-for="emoji in filteredEmojis"
-    :key="emoji.id || emoji" :emoji="emoji"
+    :key="emoji.id || emoji"
+    :emoji="emoji"
     :native="emojiProps.native"
     :skin="emojiProps.skin"
     :set="emojiProps.set"
@@ -16,12 +17,19 @@
     :force-size="emojiProps.forceSize"
     :background-image-fn="emojiProps.backgroundImageFn"
     @click="emojiProps.onClick"
-    @mouseover="emojiProps.onOver"
+    @mouseenter="emojiProps.onEnter"
     @mouseleave="emojiProps.onLeave">
   </emoji>
 
   <div v-show="!hasResults">
-    <emoji :size="38" emoji="sleuth_or_spy"></emoji>
+    <emoji
+      :size="38"
+      emoji="sleuth_or_spy"
+      :native="emojiProps.native"
+      :skin="emojiProps.skin"
+      :set="emojiProps.set"
+      :sheet-size="emojiProps.sheetSize">
+    </emoji>
     <div class="emoji-mart-no-results-label">{{ i18n.notfound }}</div>
   </div>
 </div>
@@ -30,7 +38,7 @@
 
 <script>
 
-import frequently from '../utils/frequently'
+import data from '../../data'
 import Emoji from './emoji'
 
 export default {
@@ -38,6 +46,9 @@ export default {
     i18n: {
       type: Object,
       required: true
+    },
+    emojisToShowFilter: {
+      type: Function
     },
     emojis: {
       type: Array
@@ -50,10 +61,6 @@ export default {
       type: String,
       required: true
     },
-    perLine: {
-      type: Number,
-      required: true
-    },
     emojiProps: {
       type: Object,
       required: true
@@ -61,21 +68,22 @@ export default {
   },
   computed: {
     filteredEmojis() {
-      if (this.name == 'Recent') {
-        let frequentlyUsed = frequently.get(this.perLine * 4)
-
-        if (frequentlyUsed.length) {
-          return frequentlyUsed
-        }
+      if (this.emojisToShowFilter) {
+        return this.emojis.filter((emoji) => {
+          return this.emojisToShowFilter(data.emojis[emoji] || emoji)
+        })
       }
 
       return this.emojis
     },
     isVisible() {
-      return !!this.filteredEmojis
+      return !!this.emojis
+    },
+    isSearch() {
+      return this.name == 'Search'
     },
     hasResults() {
-      return this.filteredEmojis && this.filteredEmojis.length > 0
+      return this.filteredEmojis.length > 0
     }
   },
   components: {

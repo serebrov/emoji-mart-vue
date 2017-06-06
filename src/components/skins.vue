@@ -72,7 +72,7 @@ export default {
   transition-timing-function: ease-out;
 }
 
-.emoji-mart-skin-swatch:nth-child(1) { transition-delay: 0 }
+.emoji-mart-skin-swatch:nth-child(1) { transition-delay: 0s }
 .emoji-mart-skin-swatch:nth-child(2) { transition-delay: .03s }
 .emoji-mart-skin-swatch:nth-child(3) { transition-delay: .06s }
 .emoji-mart-skin-swatch:nth-child(4) { transition-delay: .09s }

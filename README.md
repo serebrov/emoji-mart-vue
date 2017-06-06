@@ -6,6 +6,10 @@
   <br><img src="https://cloud.githubusercontent.com/assets/436043/17186519/9e71e8fe-5403-11e6-9314-21365c56a601.png">
 </div>
 
+## Installation
+
+`npm install --save emoji-mart-vue`
+
 ## Components
 ### Picker
 ```js
@@ -23,18 +27,19 @@ import { Picker } from 'emoji-mart-vue'
 | ---- | :------: | ------- | ----------- |
 | **autoFocus** | | `false` | Auto focus the search input when mounted |
 | **color** | | `#ae65c5` | The top bar anchors select and hover color |
-| **emoji** | | `department_store` | The emoji shown when no emojis are hovered |
+| **emoji** | | `department_store` | The emoji shown when no emojis are hovered, set to an empty string to show nothing |
 | **include** | | `[]` | Only load included categories. Accepts [I18n categories keys](#i18n). Order will be respected, except for the `recent` category which will always be the first. |
 | **exclude** | | `[]` | Don't load excluded categories. Accepts [I18n categories keys](#i18n). |
+| **custom** | | `[]` | [Custom emojis](#custom-emojis) |
 | **emojiSize** | | `24` | The emoji width and height |
 | **onClick** | | | Params: `(emoji, event) => {}` |
 | **perLine** | | `9` | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. This will set *Frequently Used* length as well (`perLine * 4`) |
 | **i18n** | | [`{…}`](#i18n) | [An object](#i18n) containing localized strings |
 | **native** | | `false` | Renders the native unicode emoji |
-| **set** | | `apple` | The emoji set: `'apple', 'google', 'twitter', 'emojione'` |
+| **set** | | `apple` | The emoji set: `'apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'` |
 | **sheetSize** | | `64` | The emoji [sheet size](#sheet-sizes): `16, 20, 32, 64` |
 | **backgroundImageFn** | | ```((set, sheetSize) => …)``` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
-| **emojisToShowFilter** | | ```((unicode) => true)``` | A Fn to choose whether an emoji should be displayed or not based on its unicode |
+| **emojisToShowFilter** | | ```((emoji) => true)``` | A Fn to choose whether an emoji should be displayed or not |
 | **skin** | | `1` | Default skin color: `1, 2, 3, 4, 5, 6` |
 | **style** | | | Inline styles applied to the root element. Useful for positioning |
 | **title** | | `Emoji Mart™` | The title shown when no emojis are hovered |
@@ -54,6 +59,7 @@ categories: {
   objects: 'Objects',
   symbols: 'Symbols',
   flags: 'Flags',
+  custom: 'Custom',
 }
 ```
 
@@ -101,6 +107,16 @@ Sheets are served from [unpkg](https://unpkg.com), a global CDN that serves file
   skin: 3,
   native: '🎅🏼'
 }
+
+{
+  id: 'octocat',
+  name: 'Octocat',
+  colons: ':octocat',
+  emoticons: [],
+  custom: true,
+  imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
+}
+
 ```
 
 ### Emoji
@@ -126,6 +142,25 @@ import { Emoji } from 'emoji-mart'
 | **sheetSize** | | `64` | The emoji [sheet size](#sheet-sizes): `16, 20, 32, 64` |
 | **backgroundImageFn** | | ```((set, sheetSize) => `https://unpkg.com/emoji-datasource@2.4.4/sheet_${set}_${sheetSize}.png`)``` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
 | **skin** | | `1` | Skin color: `1, 2, 3, 4, 5, 6` |
+
+## Custom emojis
+You can provide custom emojis which will show up in their own category.
+
+```js
+import { Picker } from 'emoji-mart'
+
+const customEmojis = [
+  {
+    name: 'Octocat',
+    short_names: ['octocat'],
+    emoticons: [],
+    keywords: ['github'],
+    imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
+  },
+]
+
+<Picker custom={customEmojis} />
+```
 
 ## Headless search
 The `Picker` doesn’t have to be mounted for you to take advantage of the advanced search results.
@@ -172,9 +207,9 @@ It can however be overwritten as per user preference.
 ![colors](https://cloud.githubusercontent.com/assets/436043/17221637/9f6f8508-54c2-11e6-8d10-59c5d3a458e0.png)
 
 #### Multiple sets supported
-Apple / Google / Twitter / EmojiOne
+Apple / Google / Twitter / EmojiOne / Messenger / Facebook
 
-![sets](https://cloud.githubusercontent.com/assets/436043/17221550/4261d64a-54c2-11e6-8c49-a5c4c4696f8b.png)
+![sets](https://cloud.githubusercontent.com/assets/436043/26523496/d41cd734-42e6-11e7-8ae8-bad87e83d534.png)
 
 ## Not opinionated
 **Emoji Mart** doesn’t automatically insert anything into a text input, nor does it show or hide itself. It simply returns an `emoji` object. It’s up to the developer to mount/unmount (it’s fast!) and position the picker. You can use the returned object as props for the `EmojiMart.Emoji` component. You could also use `emoji.colons` to insert text into a textarea or `emoji.native` to use the emoji.
@@ -182,7 +217,7 @@ Apple / Google / Twitter / EmojiOne
 ## Development
 ```sh
 $ yarn run build:data
-$ yarn run watch
+$ yarn start
 $ open example/index.html
 ```
 

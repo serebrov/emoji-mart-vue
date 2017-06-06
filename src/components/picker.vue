@@ -5,41 +5,45 @@
     <anchors
       :i18n="i18n"
       :color="color"
-      :categories="categories"
+      :categories="filteredCategories"
       :active-category="activeCategory"
       @click="onAnchorClick">
     </anchors>
   </div>
 
+  <search
+    ref="search"
+    :i18n="i18n"
+    :emojis-to-show-filter="emojisToShowFilter"
+    :include="include"
+    :exclude="exclude"
+    :custom="customEmojis"
+    :auto-focus="autoFocus"
+    @search="onSearch">
+  </search>
+
   <div class="emoji-mart-scroll" ref="scroll" @scroll="onScroll">
-    <search
-      ref="search"
-      :i18n="i18n"
-      :emojis-to-show-filter="emojisToShowFilter"
-      :include="include"
-      :exclude="exclude"
-      :auto-focus="autoFocus"
-      @search="onSearch">
-    </search>
     <category
       v-show="searchEmojis"
       :i18n="i18n"
+      :emojis-to-show-filter="emojisToShowFilter"
       name="Search"
       :emojis="searchEmojis"
-      :per-line="perLine"
       :native="native"
+      :custom="customEmojis"
       :emoji-props="emojiProps">
     </category>
     <category
-      v-for="category in categories"
+      v-for="category in filteredCategories"
       v-show="!searchEmojis"
       ref="categories"
       :key="category.name"
       :i18n="i18n"
+      :emojis-to-show-filter="emojisToShowFilter"
       :name="category.name"
       :emojis="category.emojis"
-      :per-line="perLine"
       :native="native"
+      :custom="customEmojis"
       :emoji-props="emojiProps">
     </category>
   </div>
@@ -70,7 +74,8 @@ import Emoji from './emoji'
 import Preview from './preview'
 import Search from './search'
 
-const RECENT_CATEGORY = { name: 'Recent', emojis: null }
+const RECENT_CATEGORY = { name: 'Recent', emojis: [] }
+const CUSTOM_CATEGORY = { name: 'Custom', emojis: [] }
 
 let CATEGORIES = [];
 
@@ -88,7 +93,15 @@ const I18N = {
     objects: 'Objects',
     symbols: 'Symbols',
     flags: 'Flags',
+    custom: 'Custom',
   },
+}
+
+function makeCustomEmoji(emoji) {
+  return Object.assign({}, emoji, {
+    id: emoji.short_names[0],
+    custom: true
+  })
 }
 
 export default {
@@ -145,6 +158,12 @@ export default {
       type: Boolean,
       default: false
     },
+    custom: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
     i18n: {
       type: Object,
       default() {
@@ -153,12 +172,29 @@ export default {
     }
   },
   data() {
+    let customEmojis = this.custom.map(makeCustomEmoji),
+        recentEmojis = frequently.get(this.perLine)
+
+    if (recentEmojis.length) {
+      recentEmojis = recentEmojis.map((id) => {
+        for (let customEmoji of customEmojis) {
+          if (customEmoji.id === id) {
+            return customEmoji
+          }
+        }
+
+        return id
+      })
+    }
+
     return {
       activeSkin: store.get('skin') || this.skin,
-      activeCategory: null,
       categories: [],
+      activeCategory: null,
       previewEmoji: null,
-      searchEmojis: null
+      searchEmojis: null,
+      customEmojis: customEmojis,
+      recentEmojis: recentEmojis
     }
   },
   computed: {
@@ -171,7 +207,7 @@ export default {
         sheetSize: this.sheetSize,
         forceSize: this.native,
         backgroundImageFn: this.backgroundImageFn,
-        onOver: this.onEmojiOver.bind(this),
+        onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this)
       }
@@ -184,50 +220,33 @@ export default {
     },
     calculateWidth() {
       return (this.perLine * (this.emojiSize + 12)) + 12 + 2
+    },
+    filteredCategories() {
+      return this.categories.filter((category) => {
+        let isIncluded = this.include && this.include.length ? this.include.indexOf(category.name.toLowerCase()) > -1 : true
+        let isExcluded = this.exclude && this.exclude.length ? this.exclude.indexOf(category.name.toLowerCase()) > -1 : false
+        let hasEmojis = category.emojis.length > 0
+
+        if (this.emojisToShowFilter) {
+          hasEmojis = category.emojis.some((emoji) => {
+            return this.emojisToShowFilter(data.emojis[emoji] || emoji)
+          })
+        }
+
+        return isIncluded && !isExcluded && hasEmojis
+      })
     }
   },
   created() {
-    this.categories = []
+    RECENT_CATEGORY.emojis = this.recentEmojis
+    CUSTOM_CATEGORY.emojis = this.customEmojis
 
-    for (let category of data.categories) {
-      let isIncluded = this.include == undefined ? true : this.include.indexOf(category.name.toLowerCase()) > -1
-      let isExcluded = this.exclude == undefined ? false : this.exclude.indexOf(category.name.toLowerCase()) > -1
-      if (!isIncluded || isExcluded) { continue }
+    this.categories.push(RECENT_CATEGORY)
+    this.categories.push(...data.categories)
+    this.categories.push(CUSTOM_CATEGORY)
 
-      if (this.emojisToShowFilter) {
-        let newEmojis = []
-
-        for (let emoji of category.emojis) {
-          let unified = data.emojis[emoji].unified
-
-          if (this.emojisToShowFilter(unified)) {
-            newEmojis.push(emoji)
-          }
-        }
-
-        if (newEmojis.length) {
-          let newCategory = {
-            emojis: newEmojis,
-            name: category.name
-          }
-
-          this.categories.push(newCategory)
-        }
-      } else {
-        this.categories.push(category)
-      }
-    }
-
-    let includeRecent = this.include == undefined ? true : this.include.indexOf('recent') > -1
-    let excludeRecent = this.exclude == undefined ? false : this.exclude.indexOf('recent') > -1
-    if (includeRecent && !excludeRecent) {
-      this.categories.unshift(RECENT_CATEGORY)
-    }
-
-    if (this.categories[0]) {
-      this.categories[0].first = true
-      this.activeCategory = this.categories[0]
-    }
+    this.categories[0].first = true
+    this.activeCategory = this.categories[0]
   },
   methods: {
     onScroll() {
@@ -240,10 +259,10 @@ export default {
       this.waitingForPaint = false
 
       let scrollTop = this.$refs.scroll.scrollTop,
-          activeCategory = this.categories[0]
+          activeCategory = this.filteredCategories[0]
 
-      for (let i = 0, l = this.categories.length; i < l; i++) {
-        let category = this.categories[i],
+      for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
+        let category = this.filteredCategories[i],
             component = this.$refs.categories[i]
 
         if (component && component.$el.offsetTop > scrollTop) {
@@ -282,7 +301,12 @@ export default {
     onSearch(emojis) {
       this.searchEmojis = emojis
     },
-    onEmojiOver(emoji) {
+    onEmojiEnter(emoji) {
+      if (emoji.custom) {
+        const customEmoji = this.customEmojis.find(_emoji => _emoji.id === emoji.id)
+        emoji = Object.assign({}, emoji, customEmoji)
+      }
+
       this.previewEmoji = emoji
     },
     onEmojiLeave(emoji) {
@@ -334,12 +358,18 @@ export default {
   background: #fff;
 }
 
+.emoji-mart-bar {
+  border: 0 solid #d9d9d9;
+}
+
 .emoji-mart-bar:first-child {
+  border-bottom-width: 1px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
 .emoji-mart-bar:last-child {
+  border-top-width: 1px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -349,8 +379,6 @@ export default {
   overflow-y: scroll;
   height: 270px;
   padding: 0 6px 6px 6px;
-  border: solid #d9d9d9;
-  border-width: 1px 0;
 
   /* Fix for rendering sticky positioned category labels on Chrome */
   z-index: 0;

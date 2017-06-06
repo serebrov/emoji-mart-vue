@@ -1,6 +1,8 @@
 <template>
 
-<input class="emoji-mart-search" type="text" :placeholder="i18n.search" @input="onInput">
+<div class="emoji-mart-search">
+  <input type="text" :placeholder="i18n.search" @input="onInput">
+</div>
 
 </template>
 
@@ -26,10 +28,13 @@ export default {
       type: Function
     },
     include: {
-      type: Function
+      type: Array
     },
     exclude: {
-      type: Function
+      type: Array
+    },
+    custom: {
+      type: Array
     }
   },
   methods: {
@@ -38,7 +43,8 @@ export default {
         emojisToShowFilter: this.emojisToShowFilter,
         maxResults: this.maxResults,
         include: this.include,
-        exclude: this.exclude
+        exclude: this.exclude,
+        custom: this.custom
       }))
     },
     clear() {
@@ -57,11 +63,15 @@ export default {
 <style scoped>
 
 .emoji-mart-search {
+  margin-top: 6px;
+  padding: 0 6px;
+}
+
+.emoji-mart-search input {
   font-size: 16px;
   display: block;
   width: 100%;
   padding: .2em .6em;
-  margin-top: 6px;
   border-radius: 25px;
   border: 1px solid #d9d9d9;
   outline: 0;

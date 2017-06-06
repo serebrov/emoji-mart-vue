@@ -18,7 +18,7 @@
     <div class="emoji-mart-preview-data">
       <div class="emoji-mart-preview-name">{{ emoji.name }}</div>
       <div class="emoji-mart-preview-shortnames">
-        <span class="emoji-mart-preview-shortname" v-for="name in emojiShortNames">{{ name }}</span>
+        <span class="emoji-mart-preview-shortname" v-for="name in emojiShortNames">:{{ name }}:</span>
       </div>
       <div class="emoji-mart-preview-emoticons">
         <span class="emoji-mart-preview-emoticon" v-for="emoticon in emojiEmoticons">{{ emoticon }}</span>
@@ -80,31 +80,21 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      emojiShortNames: [],
-      emojiEmoticons: []
-    }
-  },
-  watch: {
-    emoji() {
-      this.emojiShortNames = []
-      this.emojiEmoticons = []
-
-      if (this.emoji) {
-        let { short_names, emoticons } = getData(this.emoji)
-
-        this.emojiShortNames = short_names
-
-        let doneEmoticons = []
-
-        for (let emoticon of emoticons) {
-          if (doneEmoticons.indexOf(emoticon.toLowerCase()) == -1) {
-            doneEmoticons.push(emoticon.toLowerCase())
-            this.emojiEmoticons.push(emoticon)
-          }
-        }
+  computed: {
+    data() {
+      if (this.emoji && this.emoji.custom) {
+        return this.emoji
+      } else if (this.emoji) {
+        return getData(this.emoji)
+      } else {
+        return {}
       }
+    },
+    emojiShortNames() {
+      return this.data.short_names
+    },
+    emojiEmoticons() {
+      return this.data.emoticons
     }
   },
   components: {
@@ -136,7 +126,7 @@ export default {
 
 .emoji-mart-preview-data {
   left: 68px; right: 12px;
-  word-break: break-word;
+  word-break: break-all;
 }
 
 .emoji-mart-preview-skins {

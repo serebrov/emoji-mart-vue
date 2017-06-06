@@ -1,11 +1,13 @@
 const extend = require('util')._extend
 
 import data from '../../data'
-import { getSanitizedData, intersect } from '.'
+import { getData, getSanitizedData, intersect } from '.'
 
 var index = {}
 var emojisList = {}
 var emoticonsList = {}
+var previousInclude = null
+var previousExclude = null
 
 for (let emoji in data.emojis) {
   let emojiData = data.emojis[emoji],
@@ -21,13 +23,29 @@ for (let emoji in data.emojis) {
   emojisList[id] = getSanitizedData(id)
 }
 
-function search(value, { emojisToShowFilter, maxResults, include, exclude } = {}) {
+function search(value, { emojisToShowFilter, maxResults, include, exclude, custom = [] } = {}) {
   maxResults || (maxResults = 75)
+
+  if (custom.length) {
+    for (const emoji of custom) {
+      data.emojis[emoji.id] = getData(emoji)
+      emojisList[emoji.id] = getSanitizedData(emoji)
+    }
+
+    data.categories.push({
+      name: 'Custom',
+      emojis: custom.map(emoji => emoji.id)
+    })
+  }
 
   var results = null,
       pool = data.emojis
 
   if (value.length) {
+    if (value == '-' || value == '-1') {
+      return [emojisList['-1']]
+    }
+
     var values = value.toLowerCase().split(/[\s|,|\-|_]+/),
         allResults = []
 
@@ -38,25 +56,29 @@ function search(value, { emojisToShowFilter, maxResults, include, exclude } = {}
     if ((include && include.length) || (exclude && exclude.length)) {
       pool = {}
 
+      if (previousInclude != include.sort().join(',') || previousExclude != exclude.sort().join(',')) {
+        previousInclude = include.sort().join(',')
+        previousExclude = exclude.sort().join(',')
+        index = {}
+      }
+
       for (let category of data.categories) {
-        let isIncluded = include == undefined ? true : include.indexOf(category.name.toLowerCase()) > -1
-        let isExcluded = exclude == undefined ? false : exclude.indexOf(category.name.toLowerCase()) > -1
+        let isIncluded = include && include.length ? include.indexOf(category.name.toLowerCase()) > -1 : true
+        let isExcluded = exclude && exclude.length ? exclude.indexOf(category.name.toLowerCase()) > -1 : false
         if (!isIncluded || isExcluded) { continue }
 
         for (let emojiId of category.emojis) {
           pool[emojiId] = data.emojis[emojiId]
         }
       }
+    } else if (previousInclude || previousExclude) {
+      index = {}
     }
 
     allResults = values.map((value) => {
       var aPool = pool,
           aIndex = index,
           length = 0
-
-      if (value == '-' || value == '-1') {
-        return [emojisList['-1']]
-      }
 
       for (let char of value.split('')) {
         length++
