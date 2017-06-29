@@ -23,12 +23,14 @@
 
   <div v-show="!hasResults">
     <emoji
-      :size="38"
+      :size="emojiProps.size"
       emoji="sleuth_or_spy"
       :native="emojiProps.native"
       :skin="emojiProps.skin"
       :set="emojiProps.set"
-      :sheet-size="emojiProps.sheetSize">
+      :sheet-size="emojiProps.sheetSize"
+      :background-image-fn="emojiProps.backgroundImageFn"
+      >
     </emoji>
     <div class="emoji-mart-no-results-label">{{ i18n.notfound }}</div>
   </div>
