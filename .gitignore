@@ -1,5 +1,4 @@
 node_modules/
-#data/
-#dist/
+data/
+dist/
 bundle.js
-yarn.lock
