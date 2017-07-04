@@ -55,9 +55,13 @@ function search(value, { emojisToShowFilter, maxResults, include, exclude, custo
 
     if ((include && include.length) || (exclude && exclude.length)) {
       pool = {}
-
-      if (previousInclude != include.sort().join(',') || previousExclude != exclude.sort().join(',')) {
+      
+      if (include && include.length && previousInclude != include.sort().join(',')) {
         previousInclude = include.sort().join(',')
+        index = {}
+      }
+      
+      if (exclude && exclude.length && previousExclude != exclude.sort().join(',')) {
         previousExclude = exclude.sort().join(',')
         index = {}
       }
