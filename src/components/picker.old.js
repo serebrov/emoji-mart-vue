@@ -2,6 +2,7 @@ import '../vendor/raf-polyfill'
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import measureScrollbar from 'measure-scrollbar'
 import data from '../../data'
 
 import store from '../utils/store'
@@ -152,7 +153,8 @@ export default class Picker extends React.Component {
 
   handleEmojiOver(emoji) {
     var { preview } = this.refs
-    const emojiData = CUSTOM_CATEGORY.emojis.find(customEmoji => customEmoji.id === emoji.id)
+    // Use Array.prototype.find() when it is more widely supported.
+    const emojiData = CUSTOM_CATEGORY.emojis.filter(customEmoji => customEmoji.id === emoji.id)[0]
     preview.setState({ emoji: Object.assign(emoji, emojiData) })
     clearTimeout(this.leaveTimeout)
   }
@@ -328,7 +330,7 @@ export default class Picker extends React.Component {
   render() {
     var { perLine, emojiSize, set, sheetSize, style, title, emoji, color, native, backgroundImageFn, emojisToShowFilter, include, exclude, autoFocus } = this.props,
         { skin } = this.state,
-        width = (perLine * (emojiSize + 12)) + 12 + 2
+        width = (perLine * (emojiSize + 12)) + 12 + 2 + measureScrollbar()
 
     return <div style={{width: width, ...style}} className='emoji-mart'>
       <div className='emoji-mart-bar'>

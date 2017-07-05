@@ -104,6 +104,24 @@ function makeCustomEmoji(emoji) {
   })
 }
 
+function measureScrollbar() {
+  const div = document.createElement('div')
+
+  div.style.width = '100px'
+  div.style.height = '100px'
+  div.style.overflow = 'scroll'
+  div.style.position = 'absolute'
+  div.style.top = '-9999px'
+
+  document.body.appendChild(div)
+
+  const scrollbarWidth = div.offsetWidth - div.clientWidth
+
+  document.body.removeChild(div)
+
+  return scrollbarWidth
+}
+
 export default {
   props: {
     perLine: {
@@ -219,7 +237,7 @@ export default {
       }
     },
     calculateWidth() {
-      return (this.perLine * (this.emojiSize + 12)) + 12 + 2
+      return (this.perLine * (this.emojiSize + 12)) + 12 + 2 + measureScrollbar()
     },
     filteredCategories() {
       return this.categories.filter((category) => {
@@ -303,7 +321,8 @@ export default {
     },
     onEmojiEnter(emoji) {
       if (emoji.custom) {
-        const customEmoji = this.customEmojis.find(_emoji => _emoji.id === emoji.id)
+        // Use Array.prototype.find() when it is more widely supported.
+        const customEmoji = this.customEmojis.filter(_emoji => _emoji.id === emoji.id)[0]
         emoji = Object.assign({}, emoji, customEmoji)
       }
 

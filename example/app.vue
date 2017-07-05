@@ -73,7 +73,7 @@
 <syntax type="operator">import</syntax> &#123; Emoji &#125; <syntax type="operator">from</syntax> <syntax type="string">'emoji-mart-vue'</syntax>
 
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
-  emoji<syntax type="operator">=</syntax><syntax type="string">"{{ currentEmoji }}"</syntax>
+  emoji<syntax type="operator">=</syntax><syntax type="string">"{{ currentEmoji.id }}"</syntax>
   :size<syntax type="operator">=</syntax>"<syntax type="variable">64</syntax>"&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">emoji</syntax><syntax type="operator">&gt;</syntax>
     </pre>
@@ -90,14 +90,14 @@
   <div>
     <pre>
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
-  emoji<syntax type="operator">=</syntax><syntax type="string">":{{ currentEmoji }}:"</syntax>
+  emoji<syntax type="operator">=</syntax><syntax type="string">":{{ currentEmoji.id }}:"</syntax>
   :size<syntax type="operator">=</syntax>"<syntax type="variable">64</syntax>"&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">emoji</syntax><syntax type="operator">&gt;</syntax>
     </pre>
 
     <span :style="{ display: 'inline-block', marginTop: 40 }">
       <emoji
-        :emoji="`:${currentEmoji}:`"
+        :emoji="`:${currentEmoji.id}:`"
         :size="64"
         :set="activeSet">
       </emoji>
@@ -107,14 +107,14 @@
   <div>
     <pre>
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
-  emoji<syntax type="operator">=</syntax><syntax type="string">":{{ currentEmoji }}::skin-tone-3:"</syntax>
+  emoji<syntax type="operator">=</syntax><syntax type="string">":{{ currentEmoji.id }}::skin-tone-3:"</syntax>
   :size<syntax type="operator">=</syntax>"<syntax type="variable">64</syntax>"&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">emoji</syntax><syntax type="operator">&gt;</syntax>
     </pre>
 
     <span :style="{ display: 'inline-block', marginTop: 40 }">
       <emoji
-        :emoji="`:${currentEmoji}::skin-tone-3:`"
+        :emoji="`:${currentEmoji.id}::skin-tone-3:`"
         :size="64"
         :set="activeSet">
       </emoji>
@@ -124,7 +124,7 @@
   <div>
     <pre>
 <syntax type="operator">&lt;</syntax><syntax type="variable">emoji</syntax>
-  emoji<syntax type="operator">=</syntax><syntax type="string">':{{ currentEmoji }}::skin-tone-3:'</syntax>
+  emoji<syntax type="operator">=</syntax><syntax type="string">':{{ currentEmoji.id }}::skin-tone-3:'</syntax>
   :size<syntax type="operator">=</syntax>"<syntax type="variable">64</syntax>"
   native&gt;
 <syntax type="operator">&lt;/</syntax><syntax type="variable">emoji</syntax><syntax type="operator">&gt;</syntax>
@@ -132,7 +132,7 @@
 
     <span :style="{ display: 'inline-block', marginTop: 60 }">
       <emoji
-        :emoji="`:${currentEmoji}::skin-tone-3:`"
+        :emoji="`:${currentEmoji.id}::skin-tone-3:`"
         :size="64"
         native>
       </emoji>
@@ -171,7 +171,7 @@ export default {
       native: false,
       activeSet: 'apple',
       custom: CUSTOM_EMOJIS,
-      currentEmoji: 'thumbsup',
+      currentEmoji: { id: '+1' },
       autoFocus: false,
       include: [],
       exclude: [],
@@ -181,7 +181,7 @@ export default {
   },
   methods: {
     onClick(emoji) {
-      this.currentEmoji = emoji.id
+      this.currentEmoji = emoji
     },
     onChangeInclude(category) {
       if (this.isIncluded(category)) {

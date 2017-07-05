@@ -64,6 +64,9 @@ export default {
     isCustom() {
       return this.data.custom
     },
+    hasEmoji() {
+      return this.data['has_img_' + this.set]
+    },
     nativeEmoji() {
       if (this.data.unified) {
         return unifiedToNative(this.data.unified)
@@ -85,15 +88,17 @@ export default {
     fallbackEmojiStyles() {
       if (this.isCustom) {
         return this.customEmojiStyles
-      }
-
-      return {
-        display: 'inline-block',
-        width: this.size + 'px',
-        height: this.size + 'px',
-        backgroundImage: 'url(' + this.backgroundImageFn(this.set, this.sheetSize) + ')',
-        backgroundSize: (100 * SHEET_COLUMNS) + '%',
-        backgroundPosition: this.getPosition()
+      } else if (this.hasEmoji) {
+        return {
+          display: 'inline-block',
+          width: this.size + 'px',
+          height: this.size + 'px',
+          backgroundImage: 'url(' + this.backgroundImageFn(this.set, this.sheetSize) + ')',
+          backgroundSize: (100 * SHEET_COLUMNS) + '%',
+          backgroundPosition: this.getPosition()
+        }
+      } else {
+        return null
       }
     },
     customEmojiStyles() {

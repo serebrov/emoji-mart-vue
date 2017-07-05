@@ -26,7 +26,8 @@ export default {
   },
   computed: {
     skinTones() {
-      return Array(6).fill().map((_, i) => i + 1)
+      // Use Array.prototype.fill() when it is more widely supported.
+      return [...Array(6)].map((_, i) => i + 1)
     }
   },
   methods: {
