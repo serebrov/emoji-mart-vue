@@ -49,7 +49,16 @@ function getSanitizedData() {
   return sanitize(getData(...arguments))
 }
 
-function getData(emoji, skin, set) {
+function cloneEmoji(emoji) {
+  if (typeof emoji === 'string') {
+    return emoji;
+  }
+
+  return Object.assign({}, emoji);
+}
+
+function getData(_emoji, skin, set) {
+  var emoji = cloneEmoji(_emoji)
   var emojiData = {}
 
   if (typeof emoji == 'string') {
