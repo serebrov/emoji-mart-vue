@@ -1,7 +1,7 @@
 <template>
 
 <div class="emoji-mart" :style="{ width: calculateWidth + 'px' }">
-  <div class="emoji-mart-bar">
+  <div class="emoji-mart-bar" v-if="!hideCategoriesBar">
     <anchors
       :i18n="i18n"
       :color="color"
@@ -12,6 +12,7 @@
   </div>
 
   <search
+    v-if="!hideSearchBar"
     ref="search"
     :i18n="i18n"
     :emojis-to-show-filter="emojisToShowFilter"
@@ -48,7 +49,7 @@
     </category>
   </div>
 
-  <div class="emoji-mart-bar">
+  <div class="emoji-mart-bar" v-if="!hidePreviewBar">
     <preview
       :title="title"
       :emoji="previewEmoji"
@@ -187,6 +188,18 @@ export default {
       default() {
         return I18N
       }
+    },
+    hidePreviewBar: {
+      type: Boolean,
+      default: false
+    },
+    hideSearchBar: {
+      type: Boolean,
+      default: false
+    },
+    hideCategoriesBar: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
