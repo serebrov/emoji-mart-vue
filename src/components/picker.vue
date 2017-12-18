@@ -296,11 +296,11 @@ export default {
     this.categories.push(CUSTOM_CATEGORY)
 
     this.categories[0].first = true
-    this.activeCategory = this.categories[0]
+    this.activeCategory = this.filteredCategories[0]
   },
   methods: {
     onScroll() {
-      if (!this.waitingForPaint) {
+      if (this.infiniteScroll && !this.waitingForPaint) {
         this.waitingForPaint = true
         window.requestAnimationFrame(this.onScrollPaint.bind(this))
       }
