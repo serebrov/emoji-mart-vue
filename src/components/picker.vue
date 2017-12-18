@@ -1,7 +1,7 @@
 <template>
 
 <div class="emoji-mart" :style="{ width: calculateWidth + 'px' }">
-  <div class="emoji-mart-bar">
+  <div class="emoji-mart-bar" v-if="!hideCategoriesBar">
     <anchors
       :i18n="i18n"
       :color="color"
@@ -12,6 +12,7 @@
   </div>
 
   <search
+    v-if="!hideSearchBar"
     ref="search"
     :i18n="i18n"
     :emojis-to-show-filter="emojisToShowFilter"
@@ -33,22 +34,37 @@
       :custom="customEmojis"
       :emoji-props="emojiProps">
     </category>
+    <template v-if="infiniteScroll">
+      <category
+        v-for="category in filteredCategories"
+        v-show="!searchEmojis"
+        ref="categories"
+        :key="category.name"
+        :i18n="i18n"
+        :emojis-to-show-filter="emojisToShowFilter"
+        :name="category.name"
+        :emojis="category.emojis"
+        :native="native"
+        :custom="customEmojis"
+        :emoji-props="emojiProps">
+      </category>
+    </template>
     <category
-      v-for="category in filteredCategories"
+      v-else-if="activeCategory"
       v-show="!searchEmojis"
       ref="categories"
-      :key="category.name"
+      :key="activeCategory.name"
       :i18n="i18n"
       :emojis-to-show-filter="emojisToShowFilter"
-      :name="category.name"
-      :emojis="category.emojis"
+      :name="activeCategory.name"
+      :emojis="activeCategory.emojis"
       :native="native"
       :custom="customEmojis"
       :emoji-props="emojiProps">
     </category>
   </div>
 
-  <div class="emoji-mart-bar">
+  <div class="emoji-mart-bar" v-if="!hidePreviewBar">
     <preview
       :title="title"
       :emoji="previewEmoji"
@@ -187,6 +203,22 @@ export default {
       default() {
         return I18N
       }
+    },
+    hidePreviewBar: {
+      type: Boolean,
+      default: false
+    },
+    hideSearchBar: {
+      type: Boolean,
+      default: false
+    },
+    hideCategoriesBar: {
+      type: Boolean,
+      default: false
+    },
+    infiniteScroll: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -264,11 +296,11 @@ export default {
     this.categories.push(CUSTOM_CATEGORY)
 
     this.categories[0].first = true
-    this.activeCategory = this.categories[0]
+    this.activeCategory = this.filteredCategories[0]
   },
   methods: {
     onScroll() {
-      if (!this.waitingForPaint) {
+      if (this.infiniteScroll && !this.waitingForPaint) {
         this.waitingForPaint = true
         window.requestAnimationFrame(this.onScrollPaint.bind(this))
       }
@@ -310,10 +342,12 @@ export default {
       if (this.searchEmojis) {
         this.onSearch(null)
         this.$refs.search.clear()
-        
+
         this.$nextTick(scrollToComponent)
-      } else {
+      } else if (this.infiniteScroll) {
         scrollToComponent()
+      } else {
+        this.activeCategory = this.categories[i];
       }
     },
     onSearch(emojis) {
