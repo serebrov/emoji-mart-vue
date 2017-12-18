@@ -36,6 +36,7 @@
   set<syntax type="operator">=</syntax><syntax type="string">"{{ activeSet }}"</syntax>
   :custom<syntax type="operator">=</syntax>"<syntax type="variable">[&hellip;]</syntax>"
   :auto-focus<syntax type="operator">=</syntax>"<syntax type="variable">{{ autoFocus ? 'true' : 'false' }}</syntax>" <input type="checkbox" v-model="autoFocus" />
+  :infinite-scroll<syntax type="operator">=</syntax>"<syntax type="variable">{{ infiniteScroll ? 'true' : 'false' }}</syntax>" <input type="checkbox" v-model="infiniteScroll" />
   :include<syntax type="operator">=</syntax>"<syntax type="variable">[</syntax>
   <div class="categories">
     <label v-for="category in categories">
@@ -63,6 +64,7 @@
     :set="activeSet"
     :custom="custom"
     :auto-focus="autoFocus"
+    :infinite-scroll="infiniteScroll"
     :include="include"
     :exclude="exclude"
     @click="onClick">
@@ -173,6 +175,7 @@ export default {
       custom: CUSTOM_EMOJIS,
       currentEmoji: { id: '+1' },
       autoFocus: false,
+      infiniteScroll: true,
       include: [],
       exclude: [],
       hidden: false,
