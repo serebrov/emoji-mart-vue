@@ -46,7 +46,7 @@ module.exports = {
         include: [
           path.resolve('src/svgs'),
         ],
-      },
+      }
     ],
   },
 
