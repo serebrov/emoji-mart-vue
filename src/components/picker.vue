@@ -34,15 +34,30 @@
       :custom="customEmojis"
       :emoji-props="emojiProps">
     </category>
+    <template v-if="infiniteScroll">
+      <category
+        v-for="category in filteredCategories"
+        v-show="!searchEmojis"
+        ref="categories"
+        :key="category.name"
+        :i18n="i18n"
+        :emojis-to-show-filter="emojisToShowFilter"
+        :name="category.name"
+        :emojis="category.emojis"
+        :native="native"
+        :custom="customEmojis"
+        :emoji-props="emojiProps">
+      </category>
+    </template>
     <category
-      v-for="category in filteredCategories"
+      v-else-if="activeCategory"
       v-show="!searchEmojis"
       ref="categories"
-      :key="category.name"
+      :key="activeCategory.name"
       :i18n="i18n"
       :emojis-to-show-filter="emojisToShowFilter"
-      :name="category.name"
-      :emojis="category.emojis"
+      :name="activeCategory.name"
+      :emojis="activeCategory.emojis"
       :native="native"
       :custom="customEmojis"
       :emoji-props="emojiProps">
@@ -200,6 +215,10 @@ export default {
     hideCategoriesBar: {
       type: Boolean,
       default: false
+    },
+    infiniteScroll: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -323,10 +342,12 @@ export default {
       if (this.searchEmojis) {
         this.onSearch(null)
         this.$refs.search.clear()
-        
+
         this.$nextTick(scrollToComponent)
-      } else {
+      } else if (this.infiniteScroll) {
         scrollToComponent()
+      } else {
+        this.activeCategory = this.categories[i];
       }
     },
     onSearch(emojis) {
