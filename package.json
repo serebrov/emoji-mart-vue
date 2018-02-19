@@ -2,8 +2,7 @@
   "name": "emoji-mart-vue",
   "version": "2.4.2",
   "description": "Customizable Slack-like emoji picker for VueJS",
-  "main": "dist/index.js",
-  "module": "dist-es/index.js",
+  "main": "dist/emoji-mart.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:jm-david/emoji-mart-vue.git"
