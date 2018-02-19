@@ -1,16 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class Skins extends React.Component {
+export default class Skins extends React.PureComponent {
   constructor(props) {
     super(props)
 
     this.state = {
       opened: false,
     }
+
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(skin) {
+  handleClick(e) {
+    var skin = e.currentTarget.getAttribute('data-skin')
     var { onChange } = this.props
 
     if (!this.state.opened) {
@@ -24,25 +27,42 @@ export default class Skins extends React.Component {
   }
 
   render() {
-    var { skin } = this.props,
-        { opened } = this.state
+    const { skin } = this.props
+    const { opened } = this.state
 
-    return <div>
-      <div className={`emoji-mart-skin-swatches ${opened ? 'emoji-mart-skin-swatches-opened' : ''}`}>
-        {/* Use Array.prototype.fill() when it is more widely supported. */}
-        {[...Array(6)].map((_, i) => {
-          var skinTone = i + 1,
-              selected = skinTone == skin
+    const skinToneNodes = []
 
-          return <span key={`skin-tone-${skinTone}`} className={`emoji-mart-skin-swatch ${selected ? 'emoji-mart-skin-swatch-selected' : ''}`}>
-            <span
-              onClick={() => this.handleClick(skinTone)}
-              className={`emoji-mart-skin emoji-mart-skin-tone-${skinTone}`}>
-            </span>
-          </span>
-        })}
+    for (let i = 0; i < 6; i++) {
+      const skinTone = i + 1
+      const selected = skinTone == skin
+
+      skinToneNodes.push(
+        <span
+          key={`skin-tone-${skinTone}`}
+          className={`emoji-mart-skin-swatch ${selected
+            ? 'emoji-mart-skin-swatch-selected'
+            : ''}`}
+        >
+          <span
+            onClick={this.handleClick}
+            data-skin={skinTone}
+            className={`emoji-mart-skin emoji-mart-skin-tone-${skinTone}`}
+          />
+        </span>
+      )
+    }
+
+    return (
+      <div>
+        <div
+          className={`emoji-mart-skin-swatches ${opened
+            ? 'emoji-mart-skin-swatches-opened'
+            : ''}`}
+        >
+          {skinToneNodes}
+        </div>
       </div>
-    </div>
+    )
   }
 }
 
@@ -52,5 +72,5 @@ Skins.propTypes = {
 }
 
 Skins.defaultProps = {
-  onChange: (() => {}),
+  onChange: () => {},
 }

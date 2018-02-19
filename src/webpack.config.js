@@ -41,17 +41,17 @@ module.exports = {
         ]
       },
       {
-        test: /\.svg$/,
-        loader: 'svg-inline?removeSVGTagAttrs=false',
-        include: [
-          path.resolve('src/svgs'),
-        ],
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
       }
     ],
   },
 
   resolve: {
-    extensions: ['', '.js', '.vue'],
+    extensions: ['.js', '.vue'],
   },
 
   plugins: [

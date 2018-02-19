@@ -1,23 +1,23 @@
 <template>
 
 <div class="emoji-mart-anchors">
-  <template v-for="category in categories">
-    <span
-      :class="{ 'emoji-mart-anchor': true, 'emoji-mart-anchor-selected': category.name == activeCategory.name }"
-      :style="{ 'color': (category.name == activeCategory.name ? color : '') }"
-      :title="i18n.categories[category.name.toLowerCase()]"
-      @click="$emit('click', category)">
-      <i v-html="assets.svgs[category.name]"></i>
-      <span class="emoji-mart-anchor-bar" :style="{ backgroundColor: color }"></span>
-    </span>
-  </template>
+  <span
+    v-for="category in categories"
+    :key="category.id"
+    :class="{ 'emoji-mart-anchor': true, 'emoji-mart-anchor-selected': category.id == activeCategory.id }"
+    :style="{ 'color': (category.id == activeCategory.id ? color : '') }"
+    :title="i18n.categories[category.id]"
+    @click="$emit('click', category)">
+    <svg v-html="svgs[category.id]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"></svg>
+    <span class="emoji-mart-anchor-bar" :style="{ backgroundColor: color }"></span>
+  </span>
 </div>
 
 </template>
 
 <script>
 
-import * as svgs from '../svgs'
+import svgs from '../svgs'
 
 export default {
   props: {
@@ -39,10 +39,8 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      assets: { svgs }
-    }
+  created() {
+    this.svgs = svgs
   }
 }
 
@@ -52,6 +50,7 @@ export default {
 
 .emoji-mart-anchors {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   padding: 0 6px;
   color: #858585;
@@ -60,7 +59,8 @@ export default {
 
 .emoji-mart-anchor {
   position: relative;
-  flex: 1;
+  display: block;
+  flex: 1 1 auto;
   text-align: center;
   padding: 12px 4px;
   overflow: hidden;

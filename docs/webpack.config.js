@@ -2,22 +2,28 @@ var path = require('path')
 var pack = require('../package.json')
 var webpack = require('webpack')
 
-module.exports = {
-  entry: path.resolve('example/index.js'),
+var PROD = process.env.NODE_ENV === 'production'
+var TEST = process.env.NODE_ENV === 'test'
+
+var config = {
+  entry: path.resolve('docs/index.js'),
   output: {
-    path: path.resolve('example'),
+    path: path.resolve('docs'),
     filename: 'bundle.js',
+    library: 'EmojiMart',
+    libraryTarget: 'umd',
   },
 
+  externals: [],
+
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [
           path.resolve('src'),
-          path.resolve('data'),
-          path.resolve('example'),
+          path.resolve('docs'),
         ],
       },
       {
@@ -25,21 +31,21 @@ module.exports = {
         loader: 'vue-loader',
         include: [
           path.resolve('src'),
-          path.resolve('example'),
+          path.resolve('docs'),
         ]
       },
       {
-        test: /\.svg$/,
-        loader: 'svg-inline?removeSVGTagAttrs=false',
-        include: [
-          path.resolve('src/svgs')
-        ]
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
       }
     ],
   },
 
   resolve: {
-    extensions: ['', '.js', '.vue'],
+    extensions: ['.js', '.vue'],
   },
 
   plugins: [
@@ -47,4 +53,8 @@ module.exports = {
       EMOJI_DATASOURCE_VERSION: `'${pack.devDependencies['emoji-datasource']}'`,
     }),
   ],
+
+  bail: true,
 }
+
+module.exports = config

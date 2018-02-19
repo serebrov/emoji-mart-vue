@@ -1,11 +1,9 @@
 <template>
 
 <div :class="{ 'emoji-mart-skin-swatches': true, 'emoji-mart-skin-swatches-opened': opened }">
-  <template v-for="skinTone in skinTones">
-    <span :class="{ 'emoji-mart-skin-swatch': true, 'emoji-mart-skin-swatch-selected': skin == skinTone }">
-      <span :class="'emoji-mart-skin emoji-mart-skin-tone-' + skinTone" @click="onClick(skinTone)"></span>
-    </span>
-  </template>
+  <span v-for="skinTone in 6" :key="skinTone" :class="{ 'emoji-mart-skin-swatch': true, 'emoji-mart-skin-swatch-selected': skin == skinTone }">
+    <span :class="'emoji-mart-skin emoji-mart-skin-tone-' + skinTone" @click="onClick(skinTone)"></span>
+  </span>
 </div>
 
 </template>
@@ -24,18 +22,12 @@ export default {
       opened: false
     }
   },
-  computed: {
-    skinTones() {
-      // Use Array.prototype.fill() when it is more widely supported.
-      return [...Array(6)].map((_, i) => i + 1)
-    }
-  },
   methods: {
     onClick(skinTone) {
       if (this.opened) {
-        this.$nextTick(() => {
+        if (skinTone != this.skin) {
           this.$emit('change', skinTone)
-        })
+        }
       }
 
       this.opened = !this.opened

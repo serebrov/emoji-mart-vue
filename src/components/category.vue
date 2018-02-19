@@ -2,11 +2,11 @@
 
 <div :class="{ 'emoji-mart-category': true, 'emoji-mart-no-results': !hasResults }" v-if="isVisible && (isSearch || hasResults)">
   <div class="emoji-mart-category-label">
-    <span>{{ i18n.categories[name.toLowerCase()] }}</span>
+    <span>{{ i18n.categories[id] }}</span>
   </div>
 
   <emoji
-    v-for="emoji in filteredEmojis"
+    v-for="emoji in emojis"
     :key="emoji.id || emoji"
     :emoji="emoji"
     :native="emojiProps.native"
@@ -15,11 +15,12 @@
     :size="emojiProps.size"
     :sheet-size="emojiProps.sheetSize"
     :force-size="emojiProps.forceSize"
+    :tooltip="emojiProps.tooltip"
     :background-image-fn="emojiProps.backgroundImageFn"
     @click="emojiProps.onClick"
     @mouseenter="emojiProps.onEnter"
-    @mouseleave="emojiProps.onLeave">
-  </emoji>
+    @mouseleave="emojiProps.onLeave"
+  />
 
   <div v-show="!hasResults">
     <emoji
@@ -30,8 +31,7 @@
       :set="emojiProps.set"
       :sheet-size="emojiProps.sheetSize"
       :background-image-fn="emojiProps.backgroundImageFn"
-      >
-    </emoji>
+    />
     <div class="emoji-mart-no-results-label">{{ i18n.notfound }}</div>
   </div>
 </div>
@@ -40,8 +40,9 @@
 
 <script>
 
-import data from '../../data'
 import Emoji from './emoji'
+import frequently from '../utils/frequently'
+import { getData } from '../utils'
 
 export default {
   props: {
@@ -49,19 +50,16 @@ export default {
       type: Object,
       required: true
     },
-    emojisToShowFilter: {
-      type: Function
-    },
-    emojis: {
-      type: Array
-    },
-    hasStickyPosition: {
-      type: Boolean,
-      default: true
+    id: {
+      type: String,
+      required: true
     },
     name: {
       type: String,
       required: true
+    },
+    emojis: {
+      type: Array
     },
     emojiProps: {
       type: Object,
@@ -69,15 +67,6 @@ export default {
     }
   },
   computed: {
-    filteredEmojis() {
-      if (this.emojisToShowFilter) {
-        return this.emojis.filter((emoji) => {
-          return this.emojisToShowFilter(data.emojis[emoji] || emoji)
-        })
-      }
-
-      return this.emojis
-    },
     isVisible() {
       return !!this.emojis
     },
@@ -85,7 +74,7 @@ export default {
       return this.name == 'Search'
     },
     hasResults() {
-      return this.filteredEmojis.length > 0
+      return this.emojis.length > 0
     }
   },
   components: {

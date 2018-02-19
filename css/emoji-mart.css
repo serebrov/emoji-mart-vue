@@ -34,6 +34,7 @@
 
 .emoji-mart-anchors {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   padding: 0 6px;
   color: #858585;
@@ -42,7 +43,8 @@
 
 .emoji-mart-anchor {
   position: relative;
-  flex: 1;
+  display: block;
+  flex: 1 1 auto;
   text-align: center;
   padding: 12px 4px;
   overflow: hidden;
@@ -79,6 +81,7 @@
   overflow-y: scroll;
   height: 270px;
   padding: 0 6px 6px 6px;
+  will-change: transform; /* avoids "repaints on scroll" in mobile Chrome */
 }
 
 .emoji-mart-search {

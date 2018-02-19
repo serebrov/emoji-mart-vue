@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Emoji, Skins } from '.'
 import { getData } from '../utils'
 
-export default class Preview extends React.Component {
+export default class Preview extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = { emoji: null }
@@ -12,65 +12,66 @@ export default class Preview extends React.Component {
 
   render() {
     var { emoji } = this.state,
-        { emojiProps, skinsProps, title, emoji: idleEmoji } = this.props
+      { emojiProps, skinsProps, title, emoji: idleEmoji } = this.props
 
     if (emoji) {
       var emojiData = getData(emoji),
-          { emoticons } = emojiData,
-          knownEmoticons = [],
-          listedEmoticons = []
+        { emoticons = [] } = emojiData,
+        knownEmoticons = [],
+        listedEmoticons = []
 
-      for (let emoticon of emoticons) {
-        if (knownEmoticons.indexOf(emoticon.toLowerCase()) == -1) {
-          knownEmoticons.push(emoticon.toLowerCase())
-          listedEmoticons.push(emoticon)
+      emoticons.forEach(emoticon => {
+        if (knownEmoticons.indexOf(emoticon.toLowerCase()) >= 0) {
+          return
         }
-      }
 
-      return <div className='emoji-mart-preview'>
-        <div className='emoji-mart-preview-emoji'>
-          {Emoji({
-            key: emoji.id,
-            emoji: emoji,
-            ...emojiProps,
-          })}
-        </div>
+        knownEmoticons.push(emoticon.toLowerCase())
+        listedEmoticons.push(emoticon)
+      })
 
-        <div className='emoji-mart-preview-data'>
-          <div className='emoji-mart-preview-name'>{emoji.name}</div>
-          <div className='emoji-mart-preview-shortnames'>
-            {emojiData.short_names.map((short_name) =>
-              <span key={short_name} className='emoji-mart-preview-shortname'>:{short_name}:</span>
-            )}
+      return (
+        <div className="emoji-mart-preview">
+          <div className="emoji-mart-preview-emoji">
+            {Emoji({ key: emoji.id, emoji: emoji, ...emojiProps })}
           </div>
-          <div className='emoji-mart-preview-emoticons'>
-            {listedEmoticons.map((emoticon) =>
-              <span key={emoticon} className='emoji-mart-preview-emoticon'>{emoticon}</span>
-            )}
+
+          <div className="emoji-mart-preview-data">
+            <div className="emoji-mart-preview-name">{emoji.name}</div>
+            <div className="emoji-mart-preview-shortnames">
+              {emojiData.short_names.map(short_name => (
+                <span key={short_name} className="emoji-mart-preview-shortname">
+                  :{short_name}:
+                </span>
+              ))}
+            </div>
+            <div className="emoji-mart-preview-emoticons">
+              {listedEmoticons.map(emoticon => (
+                <span key={emoticon} className="emoji-mart-preview-emoticon">
+                  {emoticon}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )
     } else {
-      return <div className='emoji-mart-preview'>
-        <div className='emoji-mart-preview-emoji'>
-          {idleEmoji && idleEmoji.length && Emoji({
-            emoji: idleEmoji,
-            ...emojiProps,
-          })}
-        </div>
+      return (
+        <div className="emoji-mart-preview">
+          <div className="emoji-mart-preview-emoji">
+            {idleEmoji &&
+              idleEmoji.length &&
+              Emoji({ emoji: idleEmoji, ...emojiProps })}
+          </div>
 
-        <div className='emoji-mart-preview-data'>
-          <span className='emoji-mart-title-label'>
-            {title}
-          </span>
-        </div>
+          <div className="emoji-mart-preview-data">
+            <span className="emoji-mart-title-label">{title}</span>
+          </div>
 
-        <div className='emoji-mart-preview-skins'>
-          <Skins
-            {...skinsProps}
-          />
+          <div className="emoji-mart-preview-skins">
+            <Skins {...skinsProps} />
+          </div>
         </div>
-      </div>
+      )
     }
   }
 }

@@ -2,16 +2,26 @@ var fs = require('fs'),
     emojiData = require('emoji-datasource'),
     emojiLib = require('emojilib'),
     inflection = require('inflection'),
-    mkdirp = require('mkdirp'),
-    buildSearch = require('../src/utils/build-search')
+    mkdirp = require('mkdirp')
 
-var categories = ['People', 'Nature', 'Foods', 'Activity', 'Places', 'Objects', 'Symbols', 'Flags'],
-    data = { categories: [], emojis: {}, skins: {}, short_names: {} },
+var data = { categories: [], emojis: {}, skins: {}, short_names: {} },
     categoriesIndex = {}
 
+var categories = [
+  ['Smileys & People', 'people'],
+  ['Animals & Nature', 'nature'],
+  ['Food & Drink', 'foods'],
+  ['Activities', 'activity'],
+  ['Travel & Places', 'places'],
+  ['Objects', 'objects'],
+  ['Symbols', 'symbols'],
+  ['Flags', 'flags'],
+]
+
 categories.forEach((category, i) => {
-  data.categories[i] = { name: category, emojis: [] }
-  categoriesIndex[category] = i
+  let [name, id] = category
+  data.categories[i] = { id: id, name: name, emojis: [] }
+  categoriesIndex[name] = i
 })
 
 emojiData.sort((a, b) => {
@@ -33,10 +43,6 @@ emojiData.forEach((datum) => {
   datum.name || (datum.name = datum.short_name.replace(/\-/g, ' '))
   datum.name = inflection.titleize(datum.name || '')
 
-  if (datum.category == 'Flags') {
-    datum.name = datum.name.replace(/\s(\w+)$/, (letters) => letters.toUpperCase())
-  }
-
   if (!datum.name) {
     throw new Error('“' + datum.short_name + '” doesn’t have a name')
   }
@@ -46,17 +52,8 @@ emojiData.forEach((datum) => {
   delete datum.texts
 
   if (emojiLib.lib[datum.short_name]) {
-    keywords = emojiLib.lib[datum.short_name].keywords
+    datum.keywords = emojiLib.lib[datum.short_name].keywords
   }
-
-  datum.search = buildSearch({
-    short_names: datum.short_names,
-    name: datum.name,
-    keywords,
-    emoticons: datum.emoticons
-  })
-
-  datum.search = datum.search.join(',')
 
   if (datum.category == 'Skin Tones') {
     data.skins[datum.short_name] = datum
@@ -71,6 +68,12 @@ emojiData.forEach((datum) => {
     data.short_names[short_name] = datum.short_name
   })
 
+  datum.short_names = datum.short_names.filter(i => i !== datum.short_name)
+  datum.sheet = [datum.sheet_x, datum.sheet_y]
+
+  if (datum.text === '') delete datum.text
+  if (datum.added_in === '6.0') delete datum.added_in
+
   delete datum.docomo
   delete datum.au
   delete datum.softbank
@@ -79,6 +82,8 @@ emojiData.forEach((datum) => {
   delete datum.short_name
   delete datum.category
   delete datum.sort_order
+  delete datum.sheet_x
+  delete datum.sheet_y
 
   for (let key in datum) {
     let value = datum[key]
@@ -90,13 +95,13 @@ emojiData.forEach((datum) => {
 })
 
 var flags = data.categories[categoriesIndex['Flags']]
-flags.emojis.sort()
+flags.emojis = flags.emojis.filter((flag) => {
+  // Until browsers support Flag UN
+  if (flag == 'flag-un') return
+  return true
+}).sort()
 
-mkdirp('data', (err) => {
+const stringified = JSON.stringify(data).replace(/\"([A-Za-z_]+)\":/g, '$1:')
+fs.writeFile('src/data/data.js', `export default ${stringified}`, (err) => {
   if (err) throw err
-
-  const stringifiedData = JSON.stringify(data).replace(/\"([A-Za-z_]+)\":/g, '$1:')
-  fs.writeFile('data/index.js', `export default ${stringifiedData}`, (err) => {
-    if (err) throw err
-  })
 })

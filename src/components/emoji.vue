@@ -1,18 +1,18 @@
 <template>
 
 <span class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
-  <span class="emoji-native" v-if="isNative && !isCustom" :style="this.nativeEmojiStyles">{{ nativeEmoji }}</span>
-  <span class="emoji-fallback" v-else :style="this.fallbackEmojiStyles"></span>
+  <span v-if="isNative && !isCustom" class="emoji-native" :title="title" :style="nativeEmojiStyles">{{ nativeEmoji }}</span>
+  <span v-else class="emoji-fallback" :title="title" :style="fallbackEmojiStyles"></span>
 </span>
 
 </template>
 
 <script>
 
-import data from '../../data'
+import data from '../data'
 import { getData, getSanitizedData, unifiedToNative } from '../utils'
 
-const SHEET_COLUMNS = 49
+const SHEET_COLUMNS = 52
 
 export default {
   props: {
@@ -27,6 +27,10 @@ export default {
       default: false
     },
     forceSize: {
+      type: Boolean,
+      default: false
+    },
+    tooltip: {
       type: Boolean,
       default: false
     },
@@ -109,6 +113,9 @@ export default {
         backgroundImage: 'url(' + this.data.imageUrl + ')',
         backgroundSize: '100%',
       }
+    },
+    title() {
+      return this.tooltip ? this.data.short_names[0] : null
     }
   },
   methods: {

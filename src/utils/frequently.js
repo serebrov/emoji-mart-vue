@@ -19,10 +19,16 @@ const DEFAULTS = [
   'poop',
 ]
 
-let frequently = store.get('frequently')
+let frequently, initialized
 let defaults = {}
 
+function init() {
+  initialized = true
+  frequently = store.get('frequently')
+}
+
 function add(emoji) {
+  if (!initialized) init()
   var { id } = emoji
 
   frequently || (frequently = defaults)
@@ -34,20 +40,35 @@ function add(emoji) {
 }
 
 function get(perLine) {
+  if (!initialized) init()
   if (!frequently) {
     defaults = {}
 
-    // Use Array.prototype.fill() when it is more widely supported.
-    return [...Array(perLine)].map((_, i) => {
+    const result = []
+
+    for (let i = 0; i < perLine; i++) {
       defaults[DEFAULTS[i]] = perLine - i
-      return DEFAULTS[i]
-    })
+      result.push(DEFAULTS[i])
+    }
+
+    return result
   }
 
-  var quantity = perLine * 4,
-      sorted = Object.keys(frequently).sort((a, b) => frequently[a] - frequently[b]).reverse(),
-      sliced = sorted.slice(0, quantity),
-      last = store.get('last')
+  const quantity = perLine * 4
+  const frequentlyKeys = []
+
+  for (let key in frequently) {
+    if (frequently.hasOwnProperty(key)) {
+      frequentlyKeys.push(key)
+    }
+  }
+
+  const sorted = frequentlyKeys
+    .sort((a, b) => frequently[a] - frequently[b])
+    .reverse()
+  const sliced = sorted.slice(0, quantity)
+
+  const last = store.get('last')
 
   if (last && sliced.indexOf(last) == -1) {
     sliced.pop()

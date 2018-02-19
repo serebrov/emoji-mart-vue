@@ -1,4 +1,4 @@
-module.exports = data => {
+export default data => {
   const search = []
 
   var addToSearch = (strings, split) => {
@@ -6,8 +6,8 @@ module.exports = data => {
       return
     }
 
-    (Array.isArray(strings) ? strings : [strings]).forEach((string) => {
-      (split ? string.split(/[-|_|\s]+/) : [string]).forEach((s) => {
+    ;(Array.isArray(strings) ? strings : [strings]).forEach(string => {
+      ;(split ? string.split(/[-|_|\s]+/) : [string]).forEach(s => {
         s = s.toLowerCase()
 
         if (search.indexOf(s) == -1) {
@@ -22,5 +22,5 @@ module.exports = data => {
   addToSearch(data.keywords, false)
   addToSearch(data.emoticons, false)
 
-  return search
+  return search.join(',')
 }

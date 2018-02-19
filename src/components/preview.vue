@@ -11,17 +11,17 @@
         :size="38"
         :sheet-size="emojiProps.sheetSize"
         :force-size="emojiProps.forceSize"
-        :background-image-fn="emojiProps.backgroundImageFn">
-      </emoji>
+        :background-image-fn="emojiProps.backgroundImageFn"
+      />
     </div>
 
     <div class="emoji-mart-preview-data">
       <div class="emoji-mart-preview-name">{{ emoji.name }}</div>
       <div class="emoji-mart-preview-shortnames">
-        <span class="emoji-mart-preview-shortname" v-for="name in emojiShortNames">:{{ name }}:</span>
+        <span v-for="shortName in emojiShortNames" :key="shortName" class="emoji-mart-preview-shortname">:{{ shortName }}:</span>
       </div>
       <div class="emoji-mart-preview-emoticons">
-        <span class="emoji-mart-preview-emoticon" v-for="emoticon in emojiEmoticons">{{ emoticon }}</span>
+        <span v-for="emoticon in emojiEmoticons" :key="emoticon" class="emoji-mart-preview-emoticon">{{ emoticon }}</span>
       </div>
     </div>
   </template>
@@ -36,8 +36,8 @@
         :size="38"
         :sheet-size="emojiProps.sheetSize"
         :force-size="emojiProps.forceSize"
-        :background-image-fn="emojiProps.backgroundImageFn">
-      </emoji>
+        :background-image-fn="emojiProps.backgroundImageFn"
+      />
     </div>
 
     <div class="emoji-mart-preview-data">
@@ -45,7 +45,7 @@
     </div>
 
     <div class="emoji-mart-preview-skins">
-      <skins :skin="skinProps.skin" @change="skinProps.onChange"></skins>
+      <skins :skin="skinProps.skin" @change="skinProps.onChange" />
     </div>
   </template>
 </div>

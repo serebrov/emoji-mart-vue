@@ -1,8 +1,9 @@
 {
   "name": "emoji-mart-vue",
-  "version": "1.0.4",
+  "version": "2.4.2",
   "description": "Customizable Slack-like emoji picker for VueJS",
-  "main": "dist/emoji-mart.js",
+  "main": "dist/index.js",
+  "module": "dist-es/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:jm-david/emoji-mart-vue.git"
@@ -24,14 +25,18 @@
     "vue": "^2.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "6.7.2",
-    "babel-loader": "6.2.4",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-module-resolver": "2.7.1",
+    "babel-plugin-transform-define": "^1.3.0",
     "babel-plugin-transform-es2015-destructuring": "6.9.0",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "6.6.0",
+    "babel-runtime": "^6.26.0",
     "css-loader": "^0.28.0",
-    "emoji-datasource": "^3.0.0",
+    "emoji-datasource": "4.0.2",
     "emojilib": "^2.2.1",
     "inflection": "1.10.0",
     "jasmine-core": "^2.5.2",
@@ -39,27 +44,36 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.1.0",
-    "karma-webpack": "^2.0.2",
+    "karma-webpack": "^2.0.4",
     "mkdirp": "0.5.1",
+    "prettier": "1.7.4",
     "rimraf": "2.5.2",
-    "svg-inline-loader": "0.4.1",
-    "vue": "^2.2.6",
-    "vue-loader": "^11.3.4",
-    "vue-template-compiler": "^2.2.6",
-    "webpack": "1.12.14"
+    "size-limit": "^0.11.4",
+    "url-loader": "^0.5.8",
+    "vue": "^2.5.2",
+    "vue-loader": "^13.3.0",
+    "vue-style-loader": "^3.0.1",
+    "vue-template-compiler": "^2.5.2",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
   },
   "scripts": {
-    "clean": "rimraf data/ dist/",
+    "clean": "rm -rf dist/ src/data/data.js",
     "build:data": "node scripts/build-data",
-    "build:example": "node scripts/build-example",
-    "build:dist": "node scripts/build-dist",
-    "build": "npm run build:data && npm run build:example && npm run build:dist",
-    "watch": "node scripts/watch",
-    "start": "npm run watch",
-    "react:clean": "rimraf node_modules/{react,react-dom,react-addons-test-utils}",
-    "react:14": "npm run react:clean && npm i react@^0.14 react-dom@^0.14 react-addons-test-utils@^0.14 --save-dev",
-    "react:15": "npm run react:clean && npm i react@^15 react-dom@^15 react-addons-test-utils@^15 --save-dev",
-    "test": "NODE_ENV=test ./node_modules/karma/bin/karma start",
-    "prepublish": "npm run clean && npm run build"
-  }
+    "build:dist": "webpack --config src/webpack.config.js",
+    "build:docs": "webpack --config docs/webpack.config.js",
+    "build": "npm run clean && npm run build:data && npm run build:dist",
+    "dev:docs": "webpack -w --config docs/webpack.config.js",
+    "start": "npm run dev:docs",
+    "stats": "webpack --config ./spec/webpack.config.js --json > spec/stats.json",
+    "test": "NODE_ENV=test karma start && size-limit",
+    "prepublishOnly": "npm run build",
+    "prettier": "prettier --no-semi --single-quote --trailing-comma es5 --write \"{src,spec}/**/*.js\""
+  },
+  "size-limit": [
+    {
+      "path": "dist/emoji-mart.js",
+      "limit": "80 KB"
+    }
+  ]
 }

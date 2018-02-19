@@ -1,7 +1,7 @@
 <template>
 
 <div class="emoji-mart-search">
-  <input type="text" :placeholder="i18n.search" @input="onInput">
+  <input type="text" :placeholder="i18n.search" v-model="value">
 </div>
 
 </template>
@@ -37,23 +37,34 @@ export default {
       type: Array
     }
   },
-  methods: {
-    onInput(e) {
-      this.$emit('search', emojiIndex.search(e.target.value, {
+  data() {
+    return {
+      value: ''
+    }
+  },
+  watch: {
+    value() {
+      let emojis = emojiIndex.search(this.value, {
         emojisToShowFilter: this.emojisToShowFilter,
         maxResults: this.maxResults,
         include: this.include,
         exclude: this.exclude,
         custom: this.custom
-      }))
-    },
+      })
+
+      this.$emit('search', emojis)
+    }
+  },
+  methods: {
     clear() {
-      this.$el.value = ''
+      this.value = ''
     }
   },
   mounted() {
+    let $input = this.$el.querySelector('input')
+
     if (this.autoFocus) {
-      this.$el.focus()
+      $input.focus()
     }
   }
 }
