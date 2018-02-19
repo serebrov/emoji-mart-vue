@@ -1,8 +1,9 @@
 <template>
 
 <span class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
-  <span v-if="isNative && !isCustom" class="emoji-native" :title="title" :style="nativeEmojiStyles">{{ nativeEmoji }}</span>
-  <span v-else class="emoji-fallback" :title="title" :style="fallbackEmojiStyles"></span>
+  <span v-if="isNative && !isCustom" :title="title" :style="nativeEmojiStyles">{{ nativeEmoji }}</span>
+  <span v-else-if="hasEmoji" :title="title" :style="fallbackEmojiStyles"></span>
+  <span v-else>{{ fallbackEmoji }}</span>
 </span>
 
 </template>
@@ -33,6 +34,9 @@ export default {
     tooltip: {
       type: Boolean,
       default: false
+    },
+    fallback: {
+      type: Function
     },
     skin: {
       type: Number,
@@ -77,6 +81,9 @@ export default {
       } else {
         return ''
       }
+    },
+    fallbackEmoji() {
+      return this.fallback ? this.fallback(this.emoji) : null
     },
     nativeEmojiStyles() {
       let styles = { fontSize: this.size + 'px' }
