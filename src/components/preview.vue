@@ -164,7 +164,7 @@ export default {
 
 .emoji-mart-title-label {
   color: #999A9C;
-  font-size: 26px;
+  font-size: 21px;
   font-weight: 300;
 }
 

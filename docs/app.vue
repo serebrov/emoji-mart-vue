@@ -62,7 +62,7 @@ const CUSTOM_EMOJIS = [
 export default {
   data() {
     return {
-      activeSet: 'apple',
+      activeSet: 'native',
       emoji: 'point_up',
       title: 'Pick your emoji…',
       custom: CUSTOM_EMOJIS
