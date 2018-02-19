@@ -17,10 +17,10 @@ import { Picker } from 'emoji-mart-vue'
 ```
 
 ```html
-<picker set="emojione"></picker>
-<picker @click="addEmoji"></picker>
-<picker title="Pick your emoji…" emoji="point_up"></picker>
-<picker :i18n="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }"></picker>
+<picker set="emojione" />
+<picker @click="addEmoji" />
+<picker title="Pick your emoji…" emoji="point_up" />
+<picker :i18n="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }" />
 ```
 
 | Prop | Required | Default | Description |
@@ -42,6 +42,8 @@ import { Picker } from 'emoji-mart-vue'
 | **backgroundImageFn** | | ```((set, sheetSize) => …)``` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
 | **emojisToShowFilter** | | ```((emoji) => true)``` | A Fn to choose whether an emoji should be displayed or not |
 | **showPreview** | | `true` | Display preview section |
+| **showSearch** | | `true` | Display search section |
+| **showCategories** | | `true` | Display categories |
 | **emojiTooltip** | | `false` | Show emojis short name when hovering (title) |
 | **skin** | | `1` | Default skin color: `1, 2, 3, 4, 5, 6` |
 | **style** | | | Inline styles applied to the root element. Useful for positioning |
@@ -136,13 +138,13 @@ Sheets are served from [unpkg](https://unpkg.com), a global CDN that serves file
 
 ### Emoji
 ```js
-import { Emoji } from 'emoji-mart'
+import { Emoji } from 'emoji-mart-vue'
 ```
 
 ```html
-<emoji :emoji="{ id: 'santa', skin: 3 }" :size="16"></emoji>
-<emoji emoji=":santa::skin-tone-3:" :size="16"></emoji>
-<emoji emoji="santa" set="emojione" :size="16"></emoji>
+<emoji :emoji="{ id: 'santa', skin: 3 }" :size="16" />
+<emoji emoji=":santa::skin-tone-3:" :size="16" />
+<emoji emoji="santa" set="emojione" :size="16" />
 ```
 
 | Prop | Required | Default | Description |
@@ -167,35 +169,23 @@ Certain sets don’t support all emojis (i.e. Messenger & Facebook don’t suppo
 To have the component render `:shrug:` you would need to:
 
 ```js
-<Emoji
-  set={'messenger'}
-  emoji={'shrug'}
-  size={24}
-  fallback={(emoji) => {
-    return `:${emoji.short_names[0]}:`
-  }}
+function emojiFallback(emoji) {
+  return `:${emoji.short_names[0]}:`
+}
+
+<emoji
+  set="messenger"
+  emoji="shrug"
+  :size="24"
+  :fallback="emojiFallback"
 />
-```
-
-#### Using with `dangerouslySetInnerHTML`
-The Emoji component being a [functional component](https://medium.com/missive-app/45-faster-react-functional-components-now-3509a668e69f), you can call it as you would call any function instead of using JSX. Make sure you pass `html: true` for it to return an HTML string.
-
-```js
-<span dangerouslySetInnerHTML={{
-  __html: Emoji({
-    html: true
-    set: 'apple'
-    emoji: '+1'
-    size: 24
-  })
-}}></span>
 ```
 
 ## Custom emojis
 You can provide custom emojis which will show up in their own category.
 
 ```js
-import { Picker } from 'emoji-mart'
+import { Picker } from 'emoji-mart-vue'
 
 const customEmojis = [
   {
@@ -205,17 +195,17 @@ const customEmojis = [
     emoticons: [],
     keywords: ['github'],
     imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
-  },
+  }
 ]
 
-<Picker custom={customEmojis} />
+<picker :custom="customEmojis" />
 ```
 
 ## Headless search
 The `Picker` doesn’t have to be mounted for you to take advantage of the advanced search results.
 
 ```js
-import { emojiIndex } from 'emoji-mart'
+import { emojiIndex } from 'emoji-mart-vue'
 
 emojiIndex.search('christmas').map((o) => o.native)
 // => [🎄, 🎅🏼, 🔔, 🎁, ⛄️, ❄️]
@@ -225,7 +215,7 @@ emojiIndex.search('christmas').map((o) => o.native)
 By default EmojiMart will store user chosen skin and frequently used emojis in `localStorage`. That can however be overwritten should you want to store these in your own storage.
 
 ```js
-import { store } from 'emoji-mart'
+import { store } from 'emoji-mart-vue'
 
 store.setHandlers({
   getter: (key) => {
@@ -297,10 +287,3 @@ $ yarn storybook
 ## 🎩 Hat tips!
 Powered by [iamcal/emoji-data](https://github.com/iamcal/emoji-data) and inspired by [iamcal/js-emoji](https://github.com/iamcal/js-emoji).<br>
 🙌🏼  [Cal Henderson](https://github.com/iamcal).
-
-<br><br>
-<div align="center">
-  <a title="Team email, team chat, team tasks, one app" href="https://missiveapp.com"><img width="64" alt="Missive | Team email, team chat, team tasks, one app" src="https://user-images.githubusercontent.com/436043/32532559-0d15ddfc-c400-11e7-8a24-64d0157d0cb0.png"></a>
-  <br><a title="Team email, team chat, team tasks, one app" href="https://missiveapp.com">Missive</a> mixes team email and threaded group chat for productive teams.
-  <br>A single app for all your internal and external communication and a full work management solution.
-</div>
