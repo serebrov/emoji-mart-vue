@@ -113,7 +113,7 @@ function getData(_emoji, skin, set) {
   emojiData.emoticons || (emojiData.emoticons = [])
   emojiData.variations || (emojiData.variations = [])
 
-  if (emojiData.skin_variations && skin > 1 && set) {
+  if (emojiData.skin_variations && skin > 1) {
     emojiData = JSON.parse(_JSON.stringify(emojiData))
 
     var skinKey = SKINS[skin - 1],
@@ -123,7 +123,7 @@ function getData(_emoji, skin, set) {
       delete emojiData.variations
     }
 
-    if (variationData[`has_img_${set}`]) {
+    if (set == 'native' || variationData[`has_img_${set}`]) {
       emojiData.skin_tone = skin
 
       for (let k in variationData) {
