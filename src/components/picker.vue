@@ -310,7 +310,7 @@ export default {
       this.activeCategory = activeCategory
     },
     onAnchorClick(category) {
-      let i = this.categories.indexOf(category),
+      let i = this.filteredCategories.indexOf(category),
           component = this.$refs.categories[i],
           scrollToComponent = () => {
             if (component) {
@@ -332,7 +332,7 @@ export default {
       } else if (this.infiniteScroll) {
         scrollToComponent()
       } else {
-        this.activeCategory = this.categories[i];
+        this.activeCategory = this.filteredCategories[i];
       }
     },
     onSearch(emojis) {
