@@ -2870,7 +2870,7 @@ exports.default = {
     onAnchorClick: function onAnchorClick(category) {
       var _this4 = this;
 
-      var i = this.categories.indexOf(category),
+      var i = this.filteredCategories.indexOf(category),
           component = this.$refs.categories[i],
           scrollToComponent = function scrollToComponent() {
         if (component) {
@@ -2892,7 +2892,7 @@ exports.default = {
       } else if (this.infiniteScroll) {
         scrollToComponent();
       } else {
-        this.activeCategory = this.categories[i];
+        this.activeCategory = this.filteredCategories[i];
       }
     },
     onSearch: function onSearch(emojis) {
