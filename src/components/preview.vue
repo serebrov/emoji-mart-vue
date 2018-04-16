@@ -44,8 +44,8 @@
       <span class="emoji-mart-title-label">{{ title }}</span>
     </div>
 
-    <div class="emoji-mart-preview-skins">
-      <skins :skin="skinProps.skin" @change="skinProps.onChange" />
+    <div v-if="showSkinTones" class="emoji-mart-preview-skins">
+      <skins :skin="skinProps.skin" @change="$emit('change', $event)" />
     </div>
   </template>
 </div>
@@ -70,6 +70,10 @@ export default {
     idleEmoji: {
       type: [String, Object],
       required: true
+    },
+    showSkinTones: {
+      type: Boolean,
+      default: true
     },
     emojiProps: {
       type: Object,

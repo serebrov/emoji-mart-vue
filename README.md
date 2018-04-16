@@ -18,8 +18,9 @@ import { Picker } from 'emoji-mart-vue'
 
 ```html
 <picker set="emojione" />
-<picker @click="addEmoji" />
+<picker @select="addEmoji" />
 <picker title="Pick your emoji…" emoji="point_up" />
+<picker :style="{ position: 'absolute', bottom: '20px', right: '20px' }" />
 <picker :i18n="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }" />
 ```
 
@@ -33,7 +34,6 @@ import { Picker } from 'emoji-mart-vue'
 | **custom** | | `[]` | [Custom emojis](#custom-emojis) |
 | **recent** | | | Pass your own frequently used emojis as array of string IDs |
 | **emojiSize** | | `24` | The emoji width and height |
-| **onClick** | | | Params: `(emoji, event) => {}` |
 | **perLine** | | `9` | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. This will set *Frequently Used* length as well (`perLine * 4`) |
 | **i18n** | | [`{…}`](#i18n) | [An object](#i18n) containing localized strings |
 | **native** | | `false` | Renders the native unicode emoji |
@@ -44,11 +44,20 @@ import { Picker } from 'emoji-mart-vue'
 | **showPreview** | | `true` | Display preview section |
 | **showSearch** | | `true` | Display search section |
 | **showCategories** | | `true` | Display categories |
+| **showSkinTones** | | `true` | Display skin tones picker |
 | **emojiTooltip** | | `false` | Show emojis short name when hovering (title) |
-| **skin** | | `1` | Default skin color: `1, 2, 3, 4, 5, 6` |
-| **style** | | | Inline styles applied to the root element. Useful for positioning |
+| **skin** | | | Forces skin color: `1, 2, 3, 4, 5, 6` |
+| **defaultSkin** | | `1` | Default skin color: `1, 2, 3, 4, 5, 6` |
+| **pickerStyles** | | | Inline styles applied to the root element. Useful for positioning |
 | **title** | | `Emoji Mart™` | The title shown when no emojis are hovered |
 | **infiniteScroll** | | `true` | Scroll continuously through the categories |
+
+
+| Event | Description |
+| ----- | ----------- |
+| **select** | Params: `(emoji) => {}` |
+| **skin-change** | Params: `(skin) => {}` |
+
 
 #### I18n
 ```js
@@ -179,6 +188,24 @@ function emojiFallback(emoji) {
   :size="24"
   :fallback="emojiFallback"
 />
+```
+
+#### Using with `contentEditable`
+Following the `dangerouslySetInnerHTML` example above, make sure the wrapping `span` sets `contenteditable="false"`.
+
+```js
+<div contentEditable={true}>
+  Looks good to me
+
+  <span contentEditable={false} dangerouslySetInnerHTML={{
+    __html: Emoji({
+      html: true
+      set: 'apple'
+      emoji: '+1'
+      size: 24
+    })
+  }}></span>
+</div>
 ```
 
 ## Custom emojis

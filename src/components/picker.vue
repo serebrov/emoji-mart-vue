@@ -1,6 +1,6 @@
 <template>
 
-<div class="emoji-mart" :style="{ width: calculateWidth + 'px' }">
+<div class="emoji-mart" :style="customStyles">
   <div class="emoji-mart-bar" v-if="showCategories">
     <anchors
       :i18n="i18n"
@@ -51,8 +51,10 @@
       :title="title"
       :emoji="previewEmoji"
       :idle-emoji="emoji"
+      :show-skin-tones="showSkinTones"
       :emoji-props="emojiProps"
       :skin-props="skinProps"
+      @change="onSkinChange"
     />
   </div>
 </div>
@@ -128,6 +130,10 @@ export default {
     },
     skin: {
       type: Number,
+      default: null
+    },
+    defaultSkin: {
+      type: Number,
       default: 1
     },
     native: {
@@ -185,9 +191,19 @@ export default {
       type: Boolean,
       default: true
     },
+    showSkinTones: {
+      type: Boolean,
+      default: true
+    },
     infiniteScroll: {
       type: Boolean,
       default: true
+    },
+    pickerStyles: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   data() {
@@ -212,7 +228,7 @@ export default {
     }
 
     return {
-      activeSkin: store.get('skin') || this.skin,
+      activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       categories: [],
       activeCategory: null,
       previewEmoji: null,
@@ -222,6 +238,12 @@ export default {
     }
   },
   computed: {
+    customStyles() {
+      return {
+        width: this.calculateWidth + 'px',
+        ...this.pickerStyles
+      }
+    },
     emojiProps() {
       return {
         native: this.native,
@@ -239,8 +261,7 @@ export default {
     },
     skinProps() {
       return {
-        skin: this.activeSkin,
-        onChange: this.onSkinChange.bind(this)
+        skin: this.activeSkin
       }
     },
     calculateWidth() {
@@ -351,12 +372,14 @@ export default {
       this.previewEmoji = null
     },
     onEmojiClick(emoji) {
-      this.$emit('click', emoji)
+      this.$emit('select', emoji)
       frequently.add(emoji)
     },
     onSkinChange(skin) {
       this.activeSkin = skin
       store.update({ skin })
+
+      this.$emit('skin-change', skin)
     }
   },
   components: {
@@ -419,6 +442,7 @@ export default {
   padding: 0 6px 6px 6px;
   z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */
   will-change: transform; /* avoids "repaints on scroll" in mobile Chrome */
+  -webkit-overflow-scrolling: touch;
 }
 
 </style>

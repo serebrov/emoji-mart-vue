@@ -22,7 +22,7 @@
     @mouseleave="emojiProps.onLeave"
   />
 
-  <div v-show="!hasResults">
+  <div v-if="!hasResults">
     <emoji
       :size="emojiProps.size"
       emoji="sleuth_or_spy"

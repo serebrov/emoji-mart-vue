@@ -2,7 +2,7 @@
 
 <div>
   <div class="row">
-    <h1 class="demo-title">Emoji Mart Vue 🏬</h1>
+    <h1>Emoji Mart Vue 🏬</h1>
   </div>
 
   <div class="row">
@@ -43,7 +43,7 @@ const CUSTOM_EMOJIS = [
     name: 'Party Parrot',
     short_names: ['parrot'],
     keywords: ['party'],
-    imageUrl: 'http://cultofthepartyparrot.com/parrots/hd/parrot.gif'
+    imageUrl: './images/parrot.gif'
   },
   {
     name: 'Octocat',

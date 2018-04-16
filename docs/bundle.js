@@ -1650,7 +1650,7 @@ var CUSTOM_EMOJIS = [{
   name: 'Party Parrot',
   short_names: ['parrot'],
   keywords: ['party'],
-  imageUrl: 'http://cultofthepartyparrot.com/parrots/hd/parrot.gif'
+  imageUrl: './images/parrot.gif'
 }, {
   name: 'Octocat',
   short_names: ['octocat'],
@@ -2015,6 +2015,7 @@ var _utils = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
 //
 //
 //
@@ -2482,6 +2483,10 @@ var _toConsumableArray2 = __webpack_require__(132);
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
+var _extends2 = __webpack_require__(156);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _getIterator2 = __webpack_require__(141);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
@@ -2528,6 +2533,8 @@ var _search2 = _interopRequireDefault(_search);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
 //
 //
 //
@@ -2647,6 +2654,10 @@ exports.default = {
     },
     skin: {
       type: Number,
+      default: null
+    },
+    defaultSkin: {
+      type: Number,
       default: 1
     },
     native: {
@@ -2704,9 +2715,19 @@ exports.default = {
       type: Boolean,
       default: true
     },
+    showSkinTones: {
+      type: Boolean,
+      default: true
+    },
     infiniteScroll: {
       type: Boolean,
       default: true
+    },
+    pickerStyles: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
     }
   },
   data: function data() {
@@ -2758,7 +2779,7 @@ exports.default = {
     }
 
     return {
-      activeSkin: _store2.default.get('skin') || this.skin,
+      activeSkin: this.skin || _store2.default.get('skin') || this.defaultSkin,
       categories: [],
       activeCategory: null,
       previewEmoji: null,
@@ -2769,6 +2790,11 @@ exports.default = {
   },
 
   computed: {
+    customStyles: function customStyles() {
+      return (0, _extends3.default)({
+        width: this.calculateWidth + 'px'
+      }, this.pickerStyles);
+    },
     emojiProps: function emojiProps() {
       return {
         native: this.native,
@@ -2786,8 +2812,7 @@ exports.default = {
     },
     skinProps: function skinProps() {
       return {
-        skin: this.activeSkin,
-        onChange: this.onSkinChange.bind(this)
+        skin: this.activeSkin
       };
     },
     calculateWidth: function calculateWidth() {
@@ -2913,12 +2938,14 @@ exports.default = {
       this.previewEmoji = null;
     },
     onEmojiClick: function onEmojiClick(emoji) {
-      this.$emit('click', emoji);
+      this.$emit('select', emoji);
       _frequently2.default.add(emoji);
     },
     onSkinChange: function onSkinChange(skin) {
       this.activeSkin = skin;
       _store2.default.update({ skin: skin });
+
+      this.$emit('skin-change', skin);
     }
   },
   components: {
@@ -3037,6 +3064,10 @@ exports.default = {
     idleEmoji: {
       type: [String, Object],
       required: true
+    },
+    showSkinTones: {
+      type: Boolean,
+      default: true
     },
     emojiProps: {
       type: Object,
@@ -3394,6 +3425,7 @@ var originalPool = {};
 var index = {};
 var emojisList = {};
 var emoticonsList = {};
+var customEmojisList = [];
 
 var _loop = function _loop(emoji) {
   var emojiData = _data2.default.emojis[emoji];
@@ -3419,7 +3451,18 @@ for (var emoji in _data2.default.emojis) {
   _loop(emoji);
 }
 
+function clearCustomEmojis(pool) {
+  customEmojisList.forEach(function (emoji) {
+    var emojiId = emoji.id || emoji.short_names[0];
+
+    delete pool[emojiId];
+    delete emojisList[emojiId];
+  });
+}
+
 function addCustomToPool(custom, pool) {
+  if (customEmojisList.length) clearCustomEmojis(pool);
+
   custom.forEach(function (emoji) {
     var emojiId = emoji.id || emoji.short_names[0];
 
@@ -3428,6 +3471,9 @@ function addCustomToPool(custom, pool) {
       emojisList[emojiId] = (0, _.getSanitizedData)(emoji);
     }
   });
+
+  customEmojisList = custom;
+  index = {};
 }
 
 function search(value) {
@@ -3440,7 +3486,7 @@ function search(value) {
   var _ref$custom = _ref.custom;
   var custom = _ref$custom === undefined ? [] : _ref$custom;
 
-  addCustomToPool(custom, originalPool);
+  if (customEmojisList != custom) addCustomToPool(custom, originalPool);
 
   maxResults || (maxResults = 75);
   include || (include = []);
@@ -13144,18 +13190,23 @@ var render = function() {
       }
     },
     [
-      _vm.isNative && !_vm.isCustom
-        ? _c(
-            "span",
-            { style: _vm.nativeEmojiStyles, attrs: { title: _vm.title } },
-            [_vm._v(_vm._s(_vm.nativeEmoji))]
-          )
-        : _vm.hasEmoji
-          ? _c("span", {
-              style: _vm.fallbackEmojiStyles,
-              attrs: { title: _vm.title }
-            })
-          : _c("span", [_vm._v(_vm._s(_vm.fallbackEmoji))])
+      _vm.isCustom
+        ? _c("span", {
+            style: _vm.customEmojiStyles,
+            attrs: { title: _vm.title }
+          })
+        : _vm.isNative
+          ? _c(
+              "span",
+              { style: _vm.nativeEmojiStyles, attrs: { title: _vm.title } },
+              [_vm._v(_vm._s(_vm.nativeEmoji))]
+            )
+          : _vm.hasEmoji
+            ? _c("span", {
+                style: _vm.fallbackEmojiStyles,
+                attrs: { title: _vm.title }
+              })
+            : _c("span", [_vm._v(_vm._s(_vm.fallbackEmoji))])
     ]
   )
 }
@@ -13215,37 +13266,29 @@ var render = function() {
             })
           }),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: !_vm.hasResults,
-                  expression: "!hasResults"
-                }
-              ]
-            },
-            [
-              _c("emoji", {
-                attrs: {
-                  size: _vm.emojiProps.size,
-                  emoji: "sleuth_or_spy",
-                  native: _vm.emojiProps.native,
-                  skin: _vm.emojiProps.skin,
-                  set: _vm.emojiProps.set,
-                  "sheet-size": _vm.emojiProps.sheetSize,
-                  "background-image-fn": _vm.emojiProps.backgroundImageFn
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "emoji-mart-no-results-label" }, [
-                _vm._v(_vm._s(_vm.i18n.notfound))
-              ])
-            ],
-            1
-          )
+          !_vm.hasResults
+            ? _c(
+                "div",
+                [
+                  _c("emoji", {
+                    attrs: {
+                      size: _vm.emojiProps.size,
+                      emoji: "sleuth_or_spy",
+                      native: _vm.emojiProps.native,
+                      skin: _vm.emojiProps.skin,
+                      set: _vm.emojiProps.set,
+                      "sheet-size": _vm.emojiProps.sheetSize,
+                      "background-image-fn": _vm.emojiProps.backgroundImageFn
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "emoji-mart-no-results-label" }, [
+                    _vm._v(_vm._s(_vm.i18n.notfound))
+                  ])
+                ],
+                1
+              )
+            : _vm._e()
         ],
         2
       )
@@ -13396,7 +13439,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart[data-v-2076db9e] {\n  font-family: -apple-system, BlinkMacSystemFont, \"Helvetica Neue\", sans-serif;\n  font-size: 16px;\n  display: inline-block;\n  color: #222427;\n  border: 1px solid #d9d9d9;\n  border-radius: 5px;\n  background: #fff;\n}\n.emoji-mart-bar[data-v-2076db9e] {\n  border: 0 solid #d9d9d9;\n}\n.emoji-mart-bar[data-v-2076db9e]:first-child {\n  border-bottom-width: 1px;\n  border-top-left-radius: 5px;\n  border-top-right-radius: 5px;\n}\n.emoji-mart-bar[data-v-2076db9e]:last-child {\n  border-top-width: 1px;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n}\n.emoji-mart-scroll[data-v-2076db9e] {\n  position: relative;\n  overflow-y: scroll;\n  height: 270px;\n  padding: 0 6px 6px 6px;\n  z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */\n  will-change: transform; /* avoids \"repaints on scroll\" in mobile Chrome */\n}\n\n", ""]);
+exports.push([module.i, "\n.emoji-mart[data-v-2076db9e] {\n  font-family: -apple-system, BlinkMacSystemFont, \"Helvetica Neue\", sans-serif;\n  font-size: 16px;\n  display: inline-block;\n  color: #222427;\n  border: 1px solid #d9d9d9;\n  border-radius: 5px;\n  background: #fff;\n}\n.emoji-mart-bar[data-v-2076db9e] {\n  border: 0 solid #d9d9d9;\n}\n.emoji-mart-bar[data-v-2076db9e]:first-child {\n  border-bottom-width: 1px;\n  border-top-left-radius: 5px;\n  border-top-right-radius: 5px;\n}\n.emoji-mart-bar[data-v-2076db9e]:last-child {\n  border-top-width: 1px;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n}\n.emoji-mart-scroll[data-v-2076db9e] {\n  position: relative;\n  overflow-y: scroll;\n  height: 270px;\n  padding: 0 6px 6px 6px;\n  z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */\n  will-change: transform; /* avoids \"repaints on scroll\" in mobile Chrome */\n  -webkit-overflow-scrolling: touch;\n}\n\n", ""]);
 
 // exports
 
@@ -13890,17 +13933,23 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "emoji-mart-preview-skins" },
-              [
-                _c("skins", {
-                  attrs: { skin: _vm.skinProps.skin },
-                  on: { change: _vm.skinProps.onChange }
-                })
-              ],
-              1
-            )
+            _vm.showSkinTones
+              ? _c(
+                  "div",
+                  { staticClass: "emoji-mart-preview-skins" },
+                  [
+                    _c("skins", {
+                      attrs: { skin: _vm.skinProps.skin },
+                      on: {
+                        change: function($event) {
+                          _vm.$emit("change", $event)
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e()
           ]
     ],
     2
@@ -14011,7 +14060,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "emoji-mart", style: { width: _vm.calculateWidth + "px" } },
+    { staticClass: "emoji-mart", style: _vm.customStyles },
     [
       _vm.showCategories
         ? _c(
@@ -14113,9 +14162,11 @@ var render = function() {
                   title: _vm.title,
                   emoji: _vm.previewEmoji,
                   "idle-emoji": _vm.emoji,
+                  "show-skin-tones": _vm.showSkinTones,
                   "emoji-props": _vm.emojiProps,
                   "skin-props": _vm.skinProps
-                }
+                },
+                on: { change: _vm.onSkinChange }
               })
             ],
             1
@@ -14210,7 +14261,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("h1", { staticClass: "demo-title" }, [_vm._v("Emoji Mart Vue 🏬")])
+      _c("h1", [_vm._v("Emoji Mart Vue 🏬")])
     ])
   },
   function() {
@@ -14240,6 +14291,32 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-4fbc735b", esExports)
   }
 }
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _Object = Object;
+
+exports.default = _Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
 
 /***/ })
 /******/ ]);
