@@ -111,6 +111,7 @@ h1 {
 }
 
 .emoji-mart {
+  margin: 0 auto;
   text-align: left;
 }
 

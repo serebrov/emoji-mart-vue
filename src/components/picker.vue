@@ -412,7 +412,9 @@ export default {
 .emoji-mart {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   font-size: 16px;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  height: 420px;
   color: #222427;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
@@ -420,6 +422,7 @@ export default {
 }
 
 .emoji-mart-bar {
+  flex: 0;
   border: 0 solid #d9d9d9;
 }
 
@@ -435,10 +438,14 @@ export default {
   border-bottom-right-radius: 5px;
 }
 
+.emoji-mart-search {
+  flex: 0;
+}
+
 .emoji-mart-scroll {
   position: relative;
   overflow-y: scroll;
-  height: 270px;
+  flex: 1;
   padding: 0 6px 6px 6px;
   z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */
   will-change: transform; /* avoids "repaints on scroll" in mobile Chrome */
