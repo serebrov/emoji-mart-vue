@@ -51,7 +51,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.vue', '.js'],
   },
 
   plugins: [

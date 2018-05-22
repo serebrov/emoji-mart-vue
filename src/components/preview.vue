@@ -3,7 +3,8 @@
 <div class="emoji-mart-preview">
   <template v-if="emoji">
     <div class="emoji-mart-preview-emoji">
-      <emoji
+      <nimble-emoji
+        :data="data"
         :emoji="emoji"
         :native="emojiProps.native"
         :skin="emojiProps.skin"
@@ -28,7 +29,8 @@
 
   <template v-else>
     <div class="emoji-mart-preview-emoji">
-      <emoji
+      <nimble-emoji
+        :data="data"
         :emoji="idleEmoji"
         :native="emojiProps.native"
         :skin="emojiProps.skin"
@@ -54,12 +56,16 @@
 
 <script>
 
-import Emoji from './emoji'
+import NimbleEmoji from './emoji/nimbleEmoji'
 import Skins from './skins'
 import { getData } from '../utils'
 
 export default {
   props: {
+    data: {
+      type: Object,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -85,24 +91,24 @@ export default {
     }
   },
   computed: {
-    data() {
+    emojiData() {
       if (this.emoji && this.emoji.custom) {
         return this.emoji
       } else if (this.emoji) {
-        return getData(this.emoji)
+        return getData(this.emoji, null, null, this.data)
       } else {
         return {}
       }
     },
     emojiShortNames() {
-      return this.data.short_names
+      return this.emojiData.short_names
     },
     emojiEmoticons() {
-      return this.data.emoticons
+      return this.emojiData.emoticons
     }
   },
   components: {
-    Emoji,
+    NimbleEmoji,
     Skins
   }
 }

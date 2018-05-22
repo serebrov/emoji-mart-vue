@@ -5,9 +5,10 @@
     <span>{{ i18n.categories[id] }}</span>
   </div>
 
-  <emoji
+  <nimble-emoji
     v-for="emoji in emojis"
     :key="emoji.id || emoji"
+    :data="data"
     :emoji="emoji"
     :native="emojiProps.native"
     :skin="emojiProps.skin"
@@ -23,7 +24,8 @@
   />
 
   <div v-if="!hasResults">
-    <emoji
+    <nimble-emoji
+      :data="data"
       :size="emojiProps.size"
       emoji="sleuth_or_spy"
       :native="emojiProps.native"
@@ -40,12 +42,14 @@
 
 <script>
 
-import Emoji from './emoji'
-import frequently from '../utils/frequently'
-import { getData } from '../utils'
+import NimbleEmoji from './emoji/nimbleEmoji'
 
 export default {
   props: {
+    data: {
+      type: Object,
+      required: true
+    },
     i18n: {
       type: Object,
       required: true
@@ -78,7 +82,7 @@ export default {
     }
   },
   components: {
-    Emoji
+    NimbleEmoji
   }
 }
 

@@ -45,7 +45,7 @@ var config = {
   },
 
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.vue', '.js'],
   },
 
   plugins: [

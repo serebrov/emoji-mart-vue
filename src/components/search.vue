@@ -8,10 +8,14 @@
 
 <script>
 
-import emojiIndex from '../utils/emoji-index'
+import NimbleEmojiIndex from '../utils/emoji-index/nimble-emoji-index'
 
 export default {
   props: {
+    data: {
+      type: Object,
+      required: true
+    },
     i18n: {
       type: Object,
       required: true
@@ -42,9 +46,14 @@ export default {
       value: ''
     }
   },
+  computed: {
+    emojiIndex() {
+      return new NimbleEmojiIndex(this.data)
+    }
+  },
   watch: {
     value() {
-      let emojis = emojiIndex.search(this.value, {
+      let emojis = this.emojiIndex.search(this.value, {
         emojisToShowFilter: this.emojisToShowFilter,
         maxResults: this.maxResults,
         include: this.include,

@@ -1,6 +1,6 @@
 <template>
 
-<span class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
+<span v-if="canRender" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
   <span v-if="isCustom" :title="title" :style="customEmojiStyles"></span>
   <span v-else-if="isNative" :title="title" :style="nativeEmojiStyles">{{ nativeEmoji }}</span>
   <span v-else-if="hasEmoji" :title="title" :style="fallbackEmojiStyles"></span>
@@ -11,74 +11,45 @@
 
 <script>
 
-import data from '../data'
-import { getData, getSanitizedData, unifiedToNative } from '../utils'
+import { getData, getSanitizedData, unifiedToNative } from '../../utils'
+import { uncompress } from '../../utils/data'
+import { EmojiProps } from '../../utils/shared-props'
 
 const SHEET_COLUMNS = 52
 
 export default {
   props: {
-    backgroundImageFn: {
-      type: Function,
-      default: function(set, sheetSize) {
-        return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets/${sheetSize}.png`
-      }
-    },
-    native: {
-      type: Boolean,
-      default: false
-    },
-    forceSize: {
-      type: Boolean,
-      default: false
-    },
-    tooltip: {
-      type: Boolean,
-      default: false
-    },
-    fallback: {
-      type: Function
-    },
-    skin: {
-      type: Number,
-      default: 1
-    },
-    sheetSize: {
-      type: Number,
-      default: 64
-    },
-    set: {
-      type: String,
-      default: 'apple'
-    },
-    size: {
-      type: Number,
-      default: 24
-    },
-    emoji: {
-      type: [String, Object],
+    ...EmojiProps,
+    data: {
+      type: Object,
       required: true
     }
   },
   computed: {
-    data() {
-      return getData(this.emoji, this.skin, this.set)
+    parsedData() {
+      return this.data.uncompressed ? uncompress(this.data) : this.data
+    },
+    emojiData() {
+      return getData(this.emoji, this.skin, this.set, this.parsedData)
     },
     sanitizedData() {
-      return getSanitizedData(this.emoji, this.skin, this.set)
+      return getSanitizedData(this.emoji, this.skin, this.set, this.parsedData)
+    },
+    canRender() {
+      return this.isCustom || this.isNative || this.hasEmoji || this.fallback
     },
     isNative() {
       return this.native
     },
     isCustom() {
-      return this.data.custom
+      return this.emojiData.custom
     },
     hasEmoji() {
-      return this.data['has_img_' + this.set]
+      return this.emojiData['has_img_' + this.set]
     },
     nativeEmoji() {
-      if (this.data.unified) {
-        return unifiedToNative(this.data.unified)
+      if (this.emojiData.unified) {
+        return unifiedToNative(this.emojiData.unified)
       } else {
         return ''
       }
@@ -118,19 +89,19 @@ export default {
         display: 'inline-block',
         width: this.size + 'px',
         height: this.size + 'px',
-        backgroundImage: 'url(' + this.data.imageUrl + ')',
+        backgroundImage: 'url(' + this.emojiData.imageUrl + ')',
         backgroundSize: '100%',
       }
     },
     title() {
-      return this.tooltip ? this.data.short_names[0] : null
+      return this.tooltip ? this.emojiData.short_names[0] : null
     }
   },
   methods: {
     getPosition() {
       let multiply = 100 / (SHEET_COLUMNS - 1),
-          x = multiply * this.data.sheet_x,
-          y = multiply * this.data.sheet_y
+          x = multiply * this.emojiData.sheet_x,
+          y = multiply * this.emojiData.sheet_y
 
       return `${x}% ${y}%`
     },

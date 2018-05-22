@@ -3,7 +3,8 @@
 <div class="emoji-mart" :style="customStyles">
   <div class="emoji-mart-bar" v-if="showCategories">
     <anchors
-      :i18n="i18n"
+      :data="parsedData"
+      :i18n="mergedI18n"
       :color="color"
       :categories="filteredCategories"
       :active-category="activeCategory"
@@ -14,7 +15,8 @@
   <search
     v-if="showSearch"
     ref="search"
-    :i18n="i18n"
+    :data="parsedData"
+    :i18n="mergedI18n"
     :emojis-to-show-filter="emojisToShowFilter"
     :include="include"
     :exclude="exclude"
@@ -27,7 +29,8 @@
   <div class="emoji-mart-scroll" ref="scroll" @scroll="onScroll">
     <category
       v-show="searchEmojis"
-      :i18n="i18n"
+      :data="parsedData"
+      :i18n="mergedI18n"
       id="search"
       name="Search"
       :emojis="searchEmojis"
@@ -38,7 +41,8 @@
       v-show="!searchEmojis && (infiniteScroll || category == activeCategory)"
       ref="categories"
       :key="category.id"
-      :i18n="i18n"
+      :data="parsedData"
+      :i18n="mergedI18n"
       :id="category.id"
       :name="category.name"
       :emojis="category.emojis"
@@ -48,6 +52,7 @@
 
   <div class="emoji-mart-bar" v-if="showPreview">
     <preview
+      :data="parsedData"
       :title="title"
       :emoji="previewEmoji"
       :idle-emoji="emoji"
@@ -63,16 +68,17 @@
 
 <script>
 
-import '../vendor/raf-polyfill'
-import data from '../data'
-import store from '../utils/store'
-import frequently from '../utils/frequently'
-import { deepMerge, measureScrollbar } from '../utils'
-import Anchors from './anchors'
-import Category from './category'
-import Emoji from './emoji'
-import Preview from './preview'
-import Search from './search'
+import '../../vendor/raf-polyfill'
+import store from '../../utils/store'
+import frequently from '../../utils/frequently'
+import { deepMerge, measureScrollbar } from '../../utils'
+import { uncompress } from '../../utils/data'
+import { PickerProps } from '../../utils/shared-props'
+import Anchors from '../anchors'
+import Category from '../category'
+import Emoji from '../emoji'
+import Preview from '../preview'
+import Search from '../search'
 
 const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
 const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
@@ -104,106 +110,10 @@ function makeCustomEmoji(emoji) {
 
 export default {
   props: {
-    perLine: {
-      type: Number,
-      default: 9
-    },
-    emojiSize: {
-      type: Number,
-      default: 24
-    },
-    title: {
-      type: String,
-      default: 'Emoji Mart™'
-    },
-    emoji: {
-      type: String,
-      default: 'department_store'
-    },
-    color: {
-      type: String,
-      default: '#ae65c5'
-    },
-    set: {
-      type: String,
-      default: 'apple'
-    },
-    skin: {
-      type: Number,
-      default: null
-    },
-    defaultSkin: {
-      type: Number,
-      default: 1
-    },
-    native: {
-      type: Boolean,
-      default: false
-    },
-    backgroundImageFn: {
-      type: Function
-    },
-    sheetSize: {
-      type: Number,
-      default: 64
-    },
-    emojisToShowFilter: {
-      type: Function
-    },
-    emojiTooltip: {
-      type: Boolean,
-      default: false
-    },
-    include: {
-      type: Array
-    },
-    exclude: {
-      type: Array
-    },
-    recent: {
-      type: Array
-    },
-    autoFocus: {
-      type: Boolean,
-      default: false
-    },
-    custom: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
-    i18n: {
+    ...PickerProps,
+    data: {
       type: Object,
-      default() {
-        return I18N
-      }
-    },
-    showPreview: {
-      type: Boolean,
-      default: true
-    },
-    showSearch: {
-      type: Boolean,
-      default: true
-    },
-    showCategories: {
-      type: Boolean,
-      default: true
-    },
-    showSkinTones: {
-      type: Boolean,
-      default: true
-    },
-    infiniteScroll: {
-      type: Boolean,
-      default: true
-    },
-    pickerStyles: {
-      type: Object,
-      default() {
-        return {}
-      }
+      required: true
     }
   },
   data() {
@@ -223,8 +133,8 @@ export default {
     }
 
     if (this.emojisToShowFilter) {
-      customEmojis = customEmojis.filter(e => this.emojisToShowFilter(data.emojis[e] || e))
-      recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(data.emojis[e] || e))
+      customEmojis = customEmojis.filter(e => this.emojisToShowFilter(this.parsedData.emojis[e] || e))
+      recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(this.parsedData.emojis[e] || e))
     }
 
     return {
@@ -238,6 +148,9 @@ export default {
     }
   },
   computed: {
+    parsedData() {
+      return this.data.compressed ? uncompress(this.data) : this.data
+    },
     customStyles() {
       return {
         width: this.calculateWidth + 'px',
@@ -275,20 +188,23 @@ export default {
 
         if (this.emojisToShowFilter) {
           hasEmojis = category.emojis.some((emoji) => {
-            return this.emojisToShowFilter(data.emojis[emoji] || emoji)
+            return this.emojisToShowFilter(this.parsedData.emojis[emoji] || emoji)
           })
         }
 
         return isIncluded && !isExcluded && hasEmojis
       })
+    },
+    mergedI18n() {
+      return deepMerge(I18N, this.i18n)
     }
   },
   created() {
-    let categories = data.categories.map(c => {
+    let categories = this.parsedData.categories.map(c => {
       let { id, name, emojis } = c
 
       if (this.emojisToShowFilter) {
-        emojis = c.emojis.filter(e => this.emojisToShowFilter(data.emojis[e] || e))
+        emojis = c.emojis.filter(e => this.emojisToShowFilter(this.parsedData.emojis[e] || e))
       }
 
       return { id, name, emojis }
