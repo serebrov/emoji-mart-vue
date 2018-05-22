@@ -1,10 +1,8 @@
 const EmojiProps = {
   backgroundImageFn: {
     type: Function,
-    default() {
-      return function(set, sheetSize) {
-        return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets/${sheetSize}.png`
-      }
+    default: function(set, sheetSize) {
+      return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets/${sheetSize}.png`
     }
   },
   native: {

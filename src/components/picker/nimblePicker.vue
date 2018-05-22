@@ -76,7 +76,6 @@ import { uncompress } from '../../utils/data'
 import { PickerProps } from '../../utils/shared-props'
 import Anchors from '../anchors'
 import Category from '../category'
-import Emoji from '../emoji'
 import Preview from '../preview'
 import Search from '../search'
 
@@ -301,7 +300,6 @@ export default {
   components: {
     Anchors,
     Category,
-    Emoji,
     Preview,
     Search
   }

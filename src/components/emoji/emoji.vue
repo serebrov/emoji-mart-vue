@@ -17,7 +17,9 @@ export default {
     }
   },
   render(h, ctx) {
-    return h(NimbleEmoji, ctx.data, ctx.children)
+    let { data, props, children } = ctx
+
+    return h(NimbleEmoji, { ...data, props }, children)
   }
 }
 

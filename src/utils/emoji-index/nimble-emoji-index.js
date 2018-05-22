@@ -4,7 +4,7 @@ import { uncompress } from '../data'
 export default class NimbleEmojiIndex {
   constructor(data) {
     if (data.compressed) {
-      uncompress(data)
+      data = uncompress(data)
     }
 
     this.data = data || {}

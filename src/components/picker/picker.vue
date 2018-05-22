@@ -17,7 +17,9 @@ export default {
     }
   },
   render(h, ctx) {
-    return h(NimblePicker, ctx.data, ctx.children)
+    let { data, props, children } = ctx
+
+    return h(NimblePicker, { ...data, props }, children)
   }
 }
 
