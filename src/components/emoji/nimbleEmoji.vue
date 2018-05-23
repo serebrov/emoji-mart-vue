@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     parsedData() {
-      return this.data.uncompressed ? uncompress(this.data) : this.data
+      return this.data.compressed ? uncompress(this.data) : this.data
     },
     emojiData() {
       return getData(this.emoji, this.skin, this.set, this.parsedData)
