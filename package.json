@@ -1,6 +1,6 @@
 {
   "name": "emoji-mart-vue",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "Customizable Slack-like emoji picker for VueJS",
   "main": "dist/emoji-mart.js",
   "repository": {
