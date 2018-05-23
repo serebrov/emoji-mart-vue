@@ -246,7 +246,7 @@ emojiIndex.search('christmas').map((o) => o.native)
 
 ### With custom data
 ```js
-import data from 'emoji-mart-vue/datasets/messenger'
+import data from 'emoji-mart-vue/data/messenger'
 import { NimbleEmojiIndex } from 'emoji-mart-vue'
 
 let emojiIndex = new NimbleEmojiIndex(data)
