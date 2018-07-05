@@ -2,7 +2,7 @@ const EmojiProps = {
   backgroundImageFn: {
     type: Function,
     default: function(set, sheetSize) {
-      return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets/${sheetSize}.png`
+      return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`
     }
   },
   native: {
