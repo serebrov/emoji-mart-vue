@@ -167,9 +167,6 @@ import { Emoji } from 'emoji-mart-vue'
 | **emoji** | ✓ | | Either a string or an `emoji` object |
 | **size** | ✓ | | The emoji width and height. |
 | **native** | | `false` | Renders the native unicode emoji |
-| **onClick** | | | Params: `(emoji, event) => {}` |
-| **onLeave** | | | Params: `(emoji, event) => {}` |
-| **onOver** | | | Params: `(emoji, event) => {}` |
 | [**fallback**](#unsupported-emojis-fallback) | | | Params: `(emoji) => {}` |
 | **set** | | `apple` | The emoji set: `'apple', 'google', 'twitter', 'emojione'` |
 | **sheetSize** | | `64` | The emoji [sheet size](#sheet-sizes): `16, 20, 32, 64` |
@@ -177,6 +174,12 @@ import { Emoji } from 'emoji-mart-vue'
 | **skin** | | `1` | Skin color: `1, 2, 3, 4, 5, 6` |
 | **tooltip** | | `false` | Show emoji short name when hovering (title) |
 | [**html**](#using-with-dangerouslysetinnerhtml) | | `false` | Returns an HTML string to use with `dangerouslySetInnerHTML` |
+
+| Event | Description |
+| ----- | ----------- |
+| **select** | Params: `(emoji) => {}` |
+| **mouseenter** | Params: `(emoji) => {}` |
+| **mouseleave** | Params: `(emoji) => {}` |
 
 #### Unsupported emojis fallback
 Certain sets don’t support all emojis (i.e. Messenger & Facebook don’t support `:shrug:`). By default the Emoji component will not render anything so that the emojis’ don’t take space in the picker when not available. When using the standalone Emoji component, you can however render anything you want by providing the `fallback` props.
@@ -187,31 +190,15 @@ To have the component render `:shrug:` you would need to:
 function emojiFallback(emoji) {
   return `:${emoji.short_names[0]}:`
 }
+```
 
+```html
 <emoji
   set="messenger"
   emoji="shrug"
   :size="24"
   :fallback="emojiFallback"
 />
-```
-
-#### Using with `contentEditable`
-Following the `dangerouslySetInnerHTML` example above, make sure the wrapping `span` sets `contenteditable="false"`.
-
-```js
-<div contentEditable={true}>
-  Looks good to me
-
-  <span contentEditable={false} dangerouslySetInnerHTML={{
-    __html: Emoji({
-      html: true
-      set: 'apple'
-      emoji: '+1'
-      size: 24
-    })
-  }}></span>
-</div>
 ```
 
 ## Custom emojis
@@ -230,7 +217,9 @@ const customEmojis = [
     imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
   }
 ]
+```
 
+```html
 <picker :custom="customEmojis" />
 ```
 
