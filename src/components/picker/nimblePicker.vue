@@ -336,7 +336,6 @@ export default {
 }
 
 .emoji-mart-bar {
-  flex: 0;
   border: 0 solid #d9d9d9;
 }
 
@@ -350,10 +349,6 @@ export default {
   border-top-width: 1px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-}
-
-.emoji-mart-search {
-  flex: 0;
 }
 
 .emoji-mart-scroll {
