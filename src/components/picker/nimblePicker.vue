@@ -137,7 +137,7 @@ export default {
     }
 
     return {
-      mutableData: uncompress(this.data),
+      mutableData: this.data.compressed ? uncompress(this.data) : this.data,
       mutableI18n: deepMerge(I18N, this.i18n),
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       categories: [],
