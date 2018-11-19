@@ -8,7 +8,7 @@
     :style="{ 'color': (category.id == activeCategory.id ? color : '') }"
     :title="i18n.categories[category.id]"
     @click="$emit('click', category)">
-    <svg v-html="svgs[category.id]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"></svg>
+    <div v-html="svgs[category.id]"/>
     <span class="emoji-mart-anchor-bar" :style="{ backgroundColor: color }"></span>
   </span>
 </div>
