@@ -76,8 +76,7 @@ const compress = (emoji) => {
   }
 }
 
-const uncompress = (_data) => {
-  let data = JSON.parse(JSON.stringify(_data))
+const uncompress = (data) => {
   data.compressed = false
 
   for (let id in data.emojis) {
@@ -102,8 +101,6 @@ const uncompress = (_data) => {
 
     emoji.search = buildSearch(emoji)
   }
-
-  return data
 }
 
 module.exports = { buildSearch, compress, uncompress }
