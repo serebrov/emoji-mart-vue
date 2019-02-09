@@ -3,8 +3,8 @@
 <div class="emoji-mart" :style="customStyles">
   <div class="emoji-mart-bar" v-if="showCategories">
     <anchors
-      :data="data"
-      :i18n="i18n"
+      :data="parsedData"
+      :i18n="mergedI18n"
       :color="color"
       :categories="filteredCategories"
       :active-category="activeCategory"
@@ -15,8 +15,8 @@
   <search
     v-if="showSearch"
     ref="search"
-    :data="data"
-    :i18n="i18n"
+    :data="parsedData"
+    :i18n="mergedI18n"
     :emojis-to-show-filter="emojisToShowFilter"
     :include="include"
     :exclude="exclude"
@@ -29,8 +29,8 @@
   <div class="emoji-mart-scroll" ref="scroll" @scroll="onScroll">
     <category
       v-show="searchEmojis"
-      :data="data"
-      :i18n="i18n"
+      :data="parsedData"
+      :i18n="mergedI18n"
       id="search"
       name="Search"
       :emojis="searchEmojis"
@@ -41,8 +41,8 @@
       v-show="!searchEmojis && (infiniteScroll || category == activeCategory)"
       ref="categories"
       :key="category.id"
-      :data="data"
-      :i18n="i18n"
+      :data="parsedData"
+      :i18n="mergedI18n"
       :id="category.id"
       :name="category.name"
       :emojis="category.emojis"
@@ -52,7 +52,7 @@
 
   <div class="emoji-mart-bar" v-if="showPreview">
     <preview
-      :data="data"
+      :data="parsedData"
       :title="title"
       :emoji="previewEmoji"
       :idle-emoji="emoji"
@@ -132,8 +132,8 @@ export default {
     }
 
     if (this.emojisToShowFilter) {
-      customEmojis = customEmojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
-      recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
+      customEmojis = customEmojis.filter(e => this.emojisToShowFilter(this.parsedData.emojis[e] || e))
+      recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(this.parsedData.emojis[e] || e))
     }
 
     return {
@@ -147,6 +147,9 @@ export default {
     }
   },
   computed: {
+    parsedData() {
+      return this.data.compressed ? uncompress(this.data) : this.data
+    },
     customStyles() {
       return {
         width: this.calculateWidth + 'px',
@@ -184,23 +187,23 @@ export default {
 
         if (this.emojisToShowFilter) {
           hasEmojis = category.emojis.some((emoji) => {
-            return this.emojisToShowFilter(this.data.emojis[emoji] || emoji)
+            return this.emojisToShowFilter(this.parsedData.emojis[emoji] || emoji)
           })
         }
 
         return isIncluded && !isExcluded && hasEmojis
       })
     },
+    mergedI18n() {
+      return deepMerge(I18N, this.i18n)
+    }
   },
   created() {
-    this.data = uncompress(this.data);
-    this.i18n = deepMerge(I18N, this.i18n);
-
-    let categories = this.data.categories.map(c => {
+    let categories = this.parsedData.categories.map(c => {
       let { id, name, emojis } = c
 
       if (this.emojisToShowFilter) {
-        emojis = c.emojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
+        emojis = c.emojis.filter(e => this.emojisToShowFilter(this.parsedData.emojis[e] || e))
       }
 
       return { id, name, emojis }
