@@ -1,3 +1,9 @@
+This fork of https://github.com/jm-david/emoji-mart-vue fixes the https://github.com/jm-david/emoji-mart-vue/issues/41 and also applies
+performance fixes (see https://github.com/jm-david/emoji-mart-vue/pull/47, https://github.com/jm-david/emoji-mart-vue/pull/43).
+
+It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#build` (the latest build is on
+the `build` branch).
+
 > This project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
 
 <div align="center">
