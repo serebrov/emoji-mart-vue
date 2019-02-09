@@ -1543,7 +1543,7 @@ var NimbleEmojiIndex = function () {
     (0, _classCallCheck3.default)(this, NimbleEmojiIndex);
 
     if (data.compressed) {
-      data = (0, _data.uncompress)(data);
+      (0, _data.uncompress)(data);
     }
 
     this.data = data || {};
@@ -2150,8 +2150,11 @@ exports.default = {
     }
   }),
   data: function data() {
+    if (this.data.compressed) {
+      (0, _data.uncompress)(this.data);
+    }
     return {
-      mutableData: this.data.compressed ? (0, _data.uncompress)(this.data) : this.data
+      mutableData: this.data
     };
   },
 
@@ -3327,8 +3330,11 @@ exports.default = {
       });
     }
 
+    if (this.data.compressed) {
+      (0, _data.uncompress)(this.data);
+    }
     return {
-      mutableData: this.data.compressed ? (0, _data.uncompress)(this.data) : this.data,
+      mutableData: this.data,
       mutableI18n: (0, _utils.deepMerge)(I18N, this.i18n),
       activeSkin: this.skin || _store2.default.get('skin') || this.defaultSkin,
       categories: [],
