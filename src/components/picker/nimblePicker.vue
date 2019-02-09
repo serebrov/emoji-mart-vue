@@ -148,7 +148,10 @@ export default {
   },
   computed: {
     parsedData() {
-      return this.data.compressed ? uncompress(this.data) : this.data
+      if (this.data.compressed) {
+        uncompress(this.data)
+      }
+      return this.data
     },
     customStyles() {
       return {

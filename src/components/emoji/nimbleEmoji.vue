@@ -25,9 +25,6 @@ export default {
       required: true
     }
   },
-    if (this.data.compressed) {
-      uncompress(this.data)
-    }
   computed: {
     parsedData() {
       if (this.data.compressed) {
