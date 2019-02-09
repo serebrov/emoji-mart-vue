@@ -25,20 +25,21 @@ export default {
       required: true
     }
   },
-  data() {
     if (this.data.compressed) {
       uncompress(this.data)
     }
-    return {
-      mutableData: this.data,
-    }
-  },
   computed: {
+    parsedData() {
+      if (this.data.compressed) {
+        uncompress(this.data)
+      }
+      return this.data
+    },
     emojiData() {
-      return getData(this.emoji, this.skin, this.set, this.mutableData)
+      return getData(this.emoji, this.skin, this.set, this.parsedData)
     },
     sanitizedData() {
-      return getSanitizedData(this.emoji, this.skin, this.set, this.mutableData)
+      return getSanitizedData(this.emoji, this.skin, this.set, this.parsedData)
     },
     canRender() {
       return this.isCustom || this.isNative || this.hasEmoji || this.fallback
