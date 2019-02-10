@@ -202,6 +202,7 @@ function measureScrollbar() {
 export {
   getData,
   getSanitizedData,
+  sanitize,
   uniq,
   intersect,
   deepMerge,

@@ -9,10 +9,6 @@ const EmojiProps = {
     type: Boolean,
     default: false
   },
-  forceSize: {
-    type: Boolean,
-    default: false
-  },
   tooltip: {
     type: Boolean,
     default: false

@@ -3,8 +3,8 @@
 <div class="emoji-mart" :style="customStyles">
   <div class="emoji-mart-bar" v-if="showCategories">
     <anchors
-      :data="mutableData"
-      :i18n="mutableI18n"
+      :data="data"
+      :i18n="mergedI18n"
       :color="color"
       :categories="filteredCategories"
       :active-category="activeCategory"
@@ -15,8 +15,8 @@
   <search
     v-if="showSearch"
     ref="search"
-    :data="mutableData"
-    :i18n="mutableI18n"
+    :data="data"
+    :i18n="mergedI18n"
     :emojis-to-show-filter="emojisToShowFilter"
     :include="include"
     :exclude="exclude"
@@ -29,8 +29,8 @@
   <div class="emoji-mart-scroll" ref="scroll" @scroll="onScroll">
     <category
       v-show="searchEmojis"
-      :data="mutableData"
-      :i18n="mutableI18n"
+      :data="data"
+      :i18n="mergedI18n"
       id="search"
       name="Search"
       :emojis="searchEmojis"
@@ -41,8 +41,8 @@
       v-show="!searchEmojis && (infiniteScroll || category == activeCategory)"
       ref="categories"
       :key="category.id"
-      :data="mutableData"
-      :i18n="mutableI18n"
+      :data="data"
+      :i18n="mergedI18n"
       :id="category.id"
       :name="category.name"
       :emojis="category.emojis"
@@ -52,10 +52,10 @@
 
   <div class="emoji-mart-bar" v-if="showPreview">
     <preview
-      :data="mutableData"
+      :data="data"
       :title="title"
       :emoji="previewEmoji"
-      :idle-emoji="emoji"
+      :idle-emoji="idleEmoji"
       :show-skin-tones="showSkinTones"
       :emoji-props="emojiProps"
       :skin-props="skinProps"
@@ -73,6 +73,7 @@ import store from '../../utils/store'
 import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar } from '../../utils'
 import { PickerProps } from '../../utils/shared-props'
+import { EmojiData } from '../../utils/emoji-data'
 import Anchors from '../anchors'
 import Category from '../category'
 import Preview from '../preview'
@@ -131,13 +132,11 @@ export default {
     }
 
     if (this.emojisToShowFilter) {
-      customEmojis = customEmojis.filter(e => this.emojisToShowFilter(this.mutableData.emojis[e] || e))
-      recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(this.mutableData.emojis[e] || e))
+      customEmojis = customEmojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
+      recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
     }
 
     return {
-      mutableData: this.data,
-      mutableI18n: deepMerge(I18N, this.i18n),
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       categories: [],
       activeCategory: null,
@@ -161,7 +160,6 @@ export default {
         size: this.emojiSize,
         set: this.set,
         sheetSize: this.sheetSize,
-        forceSize: this.native,
         tooltip: this.emojiTooltip,
         backgroundImageFn: this.backgroundImageFn,
         onEnter: this.onEmojiEnter.bind(this),
@@ -185,16 +183,27 @@ export default {
 
         if (this.emojisToShowFilter) {
           hasEmojis = category.emojis.some((emoji) => {
-            return this.emojisToShowFilter(this.mutableData.emojis[emoji] || emoji)
+            return this.emojisToShowFilter(this.data.emojis[emoji] || emoji)
           })
         }
 
         return isIncluded && !isExcluded && hasEmojis
       })
     },
+    mergedI18n() {
+      return deepMerge(I18N, this.i18n)
+    },
+    idleEmoji() {
+      if (typeof this.emoji == "string") {
+        return new EmojiData(
+          this.emoji, this.skin, this.set, this.data
+        )
+      }
+      return this.emoji
+    }
   },
   created() {
-    let categories = this.mutableData.categories.map(c => {
+    let categories = this.data.categories.map(c => {
       let { id, name, emojis } = c
 
       if (this.emojisToShowFilter) {
