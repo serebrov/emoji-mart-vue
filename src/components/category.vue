@@ -47,7 +47,6 @@
     :set="emojiProps.set"
     :size="emojiProps.size"
     :sheet-size="emojiProps.sheetSize"
-    :force-size="emojiProps.forceSize"
     :tooltip="emojiProps.tooltip"
     :background-image-fn="emojiProps.backgroundImageFn"
     @click="emojiProps.onClick"
@@ -103,7 +102,7 @@ export default {
           let emojiView = new EmojiView(
             emojiObject, this.emojiProps.set, this.emojiProps.native, 
             this.emojiProps.fallback, this.emojiProps.size, 
-            this.emojiProps.forceSize, this.emojiProps.sheetSize, 
+            this.emojiProps.sheetSize, 
             this.emojiProps.backgroundImageFn)
           return { emojiObject, emojiView }
       })
@@ -113,7 +112,7 @@ export default {
     emojiView(emoji) {
       return new EmojiView(
           this.set, this.native, this.fallback,
-          this.size, this.forceSize, this.sheetSize, this.backgroundImageFn)
+          this.size, this.sheetSize, this.backgroundImageFn)
     },
   },
   components: {

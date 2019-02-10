@@ -26,7 +26,7 @@ export default {
     view() {
       return new EmojiView(
           this.emoji, this.set, this.native, this.fallback,
-          this.size, this.forceSize, this.sheetSize, this.backgroundImageFn)
+          this.size, this.sheetSize, this.backgroundImageFn)
     },
     emojiData() {
       return this.emoji._data

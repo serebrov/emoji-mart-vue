@@ -32,20 +32,18 @@ export class EmojiView {
    * native - boolean, whether to render native emoji
    * fallback - fallback function to render missing emoji, optional
    * size - integer, emoji size
-   * forceSize - boolean, whether to force size for native emoji
    * sheetSize - integer, 16, 20, 32, 64 - emoji image sheet size
    * backgroundImageFn - function to get background image url
    */
   constructor(
-    emoji, set, native, fallback, 
-    size, forceSize, sheetSize, backgroundImageFn
+    emoji, set, native, fallback,
+    size, sheetSize, backgroundImageFn
   ) {
     this._emoji = emoji
     this._native = native
     this._set = set
     this._fallback = fallback
     this._size = size
-    this._forceSize = forceSize
     this._sheetSize = sheetSize
     this._backgroundImageFn = backgroundImageFn || function(set, sheetSize) {
       return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`
@@ -100,11 +98,11 @@ export class EmojiView {
       }
     }
     if (this.isNative()) {
-      let styles = { fontSize: this._size + 'px' }
-      if (this.forceSize) {
-        styles.display = 'inline-block'
-        styles.width = this._size + 'px'
-        styles.height = this._size + 'px'
+      let styles = { 
+        fontSize: this._size - 6 + 'px',
+        display: 'inline-block',
+        width: this._size + 'px',
+        height: this._size + 'px'
       }
       return styles
     }

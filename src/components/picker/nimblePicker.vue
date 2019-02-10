@@ -160,7 +160,6 @@ export default {
         size: this.emojiSize,
         set: this.set,
         sheetSize: this.sheetSize,
-        forceSize: this.native,
         tooltip: this.emojiTooltip,
         backgroundImageFn: this.backgroundImageFn,
         onEnter: this.onEmojiEnter.bind(this),

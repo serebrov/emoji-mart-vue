@@ -11,7 +11,6 @@
         :set="emojiProps.set"
         :size="38"
         :sheet-size="emojiProps.sheetSize"
-        :force-size="emojiProps.forceSize"
         :background-image-fn="emojiProps.backgroundImageFn"
       />
     </div>
@@ -37,7 +36,6 @@
         :set="emojiProps.set"
         :size="38"
         :sheet-size="emojiProps.sheetSize"
-        :force-size="emojiProps.forceSize"
         :background-image-fn="emojiProps.backgroundImageFn"
       />
     </div>
