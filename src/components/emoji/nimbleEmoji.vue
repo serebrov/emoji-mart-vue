@@ -25,14 +25,11 @@ export default {
     }
   },
   computed: {
-    parsedData() {
-      return this.data
-    },
     emojiData() {
-      return getData(this.emoji, this.skin, this.set, this.parsedData)
+      return getData(this.emoji, this.skin, this.set, this.data)
     },
     sanitizedData() {
-      return getSanitizedData(this.emoji, this.skin, this.set, this.parsedData)
+      return getSanitizedData(this.emoji, this.skin, this.set, this.data)
     },
     canRender() {
       return this.isCustom || this.isNative || this.hasEmoji || this.fallback
