@@ -72,7 +72,6 @@ import '../../vendor/raf-polyfill'
 import store from '../../utils/store'
 import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar } from '../../utils'
-import { uncompress } from '../../utils/data'
 import { PickerProps } from '../../utils/shared-props'
 import Anchors from '../anchors'
 import Category from '../category'
@@ -136,9 +135,6 @@ export default {
       recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(this.mutableData.emojis[e] || e))
     }
 
-    if (this.data.compressed) {
-      uncompress(this.data)
-    }
     return {
       mutableData: this.data,
       mutableI18n: deepMerge(I18N, this.i18n),
