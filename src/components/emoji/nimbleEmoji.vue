@@ -1,10 +1,7 @@
 <template>
 
-<span v-if="canRender" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
-  <span v-if="isCustom" :title="title" :style="customEmojiStyles"></span>
-  <span v-else-if="isNative" :title="title" :style="nativeEmojiStyles">{{ nativeEmoji }}</span>
-  <span v-else-if="hasEmoji" :title="title" :style="fallbackEmojiStyles"></span>
-  <span v-else>{{ fallbackEmoji }}</span>
+<span v-if="canRender" :title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
+  <span  :class="cssClass" :style="cssStyle">{{content}}</span>
 </span>
 
 </template>
@@ -42,6 +39,48 @@ export default {
     },
     hasEmoji() {
       return this.emojiData['has_img_' + this.set]
+    },
+    emojiType() {
+      if (this.isCustom) {
+        return 'custom';
+      }
+      if (this.isNative) {
+        return 'native';
+      }
+      if (this.hasEmoji) {
+        return 'image';
+      }
+      return 'fallback';
+    },
+    cssClass() {
+        return [
+          'emoji-mart-emoji',
+          'emoji-mart-emoji-set-' + this.set,
+          'emoji-mart-emoji-type-' + this.emojiType
+        ]
+    },
+    cssStyle() {
+      if (this.isCustom) {
+        return this.customEmojiStyles
+      }
+      if (this.isNative) {
+        return this.nativeEmojiStyles
+      }
+      if (this.hasEmoji) {
+        return this.fallbackEmojiStyles
+      }
+    },
+    content() {
+      if (this.isCustom) {
+        return ''
+      }
+      if (this.isNative) {
+        return this.nativeEmoji
+      }
+      if (this.hasEmoji) {
+        return ''
+      }
+      return this.fallbackEmoji
     },
     nativeEmoji() {
       if (this.emojiData.unified) {
