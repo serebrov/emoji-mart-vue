@@ -232,8 +232,10 @@ const customEmojis = [
 The `Picker` doesn’t have to be mounted for you to take advantage of the advanced search results.
 
 ```js
-import { emojiIndex } from 'emoji-mart-vue'
+import { NimbleEmojiIndex, uncompress } from 'emoji-mart-vue'
+import data from '../../../data/all.json'
 
+const emojiIndex = new NimbleEmojiIndex(uncompress(data))
 emojiIndex.search('christmas').map((o) => o.native)
 // => [🎄, 🎅🏼, 🔔, 🎁, ⛄️, ❄️]
 ```
