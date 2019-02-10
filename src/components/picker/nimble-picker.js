@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import store from '../../utils/store'
 import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar } from '../../utils'
-import { uncompress } from '../../utils/data'
 import { PickerPropTypes, PickerDefaultProps } from '../../utils/shared-props'
 
 import { Anchors, Category, Preview, Search } from '..'
@@ -40,10 +39,6 @@ export default class NimblePicker extends React.PureComponent {
       name: 'Search',
       emojis: null,
       anchor: false,
-    }
-
-    if (props.data.compressed) {
-      uncompress(props.data)
     }
 
     this.data = props.data
