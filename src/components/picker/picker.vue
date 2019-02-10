@@ -1,6 +1,7 @@
 <script>
 
 import data from '../../../data/all.json'
+import { uncompress } from '../../utils/data'
 import NimblePicker from './nimblePicker'
 
 import { PickerProps } from '../../utils/shared-props'
@@ -12,7 +13,7 @@ export default {
     data: {
       type: Object,
       default() {
-        return data
+        return uncompress(data)
       }
     }
   },
