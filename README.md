@@ -113,11 +113,11 @@ To use these data files (or any other custom data), use the `NimblePicker` compo
 
 ```js
 import data from 'emoji-mart-vue/data/messenger.json'
-import { NimblePicker } from 'emoji-mart-vue'
+import { NimblePicker, uncompress } from 'emoji-mart-vue'
 ```
 
 ```html
-<nimble-picker set="messenger" :data="data" />
+<nimble-picker set="messenger" :data="uncompress(data)" />
 ```
 
 #### Examples of `emoji` object:
@@ -232,8 +232,10 @@ const customEmojis = [
 The `Picker` doesn’t have to be mounted for you to take advantage of the advanced search results.
 
 ```js
-import { emojiIndex } from 'emoji-mart-vue'
+import { NimbleEmojiIndex, uncompress } from 'emoji-mart-vue'
+import data from '../../../data/all.json'
 
+const emojiIndex = new NimbleEmojiIndex(uncompress(data))
 emojiIndex.search('christmas').map((o) => o.native)
 // => [🎄, 🎅🏼, 🔔, 🎁, ⛄️, ❄️]
 ```
@@ -241,9 +243,9 @@ emojiIndex.search('christmas').map((o) => o.native)
 ### With custom data
 ```js
 import data from 'emoji-mart-vue/data/messenger'
-import { NimbleEmojiIndex } from 'emoji-mart-vue'
+import { NimbleEmojiIndex, uncompress } from 'emoji-mart-vue'
 
-let emojiIndex = new NimbleEmojiIndex(data)
+let emojiIndex = new NimbleEmojiIndex(uncompress(data))
 emojiIndex.search('christmas')
 ```
 

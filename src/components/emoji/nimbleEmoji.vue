@@ -12,7 +12,6 @@
 <script>
 
 import { getData, getSanitizedData, unifiedToNative } from '../../utils'
-import { uncompress } from '../../utils/data'
 import { EmojiProps } from '../../utils/shared-props'
 
 const SHEET_COLUMNS = 52
@@ -27,9 +26,6 @@ export default {
   },
   computed: {
     parsedData() {
-      if (this.data.compressed) {
-        uncompress(this.data)
-      }
       return this.data
     },
     emojiData() {
