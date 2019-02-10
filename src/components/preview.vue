@@ -92,10 +92,8 @@ export default {
   },
   computed: {
     emojiData() {
-      if (this.emoji && this.emoji.custom) {
+      if (this.emoji) {
         return this.emoji
-      } else if (this.emoji) {
-        return getData(this.emoji, null, null, this.data)
       } else {
         return {}
       }

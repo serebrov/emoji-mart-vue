@@ -9,6 +9,9 @@ export default class EmojiData {
     this._data = Object.assign({}, getData(
         emoji, skin, set, data))
     this._sanitized = sanitize(this._data)
+    for (let key in this._sanitized) {
+      this[key] = this._sanitized[key]
+    }
     Object.freeze(this)
   }
 

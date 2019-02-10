@@ -102,13 +102,13 @@ export default {
       return `${x}% ${y}%`
     },
     onClick() {
-      this.$emit('click', this.sanitizedData)
+      this.$emit('click', this.emoji)
     },
     onMouseEnter() {
-      this.$emit('mouseenter', this.sanitizedData)
+      this.$emit('mouseenter', this.emoji)
     },
     onMouseLeave() {
-      this.$emit('mouseleave', this.sanitizedData)
+      this.$emit('mouseleave', this.emoji)
     }
   }
 }
