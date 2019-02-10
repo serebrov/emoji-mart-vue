@@ -26,10 +26,10 @@ export default {
   },
   computed: {
     emojiData() {
-      return getData(this.emoji, this.skin, this.set, this.data)
+      return this.emoji._data
     },
     sanitizedData() {
-      return getSanitizedData(this.emoji, this.skin, this.set, this.data)
+      return this.emoji._sanitized
     },
     canRender() {
       return this.isCustom || this.isNative || this.hasEmoji || this.fallback
