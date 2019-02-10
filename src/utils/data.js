@@ -118,6 +118,7 @@ const uncompress = (data) => {
     emoji.search = buildSearch(emoji)
   }
   data = deepFreeze(data)
+  return data
 }
 
 module.exports = { buildSearch, compress, uncompress }
