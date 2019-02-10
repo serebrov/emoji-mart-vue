@@ -1,7 +1,7 @@
 <template>
 
-<span v-if="canRender" :title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
-  <span  :class="cssClass" :style="cssStyle">{{content}}</span>
+<span v-if="view.canRender()" :title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
+  <span  :class="view.cssClass()" :style="view.cssStyle()">{{content}}</span>
 </span>
 
 </template>
@@ -10,6 +10,7 @@
 
 import { getData, getSanitizedData, unifiedToNative } from '../../utils'
 import { EmojiProps } from '../../utils/shared-props'
+import { EmojiView } from '../../utils/emoji-data'
 
 const SHEET_COLUMNS = 52
 
@@ -22,15 +23,20 @@ export default {
     }
   },
   computed: {
+    view() {
+      return new EmojiView(
+          this.emoji, this.set, this.native, this.fallback,
+          this.size, this.forceSize, this.sheetSize, this.backgroundImageFn)
+    },
     emojiData() {
       return this.emoji._data
     },
     sanitizedData() {
       return this.emoji._sanitized
     },
-    canRender() {
-      return this.isCustom || this.isNative || this.hasEmoji || this.fallback
-    },
+    // canRender() {
+    //   return this.isCustom || this.isNative || this.hasEmoji || this.fallback
+    // },
     isNative() {
       return this.native
     },

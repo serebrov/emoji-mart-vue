@@ -43,7 +43,7 @@
 
 <script>
 
-import EmojiData from '../utils/emoji-data'
+import { EmojiData } from '../utils/emoji-data'
 import NimbleEmoji from './emoji/nimbleEmoji'
 
 /*
