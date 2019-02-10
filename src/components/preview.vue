@@ -11,7 +11,6 @@
         :set="emojiProps.set"
         :size="38"
         :sheet-size="emojiProps.sheetSize"
-        :force-size="emojiProps.forceSize"
         :background-image-fn="emojiProps.backgroundImageFn"
       />
     </div>
@@ -37,7 +36,6 @@
         :set="emojiProps.set"
         :size="38"
         :sheet-size="emojiProps.sheetSize"
-        :force-size="emojiProps.forceSize"
         :background-image-fn="emojiProps.backgroundImageFn"
       />
     </div>
@@ -92,10 +90,8 @@ export default {
   },
   computed: {
     emojiData() {
-      if (this.emoji && this.emoji.custom) {
+      if (this.emoji) {
         return this.emoji
-      } else if (this.emoji) {
-        return getData(this.emoji, null, null, this.data)
       } else {
         return {}
       }

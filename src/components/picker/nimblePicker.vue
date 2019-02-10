@@ -55,7 +55,7 @@
       :data="data"
       :title="title"
       :emoji="previewEmoji"
-      :idle-emoji="emoji"
+      :idle-emoji="idleEmoji"
       :show-skin-tones="showSkinTones"
       :emoji-props="emojiProps"
       :skin-props="skinProps"
@@ -73,6 +73,7 @@ import store from '../../utils/store'
 import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar } from '../../utils'
 import { PickerProps } from '../../utils/shared-props'
+import { EmojiData } from '../../utils/emoji-data'
 import Anchors from '../anchors'
 import Category from '../category'
 import Preview from '../preview'
@@ -159,7 +160,6 @@ export default {
         size: this.emojiSize,
         set: this.set,
         sheetSize: this.sheetSize,
-        forceSize: this.native,
         tooltip: this.emojiTooltip,
         backgroundImageFn: this.backgroundImageFn,
         onEnter: this.onEmojiEnter.bind(this),
@@ -192,6 +192,14 @@ export default {
     },
     mergedI18n() {
       return deepMerge(I18N, this.i18n)
+    },
+    idleEmoji() {
+      if (typeof this.emoji == "string") {
+        return new EmojiData(
+          this.emoji, this.skin, this.set, this.data
+        )
+      }
+      return this.emoji
     }
   },
   created() {
