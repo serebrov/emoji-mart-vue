@@ -76,7 +76,23 @@ const compress = (emoji) => {
   }
 }
 
+function deepFreeze(object) {
+  // Retrieve the property names defined on object
+  var propNames = Object.getOwnPropertyNames(object);
+
+  // Freeze properties before freezing self
+  for (let name of propNames) {
+    let value = object[name];
+    object[name] = value && typeof value === "object" ?
+      deepFreeze(value) : value;
+  }
+  return Object.freeze(object);
+}
+
 const uncompress = (data) => {
+  if (!data.compressed) {
+    return data
+  }
   data.compressed = false
 
   for (let id in data.emojis) {
@@ -101,6 +117,7 @@ const uncompress = (data) => {
 
     emoji.search = buildSearch(emoji)
   }
+  data = deepFreeze(data)
 }
 
 module.exports = { buildSearch, compress, uncompress }
