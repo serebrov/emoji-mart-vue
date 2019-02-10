@@ -24,17 +24,12 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      mutableData: this.data,
-    }
-  },
   computed: {
     emojiData() {
-      return getData(this.emoji, this.skin, this.set, this.mutableData)
+      return getData(this.emoji, this.skin, this.set, this.data)
     },
     sanitizedData() {
-      return getSanitizedData(this.emoji, this.skin, this.set, this.mutableData)
+      return getSanitizedData(this.emoji, this.skin, this.set, this.data)
     },
     canRender() {
       return this.isCustom || this.isNative || this.hasEmoji || this.fallback
