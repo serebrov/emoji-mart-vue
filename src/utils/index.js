@@ -85,7 +85,7 @@ function getData(_emoji, skin, set, data) {
     }
 
     if (data.emojis.hasOwnProperty(emoji)) {
-      emojiData = data.emojis[emoji]
+      emojiData = Object.assign({}, data.emojis[emoji])
     } else {
       return null
     }
@@ -95,7 +95,7 @@ function getData(_emoji, skin, set, data) {
     }
 
     if (data.emojis.hasOwnProperty(emoji.id)) {
-      emojiData = data.emojis[emoji.id]
+      emojiData = Object.assign({}, data.emojis[emoji.id])
       skin || (skin = emoji.skin)
     }
   }
@@ -141,7 +141,7 @@ function getData(_emoji, skin, set, data) {
     emojiData.unified = emojiData.variations.shift()
   }
 
-  return emojiData
+  return Object.freeze(emojiData)
 }
 
 function uniq(arr) {
