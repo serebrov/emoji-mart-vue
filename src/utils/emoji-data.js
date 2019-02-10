@@ -47,7 +47,9 @@ export class EmojiView {
     this._size = size
     this._forceSize = forceSize
     this._sheetSize = sheetSize
-    this._backgroundImageFn = backgroundImageFn
+    this._backgroundImageFn = backgroundImageFn || function(set, sheetSize) {
+      return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`
+    }
   }
 
   canRender() {
@@ -81,7 +83,7 @@ export class EmojiView {
 
   cssClass() {
     return [
-      'emoji-mart-emoji',
+      // 'emoji-mart-emoji',
       'emoji-mart-emoji-set-' + this._set,
       'emoji-mart-emoji-type-' + this.emojiType()
     ]

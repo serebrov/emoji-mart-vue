@@ -53,7 +53,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 
 .emoji-mart-emoji {
   position: relative;

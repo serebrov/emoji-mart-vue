@@ -5,24 +5,17 @@
     <span>{{ i18n.categories[id] }}</span>
   </div>
 
-  <nimble-emoji
-    v-for="emoji in emojiObjects"
-    :key="emoji.id || emoji._key"
-    :data="data"
-    :emoji="emoji"
-    :native="emojiProps.native"
-    :skin="emojiProps.skin"
-    :set="emojiProps.set"
-    :size="emojiProps.size"
-    :sheet-size="emojiProps.sheetSize"
-    :force-size="emojiProps.forceSize"
-    :tooltip="emojiProps.tooltip"
-    :background-image-fn="emojiProps.backgroundImageFn"
-    @click="emojiProps.onClick"
-    @mouseenter="emojiProps.onEnter"
-    @mouseleave="emojiProps.onLeave"
-  />
-
+  <template v-for="{ emojiObject, emojiView} in emojiObjects">
+    <span 
+      v-if="emojiView.canRender()" 
+      :title="emojiObject._data.short_names[0]" 
+      class="emoji-mart-emoji"
+      @mouseenter="emojiProps.onEnter(emojiObject)"
+      @mouseleave="emojiProps.onLeave(emojiObject)"
+      @click="emojiProps.onClick(emojiObject)">
+      <span  :class="emojiView.cssClass()" :style="emojiView.cssStyle()">{{emojiView.content()}}</span>
+    </span>
+  </template>
 
   <div v-if="!hasResults">
     <nimble-emoji
@@ -43,22 +36,29 @@
 
 <script>
 
-import { EmojiData } from '../utils/emoji-data'
+/*
+  <nimble-emoji
+    v-for="emoji in emojiObjects"
+    :key="emoji.id || emoji._key"
+    :data="data"
+    :emoji="emoji"
+    :native="emojiProps.native"
+    :skin="emojiProps.skin"
+    :set="emojiProps.set"
+    :size="emojiProps.size"
+    :sheet-size="emojiProps.sheetSize"
+    :force-size="emojiProps.forceSize"
+    :tooltip="emojiProps.tooltip"
+    :background-image-fn="emojiProps.backgroundImageFn"
+    @click="emojiProps.onClick"
+    @mouseenter="emojiProps.onEnter"
+    @mouseleave="emojiProps.onLeave"
+  />
+*/
+
+import { EmojiData, EmojiView } from '../utils/emoji-data'
 import NimbleEmoji from './emoji/nimbleEmoji'
 
-/*
-
-
-  <template v-for="emoji in emojiObjects">
-    <span 
-      class="emoji-mart-emoji-one"
-      :style="fallbackEmojiStyles(emoji)"
-      @mouseenter="emojiProps.onEnter(emoji.sanitized)"
-      @mouseleave="emojiProps.onLeave(emoji.sanitized)"
-      @click="emojiProps.onClick(emoji.sanitized)">
-    </span>
-  </template>
-*/
 
 export default {
   props: {
@@ -97,22 +97,24 @@ export default {
       return this.emojis.length > 0
     },
     emojiObjects() {
-      return this.emojis.map((emoji) => new EmojiData(
-        emoji, this.emojiProps.skin, this.emojiProps.set, this.data
-      ))
+      return this.emojis.map((emoji) => {
+          let emojiObject = new EmojiData(
+            emoji, this.emojiProps.skin, this.emojiProps.set, this.data)
+          let emojiView = new EmojiView(
+            emojiObject, this.emojiProps.set, this.emojiProps.native, 
+            this.emojiProps.fallback, this.emojiProps.size, 
+            this.emojiProps.forceSize, this.emojiProps.sheetSize, 
+            this.emojiProps.backgroundImageFn)
+          return { emojiObject, emojiView }
+      })
     }
   },
   methods: {
-    fallbackEmojiStyles(emoji) {
-        return {
-          // display: 'inline-block',
-          // width: this.size + 'px',
-          // height: this.size + 'px',
-          // backgroundImage: 'url(' + this.backgroundImageFn(this.set, this.sheetSize) + ')',
-          // backgroundSize: (100 * SHEET_COLUMNS) + '%',
-          backgroundPosition: emoji.getPosition()
-        }
-    }
+    emojiView(emoji) {
+      return new EmojiView(
+          this.set, this.native, this.fallback,
+          this.size, this.forceSize, this.sheetSize, this.backgroundImageFn)
+    },
   },
   components: {
     NimbleEmoji
@@ -192,16 +194,6 @@ export default {
   position: relative;
   text-align: center;
   cursor: default;
-}
-
-.emoji-mart-emoji-one {
-  position: relative;
-  display: inline-block;
-  font-size: 0;
-  display: inline-block; 
-  width: 24px; height: 24px; 
-  background-image: url("https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png"); 
-  background-size: 5200%;
 }
 
 </style>
