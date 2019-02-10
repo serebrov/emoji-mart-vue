@@ -5,23 +5,15 @@
     <span>{{ i18n.categories[id] }}</span>
   </div>
 
-  <nimble-emoji
-    v-for="emoji in emojis"
-    :key="emoji.id || emoji"
-    :data="data"
-    :emoji="emoji"
-    :native="emojiProps.native"
-    :skin="emojiProps.skin"
-    :set="emojiProps.set"
-    :size="emojiProps.size"
-    :sheet-size="emojiProps.sheetSize"
-    :force-size="emojiProps.forceSize"
-    :tooltip="emojiProps.tooltip"
-    :background-image-fn="emojiProps.backgroundImageFn"
-    @click="emojiProps.onClick"
-    @mouseenter="emojiProps.onEnter"
-    @mouseleave="emojiProps.onLeave"
-  />
+  <template v-for="emoji in emojiObjects">
+    <span 
+      class="emoji-mart-emoji-one"
+      :style="fallbackEmojiStyles(emoji)"
+      @mouseenter="emojiProps.onEnter(emoji.sanitized)"
+      @mouseleave="emojiProps.onLeave(emoji.sanitized)"
+      @click="emojiProps.onClick(emoji.sanitized)">
+    </span>
+  </template>
 
   <div v-if="!hasResults">
     <nimble-emoji
@@ -42,7 +34,29 @@
 
 <script>
 
+import EmojiData from '../utils/emoji-data'
 import NimbleEmoji from './emoji/nimbleEmoji'
+
+/*
+
+  <nimble-emoji
+    v-for="emoji in emojiObjects"
+    :key="emoji.id || emoji"
+    :data="data"
+    :emoji="emoji"
+    :native="emojiProps.native"
+    :skin="emojiProps.skin"
+    :set="emojiProps.set"
+    :size="emojiProps.size"
+    :sheet-size="emojiProps.sheetSize"
+    :force-size="emojiProps.forceSize"
+    :tooltip="emojiProps.tooltip"
+    :background-image-fn="emojiProps.backgroundImageFn"
+    @click="emojiProps.onClick"
+    @mouseenter="emojiProps.onEnter"
+    @mouseleave="emojiProps.onLeave"
+  />
+*/
 
 export default {
   props: {
@@ -79,6 +93,23 @@ export default {
     },
     hasResults() {
       return this.emojis.length > 0
+    },
+    emojiObjects() {
+      return this.emojis.map((emoji) => new EmojiData(
+        emoji, this.emojiProps.skin, this.emojiProps.set, this.data
+      ))
+    }
+  },
+  methods: {
+    fallbackEmojiStyles(emoji) {
+        return {
+          // display: 'inline-block',
+          // width: this.size + 'px',
+          // height: this.size + 'px',
+          // backgroundImage: 'url(' + this.backgroundImageFn(this.set, this.sheetSize) + ')',
+          // backgroundSize: (100 * SHEET_COLUMNS) + '%',
+          backgroundPosition: emoji.getPosition()
+        }
     }
   },
   components: {
@@ -159,6 +190,16 @@ export default {
   position: relative;
   text-align: center;
   cursor: default;
+}
+
+.emoji-mart-emoji-one {
+  position: relative;
+  display: inline-block;
+  font-size: 0;
+  display: inline-block; 
+  width: 24px; height: 24px; 
+  background-image: url("https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png"); 
+  background-size: 5200%;
 }
 
 </style>
