@@ -31,23 +31,12 @@ export class EmojiView {
    * set - string, emoji set name
    * native - boolean, whether to render native emoji
    * fallback - fallback function to render missing emoji, optional
-   * size - integer, emoji size
-   * sheetSize - integer, 16, 20, 32, 64 - emoji image sheet size
-   * backgroundImageFn - function to get background image url
    */
-  constructor(
-    emoji, set, native, fallback,
-    size, sheetSize, backgroundImageFn
-  ) {
+  constructor(emoji, set, native, fallback) {
     this._emoji = emoji
     this._native = native
     this._set = set
     this._fallback = fallback
-    this._size = size
-    this._sheetSize = sheetSize
-    this._backgroundImageFn = backgroundImageFn || function(set, sheetSize) {
-      return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`
-    }
   }
 
   canRender() {
@@ -81,7 +70,6 @@ export class EmojiView {
 
   cssClass() {
     return [
-      // 'emoji-mart-emoji',
       'emoji-mart-emoji-set-' + this._set,
       'emoji-mart-emoji-type-' + this.emojiType()
     ]
@@ -90,32 +78,16 @@ export class EmojiView {
   cssStyle() {
     if (this.isCustom()) {
       return {
-        display: 'inline-block',
-        width: this._size + 'px',
-        height: this._size + 'px',
         backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
         backgroundSize: '100%',
       }
     }
-    if (this.isNative()) {
-      let styles = { 
-        fontSize: this._size - 6 + 'px',
-        display: 'inline-block',
-        width: this._size + 'px',
-        height: this._size + 'px'
-      }
-      return styles
-    }
     if (this.hasEmoji()) {
       return {
-        display: 'inline-block',
-        width: this._size + 'px',
-        height: this._size + 'px',
-        backgroundImage: 'url(' + this._backgroundImageFn(this._set, this._sheetSize) + ')',
-        backgroundSize: (100 * SHEET_COLUMNS) + '%',
         backgroundPosition: this._emoji.getPosition()
       }
     }
+    return {}
   }
 
   content() {

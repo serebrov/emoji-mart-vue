@@ -9,9 +9,6 @@
         :native="emojiProps.native"
         :skin="emojiProps.skin"
         :set="emojiProps.set"
-        :size="38"
-        :sheet-size="emojiProps.sheetSize"
-        :background-image-fn="emojiProps.backgroundImageFn"
       />
     </div>
 
@@ -34,9 +31,6 @@
         :native="emojiProps.native"
         :skin="emojiProps.skin"
         :set="emojiProps.set"
-        :size="38"
-        :sheet-size="emojiProps.sheetSize"
-        :background-image-fn="emojiProps.backgroundImageFn"
       />
     </div>
 
