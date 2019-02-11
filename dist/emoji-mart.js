@@ -1486,7 +1486,7 @@ var EmojiView = exports.EmojiView = function () {
   }, {
     key: 'hasEmoji',
     value: function hasEmoji() {
-      return this._emoji._data['has_img_' + this._set];
+      return this._emoji._data && this._emoji._data['has_img_' + this._set];
     }
   }, {
     key: 'emojiType',
@@ -3058,7 +3058,7 @@ var _createClass2 = __webpack_require__(56);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _ = __webpack_require__(17);
+var _index = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3097,7 +3097,7 @@ var NimbleEmojiIndex = function () {
           });
         }
 
-        _this.emojis[id] = (0, _.getSanitizedData)(id, null, null, _this.data);
+        _this.emojis[id] = (0, _index.getSanitizedData)(id, null, null, _this.data);
         _this.originalPool[id] = emojiData;
       };
 
@@ -3128,8 +3128,8 @@ var NimbleEmojiIndex = function () {
         var emojiId = emoji.id || emoji.short_names[0];
 
         if (emojiId && !pool[emojiId]) {
-          pool[emojiId] = (0, _.getData)(emoji, null, null, _this3.data);
-          _this3.emojis[emojiId] = (0, _.getSanitizedData)(emoji, null, null, _this3.data);
+          pool[emojiId] = (0, _index.getData)(emoji, null, null, _this3.data);
+          _this3.emojis[emojiId] = (0, _index.getSanitizedData)(emoji, null, null, _this3.data);
         }
       });
 
@@ -3249,7 +3249,7 @@ var NimbleEmojiIndex = function () {
         });
 
         if (allResults.length > 1) {
-          results = _.intersect.apply(null, allResults);
+          results = _index.intersect.apply(null, allResults);
         } else if (allResults.length) {
           results = allResults[0];
         } else {
