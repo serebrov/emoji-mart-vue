@@ -37,52 +37,34 @@ export class EmojiView {
     this._native = native
     this._set = set
     this._fallback = fallback
+
+    this.canRender = this._canRender()
+    this.cssClass = this._cssClass()
+    this.cssStyle = this._cssStyle()
+    this.content = this._content()
+
+    Object.freeze(this)
   }
 
-  canRender() {
-    return this.isCustom() || this.isNative() || this.hasEmoji() || this._fallback
+  _canRender() {
+    return this._isCustom() || this._isNative() || this._hasEmoji() || this._fallback
   }
 
-  isNative() {
-    return this._native
-  }
-
-  isCustom() {
-    return this._emoji.custom
-  }
-
-  hasEmoji() {
-    return this._emoji._data && this._emoji._data['has_img_' + this._set]
-  }
-
-  emojiType() {
-    if (this.isCustom()) {
-      return 'custom';
-    }
-    if (this.isNative()) {
-      return 'native';
-    }
-    if (this.hasEmoji()) {
-      return 'image';
-    }
-    return 'fallback';
-  }
-
-  cssClass() {
+  _cssClass() {
     return [
-      'emoji-mart-emoji-set-' + this._set,
-      'emoji-mart-emoji-type-' + this.emojiType()
+      'emoji-set-' + this._set,
+      'emoji-type-' + this._emojiType()
     ]
   }
 
-  cssStyle() {
-    if (this.isCustom()) {
+  _cssStyle() {
+    if (this._isCustom()) {
       return {
         backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
         backgroundSize: '100%',
       }
     }
-    if (this.hasEmoji()) {
+    if (this._hasEmoji()) {
       return {
         backgroundPosition: this._emoji.getPosition()
       }
@@ -90,17 +72,42 @@ export class EmojiView {
     return {}
   }
 
-  content() {
-    if (this.isCustom()) {
+  _content() {
+    if (this._isCustom()) {
       return ''
     }
-    if (this.isNative()) {
+    if (this._isNative()) {
       return this._emoji.native
     }
-    if (this.hasEmoji()) {
+    if (this._hasEmoji()) {
       return ''
     }
     return this._fallback ? this._fallback(this._emoji) : null
+  }
+
+  _isNative() {
+    return this._native
+  }
+
+  _isCustom() {
+    return this._emoji.custom
+  }
+
+  _hasEmoji() {
+    return this._emoji._data && this._emoji._data['has_img_' + this._set]
+  }
+
+  _emojiType() {
+    if (this._isCustom()) {
+      return 'custom';
+    }
+    if (this._isNative()) {
+      return 'native';
+    }
+    if (this._hasEmoji()) {
+      return 'image';
+    }
+    return 'fallback';
   }
 
 }

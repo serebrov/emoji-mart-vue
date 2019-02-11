@@ -9,9 +9,10 @@
     <template v-for="set in ['native', 'apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook']">
       <button :key="set" @click="activeSet = set" :disabled="activeSet == set">{{ set }}</button>
     </template>
+    <button @click="toggleVisible">show/hide</button>
   </div>
 
-  <div class="row">
+  <div v-if="isVisible" class="row">
     <picker
       :set="activeSet"
       :native="native"
@@ -65,12 +66,19 @@ export default {
       activeSet: 'native',
       emoji: 'point_up',
       title: 'Pick your emoji…',
-      custom: CUSTOM_EMOJIS
+      custom: CUSTOM_EMOJIS,
+      isVisible: true
     }
   },
   computed: {
     native () {
       return this.activeSet == 'native'
+    }
+  },
+  methods: {
+
+    toggleVisible() {
+      this.isVisible = !this.isVisible
     }
   },
   components: {
