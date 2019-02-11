@@ -2031,22 +2031,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 
 
-/*
-  <nimble-emoji
-    v-for="emoji in emojiObjects"
-    :key="emoji.id || emoji._key"
-    :data="data"
-    :emoji="emoji"
-    :native="emojiProps.native"
-    :skin="emojiProps.skin"
-    :set="emojiProps.set"
-    :tooltip="emojiProps.tooltip"
-    @click="emojiProps.onClick"
-    @mouseenter="emojiProps.onEnter"
-    @mouseleave="emojiProps.onLeave"
-  />
-*/
-
 exports.default = {
   props: {
     data: {
@@ -2091,11 +2075,6 @@ exports.default = {
         var emojiView = new _emojiData.EmojiView(emojiObject, _this.emojiProps.set, _this.emojiProps.native, _this.emojiProps.fallback);
         return { emojiObject: emojiObject, emojiView: emojiView };
       });
-    }
-  },
-  methods: {
-    emojiView: function emojiView(emoji) {
-      return new _emojiData.EmojiView(this.set, this.native, this.fallback);
     }
   },
   components: {
