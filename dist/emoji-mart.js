@@ -396,7 +396,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(35)('wks');
-var uid = __webpack_require__(19);
+var uid = __webpack_require__(20);
 var Symbol = __webpack_require__(5).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
@@ -740,7 +740,7 @@ var _typeof2 = __webpack_require__(57);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
-var _freeze = __webpack_require__(27);
+var _freeze = __webpack_require__(19);
 
 var _freeze2 = _interopRequireDefault(_freeze);
 
@@ -752,7 +752,7 @@ var _assign = __webpack_require__(30);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _data = __webpack_require__(22);
+var _data = __webpack_require__(23);
 
 var _stringFromCodePoint = __webpack_require__(129);
 
@@ -974,6 +974,12 @@ module.exports = {};
 
 /***/ }),
 /* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(93), __esModule: true };
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -984,14 +990,14 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -1002,7 +1008,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1016,7 +1022,7 @@ var _getIterator2 = __webpack_require__(64);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _freeze = __webpack_require__(27);
+var _freeze = __webpack_require__(19);
 
 var _freeze2 = _interopRequireDefault(_freeze);
 
@@ -1173,7 +1179,7 @@ var uncompress = function uncompress(data) {
 module.exports = { buildSearch: buildSearch, compress: compress, uncompress: uncompress };
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1231,7 +1237,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1257,7 +1263,7 @@ exports.default = _Object.assign || function (target) {
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1393,7 +1399,7 @@ exports.EmojiProps = EmojiProps;
 exports.PickerProps = PickerProps;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1404,7 +1410,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.EmojiView = exports.EmojiData = undefined;
 
-var _freeze = __webpack_require__(27);
+var _freeze = __webpack_require__(19);
 
 var _freeze2 = _interopRequireDefault(_freeze);
 
@@ -1466,57 +1472,35 @@ var EmojiView = exports.EmojiView = function () {
     this._native = native;
     this._set = set;
     this._fallback = fallback;
+
+    this.canRender = this._canRender();
+    this.cssClass = this._cssClass();
+    this.cssStyle = this._cssStyle();
+    this.content = this._content();
+
+    (0, _freeze2.default)(this);
   }
 
   (0, _createClass3.default)(EmojiView, [{
-    key: 'canRender',
-    value: function canRender() {
-      return this.isCustom() || this.isNative() || this.hasEmoji() || this._fallback;
+    key: '_canRender',
+    value: function _canRender() {
+      return this._isCustom() || this._isNative() || this._hasEmoji() || this._fallback;
     }
   }, {
-    key: 'isNative',
-    value: function isNative() {
-      return this._native;
+    key: '_cssClass',
+    value: function _cssClass() {
+      return ['emoji-set-' + this._set, 'emoji-type-' + this._emojiType()];
     }
   }, {
-    key: 'isCustom',
-    value: function isCustom() {
-      return this._emoji.custom;
-    }
-  }, {
-    key: 'hasEmoji',
-    value: function hasEmoji() {
-      return this._emoji._data && this._emoji._data['has_img_' + this._set];
-    }
-  }, {
-    key: 'emojiType',
-    value: function emojiType() {
-      if (this.isCustom()) {
-        return 'custom';
-      }
-      if (this.isNative()) {
-        return 'native';
-      }
-      if (this.hasEmoji()) {
-        return 'image';
-      }
-      return 'fallback';
-    }
-  }, {
-    key: 'cssClass',
-    value: function cssClass() {
-      return ['emoji-mart-emoji-set-' + this._set, 'emoji-mart-emoji-type-' + this.emojiType()];
-    }
-  }, {
-    key: 'cssStyle',
-    value: function cssStyle() {
-      if (this.isCustom()) {
+    key: '_cssStyle',
+    value: function _cssStyle() {
+      if (this._isCustom()) {
         return {
           backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
           backgroundSize: '100%'
         };
       }
-      if (this.hasEmoji()) {
+      if (this._hasEmoji()) {
         return {
           backgroundPosition: this._emoji.getPosition()
         };
@@ -1524,28 +1508,51 @@ var EmojiView = exports.EmojiView = function () {
       return {};
     }
   }, {
-    key: 'content',
-    value: function content() {
-      if (this.isCustom()) {
+    key: '_content',
+    value: function _content() {
+      if (this._isCustom()) {
         return '';
       }
-      if (this.isNative()) {
+      if (this._isNative()) {
         return this._emoji.native;
       }
-      if (this.hasEmoji()) {
+      if (this._hasEmoji()) {
         return '';
       }
       return this._fallback ? this._fallback(this._emoji) : null;
     }
+  }, {
+    key: '_isNative',
+    value: function _isNative() {
+      return this._native;
+    }
+  }, {
+    key: '_isCustom',
+    value: function _isCustom() {
+      return this._emoji.custom;
+    }
+  }, {
+    key: '_hasEmoji',
+    value: function _hasEmoji() {
+      return this._emoji._data && this._emoji._data['has_img_' + this._set];
+    }
+  }, {
+    key: '_emojiType',
+    value: function _emojiType() {
+      if (this._isCustom()) {
+        return 'custom';
+      }
+      if (this._isNative()) {
+        return 'native';
+      }
+      if (this._hasEmoji()) {
+        return 'image';
+      }
+      return 'fallback';
+    }
   }]);
   return EmojiView;
 }();
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(93), __esModule: true };
 
 /***/ }),
 /* 28 */
@@ -1626,7 +1633,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(35)('keys');
-var uid = __webpack_require__(19);
+var uid = __webpack_require__(20);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -1920,7 +1927,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_376cda0e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_376cda0e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__ = __webpack_require__(133);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
@@ -1938,12 +1945,12 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-376cda0e"
+var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_376cda0e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_376cda0e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -1981,9 +1988,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _emojiData = __webpack_require__(26);
+var _emojiData = __webpack_require__(27);
 
-var _nimbleEmoji = __webpack_require__(23);
+var _nimbleEmoji = __webpack_require__(24);
 
 var _nimbleEmoji2 = _interopRequireDefault(_nimbleEmoji);
 
@@ -2100,7 +2107,7 @@ exports.default = {
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(19)('meta');
+var META = __webpack_require__(20)('meta');
 var isObject = __webpack_require__(8);
 var has = __webpack_require__(6);
 var setDesc = __webpack_require__(7).f;
@@ -2547,15 +2554,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(24);
+var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
 var _utils = __webpack_require__(17);
 
-var _sharedProps = __webpack_require__(25);
+var _sharedProps = __webpack_require__(26);
 
-var _emojiData = __webpack_require__(26);
+var _emojiData = __webpack_require__(27);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2672,7 +2679,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _nimbleEmoji = __webpack_require__(23);
+var _nimbleEmoji = __webpack_require__(24);
 
 var _nimbleEmoji2 = _interopRequireDefault(_nimbleEmoji);
 
@@ -3288,7 +3295,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(24);
+var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -3296,13 +3303,13 @@ var _all = __webpack_require__(75);
 
 var _all2 = _interopRequireDefault(_all);
 
-var _data = __webpack_require__(22);
+var _data = __webpack_require__(23);
 
-var _nimbleEmoji = __webpack_require__(23);
+var _nimbleEmoji = __webpack_require__(24);
 
 var _nimbleEmoji2 = _interopRequireDefault(_nimbleEmoji);
 
-var _sharedProps = __webpack_require__(25);
+var _sharedProps = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3343,7 +3350,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(24);
+var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -3351,13 +3358,13 @@ var _all = __webpack_require__(75);
 
 var _all2 = _interopRequireDefault(_all);
 
-var _data = __webpack_require__(22);
+var _data = __webpack_require__(23);
 
 var _nimblePicker = __webpack_require__(77);
 
 var _nimblePicker2 = _interopRequireDefault(_nimblePicker);
 
-var _sharedProps = __webpack_require__(25);
+var _sharedProps = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3455,11 +3462,15 @@ var _toConsumableArray2 = __webpack_require__(149);
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
+var _freeze = __webpack_require__(19);
+
+var _freeze2 = _interopRequireDefault(_freeze);
+
 var _getIterator2 = __webpack_require__(64);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _extends2 = __webpack_require__(24);
+var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -3479,9 +3490,9 @@ var _frequently2 = _interopRequireDefault(_frequently);
 
 var _utils = __webpack_require__(17);
 
-var _sharedProps = __webpack_require__(25);
+var _sharedProps = __webpack_require__(26);
 
-var _emojiData = __webpack_require__(26);
+var _emojiData = __webpack_require__(27);
 
 var _anchors = __webpack_require__(44);
 
@@ -3708,7 +3719,7 @@ exports.default = {
       });
     },
     mergedI18n: function mergedI18n() {
-      return (0, _utils.deepMerge)(I18N, this.i18n);
+      return (0, _freeze2.default)((0, _utils.deepMerge)(I18N, this.i18n));
     },
     idleEmoji: function idleEmoji() {
       if (typeof this.emoji == "string") {
@@ -3977,7 +3988,7 @@ var _store = __webpack_require__(43);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _data = __webpack_require__(22);
+var _data = __webpack_require__(23);
 
 var _frequently = __webpack_require__(79);
 
@@ -4054,7 +4065,7 @@ Object.defineProperty(exports, 'Emoji', {
   }
 });
 
-var _nimbleEmoji = __webpack_require__(23);
+var _nimbleEmoji = __webpack_require__(24);
 
 Object.defineProperty(exports, 'NimbleEmoji', {
   enumerable: true,
@@ -4295,13 +4306,13 @@ var content = __webpack_require__(90);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("68685529", content, false, {});
+var update = __webpack_require__(2)("21752ce2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-376cda0e\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./category.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-376cda0e\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./category.vue");
+   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-376cda0e\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./category.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-376cda0e\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./category.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -4319,7 +4330,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-category[data-v-376cda0e] {\n  position: relative;\n}\n.emoji-mart-category-label[data-v-376cda0e] {\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n}\n.emoji-mart-category .emoji-mart-emoji[data-v-376cda0e]:before {\n  z-index: 0;\n  content: \"\";\n  position: absolute;\n  top: 0; left: 0;\n  width: 100%; height: 100%;\n  background-color: #f4f4f4;\n  border-radius: 100%;\n  opacity: 0;\n}\n.emoji-mart-category .emoji-mart-emoji[data-v-376cda0e]:hover:before {\n  opacity: 1;\n}\n.emoji-mart-category-label[data-v-376cda0e] {\n  z-index: 2;\n  position: relative;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n}\n.emoji-mart-category-label span[data-v-376cda0e] {\n  display: block;\n  width: 100%;\n  font-weight: 500;\n  padding: 5px 6px;\n  background-color: #fff;\n  background-color: rgba(255, 255, 255, .95);\n}\n.emoji-mart-no-results[data-v-376cda0e] {\n  font-size: 14px;\n  text-align: center;\n  padding-top: 70px;\n  color: #858585;\n}\n.emoji-mart-no-results .emoji-mart-category-label[data-v-376cda0e] {\n  display: none;\n}\n.emoji-mart-no-results .emoji-mart-no-results-label[data-v-376cda0e] {\n  margin-top: .2em;\n}\n.emoji-mart-no-results .emoji-mart-emoji[data-v-376cda0e]:hover:before {\n  content: none;\n}\n\n", ""]);
+exports.push([module.i, "\n.emoji-mart-category {\n  position: relative;\n}\n.emoji-mart-category-label {\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n}\n.emoji-mart-category .emoji-mart-emoji:hover:before {\n  z-index: 0;\n  content: \"\";\n  position: absolute;\n  top: 0; left: 0;\n  width: 100%; height: 100%;\n  background-color: #f4f4f4;\n  border-radius: 100%;\n  opacity: 0;\n}\n.emoji-mart-category .emoji-mart-emoji:hover:before {\n  opacity: 1;\n}\n.emoji-mart-category-label {\n  z-index: 2;\n  position: relative;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n}\n.emoji-mart-category-label span {\n  display: block;\n  width: 100%;\n  font-weight: 500;\n  padding: 5px 6px;\n  background-color: #fff;\n  background-color: rgba(255, 255, 255, .95);\n}\n.emoji-mart-no-results {\n  font-size: 14px;\n  text-align: center;\n  padding-top: 70px;\n  color: #858585;\n}\n.emoji-mart-no-results .emoji-mart-category-label {\n  display: none;\n}\n.emoji-mart-no-results .emoji-mart-no-results-label {\n  margin-top: .2em;\n}\n.emoji-mart-no-results .emoji-mart-emoji:hover:before {\n  content: none;\n}\n\n", ""]);
 
 // exports
 
@@ -4424,8 +4435,8 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(98) });
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys = __webpack_require__(16);
 var gOPS = __webpack_require__(37);
-var pIE = __webpack_require__(20);
-var toObject = __webpack_require__(21);
+var pIE = __webpack_require__(21);
+var toObject = __webpack_require__(22);
 var IObject = __webpack_require__(53);
 var $assign = Object.assign;
 
@@ -4589,7 +4600,7 @@ module.exports = document && document.documentElement;
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(6);
-var toObject = __webpack_require__(21);
+var toObject = __webpack_require__(22);
 var IE_PROTO = __webpack_require__(34)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -4692,7 +4703,7 @@ var META = __webpack_require__(48).KEY;
 var $fails = __webpack_require__(11);
 var shared = __webpack_require__(35);
 var setToStringTag = __webpack_require__(40);
-var uid = __webpack_require__(19);
+var uid = __webpack_require__(20);
 var wks = __webpack_require__(3);
 var wksExt = __webpack_require__(41);
 var wksDefine = __webpack_require__(42);
@@ -4831,7 +4842,7 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(63).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(20).f = $propertyIsEnumerable;
+  __webpack_require__(21).f = $propertyIsEnumerable;
   __webpack_require__(37).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(39)) {
@@ -4924,7 +4935,7 @@ setToStringTag(global.JSON, 'JSON', true);
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(16);
 var gOPS = __webpack_require__(37);
-var pIE = __webpack_require__(20);
+var pIE = __webpack_require__(21);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -4953,7 +4964,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(20);
+var pIE = __webpack_require__(21);
 var createDesc = __webpack_require__(15);
 var toIObject = __webpack_require__(13);
 var toPrimitive = __webpack_require__(28);
@@ -5010,7 +5021,7 @@ module.exports = __webpack_require__(0).Object.keys;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(21);
+var toObject = __webpack_require__(22);
 var $keys = __webpack_require__(16);
 
 __webpack_require__(29)('keys', function () {
@@ -5184,7 +5195,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-emoji {\n  position: relative;\n  display: inline-block;\n  font-size: 0;\n}\n.emoji-mart-emoji span {\n  display: inline-block;\n  width: 24px;\n  height: 24px;\n}\n.emoji-mart-preview-emoji .emoji-mart-emoji span {\n  width: 38px;\n  height: 38px;\n}\n.emoji-mart-emoji-type-native {\n  font-size: 18px;\n}\n.emoji-mart-emoji-type-image {\n  background-size: 5200%;\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-emojione {\n  background-image: url(\"https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-messenger {\n  background-image: url(\"https://unpkg.com/emoji-datasource-messenger@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-apple {\n  background-image: url(\"https://unpkg.com/emoji-datasource-apple@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-facebook {\n  background-image: url(\"https://unpkg.com/emoji-datasource-facebook@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-google {\n  background-image: url(\"https://unpkg.com/emoji-datasource-google@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-twitter {\n  background-image: url(\"https://unpkg.com/emoji-datasource-twitter@4.0.4/img/emojione/sheets-256/64.png\");\n}\n\n", ""]);
+exports.push([module.i, "\n.emoji-mart-emoji {\n  position: relative;\n  display: inline-block;\n  font-size: 0;\n}\n.emoji-mart-emoji span {\n  display: inline-block;\n  width: 24px;\n  height: 24px;\n}\n.emoji-mart-preview-emoji .emoji-mart-emoji span {\n  width: 38px;\n  height: 38px;\n}\n.emoji-type-native {\n  font-size: 18px;\n}\n.emoji-type-image {\n  background-size: 5200%;\n}\n.emoji-type-image.emoji-set-emojione {\n  background-image: url(\"https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-messenger {\n  background-image: url(\"https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-apple {\n  background-image: url(\"https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-facebook {\n  background-image: url(\"https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-google {\n  background-image: url(\"https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-twitter {\n  background-image: url(\"https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png\");\n}\n\n", ""]);
 
 // exports
 
@@ -5198,7 +5209,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.view.canRender()
+  return _vm.view.canRender
     ? _c(
         "span",
         {
@@ -5211,11 +5222,9 @@ var render = function() {
           }
         },
         [
-          _c(
-            "span",
-            { class: _vm.view.cssClass(), style: _vm.view.cssStyle() },
-            [_vm._v(_vm._s(_vm.view.content()))]
-          )
+          _c("span", { class: _vm.view.cssClass, style: _vm.view.cssStyle }, [
+            _vm._v(_vm._s(_vm.view.content))
+          ])
         ]
       )
     : _vm._e()
@@ -5258,7 +5267,7 @@ var render = function() {
             var emojiObject = ref.emojiObject
             var emojiView = ref.emojiView
             return [
-              emojiView.canRender()
+              emojiView.canRender
                 ? _c(
                     "span",
                     {
@@ -5280,10 +5289,10 @@ var render = function() {
                       _c(
                         "span",
                         {
-                          class: emojiView.cssClass(),
-                          style: emojiView.cssStyle()
+                          class: emojiView.cssClass,
+                          style: emojiView.cssStyle
                         },
-                        [_vm._v(_vm._s(emojiView.content()))]
+                        [_vm._v(_vm._s(emojiView.content))]
                       )
                     ]
                   )
@@ -5904,7 +5913,7 @@ module.exports = __webpack_require__(0).Array.from;
 
 var ctx = __webpack_require__(51);
 var $export = __webpack_require__(14);
-var toObject = __webpack_require__(21);
+var toObject = __webpack_require__(22);
 var call = __webpack_require__(153);
 var isArrayIter = __webpack_require__(154);
 var toLength = __webpack_require__(54);

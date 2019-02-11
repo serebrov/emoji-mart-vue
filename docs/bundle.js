@@ -1511,23 +1511,23 @@ var EmojiView = exports.EmojiView = function () {
   (0, _createClass3.default)(EmojiView, [{
     key: '_canRender',
     value: function _canRender() {
-      return this.isCustom() || this.isNative() || this.hasEmoji() || this._fallback;
+      return this._isCustom() || this._isNative() || this._hasEmoji() || this._fallback;
     }
   }, {
     key: '_cssClass',
     value: function _cssClass() {
-      return ['emoji-set-' + this._set, 'emoji-type-' + this.emojiType()];
+      return ['emoji-set-' + this._set, 'emoji-type-' + this._emojiType()];
     }
   }, {
     key: '_cssStyle',
     value: function _cssStyle() {
-      if (this.isCustom()) {
+      if (this._isCustom()) {
         return {
           backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
           backgroundSize: '100%'
         };
       }
-      if (this.hasEmoji()) {
+      if (this._hasEmoji()) {
         return {
           backgroundPosition: this._emoji.getPosition()
         };
@@ -1537,42 +1537,42 @@ var EmojiView = exports.EmojiView = function () {
   }, {
     key: '_content',
     value: function _content() {
-      if (this.isCustom()) {
+      if (this._isCustom()) {
         return '';
       }
-      if (this.isNative()) {
+      if (this._isNative()) {
         return this._emoji.native;
       }
-      if (this.hasEmoji()) {
+      if (this._hasEmoji()) {
         return '';
       }
       return this._fallback ? this._fallback(this._emoji) : null;
     }
   }, {
-    key: 'isNative',
-    value: function isNative() {
+    key: '_isNative',
+    value: function _isNative() {
       return this._native;
     }
   }, {
-    key: 'isCustom',
-    value: function isCustom() {
+    key: '_isCustom',
+    value: function _isCustom() {
       return this._emoji.custom;
     }
   }, {
-    key: 'hasEmoji',
-    value: function hasEmoji() {
+    key: '_hasEmoji',
+    value: function _hasEmoji() {
       return this._emoji._data && this._emoji._data['has_img_' + this._set];
     }
   }, {
-    key: 'emojiType',
-    value: function emojiType() {
-      if (this.isCustom()) {
+    key: '_emojiType',
+    value: function _emojiType() {
+      if (this._isCustom()) {
         return 'custom';
       }
-      if (this.isNative()) {
+      if (this._isNative()) {
         return 'native';
       }
-      if (this.hasEmoji()) {
+      if (this._hasEmoji()) {
         return 'image';
       }
       return 'fallback';
@@ -2342,22 +2342,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 
 
-/*
-  <nimble-emoji
-    v-for="emoji in emojiObjects"
-    :key="emoji.id || emoji._key"
-    :data="data"
-    :emoji="emoji"
-    :native="emojiProps.native"
-    :skin="emojiProps.skin"
-    :set="emojiProps.set"
-    :tooltip="emojiProps.tooltip"
-    @click="emojiProps.onClick"
-    @mouseenter="emojiProps.onEnter"
-    @mouseleave="emojiProps.onLeave"
-  />
-*/
-
 exports.default = {
   props: {
     data: {
@@ -2402,11 +2386,6 @@ exports.default = {
         var emojiView = new _emojiData.EmojiView(emojiObject, _this.emojiProps.set, _this.emojiProps.native, _this.emojiProps.fallback);
         return { emojiObject: emojiObject, emojiView: emojiView };
       });
-    }
-  },
-  methods: {
-    emojiView: function emojiView(emoji) {
-      return new _emojiData.EmojiView(this.set, this.native, this.fallback);
     }
   },
   components: {
