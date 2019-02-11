@@ -52,7 +52,7 @@ export class EmojiView {
   }
 
   hasEmoji() {
-    return this._emoji._data['has_img_' + this._set]
+    return this._emoji._data && this._emoji._data['has_img_' + this._set]
   }
 
   emojiType() {
