@@ -7,13 +7,13 @@
 
   <template v-for="{ emojiObject, emojiView} in emojiObjects">
     <span 
-      v-if="emojiView.canRender()" 
+      v-if="emojiView.canRender" 
       :title="emojiObject._data.short_names[0]" 
       class="emoji-mart-emoji"
       @mouseenter="emojiProps.onEnter(emojiObject)"
       @mouseleave="emojiProps.onLeave(emojiObject)"
       @click="emojiProps.onClick(emojiObject)">
-      <span  :class="emojiView.cssClass()" :style="emojiView.cssStyle()">{{emojiView.content()}}</span>
+      <span  :class="emojiView.cssClass" :style="emojiView.cssStyle">{{emojiView.content}}</span>
     </span>
   </template>
 
@@ -115,7 +115,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 
 .emoji-mart-category {
   position: relative;
@@ -126,7 +126,7 @@ export default {
   top: 0;
 }
 
-.emoji-mart-category .emoji-mart-emoji:before {
+.emoji-mart-category .emoji-mart-emoji:hover:before {
   z-index: 0;
   content: "";
   position: absolute;
