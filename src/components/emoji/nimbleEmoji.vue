@@ -1,7 +1,7 @@
 <template>
 
-<span v-if="view.canRender()" :title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
-  <span  :class="view.cssClass()" :style="view.cssStyle()">{{view.content()}}</span>
+<span v-if="view.canRender" :title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
+  <span  :class="view.cssClass" :style="view.cssStyle">{{view.content}}</span>
 </span>
 
 </template>
@@ -72,30 +72,30 @@ export default {
   height: 38px;
 }
 
-.emoji-mart-emoji-type-native {
+.emoji-type-native {
   font-size: 18px;
 }
 
-.emoji-mart-emoji-type-image {
+.emoji-type-image {
   background-size: 5200%;
 }
-.emoji-mart-emoji-type-image.emoji-mart-emoji-set-emojione {
+.emoji-type-image.emoji-set-emojione {
   background-image: url("https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png");
 }
-.emoji-mart-emoji-type-image.emoji-mart-emoji-set-messenger {
-  background-image: url("https://unpkg.com/emoji-datasource-messenger@4.0.4/img/emojione/sheets-256/64.png");
+.emoji-type-image.emoji-set-messenger {
+  background-image: url("https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png");
 }
-.emoji-mart-emoji-type-image.emoji-mart-emoji-set-apple {
-  background-image: url("https://unpkg.com/emoji-datasource-apple@4.0.4/img/emojione/sheets-256/64.png");
+.emoji-type-image.emoji-set-apple {
+  background-image: url("https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png");
 }
-.emoji-mart-emoji-type-image.emoji-mart-emoji-set-facebook {
-  background-image: url("https://unpkg.com/emoji-datasource-facebook@4.0.4/img/emojione/sheets-256/64.png");
+.emoji-type-image.emoji-set-facebook {
+  background-image: url("https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png");
 }
-.emoji-mart-emoji-type-image.emoji-mart-emoji-set-google {
-  background-image: url("https://unpkg.com/emoji-datasource-google@4.0.4/img/emojione/sheets-256/64.png");
+.emoji-type-image.emoji-set-google {
+  background-image: url("https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png");
 }
-.emoji-mart-emoji-type-image.emoji-mart-emoji-set-twitter {
-  background-image: url("https://unpkg.com/emoji-datasource-twitter@4.0.4/img/emojione/sheets-256/64.png");
+.emoji-type-image.emoji-set-twitter {
+  background-image: url("https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png");
 }
 
 </style>

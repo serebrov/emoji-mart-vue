@@ -188,7 +188,7 @@ export default {
       })
     },
     mergedI18n() {
-      return deepMerge(I18N, this.i18n)
+      return Object.freeze(deepMerge(I18N, this.i18n))
     },
     idleEmoji() {
       if (typeof this.emoji == "string") {

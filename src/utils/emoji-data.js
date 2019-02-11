@@ -37,10 +37,52 @@ export class EmojiView {
     this._native = native
     this._set = set
     this._fallback = fallback
+
+    this.canRender = this._canRender()
+    this.cssClass = this._cssClass()
+    this.cssStyle = this._cssStyle()
+    this.content = this._content()
+
+    Object.freeze(this)
   }
 
-  canRender() {
+  _canRender() {
     return this.isCustom() || this.isNative() || this.hasEmoji() || this._fallback
+  }
+
+  _cssClass() {
+    return [
+      'emoji-set-' + this._set,
+      'emoji-type-' + this.emojiType()
+    ]
+  }
+
+  _cssStyle() {
+    if (this.isCustom()) {
+      return {
+        backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
+        backgroundSize: '100%',
+      }
+    }
+    if (this.hasEmoji()) {
+      return {
+        backgroundPosition: this._emoji.getPosition()
+      }
+    }
+    return {}
+  }
+
+  _content() {
+    if (this.isCustom()) {
+      return ''
+    }
+    if (this.isNative()) {
+      return this._emoji.native
+    }
+    if (this.hasEmoji()) {
+      return ''
+    }
+    return this._fallback ? this._fallback(this._emoji) : null
   }
 
   isNative() {
@@ -68,39 +110,5 @@ export class EmojiView {
     return 'fallback';
   }
 
-  cssClass() {
-    return [
-      'emoji-mart-emoji-set-' + this._set,
-      'emoji-mart-emoji-type-' + this.emojiType()
-    ]
-  }
-
-  cssStyle() {
-    if (this.isCustom()) {
-      return {
-        backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
-        backgroundSize: '100%',
-      }
-    }
-    if (this.hasEmoji()) {
-      return {
-        backgroundPosition: this._emoji.getPosition()
-      }
-    }
-    return {}
-  }
-
-  content() {
-    if (this.isCustom()) {
-      return ''
-    }
-    if (this.isNative()) {
-      return this._emoji.native
-    }
-    if (this.hasEmoji()) {
-      return ''
-    }
-    return this._fallback ? this._fallback(this._emoji) : null
-  }
 
 }
