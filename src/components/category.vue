@@ -9,11 +9,13 @@
     <span 
       v-if="emojiView.canRender" 
       :title="emojiObject._data.short_names[0]" 
+      :class="emojiView.cssClass" 
+      :style="emojiView.cssStyle"
       class="emoji-mart-emoji"
       @mouseenter="emojiProps.onEnter(emojiObject)"
       @mouseleave="emojiProps.onLeave(emojiObject)"
       @click="emojiProps.onClick(emojiObject)">
-      <span  :class="emojiView.cssClass" :style="emojiView.cssStyle">{{emojiView.content}}</span>
+      {{emojiView.content}}
     </span>
   </template>
 
@@ -103,20 +105,6 @@ export default {
   top: 0;
 }
 
-.emoji-mart-category .emoji-mart-emoji:hover:before {
-  z-index: 0;
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: #f4f4f4;
-  border-radius: 100%;
-  opacity: 0;
-}
-
-.emoji-mart-category .emoji-mart-emoji:hover:before {
-  opacity: 1;
-}
 
 .emoji-mart-category-label {
   z-index: 2;
@@ -150,8 +138,10 @@ export default {
   margin-top: .2em;
 }
 
-.emoji-mart-no-results .emoji-mart-emoji:hover:before {
-  content: none;
+.emoji-mart-category .emoji-mart-emoji:hover {
+  background-color: grey;
+  border-radius: 12px;
+  box-shadow: 0 0 12px 2px grey;
 }
 
 </style>

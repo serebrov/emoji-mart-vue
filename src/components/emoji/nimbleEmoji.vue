@@ -1,7 +1,7 @@
 <template>
 
-<span v-if="view.canRender" :title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
-  <span  :class="view.cssClass" :style="view.cssStyle">{{view.content}}</span>
+<span v-if="view.canRender" :class="view.cssClass" :style="view.cssStyle" :title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
+  {{view.content}}
 </span>
 
 </template>
@@ -59,15 +59,13 @@ export default {
   position: relative;
   display: inline-block;
   font-size: 0;
-}
-
-.emoji-mart-emoji span {
   display: inline-block;
   width: 24px;
   height: 24px;
+  border: 6px;
 }
 
-.emoji-mart-preview-emoji .emoji-mart-emoji span {
+.emoji-mart-preview-emoji .emoji-mart-emoji {
   width: 38px;
   height: 38px;
 }
