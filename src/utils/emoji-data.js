@@ -47,24 +47,24 @@ export class EmojiView {
   }
 
   _canRender() {
-    return this.isCustom() || this.isNative() || this.hasEmoji() || this._fallback
+    return this._isCustom() || this._isNative() || this._hasEmoji() || this._fallback
   }
 
   _cssClass() {
     return [
       'emoji-set-' + this._set,
-      'emoji-type-' + this.emojiType()
+      'emoji-type-' + this._emojiType()
     ]
   }
 
   _cssStyle() {
-    if (this.isCustom()) {
+    if (this._isCustom()) {
       return {
         backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
         backgroundSize: '100%',
       }
     }
-    if (this.hasEmoji()) {
+    if (this._hasEmoji()) {
       return {
         backgroundPosition: this._emoji.getPosition()
       }
@@ -73,42 +73,41 @@ export class EmojiView {
   }
 
   _content() {
-    if (this.isCustom()) {
+    if (this._isCustom()) {
       return ''
     }
-    if (this.isNative()) {
+    if (this._isNative()) {
       return this._emoji.native
     }
-    if (this.hasEmoji()) {
+    if (this._hasEmoji()) {
       return ''
     }
     return this._fallback ? this._fallback(this._emoji) : null
   }
 
-  isNative() {
+  _isNative() {
     return this._native
   }
 
-  isCustom() {
+  _isCustom() {
     return this._emoji.custom
   }
 
-  hasEmoji() {
+  _hasEmoji() {
     return this._emoji._data && this._emoji._data['has_img_' + this._set]
   }
 
-  emojiType() {
-    if (this.isCustom()) {
+  _emojiType() {
+    if (this._isCustom()) {
       return 'custom';
     }
-    if (this.isNative()) {
+    if (this._isNative()) {
       return 'native';
     }
-    if (this.hasEmoji()) {
+    if (this._hasEmoji()) {
       return 'image';
     }
     return 'fallback';
   }
-
 
 }
