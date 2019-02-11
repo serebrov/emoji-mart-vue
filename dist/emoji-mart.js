@@ -1267,12 +1267,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var EmojiProps = {
-  backgroundImageFn: {
-    type: Function,
-    default: function _default(set, sheetSize) {
-      return 'https://unpkg.com/emoji-datasource-' + set + '@' + '4.0.4' + '/img/' + set + '/sheets-256/' + sheetSize + '.png';
-    }
-  },
   native: {
     type: Boolean,
     default: false
@@ -1288,17 +1282,9 @@ var EmojiProps = {
     type: Number,
     default: 1
   },
-  sheetSize: {
-    type: Number,
-    default: 64
-  },
   set: {
     type: String,
     default: 'apple'
-  },
-  size: {
-    type: Number,
-    default: 24
   },
   emoji: {
     type: [String, Object],
@@ -1342,13 +1328,6 @@ var PickerProps = {
   native: {
     type: Boolean,
     default: false
-  },
-  backgroundImageFn: {
-    type: Function
-  },
-  sheetSize: {
-    type: Number,
-    default: 64
   },
   emojisToShowFilter: {
     type: Function
@@ -1479,22 +1458,14 @@ var EmojiView = exports.EmojiView = function () {
    * set - string, emoji set name
    * native - boolean, whether to render native emoji
    * fallback - fallback function to render missing emoji, optional
-   * size - integer, emoji size
-   * sheetSize - integer, 16, 20, 32, 64 - emoji image sheet size
-   * backgroundImageFn - function to get background image url
    */
-  function EmojiView(emoji, set, native, fallback, size, sheetSize, backgroundImageFn) {
+  function EmojiView(emoji, set, native, fallback) {
     (0, _classCallCheck3.default)(this, EmojiView);
 
     this._emoji = emoji;
     this._native = native;
     this._set = set;
     this._fallback = fallback;
-    this._size = size;
-    this._sheetSize = sheetSize;
-    this._backgroundImageFn = backgroundImageFn || function (set, sheetSize) {
-      return 'https://unpkg.com/emoji-datasource-' + set + '@' + '4.0.4' + '/img/' + set + '/sheets-256/' + sheetSize + '.png';
-    };
   }
 
   (0, _createClass3.default)(EmojiView, [{
@@ -1534,41 +1505,23 @@ var EmojiView = exports.EmojiView = function () {
   }, {
     key: 'cssClass',
     value: function cssClass() {
-      return [
-      // 'emoji-mart-emoji',
-      'emoji-mart-emoji-set-' + this._set, 'emoji-mart-emoji-type-' + this.emojiType()];
+      return ['emoji-mart-emoji-set-' + this._set, 'emoji-mart-emoji-type-' + this.emojiType()];
     }
   }, {
     key: 'cssStyle',
     value: function cssStyle() {
       if (this.isCustom()) {
         return {
-          display: 'inline-block',
-          width: this._size + 'px',
-          height: this._size + 'px',
           backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
           backgroundSize: '100%'
         };
       }
-      if (this.isNative()) {
-        var styles = {
-          fontSize: this._size - 6 + 'px',
-          display: 'inline-block',
-          width: this._size + 'px',
-          height: this._size + 'px'
-        };
-        return styles;
-      }
       if (this.hasEmoji()) {
         return {
-          display: 'inline-block',
-          width: this._size + 'px',
-          height: this._size + 'px',
-          backgroundImage: 'url(' + this._backgroundImageFn(this._set, this._sheetSize) + ')',
-          backgroundSize: 100 * SHEET_COLUMNS + '%',
           backgroundPosition: this._emoji.getPosition()
         };
       }
+      return {};
     }
   }, {
     key: 'content',
@@ -2069,9 +2022,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
 
 
 /*
@@ -2083,10 +2033,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     :native="emojiProps.native"
     :skin="emojiProps.skin"
     :set="emojiProps.set"
-    :size="emojiProps.size"
-    :sheet-size="emojiProps.sheetSize"
     :tooltip="emojiProps.tooltip"
-    :background-image-fn="emojiProps.backgroundImageFn"
     @click="emojiProps.onClick"
     @mouseenter="emojiProps.onEnter"
     @mouseleave="emojiProps.onLeave"
@@ -2134,14 +2081,14 @@ exports.default = {
 
       return this.emojis.map(function (emoji) {
         var emojiObject = new _emojiData.EmojiData(emoji, _this.emojiProps.skin, _this.emojiProps.set, _this.data);
-        var emojiView = new _emojiData.EmojiView(emojiObject, _this.emojiProps.set, _this.emojiProps.native, _this.emojiProps.fallback, _this.emojiProps.size, _this.emojiProps.sheetSize, _this.emojiProps.backgroundImageFn);
+        var emojiView = new _emojiData.EmojiView(emojiObject, _this.emojiProps.set, _this.emojiProps.native, _this.emojiProps.fallback);
         return { emojiObject: emojiObject, emojiView: emojiView };
       });
     }
   },
   methods: {
     emojiView: function emojiView(emoji) {
-      return new _emojiData.EmojiView(this.set, this.native, this.fallback, this.size, this.sheetSize, this.backgroundImageFn);
+      return new _emojiData.EmojiView(this.set, this.native, this.fallback);
     }
   },
   components: {
@@ -2631,7 +2578,7 @@ exports.default = {
   }),
   computed: {
     view: function view() {
-      return new _emojiData.EmojiView(this.emoji, this.set, this.native, this.fallback, this.size, this.sheetSize, this.backgroundImageFn);
+      return new _emojiData.EmojiView(this.emoji, this.set, this.native, this.fallback);
     },
     emojiData: function emojiData() {
       return this.emoji._data;
@@ -2787,12 +2734,6 @@ exports.default = {
     Skins: _skins2.default
   }
 }; //
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3734,11 +3675,8 @@ exports.default = {
       return {
         native: this.native,
         skin: this.activeSkin,
-        size: this.emojiSize,
         set: this.set,
-        sheetSize: this.sheetSize,
         tooltip: this.emojiTooltip,
-        backgroundImageFn: this.backgroundImageFn,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this)
@@ -5246,7 +5184,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-emoji {\n  position: relative;\n  display: inline-block;\n  font-size: 0;\n}\n\n", ""]);
+exports.push([module.i, "\n.emoji-mart-emoji {\n  position: relative;\n  display: inline-block;\n  font-size: 0;\n}\n.emoji-mart-emoji span {\n  display: inline-block;\n  width: 24px;\n  height: 24px;\n}\n.emoji-mart-preview-emoji .emoji-mart-emoji span {\n  width: 38px;\n  height: 38px;\n}\n.emoji-mart-emoji-type-native {\n  font-size: 18px;\n}\n.emoji-mart-emoji-type-image {\n  background-size: 5200%;\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-emojione {\n  background-image: url(\"https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-messenger {\n  background-image: url(\"https://unpkg.com/emoji-datasource-messenger@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-apple {\n  background-image: url(\"https://unpkg.com/emoji-datasource-apple@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-facebook {\n  background-image: url(\"https://unpkg.com/emoji-datasource-facebook@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-google {\n  background-image: url(\"https://unpkg.com/emoji-datasource-google@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-mart-emoji-type-image.emoji-mart-emoji-set-twitter {\n  background-image: url(\"https://unpkg.com/emoji-datasource-twitter@4.0.4/img/emojione/sheets-256/64.png\");\n}\n\n", ""]);
 
 // exports
 
@@ -5360,13 +5298,10 @@ var render = function() {
                   _c("nimble-emoji", {
                     attrs: {
                       data: _vm.data,
-                      size: _vm.emojiProps.size,
                       emoji: "sleuth_or_spy",
                       native: _vm.emojiProps.native,
                       skin: _vm.emojiProps.skin,
-                      set: _vm.emojiProps.set,
-                      "sheet-size": _vm.emojiProps.sheetSize,
-                      "background-image-fn": _vm.emojiProps.backgroundImageFn
+                      set: _vm.emojiProps.set
                     }
                   }),
                   _vm._v(" "),
@@ -5550,10 +5485,7 @@ var render = function() {
                     emoji: _vm.emoji,
                     native: _vm.emojiProps.native,
                     skin: _vm.emojiProps.skin,
-                    set: _vm.emojiProps.set,
-                    size: 38,
-                    "sheet-size": _vm.emojiProps.sheetSize,
-                    "background-image-fn": _vm.emojiProps.backgroundImageFn
+                    set: _vm.emojiProps.set
                   }
                 })
               ],
@@ -5607,10 +5539,7 @@ var render = function() {
                     emoji: _vm.idleEmoji,
                     native: _vm.emojiProps.native,
                     skin: _vm.emojiProps.skin,
-                    set: _vm.emojiProps.set,
-                    size: 38,
-                    "sheet-size": _vm.emojiProps.sheetSize,
-                    "background-image-fn": _vm.emojiProps.backgroundImageFn
+                    set: _vm.emojiProps.set
                   }
                 })
               ],
