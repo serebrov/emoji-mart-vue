@@ -8,7 +8,7 @@
 
 <script>
 
-import NimbleEmojiIndex from '../utils/emoji-index/nimble-emoji-index'
+import NimbleEmojiIndex from '../utils/nimble-emoji-index'
 
 export default {
   props: {
