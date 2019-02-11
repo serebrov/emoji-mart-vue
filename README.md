@@ -39,13 +39,11 @@ import { Picker } from 'emoji-mart-vue'
 | **exclude** | | `[]` | Don't load excluded categories. Accepts [I18n categories keys](#i18n). |
 | **custom** | | `[]` | [Custom emojis](#custom-emojis) |
 | **recent** | | | Pass your own frequently used emojis as array of string IDs |
-| **emojiSize** | | `24` | The emoji width and height |
+| **emojiSize** | | `24` | The emoji width and height to calculate picker size; set the size for emoji itself via CSS |
 | **perLine** | | `9` | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. This will set *Frequently Used* length as well (`perLine * 4`) |
 | **i18n** | | [`{…}`](#i18n) | [An object](#i18n) containing localized strings |
 | **native** | | `false` | Renders the native unicode emoji |
 | **set** | | `apple` | The emoji set: `'apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'` |
-| **sheetSize** | | `64` | The emoji [sheet size](#sheet-sizes): `16, 20, 32, 64` |
-| **backgroundImageFn** | | ```((set, sheetSize) => …)``` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
 | **emojisToShowFilter** | | ```((emoji) => true)``` | A Fn to choose whether an emoji should be displayed or not |
 | **showPreview** | | `true` | Display preview section |
 | **showSearch** | | `true` | Display search section |

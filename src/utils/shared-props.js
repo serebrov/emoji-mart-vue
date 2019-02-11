@@ -1,10 +1,4 @@
 const EmojiProps = {
-  backgroundImageFn: {
-    type: Function,
-    default: function(set, sheetSize) {
-      return `https://unpkg.com/emoji-datasource-${set}@${EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`
-    }
-  },
   native: {
     type: Boolean,
     default: false
@@ -20,17 +14,9 @@ const EmojiProps = {
     type: Number,
     default: 1
   },
-  sheetSize: {
-    type: Number,
-    default: 64
-  },
   set: {
     type: String,
     default: 'apple'
-  },
-  size: {
-    type: Number,
-    default: 24
   },
   emoji: {
     type: [String, Object],
@@ -74,13 +60,6 @@ const PickerProps = {
   native: {
     type: Boolean,
     default: false
-  },
-  backgroundImageFn: {
-    type: Function
-  },
-  sheetSize: {
-    type: Number,
-    default: 64
   },
   emojisToShowFilter: {
     type: Function

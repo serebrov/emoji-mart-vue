@@ -157,11 +157,8 @@ export default {
       return {
         native: this.native,
         skin: this.activeSkin,
-        size: this.emojiSize,
         set: this.set,
-        sheetSize: this.sheetSize,
         tooltip: this.emojiTooltip,
-        backgroundImageFn: this.backgroundImageFn,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this)

@@ -20,13 +20,10 @@
   <div v-if="!hasResults">
     <nimble-emoji
       :data="data"
-      :size="emojiProps.size"
       emoji="sleuth_or_spy"
       :native="emojiProps.native"
       :skin="emojiProps.skin"
       :set="emojiProps.set"
-      :sheet-size="emojiProps.sheetSize"
-      :background-image-fn="emojiProps.backgroundImageFn"
     />
     <div class="emoji-mart-no-results-label">{{ i18n.notfound }}</div>
   </div>
@@ -45,10 +42,7 @@
     :native="emojiProps.native"
     :skin="emojiProps.skin"
     :set="emojiProps.set"
-    :size="emojiProps.size"
-    :sheet-size="emojiProps.sheetSize"
     :tooltip="emojiProps.tooltip"
-    :background-image-fn="emojiProps.backgroundImageFn"
     @click="emojiProps.onClick"
     @mouseenter="emojiProps.onEnter"
     @mouseleave="emojiProps.onLeave"
@@ -101,9 +95,8 @@ export default {
             emoji, this.emojiProps.skin, this.emojiProps.set, this.data)
           let emojiView = new EmojiView(
             emojiObject, this.emojiProps.set, this.emojiProps.native, 
-            this.emojiProps.fallback, this.emojiProps.size, 
-            this.emojiProps.sheetSize, 
-            this.emojiProps.backgroundImageFn)
+            this.emojiProps.fallback
+          )
           return { emojiObject, emojiView }
       })
     }
@@ -111,8 +104,8 @@ export default {
   methods: {
     emojiView(emoji) {
       return new EmojiView(
-          this.set, this.native, this.fallback,
-          this.size, this.sheetSize, this.backgroundImageFn)
+          this.set, this.native, this.fallback
+      )
     },
   },
   components: {

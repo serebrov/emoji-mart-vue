@@ -25,8 +25,8 @@ export default {
   computed: {
     view() {
       return new EmojiView(
-          this.emoji, this.set, this.native, this.fallback,
-          this.size, this.sheetSize, this.backgroundImageFn)
+          this.emoji, this.set, this.native, this.fallback
+      )
     },
     emojiData() {
       return this.emoji._data
@@ -59,6 +59,43 @@ export default {
   position: relative;
   display: inline-block;
   font-size: 0;
+}
+
+.emoji-mart-emoji span {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.emoji-mart-preview-emoji .emoji-mart-emoji span {
+  width: 38px;
+  height: 38px;
+}
+
+.emoji-mart-emoji-type-native {
+  font-size: 18px;
+}
+
+.emoji-mart-emoji-type-image {
+  background-size: 5200%;
+}
+.emoji-mart-emoji-type-image.emoji-mart-emoji-set-emojione {
+  background-image: url("https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png");
+}
+.emoji-mart-emoji-type-image.emoji-mart-emoji-set-messenger {
+  background-image: url("https://unpkg.com/emoji-datasource-messenger@4.0.4/img/emojione/sheets-256/64.png");
+}
+.emoji-mart-emoji-type-image.emoji-mart-emoji-set-apple {
+  background-image: url("https://unpkg.com/emoji-datasource-apple@4.0.4/img/emojione/sheets-256/64.png");
+}
+.emoji-mart-emoji-type-image.emoji-mart-emoji-set-facebook {
+  background-image: url("https://unpkg.com/emoji-datasource-facebook@4.0.4/img/emojione/sheets-256/64.png");
+}
+.emoji-mart-emoji-type-image.emoji-mart-emoji-set-google {
+  background-image: url("https://unpkg.com/emoji-datasource-google@4.0.4/img/emojione/sheets-256/64.png");
+}
+.emoji-mart-emoji-type-image.emoji-mart-emoji-set-twitter {
+  background-image: url("https://unpkg.com/emoji-datasource-twitter@4.0.4/img/emojione/sheets-256/64.png");
 }
 
 </style>
