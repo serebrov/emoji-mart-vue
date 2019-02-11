@@ -1,4 +1,4 @@
-import { getData, getSanitizedData, intersect } from '..'
+import { getData, getSanitizedData, intersect } from './index'
 
 export default class NimbleEmojiIndex {
   constructor(data) {
