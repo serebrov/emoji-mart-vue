@@ -33,22 +33,6 @@
 
 <script>
 
-/*
-  <nimble-emoji
-    v-for="emoji in emojiObjects"
-    :key="emoji.id || emoji._key"
-    :data="data"
-    :emoji="emoji"
-    :native="emojiProps.native"
-    :skin="emojiProps.skin"
-    :set="emojiProps.set"
-    :tooltip="emojiProps.tooltip"
-    @click="emojiProps.onClick"
-    @mouseenter="emojiProps.onEnter"
-    @mouseleave="emojiProps.onLeave"
-  />
-*/
-
 import { EmojiData, EmojiView } from '../utils/emoji-data'
 import NimbleEmoji from './emoji/nimbleEmoji'
 
@@ -100,13 +84,6 @@ export default {
           return { emojiObject, emojiView }
       })
     }
-  },
-  methods: {
-    emojiView(emoji) {
-      return new EmojiView(
-          this.set, this.native, this.fallback
-      )
-    },
   },
   components: {
     NimbleEmoji
