@@ -1187,10 +1187,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7f853594_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__ = __webpack_require__(132);
-var disposed = false
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_fa120394_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__ = __webpack_require__(132);
 function injectStyle (ssrContext) {
-  if (disposed) return
   __webpack_require__(130)
 }
 var normalizeComponent = __webpack_require__(4)
@@ -1209,29 +1207,12 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7f853594_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_fa120394_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/emoji/nimbleEmoji.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7f853594", Component.options)
-  } else {
-    hotAPI.reload("data-v-7f853594", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -1810,10 +1791,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_51188104_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_anchors_vue__ = __webpack_require__(88);
-var disposed = false
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_451ecadb_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_anchors_vue__ = __webpack_require__(88);
 function injectStyle (ssrContext) {
-  if (disposed) return
   __webpack_require__(82)
   __webpack_require__(85)
 }
@@ -1828,34 +1807,17 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-51188104"
+var __vue_scopeId__ = "data-v-451ecadb"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_51188104_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_anchors_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_451ecadb_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_anchors_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/anchors.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-51188104", Component.options)
-  } else {
-    hotAPI.reload("data-v-51188104", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -1927,10 +1889,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_376cda0e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__ = __webpack_require__(133);
-var disposed = false
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_c6cd66fa_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__ = __webpack_require__(133);
 function injectStyle (ssrContext) {
-  if (disposed) return
   __webpack_require__(89)
   __webpack_require__(91)
 }
@@ -1950,29 +1910,12 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_376cda0e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_c6cd66fa_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/category.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-376cda0e", Component.options)
-  } else {
-    hotAPI.reload("data-v-376cda0e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -2598,10 +2541,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_35056c30_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_preview_vue__ = __webpack_require__(139);
-var disposed = false
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_aabea648_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_preview_vue__ = __webpack_require__(139);
 function injectStyle (ssrContext) {
-  if (disposed) return
   __webpack_require__(134)
 }
 var normalizeComponent = __webpack_require__(4)
@@ -2615,34 +2556,17 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-35056c30"
+var __vue_scopeId__ = "data-v-aabea648"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_35056c30_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_preview_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_aabea648_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_preview_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/preview.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-35056c30", Component.options)
-  } else {
-    hotAPI.reload("data-v-35056c30", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -2777,10 +2701,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1c614894_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_skins_vue__ = __webpack_require__(138);
-var disposed = false
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_08917036_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_skins_vue__ = __webpack_require__(138);
 function injectStyle (ssrContext) {
-  if (disposed) return
   __webpack_require__(136)
 }
 var normalizeComponent = __webpack_require__(4)
@@ -2794,34 +2716,17 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-1c614894"
+var __vue_scopeId__ = "data-v-08917036"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1c614894_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_skins_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_08917036_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_skins_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/skins.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1c614894", Component.options)
-  } else {
-    hotAPI.reload("data-v-1c614894", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -2883,10 +2788,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4ad41bb8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__ = __webpack_require__(142);
-var disposed = false
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0d2ede27_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__ = __webpack_require__(142);
 function injectStyle (ssrContext) {
-  if (disposed) return
   __webpack_require__(140)
 }
 var normalizeComponent = __webpack_require__(4)
@@ -2900,34 +2803,17 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-4ad41bb8"
+var __vue_scopeId__ = "data-v-0d2ede27"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4ad41bb8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0d2ede27_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/search.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4ad41bb8", Component.options)
-  } else {
-    hotAPI.reload("data-v-4ad41bb8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -3376,10 +3262,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7bc71df8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimblePicker_vue__ = __webpack_require__(158);
-var disposed = false
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_96a4ffca_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimblePicker_vue__ = __webpack_require__(158);
 function injectStyle (ssrContext) {
-  if (disposed) return
   __webpack_require__(145)
   __webpack_require__(147)
 }
@@ -3394,34 +3278,17 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-7bc71df8"
+var __vue_scopeId__ = "data-v-96a4ffca"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7bc71df8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimblePicker_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_96a4ffca_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimblePicker_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/picker/nimblePicker.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7bc71df8", Component.options)
-  } else {
-    hotAPI.reload("data-v-7bc71df8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -4084,20 +3951,7 @@ var content = __webpack_require__(83);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("f00073bc", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-51188104\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./anchors.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-51188104\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./anchors.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("fc477ddc", content, true, {});
 
 /***/ }),
 /* 83 */
@@ -4108,7 +3962,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-anchors[data-v-51188104] {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n  padding: 0 6px;\n  color: #858585;\n  line-height: 0;\n}\n.emoji-mart-anchor[data-v-51188104] {\n  position: relative;\n  display: block;\n  -ms-flex: 1 1 auto;\n      flex: 1 1 auto;\n  text-align: center;\n  padding: 12px 4px;\n  overflow: hidden;\n  transition: color .1s ease-out;\n}\n.emoji-mart-anchor[data-v-51188104]:hover,\n.emoji-mart-anchor-selected[data-v-51188104] {\n  color: #464646;\n}\n.emoji-mart-anchor-selected .emoji-mart-anchor-bar[data-v-51188104] {\n  bottom: 0;\n}\n.emoji-mart-anchor-bar[data-v-51188104] {\n  position: absolute;\n  bottom: -3px; left: 0;\n  width: 100%; height: 3px;\n  background-color: #464646;\n}\n.emoji-mart-anchors i[data-v-51188104] {\n  display: inline-block;\n  width: 100%;\n  max-width: 22px;\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart-anchors[data-v-451ecadb]{display:-ms-flexbox;display:flex;-ms-flex-direction:row;flex-direction:row;-ms-flex-pack:justify;justify-content:space-between;padding:0 6px;color:#858585;line-height:0}.emoji-mart-anchor[data-v-451ecadb]{position:relative;display:block;-ms-flex:1 1 auto;flex:1 1 auto;text-align:center;padding:12px 4px;overflow:hidden;transition:color .1s ease-out}.emoji-mart-anchor-selected[data-v-451ecadb],.emoji-mart-anchor[data-v-451ecadb]:hover{color:#464646}.emoji-mart-anchor-selected .emoji-mart-anchor-bar[data-v-451ecadb]{bottom:0}.emoji-mart-anchor-bar[data-v-451ecadb]{position:absolute;bottom:-3px;left:0;width:100%;height:3px;background-color:#464646}.emoji-mart-anchors i[data-v-451ecadb]{display:inline-block;width:100%;max-width:22px}", ""]);
 
 // exports
 
@@ -4157,20 +4011,7 @@ var content = __webpack_require__(86);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("6f440be0", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-51188104\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./anchors.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-51188104\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./anchors.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("9e122220", content, true, {});
 
 /***/ }),
 /* 86 */
@@ -4181,7 +4022,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-anchors svg {\n  fill: currentColor;\n  max-height: 18px;\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart-anchors svg{fill:currentColor;max-height:18px}", ""]);
 
 // exports
 
@@ -4225,54 +4066,10 @@ exports.default = SVGs;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "emoji-mart-anchors" },
-    _vm._l(_vm.categories, function(category) {
-      return _c(
-        "span",
-        {
-          key: category.id,
-          class: {
-            "emoji-mart-anchor": true,
-            "emoji-mart-anchor-selected": category.id == _vm.activeCategory.id
-          },
-          style: {
-            color: category.id == _vm.activeCategory.id ? _vm.color : ""
-          },
-          attrs: { title: _vm.i18n.categories[category.id] },
-          on: {
-            click: function($event) {
-              _vm.$emit("click", category)
-            }
-          }
-        },
-        [
-          _c("div", { domProps: { innerHTML: _vm._s(_vm.svgs[category.id]) } }),
-          _vm._v(" "),
-          _c("span", {
-            staticClass: "emoji-mart-anchor-bar",
-            style: { backgroundColor: _vm.color }
-          })
-        ]
-      )
-    })
-  )
-}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"emoji-mart-anchors"},_vm._l((_vm.categories),function(category){return _c('span',{key:category.id,class:{ 'emoji-mart-anchor': true, 'emoji-mart-anchor-selected': category.id == _vm.activeCategory.id },style:({ 'color': (category.id == _vm.activeCategory.id ? _vm.color : '') }),attrs:{"title":_vm.i18n.categories[category.id]},on:{"click":function($event){_vm.$emit('click', category)}}},[_c('div',{domProps:{"innerHTML":_vm._s(_vm.svgs[category.id])}}),_vm._v(" "),_c('span',{staticClass:"emoji-mart-anchor-bar",style:({ backgroundColor: _vm.color })})])}))}
 var staticRenderFns = []
-render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-51188104", esExports)
-  }
-}
 
 /***/ }),
 /* 89 */
@@ -4285,20 +4082,7 @@ var content = __webpack_require__(90);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("21752ce2", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-376cda0e\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./category.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-376cda0e\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./category.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("45207412", content, true, {});
 
 /***/ }),
 /* 90 */
@@ -4309,7 +4093,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-category {\n  position: relative;\n}\n.emoji-mart-category-label {\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n}\n.emoji-mart-category .emoji-mart-emoji:hover:before {\n  z-index: 0;\n  content: \"\";\n  position: absolute;\n  top: 0; left: 0;\n  width: 100%; height: 100%;\n  background-color: #f4f4f4;\n  border-radius: 100%;\n  opacity: 0;\n}\n.emoji-mart-category .emoji-mart-emoji:hover:before {\n  opacity: 1;\n}\n.emoji-mart-category-label {\n  z-index: 2;\n  position: relative;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n}\n.emoji-mart-category-label span {\n  display: block;\n  width: 100%;\n  font-weight: 500;\n  padding: 5px 6px;\n  background-color: #fff;\n  background-color: rgba(255, 255, 255, .95);\n}\n.emoji-mart-no-results {\n  font-size: 14px;\n  text-align: center;\n  padding-top: 70px;\n  color: #858585;\n}\n.emoji-mart-no-results .emoji-mart-category-label {\n  display: none;\n}\n.emoji-mart-no-results .emoji-mart-no-results-label {\n  margin-top: .2em;\n}\n.emoji-mart-no-results .emoji-mart-emoji:hover:before {\n  content: none;\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart-category{position:relative}.emoji-mart-category .emoji-mart-emoji:hover:before{z-index:0;content:\"\";position:absolute;top:0;left:0;width:100%;height:100%;background-color:#f4f4f4;border-radius:100%;opacity:0;opacity:1}.emoji-mart-category-label{z-index:2;position:relative;position:-webkit-sticky;position:sticky;top:0}.emoji-mart-category-label span{display:block;width:100%;font-weight:500;padding:5px 6px;background-color:#fff;background-color:hsla(0,0%,100%,.95)}.emoji-mart-no-results{font-size:14px;text-align:center;padding-top:70px;color:#858585}.emoji-mart-no-results .emoji-mart-category-label{display:none}.emoji-mart-no-results .emoji-mart-no-results-label{margin-top:.2em}.emoji-mart-no-results .emoji-mart-emoji:hover:before{content:none}", ""]);
 
 // exports
 
@@ -4325,20 +4109,7 @@ var content = __webpack_require__(92);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("22ab7fc1", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-376cda0e\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./category.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-376cda0e\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./category.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("42b3ce54", content, true, {});
 
 /***/ }),
 /* 92 */
@@ -4349,7 +4120,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-category .emoji-mart-emoji span {\n  z-index: 1;\n  position: relative;\n  text-align: center;\n  cursor: default;\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart-category .emoji-mart-emoji span{z-index:1;position:relative;text-align:center;cursor:default}", ""]);
 
 // exports
 
@@ -5150,20 +4921,7 @@ var content = __webpack_require__(131);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("a5b0a058", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7f853594\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./nimbleEmoji.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7f853594\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./nimbleEmoji.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("00d8a0d8", content, true, {});
 
 /***/ }),
 /* 131 */
@@ -5174,7 +4932,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-emoji {\n  position: relative;\n  display: inline-block;\n  font-size: 0;\n}\n.emoji-mart-emoji span {\n  display: inline-block;\n  width: 24px;\n  height: 24px;\n}\n.emoji-mart-preview-emoji .emoji-mart-emoji span {\n  width: 38px;\n  height: 38px;\n}\n.emoji-type-native {\n  font-size: 18px;\n}\n.emoji-type-image {\n  background-size: 5200%;\n}\n.emoji-type-image.emoji-set-emojione {\n  background-image: url(\"https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-messenger {\n  background-image: url(\"https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-apple {\n  background-image: url(\"https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-facebook {\n  background-image: url(\"https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-google {\n  background-image: url(\"https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-twitter {\n  background-image: url(\"https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png\");\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart-emoji{position:relative;display:inline-block;font-size:0}.emoji-mart-emoji span{display:inline-block;width:24px;height:24px}.emoji-mart-preview-emoji .emoji-mart-emoji span{width:38px;height:38px}.emoji-type-native{font-size:18px}.emoji-type-image{background-size:5200%}.emoji-type-image.emoji-set-emojione{background-image:url(\"https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png\")}.emoji-type-image.emoji-set-messenger{background-image:url(\"https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png\")}.emoji-type-image.emoji-set-apple{background-image:url(\"https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png\")}.emoji-type-image.emoji-set-facebook{background-image:url(\"https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png\")}.emoji-type-image.emoji-set-google{background-image:url(\"https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png\")}.emoji-type-image.emoji-set-twitter{background-image:url(\"https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png\")}", ""]);
 
 // exports
 
@@ -5184,137 +4942,23 @@ exports.push([module.i, "\n.emoji-mart-emoji {\n  position: relative;\n  display
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.view.canRender
-    ? _c(
-        "span",
-        {
-          staticClass: "emoji-mart-emoji",
-          attrs: { title: _vm.title },
-          on: {
-            mouseenter: _vm.onMouseEnter,
-            mouseleave: _vm.onMouseLeave,
-            click: _vm.onClick
-          }
-        },
-        [
-          _c("span", { class: _vm.view.cssClass, style: _vm.view.cssStyle }, [
-            _vm._v(_vm._s(_vm.view.content))
-          ])
-        ]
-      )
-    : _vm._e()
-}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.view.canRender)?_c('span',{staticClass:"emoji-mart-emoji",attrs:{"title":_vm.title},on:{"mouseenter":_vm.onMouseEnter,"mouseleave":_vm.onMouseLeave,"click":_vm.onClick}},[_c('span',{class:_vm.view.cssClass,style:(_vm.view.cssStyle)},[_vm._v(_vm._s(_vm.view.content))])]):_vm._e()}
 var staticRenderFns = []
-render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7f853594", esExports)
-  }
-}
 
 /***/ }),
 /* 133 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.isVisible && (_vm.isSearch || _vm.hasResults)
-    ? _c(
-        "div",
-        {
-          class: {
-            "emoji-mart-category": true,
-            "emoji-mart-no-results": !_vm.hasResults
-          }
-        },
-        [
-          _c("div", { staticClass: "emoji-mart-category-label" }, [
-            _c("span", [_vm._v(_vm._s(_vm.i18n.categories[_vm.id]))])
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.emojiObjects, function(ref) {
-            var emojiObject = ref.emojiObject
-            var emojiView = ref.emojiView
-            return [
-              emojiView.canRender
-                ? _c(
-                    "span",
-                    {
-                      staticClass: "emoji-mart-emoji",
-                      attrs: { title: emojiObject._data.short_names[0] },
-                      on: {
-                        mouseenter: function($event) {
-                          _vm.emojiProps.onEnter(emojiObject)
-                        },
-                        mouseleave: function($event) {
-                          _vm.emojiProps.onLeave(emojiObject)
-                        },
-                        click: function($event) {
-                          _vm.emojiProps.onClick(emojiObject)
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          class: emojiView.cssClass,
-                          style: emojiView.cssStyle
-                        },
-                        [_vm._v(_vm._s(emojiView.content))]
-                      )
-                    ]
-                  )
-                : _vm._e()
-            ]
-          }),
-          _vm._v(" "),
-          !_vm.hasResults
-            ? _c(
-                "div",
-                [
-                  _c("nimble-emoji", {
-                    attrs: {
-                      data: _vm.data,
-                      emoji: "sleuth_or_spy",
-                      native: _vm.emojiProps.native,
-                      skin: _vm.emojiProps.skin,
-                      set: _vm.emojiProps.set
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "emoji-mart-no-results-label" }, [
-                    _vm._v(_vm._s(_vm.i18n.notfound))
-                  ])
-                ],
-                1
-              )
-            : _vm._e()
-        ],
-        2
-      )
-    : _vm._e()
-}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.isVisible && (_vm.isSearch || _vm.hasResults))?_c('div',{class:{ 'emoji-mart-category': true, 'emoji-mart-no-results': !_vm.hasResults }},[_c('div',{staticClass:"emoji-mart-category-label"},[_c('span',[_vm._v(_vm._s(_vm.i18n.categories[_vm.id]))])]),_vm._v(" "),_vm._l((_vm.emojiObjects),function(ref){
+var emojiObject = ref.emojiObject;
+var emojiView = ref.emojiView;
+return [(emojiView.canRender)?_c('span',{staticClass:"emoji-mart-emoji",attrs:{"title":emojiObject._data.short_names[0]},on:{"mouseenter":function($event){_vm.emojiProps.onEnter(emojiObject)},"mouseleave":function($event){_vm.emojiProps.onLeave(emojiObject)},"click":function($event){_vm.emojiProps.onClick(emojiObject)}}},[_c('span',{class:emojiView.cssClass,style:(emojiView.cssStyle)},[_vm._v(_vm._s(emojiView.content))])]):_vm._e()]}),_vm._v(" "),(!_vm.hasResults)?_c('div',[_c('nimble-emoji',{attrs:{"data":_vm.data,"emoji":"sleuth_or_spy","native":_vm.emojiProps.native,"skin":_vm.emojiProps.skin,"set":_vm.emojiProps.set}}),_vm._v(" "),_c('div',{staticClass:"emoji-mart-no-results-label"},[_vm._v(_vm._s(_vm.i18n.notfound))])],1):_vm._e()],2):_vm._e()}
 var staticRenderFns = []
-render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-376cda0e", esExports)
-  }
-}
 
 /***/ }),
 /* 134 */
@@ -5327,20 +4971,7 @@ var content = __webpack_require__(135);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("781b545a", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-35056c30\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./preview.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-35056c30\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./preview.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("6e436606", content, true, {});
 
 /***/ }),
 /* 135 */
@@ -5351,7 +4982,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-preview[data-v-35056c30] {\n  position: relative;\n  height: 70px;\n}\n.emoji-mart-preview-emoji[data-v-35056c30],\n.emoji-mart-preview-data[data-v-35056c30],\n.emoji-mart-preview-skins[data-v-35056c30] {\n  position: absolute;\n  top: 50%;\n  -ms-transform: translateY(-50%);\n      transform: translateY(-50%);\n}\n.emoji-mart-preview-emoji[data-v-35056c30] {\n  left: 12px;\n}\n.emoji-mart-preview-data[data-v-35056c30] {\n  left: 68px; right: 12px;\n  word-break: break-all;\n}\n.emoji-mart-preview-skins[data-v-35056c30] {\n  right: 30px;\n  text-align: right;\n}\n.emoji-mart-preview-name[data-v-35056c30] {\n  font-size: 14px;\n}\n.emoji-mart-preview-shortname[data-v-35056c30] {\n  font-size: 12px;\n  color: #888;\n}\n.emoji-mart-preview-shortname + .emoji-mart-preview-shortname[data-v-35056c30],\n.emoji-mart-preview-shortname + .emoji-mart-preview-emoticon[data-v-35056c30],\n.emoji-mart-preview-emoticon + .emoji-mart-preview-emoticon[data-v-35056c30] {\n  margin-left: .5em;\n}\n.emoji-mart-preview-emoticon[data-v-35056c30] {\n  font-size: 11px;\n  color: #bbb;\n}\n.emoji-mart-title span[data-v-35056c30] {\n  display: inline-block;\n  vertical-align: middle;\n}\n.emoji-mart-title .emoji-mart-emoji[data-v-35056c30] {\n  padding: 0;\n}\n.emoji-mart-title-label[data-v-35056c30] {\n  color: #999A9C;\n  font-size: 21px;\n  font-weight: 300;\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart-preview[data-v-aabea648]{position:relative;height:70px}.emoji-mart-preview-data[data-v-aabea648],.emoji-mart-preview-emoji[data-v-aabea648],.emoji-mart-preview-skins[data-v-aabea648]{position:absolute;top:50%;-ms-transform:translateY(-50%);transform:translateY(-50%)}.emoji-mart-preview-emoji[data-v-aabea648]{left:12px}.emoji-mart-preview-data[data-v-aabea648]{left:68px;right:12px;word-break:break-all}.emoji-mart-preview-skins[data-v-aabea648]{right:30px;text-align:right}.emoji-mart-preview-name[data-v-aabea648]{font-size:14px}.emoji-mart-preview-shortname[data-v-aabea648]{font-size:12px;color:#888}.emoji-mart-preview-emoticon+.emoji-mart-preview-emoticon[data-v-aabea648],.emoji-mart-preview-shortname+.emoji-mart-preview-emoticon[data-v-aabea648],.emoji-mart-preview-shortname+.emoji-mart-preview-shortname[data-v-aabea648]{margin-left:.5em}.emoji-mart-preview-emoticon[data-v-aabea648]{font-size:11px;color:#bbb}.emoji-mart-title span[data-v-aabea648]{display:inline-block;vertical-align:middle}.emoji-mart-title .emoji-mart-emoji[data-v-aabea648]{padding:0}.emoji-mart-title-label[data-v-aabea648]{color:#999a9c;font-size:21px;font-weight:300}", ""]);
 
 // exports
 
@@ -5367,20 +4998,7 @@ var content = __webpack_require__(137);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("2c18b74e", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1c614894\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./skins.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1c614894\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./skins.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("18dc0586", content, true, {});
 
 /***/ }),
 /* 137 */
@@ -5391,7 +5009,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-skin-swatches[data-v-1c614894] {\n  font-size: 0;\n  padding: 2px 0;\n  border: 1px solid #d9d9d9;\n  border-radius: 12px;\n  background-color: #fff;\n}\n.emoji-mart-skin-swatches-opened .emoji-mart-skin-swatch[data-v-1c614894] {\n  width: 16px;\n  padding: 0 2px;\n}\n.emoji-mart-skin-swatches-opened .emoji-mart-skin-swatch-selected[data-v-1c614894]:after {\n  opacity: .75;\n}\n.emoji-mart-skin-swatch[data-v-1c614894] {\n  display: inline-block;\n  width: 0;\n  vertical-align: middle;\n  transition-property: width, padding;\n  transition-duration: .125s;\n  transition-timing-function: ease-out;\n}\n.emoji-mart-skin-swatch[data-v-1c614894]:nth-child(1) { transition-delay: 0s\n}\n.emoji-mart-skin-swatch[data-v-1c614894]:nth-child(2) { transition-delay: .03s\n}\n.emoji-mart-skin-swatch[data-v-1c614894]:nth-child(3) { transition-delay: .06s\n}\n.emoji-mart-skin-swatch[data-v-1c614894]:nth-child(4) { transition-delay: .09s\n}\n.emoji-mart-skin-swatch[data-v-1c614894]:nth-child(5) { transition-delay: .12s\n}\n.emoji-mart-skin-swatch[data-v-1c614894]:nth-child(6) { transition-delay: .15s\n}\n.emoji-mart-skin-swatch-selected[data-v-1c614894] {\n  position: relative;\n  width: 16px;\n  padding: 0 2px;\n}\n.emoji-mart-skin-swatch-selected[data-v-1c614894]:after {\n  content: \"\";\n  position: absolute;\n  top: 50%; left: 50%;\n  width: 4px; height: 4px;\n  margin: -2px 0 0 -2px;\n  background-color: #fff;\n  border-radius: 100%;\n  pointer-events: none;\n  opacity: 0;\n  transition: opacity .2s ease-out;\n}\n.emoji-mart-skin[data-v-1c614894] {\n  display: inline-block;\n  width: 100%; padding-top: 100%;\n  max-width: 12px;\n  border-radius: 100%;\n}\n.emoji-mart-skin-tone-1[data-v-1c614894] { background-color: #ffc93a\n}\n.emoji-mart-skin-tone-2[data-v-1c614894] { background-color: #fadcbc\n}\n.emoji-mart-skin-tone-3[data-v-1c614894] { background-color: #e0bb95\n}\n.emoji-mart-skin-tone-4[data-v-1c614894] { background-color: #bf8f68\n}\n.emoji-mart-skin-tone-5[data-v-1c614894] { background-color: #9b643d\n}\n.emoji-mart-skin-tone-6[data-v-1c614894] { background-color: #594539\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart-skin-swatches[data-v-08917036]{font-size:0;padding:2px 0;border:1px solid #d9d9d9;border-radius:12px;background-color:#fff}.emoji-mart-skin-swatches-opened .emoji-mart-skin-swatch[data-v-08917036]{width:16px;padding:0 2px}.emoji-mart-skin-swatches-opened .emoji-mart-skin-swatch-selected[data-v-08917036]:after{opacity:.75}.emoji-mart-skin-swatch[data-v-08917036]{display:inline-block;width:0;vertical-align:middle;transition-property:width,padding;transition-duration:.125s;transition-timing-function:ease-out}.emoji-mart-skin-swatch[data-v-08917036]:first-child{transition-delay:0s}.emoji-mart-skin-swatch[data-v-08917036]:nth-child(2){transition-delay:.03s}.emoji-mart-skin-swatch[data-v-08917036]:nth-child(3){transition-delay:.06s}.emoji-mart-skin-swatch[data-v-08917036]:nth-child(4){transition-delay:.09s}.emoji-mart-skin-swatch[data-v-08917036]:nth-child(5){transition-delay:.12s}.emoji-mart-skin-swatch[data-v-08917036]:nth-child(6){transition-delay:.15s}.emoji-mart-skin-swatch-selected[data-v-08917036]{position:relative;width:16px;padding:0 2px}.emoji-mart-skin-swatch-selected[data-v-08917036]:after{content:\"\";position:absolute;top:50%;left:50%;width:4px;height:4px;margin:-2px 0 0 -2px;background-color:#fff;border-radius:100%;pointer-events:none;opacity:0;transition:opacity .2s ease-out}.emoji-mart-skin[data-v-08917036]{display:inline-block;width:100%;padding-top:100%;max-width:12px;border-radius:100%}.emoji-mart-skin-tone-1[data-v-08917036]{background-color:#ffc93a}.emoji-mart-skin-tone-2[data-v-08917036]{background-color:#fadcbc}.emoji-mart-skin-tone-3[data-v-08917036]{background-color:#e0bb95}.emoji-mart-skin-tone-4[data-v-08917036]{background-color:#bf8f68}.emoji-mart-skin-tone-5[data-v-08917036]{background-color:#9b643d}.emoji-mart-skin-tone-6[data-v-08917036]{background-color:#594539}", ""]);
 
 // exports
 
@@ -5401,177 +5019,20 @@ exports.push([module.i, "\n.emoji-mart-skin-swatches[data-v-1c614894] {\n  font-
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      class: {
-        "emoji-mart-skin-swatches": true,
-        "emoji-mart-skin-swatches-opened": _vm.opened
-      }
-    },
-    _vm._l(6, function(skinTone) {
-      return _c(
-        "span",
-        {
-          key: skinTone,
-          class: {
-            "emoji-mart-skin-swatch": true,
-            "emoji-mart-skin-swatch-selected": _vm.skin == skinTone
-          }
-        },
-        [
-          _c("span", {
-            class: "emoji-mart-skin emoji-mart-skin-tone-" + skinTone,
-            on: {
-              click: function($event) {
-                _vm.onClick(skinTone)
-              }
-            }
-          })
-        ]
-      )
-    })
-  )
-}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'emoji-mart-skin-swatches': true, 'emoji-mart-skin-swatches-opened': _vm.opened }},_vm._l((6),function(skinTone){return _c('span',{key:skinTone,class:{ 'emoji-mart-skin-swatch': true, 'emoji-mart-skin-swatch-selected': _vm.skin == skinTone }},[_c('span',{class:'emoji-mart-skin emoji-mart-skin-tone-' + skinTone,on:{"click":function($event){_vm.onClick(skinTone)}}})])}))}
 var staticRenderFns = []
-render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1c614894", esExports)
-  }
-}
 
 /***/ }),
 /* 139 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "emoji-mart-preview" },
-    [
-      _vm.emoji
-        ? [
-            _c(
-              "div",
-              { staticClass: "emoji-mart-preview-emoji" },
-              [
-                _c("nimble-emoji", {
-                  attrs: {
-                    data: _vm.data,
-                    emoji: _vm.emoji,
-                    native: _vm.emojiProps.native,
-                    skin: _vm.emojiProps.skin,
-                    set: _vm.emojiProps.set
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "emoji-mart-preview-data" }, [
-              _c("div", { staticClass: "emoji-mart-preview-name" }, [
-                _vm._v(_vm._s(_vm.emoji.name))
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "emoji-mart-preview-shortnames" },
-                _vm._l(_vm.emojiShortNames, function(shortName) {
-                  return _c(
-                    "span",
-                    {
-                      key: shortName,
-                      staticClass: "emoji-mart-preview-shortname"
-                    },
-                    [_vm._v(":" + _vm._s(shortName) + ":")]
-                  )
-                })
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "emoji-mart-preview-emoticons" },
-                _vm._l(_vm.emojiEmoticons, function(emoticon) {
-                  return _c(
-                    "span",
-                    {
-                      key: emoticon,
-                      staticClass: "emoji-mart-preview-emoticon"
-                    },
-                    [_vm._v(_vm._s(emoticon))]
-                  )
-                })
-              )
-            ])
-          ]
-        : [
-            _c(
-              "div",
-              { staticClass: "emoji-mart-preview-emoji" },
-              [
-                _c("nimble-emoji", {
-                  attrs: {
-                    data: _vm.data,
-                    emoji: _vm.idleEmoji,
-                    native: _vm.emojiProps.native,
-                    skin: _vm.emojiProps.skin,
-                    set: _vm.emojiProps.set
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "emoji-mart-preview-data" }, [
-              _c("span", { staticClass: "emoji-mart-title-label" }, [
-                _vm._v(_vm._s(_vm.title))
-              ])
-            ]),
-            _vm._v(" "),
-            _vm.showSkinTones
-              ? _c(
-                  "div",
-                  { staticClass: "emoji-mart-preview-skins" },
-                  [
-                    _c("skins", {
-                      attrs: { skin: _vm.skinProps.skin },
-                      on: {
-                        change: function($event) {
-                          _vm.$emit("change", $event)
-                        }
-                      }
-                    })
-                  ],
-                  1
-                )
-              : _vm._e()
-          ]
-    ],
-    2
-  )
-}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"emoji-mart-preview"},[(_vm.emoji)?[_c('div',{staticClass:"emoji-mart-preview-emoji"},[_c('nimble-emoji',{attrs:{"data":_vm.data,"emoji":_vm.emoji,"native":_vm.emojiProps.native,"skin":_vm.emojiProps.skin,"set":_vm.emojiProps.set}})],1),_vm._v(" "),_c('div',{staticClass:"emoji-mart-preview-data"},[_c('div',{staticClass:"emoji-mart-preview-name"},[_vm._v(_vm._s(_vm.emoji.name))]),_vm._v(" "),_c('div',{staticClass:"emoji-mart-preview-shortnames"},_vm._l((_vm.emojiShortNames),function(shortName){return _c('span',{key:shortName,staticClass:"emoji-mart-preview-shortname"},[_vm._v(":"+_vm._s(shortName)+":")])})),_vm._v(" "),_c('div',{staticClass:"emoji-mart-preview-emoticons"},_vm._l((_vm.emojiEmoticons),function(emoticon){return _c('span',{key:emoticon,staticClass:"emoji-mart-preview-emoticon"},[_vm._v(_vm._s(emoticon))])}))])]:[_c('div',{staticClass:"emoji-mart-preview-emoji"},[_c('nimble-emoji',{attrs:{"data":_vm.data,"emoji":_vm.idleEmoji,"native":_vm.emojiProps.native,"skin":_vm.emojiProps.skin,"set":_vm.emojiProps.set}})],1),_vm._v(" "),_c('div',{staticClass:"emoji-mart-preview-data"},[_c('span',{staticClass:"emoji-mart-title-label"},[_vm._v(_vm._s(_vm.title))])]),_vm._v(" "),(_vm.showSkinTones)?_c('div',{staticClass:"emoji-mart-preview-skins"},[_c('skins',{attrs:{"skin":_vm.skinProps.skin},on:{"change":function($event){_vm.$emit('change', $event)}}})],1):_vm._e()]],2)}
 var staticRenderFns = []
-render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-35056c30", esExports)
-  }
-}
 
 /***/ }),
 /* 140 */
@@ -5584,20 +5045,7 @@ var content = __webpack_require__(141);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("3ed651de", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ad41bb8\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./search.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ad41bb8\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./search.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("277c64b4", content, true, {});
 
 /***/ }),
 /* 141 */
@@ -5608,7 +5056,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-search[data-v-4ad41bb8] {\n  margin-top: 6px;\n  padding: 0 6px;\n}\n.emoji-mart-search input[data-v-4ad41bb8] {\n  font-size: 16px;\n  display: block;\n  width: 100%;\n  padding: .2em .6em;\n  border-radius: 25px;\n  border: 1px solid #d9d9d9;\n  outline: 0;\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart-search[data-v-0d2ede27]{margin-top:6px;padding:0 6px}.emoji-mart-search input[data-v-0d2ede27]{font-size:16px;display:block;width:100%;padding:.2em .6em;border-radius:25px;border:1px solid #d9d9d9;outline:0}", ""]);
 
 // exports
 
@@ -5618,43 +5066,10 @@ exports.push([module.i, "\n.emoji-mart-search[data-v-4ad41bb8] {\n  margin-top: 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "emoji-mart-search" }, [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.value,
-          expression: "value"
-        }
-      ],
-      attrs: { type: "text", placeholder: _vm.i18n.search },
-      domProps: { value: _vm.value },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.value = $event.target.value
-        }
-      }
-    })
-  ])
-}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"emoji-mart-search"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.value),expression:"value"}],attrs:{"type":"text","placeholder":_vm.i18n.search},domProps:{"value":(_vm.value)},on:{"input":function($event){if($event.target.composing){ return; }_vm.value=$event.target.value}}})])}
 var staticRenderFns = []
-render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4ad41bb8", esExports)
-  }
-}
 
 /***/ }),
 /* 143 */
@@ -5665,7 +5080,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
 
@@ -5688,23 +5102,6 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/emoji/emoji.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-924ece46", Component.options)
-  } else {
-    hotAPI.reload("data-v-924ece46", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -5718,7 +5115,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
 
@@ -5741,23 +5137,6 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/components/picker/picker.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-344c59cf", Component.options)
-  } else {
-    hotAPI.reload("data-v-344c59cf", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -5773,20 +5152,7 @@ var content = __webpack_require__(146);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("2203165e", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7bc71df8\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./nimblePicker.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7bc71df8\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./nimblePicker.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("b0847a58", content, true, {});
 
 /***/ }),
 /* 146 */
@@ -5797,7 +5163,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart,\n.emoji-mart * {\n  box-sizing: border-box;\n  line-height: 1.15;\n}\n.emoji-mart .emoji-mart-emoji {\n  padding: 6px;\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart,.emoji-mart *{box-sizing:border-box;line-height:1.15}.emoji-mart .emoji-mart-emoji{padding:6px}", ""]);
 
 // exports
 
@@ -5813,20 +5179,7 @@ var content = __webpack_require__(148);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("28284c0a", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7bc71df8\",\"scoped\":true,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./nimblePicker.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7bc71df8\",\"scoped\":true,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./nimblePicker.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+var update = __webpack_require__(2)("5e4d80d0", content, true, {});
 
 /***/ }),
 /* 148 */
@@ -5837,7 +5190,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart[data-v-7bc71df8] {\n  font-family: -apple-system, BlinkMacSystemFont, \"Helvetica Neue\", sans-serif;\n  font-size: 16px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  height: 420px;\n  color: #222427;\n  border: 1px solid #d9d9d9;\n  border-radius: 5px;\n  background: #fff;\n}\n.emoji-mart-bar[data-v-7bc71df8] {\n  border: 0 solid #d9d9d9;\n}\n.emoji-mart-bar[data-v-7bc71df8]:first-child {\n  border-bottom-width: 1px;\n  border-top-left-radius: 5px;\n  border-top-right-radius: 5px;\n}\n.emoji-mart-bar[data-v-7bc71df8]:last-child {\n  border-top-width: 1px;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n}\n.emoji-mart-scroll[data-v-7bc71df8] {\n  position: relative;\n  overflow-y: scroll;\n  -ms-flex: 1;\n      flex: 1;\n  padding: 0 6px 6px 6px;\n  z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */\n  will-change: transform; /* avoids \"repaints on scroll\" in mobile Chrome */\n  -webkit-overflow-scrolling: touch;\n}\n\n", ""]);
+exports.push([module.i, ".emoji-mart[data-v-96a4ffca]{font-family:-apple-system,BlinkMacSystemFont,Helvetica Neue,sans-serif;font-size:16px;display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;height:420px;color:#222427;border:1px solid #d9d9d9;border-radius:5px;background:#fff}.emoji-mart-bar[data-v-96a4ffca]{border:0 solid #d9d9d9}.emoji-mart-bar[data-v-96a4ffca]:first-child{border-bottom-width:1px;border-top-left-radius:5px;border-top-right-radius:5px}.emoji-mart-bar[data-v-96a4ffca]:last-child{border-top-width:1px;border-bottom-left-radius:5px;border-bottom-right-radius:5px}.emoji-mart-scroll[data-v-96a4ffca]{position:relative;overflow-y:scroll;-ms-flex:1;flex:1;padding:0 6px 6px;z-index:0;will-change:transform;-webkit-overflow-scrolling:touch}", ""]);
 
 // exports
 
@@ -6049,143 +5402,10 @@ isWindowAvailable && function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "emoji-mart", style: _vm.customStyles },
-    [
-      _vm.showCategories
-        ? _c(
-            "div",
-            { staticClass: "emoji-mart-bar" },
-            [
-              _c("anchors", {
-                attrs: {
-                  data: _vm.data,
-                  i18n: _vm.mergedI18n,
-                  color: _vm.color,
-                  categories: _vm.filteredCategories,
-                  "active-category": _vm.activeCategory
-                },
-                on: { click: _vm.onAnchorClick }
-              })
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.showSearch
-        ? _c("search", {
-            ref: "search",
-            attrs: {
-              data: _vm.data,
-              i18n: _vm.mergedI18n,
-              "emojis-to-show-filter": _vm.emojisToShowFilter,
-              include: _vm.include,
-              exclude: _vm.exclude,
-              custom: _vm.customEmojis,
-              recent: _vm.recentEmojis,
-              "auto-focus": _vm.autoFocus
-            },
-            on: { search: _vm.onSearch }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          ref: "scroll",
-          staticClass: "emoji-mart-scroll",
-          on: { scroll: _vm.onScroll }
-        },
-        [
-          _c("category", {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.searchEmojis,
-                expression: "searchEmojis"
-              }
-            ],
-            attrs: {
-              data: _vm.data,
-              i18n: _vm.mergedI18n,
-              id: "search",
-              name: "Search",
-              emojis: _vm.searchEmojis,
-              "emoji-props": _vm.emojiProps
-            }
-          }),
-          _vm._v(" "),
-          _vm._l(_vm.filteredCategories, function(category) {
-            return _c("category", {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value:
-                    !_vm.searchEmojis &&
-                    (_vm.infiniteScroll || category == _vm.activeCategory),
-                  expression:
-                    "!searchEmojis && (infiniteScroll || category == activeCategory)"
-                }
-              ],
-              key: category.id,
-              ref: "categories",
-              refInFor: true,
-              attrs: {
-                data: _vm.data,
-                i18n: _vm.mergedI18n,
-                id: category.id,
-                name: category.name,
-                emojis: category.emojis,
-                "emoji-props": _vm.emojiProps
-              }
-            })
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _vm.showPreview
-        ? _c(
-            "div",
-            { staticClass: "emoji-mart-bar" },
-            [
-              _c("preview", {
-                attrs: {
-                  data: _vm.data,
-                  title: _vm.title,
-                  emoji: _vm.previewEmoji,
-                  "idle-emoji": _vm.idleEmoji,
-                  "show-skin-tones": _vm.showSkinTones,
-                  "emoji-props": _vm.emojiProps,
-                  "skin-props": _vm.skinProps
-                },
-                on: { change: _vm.onSkinChange }
-              })
-            ],
-            1
-          )
-        : _vm._e()
-    ],
-    1
-  )
-}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"emoji-mart",style:(_vm.customStyles)},[(_vm.showCategories)?_c('div',{staticClass:"emoji-mart-bar"},[_c('anchors',{attrs:{"data":_vm.data,"i18n":_vm.mergedI18n,"color":_vm.color,"categories":_vm.filteredCategories,"active-category":_vm.activeCategory},on:{"click":_vm.onAnchorClick}})],1):_vm._e(),_vm._v(" "),(_vm.showSearch)?_c('search',{ref:"search",attrs:{"data":_vm.data,"i18n":_vm.mergedI18n,"emojis-to-show-filter":_vm.emojisToShowFilter,"include":_vm.include,"exclude":_vm.exclude,"custom":_vm.customEmojis,"recent":_vm.recentEmojis,"auto-focus":_vm.autoFocus},on:{"search":_vm.onSearch}}):_vm._e(),_vm._v(" "),_c('div',{ref:"scroll",staticClass:"emoji-mart-scroll",on:{"scroll":_vm.onScroll}},[_c('category',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchEmojis),expression:"searchEmojis"}],attrs:{"data":_vm.data,"i18n":_vm.mergedI18n,"id":"search","name":"Search","emojis":_vm.searchEmojis,"emoji-props":_vm.emojiProps}}),_vm._v(" "),_vm._l((_vm.filteredCategories),function(category){return _c('category',{directives:[{name:"show",rawName:"v-show",value:(!_vm.searchEmojis && (_vm.infiniteScroll || category == _vm.activeCategory)),expression:"!searchEmojis && (infiniteScroll || category == activeCategory)"}],key:category.id,ref:"categories",refInFor:true,attrs:{"data":_vm.data,"i18n":_vm.mergedI18n,"id":category.id,"name":category.name,"emojis":category.emojis,"emoji-props":_vm.emojiProps}})})],2),_vm._v(" "),(_vm.showPreview)?_c('div',{staticClass:"emoji-mart-bar"},[_c('preview',{attrs:{"data":_vm.data,"title":_vm.title,"emoji":_vm.previewEmoji,"idle-emoji":_vm.idleEmoji,"show-skin-tones":_vm.showSkinTones,"emoji-props":_vm.emojiProps,"skin-props":_vm.skinProps},on:{"change":_vm.onSkinChange}})],1):_vm._e()],1)}
 var staticRenderFns = []
-render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7bc71df8", esExports)
-  }
-}
 
 /***/ })
 /******/ ]);
