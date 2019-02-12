@@ -50,7 +50,6 @@
 
 import NimbleEmoji from './emoji/nimbleEmoji'
 import Skins from './skins'
-import { getData } from '../utils'
 
 export default {
   props: {
