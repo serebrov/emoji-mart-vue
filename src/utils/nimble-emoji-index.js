@@ -1,4 +1,4 @@
-import { getData, getSanitizedData, intersect } from './index'
+import { getData, sanitize, intersect } from './index'
 
 export default class NimbleEmojiIndex {
   constructor(data) {
@@ -28,7 +28,8 @@ export default class NimbleEmojiIndex {
         })
       }
 
-      this.emojis[id] = getSanitizedData(id, null, null, this.data)
+      let data = getData(id, null, null, this.data)
+      this.emojis[id] = sanitize(data)
       this.originalPool[id] = emojiData
     }
   }
@@ -50,7 +51,7 @@ export default class NimbleEmojiIndex {
 
       if (emojiId && !pool[emojiId]) {
         pool[emojiId] = getData(emoji, null, null, this.data)
-        this.emojis[emojiId] = getSanitizedData(emoji, null, null, this.data)
+        this.emojis[emojiId] = getSanitizedData(pool[emojiId])
       }
     })
 

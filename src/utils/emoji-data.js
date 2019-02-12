@@ -6,8 +6,7 @@ export class EmojiData {
 
   constructor(emoji, skin, set, data) {
     this._key = emoji
-    this._data = Object.assign({}, getData(
-        emoji, skin, set, data))
+    this._data = getData(emoji, skin, set, data)
     this._sanitized = sanitize(this._data)
     for (let key in this._sanitized) {
       this[key] = this._sanitized[key]
