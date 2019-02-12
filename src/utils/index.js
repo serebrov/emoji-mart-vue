@@ -53,10 +53,6 @@ function sanitize(emoji) {
   }
 }
 
-function getSanitizedData() {
-  return sanitize(getData(...arguments))
-}
-
 function cloneEmoji(emoji) {
   if (typeof emoji === 'string') {
     return emoji;
@@ -201,7 +197,6 @@ function measureScrollbar() {
 
 export {
   getData,
-  getSanitizedData,
   sanitize,
   uniq,
   intersect,
