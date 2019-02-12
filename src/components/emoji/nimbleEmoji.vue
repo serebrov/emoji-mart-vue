@@ -8,7 +8,6 @@
 
 <script>
 
-import { getData, getSanitizedData, unifiedToNative } from '../../utils'
 import { EmojiProps } from '../../utils/shared-props'
 import { EmojiView } from '../../utils/emoji-data'
 
