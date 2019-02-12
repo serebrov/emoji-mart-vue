@@ -2848,15 +2848,13 @@ var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _utils = __webpack_require__(17);
-
 var _sharedProps = __webpack_require__(26);
 
 var _emojiData = __webpack_require__(28);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SHEET_COLUMNS = 52; //
+//
 //
 //
 //
@@ -2865,6 +2863,8 @@ var SHEET_COLUMNS = 52; //
 //
 //
 
+
+var SHEET_COLUMNS = 52;
 
 exports.default = {
   props: (0, _extends3.default)({}, _sharedProps.EmojiProps, {
@@ -2977,9 +2977,57 @@ var _skins = __webpack_require__(72);
 
 var _skins2 = _interopRequireDefault(_skins);
 
-var _utils = __webpack_require__(17);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 exports.default = {
   props: {
@@ -3030,54 +3078,7 @@ exports.default = {
     NimbleEmoji: _nimbleEmoji2.default,
     Skins: _skins2.default
   }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 /* 72 */
@@ -3957,7 +3958,6 @@ exports.default = {
 
     return {
       activeSkin: this.skin || _store2.default.get('skin') || this.defaultSkin,
-      categories: [],
       activeCategory: null,
       previewEmoji: null,
       searchEmojis: null,
@@ -4033,18 +4033,19 @@ exports.default = {
           return _this3.emojisToShowFilter(_this3.data.emojis[e] || e);
         });
       }
-
-      return { id: id, name: name, emojis: emojis };
+      return (0, _freeze2.default)({ id: id, name: name, emojis: emojis });
     });
 
     RECENT_CATEGORY.emojis = this.recentEmojis;
     CUSTOM_CATEGORY.emojis = this.customEmojis;
 
+    this.categories = [];
     this.categories.push(RECENT_CATEGORY);
     (_categories = this.categories).push.apply(_categories, (0, _toConsumableArray3.default)(categories));
     this.categories.push(CUSTOM_CATEGORY);
 
     this.categories[0].first = true;
+    (0, _freeze2.default)(this.categories);
     this.activeCategory = this.filteredCategories[0];
   },
 
