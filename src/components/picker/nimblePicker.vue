@@ -138,7 +138,6 @@ export default {
 
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
-      categories: [],
       activeCategory: null,
       previewEmoji: null,
       searchEmojis: null,
@@ -206,18 +205,19 @@ export default {
       if (this.emojisToShowFilter) {
         emojis = c.emojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
       }
-
-      return { id, name, emojis }
+      return Object.freeze({ id, name, emojis })
     })
 
     RECENT_CATEGORY.emojis = this.recentEmojis
     CUSTOM_CATEGORY.emojis = this.customEmojis
 
+    this.categories = []
     this.categories.push(RECENT_CATEGORY)
     this.categories.push(...categories)
     this.categories.push(CUSTOM_CATEGORY)
 
     this.categories[0].first = true
+    Object.freeze(this.categories)
     this.activeCategory = this.filteredCategories[0]
   },
   methods: {
