@@ -63,7 +63,7 @@ export class EmojiView {
         backgroundSize: '100%',
       }
     }
-    if (this._hasEmoji()) {
+    if (this._hasEmoji() && !this._isNative()) {
       return {
         backgroundPosition: this._emoji.getPosition()
       }
