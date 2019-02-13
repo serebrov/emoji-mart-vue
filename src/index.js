@@ -1,4 +1,5 @@
 import store from './utils/store'
+import { getData } from './utils'
 import { uncompress } from './utils/data'
 import frequently from './utils/frequently'
 
@@ -11,4 +12,4 @@ export {
 } from './components'
 
 export { default as NimbleEmojiIndex } from './utils/nimble-emoji-index'
-export { uncompress, store, frequently }
+export { getData, uncompress, store, frequently }
