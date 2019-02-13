@@ -6,10 +6,12 @@
   </div>
 
   <div class="row">
+    <button @click="toggleVisible">Show / hide the picker</button>
+  </div>
+  <div class="row">
     <template v-for="set in ['native', 'apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook']">
       <button :key="set" @click="activeSet = set" :disabled="activeSet == set">{{ set }}</button>
     </template>
-    <button @click="toggleVisible">show/hide</button>
   </div>
 
   <div v-if="isVisible" class="row">

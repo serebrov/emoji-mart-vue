@@ -2068,6 +2068,8 @@ var CUSTOM_EMOJIS = [{
 //
 //
 //
+//
+//
 
 
 exports.default = {
@@ -13793,7 +13795,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.emoji-mart-emoji {\n  position: relative;\n  display: inline-block;\n  font-size: 0;\n}\n.emoji-mart-emoji span {\n  display: inline-block;\n  width: 24px;\n  height: 24px;\n}\n.emoji-mart-preview-emoji .emoji-mart-emoji span {\n  width: 38px;\n  height: 38px;\n}\n.emoji-type-native {\n  font-size: 18px;\n}\n.emoji-type-image {\n  background-size: 5200%;\n}\n.emoji-type-image.emoji-set-emojione {\n  background-image: url(\"https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-messenger {\n  background-image: url(\"https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-apple {\n  background-image: url(\"https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-facebook {\n  background-image: url(\"https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-google {\n  background-image: url(\"https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-twitter {\n  background-image: url(\"https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png\");\n}\n\n", ""]);
+exports.push([module.i, "\n.emoji-mart-emoji {\n  position: relative;\n  display: inline-block;\n  font-size: 0;\n}\n.emoji-mart-emoji span {\n  display: inline-block;\n  width: 24px;\n  height: 24px;\n}\n.emoji-mart-preview-emoji .emoji-mart-emoji span {\n  width: 38px;\n  height: 38px;\n}\n.emoji-type-native {\n  font-size: 18px;\n  font-family: \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Segoe UI\", \"Apple Color Emoji\", \"Twemoji Mozilla\", \"Noto Color Emoji\", \"EmojiOne Color\", \"Android Emoji\", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;\n}\n.emoji-type-image {\n  background-size: 5200%;\n}\n.emoji-type-image.emoji-set-emojione {\n  background-image: url(\"https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-messenger {\n  background-image: url(\"https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-apple {\n  background-image: url(\"https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-facebook {\n  background-image: url(\"https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-google {\n  background-image: url(\"https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png\");\n}\n.emoji-type-image.emoji-set-twitter {\n  background-image: url(\"https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png\");\n}\n\n", ""]);
 
 // exports
 
@@ -14818,6 +14820,12 @@ var render = function() {
   return _c("div", [
     _vm._m(0),
     _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("button", { on: { click: _vm.toggleVisible } }, [
+        _vm._v("Show / hide the picker")
+      ])
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },
@@ -14849,11 +14857,7 @@ var render = function() {
               )
             ]
           }
-        ),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.toggleVisible } }, [
-          _vm._v("show/hide")
-        ])
+        )
       ],
       2
     ),
