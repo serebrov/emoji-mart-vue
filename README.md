@@ -231,7 +231,7 @@ The `Picker` doesn’t have to be mounted for you to take advantage of the advan
 
 ```js
 import { NimbleEmojiIndex, uncompress } from 'emoji-mart-vue'
-import data from '../../../data/all.json'
+import data from 'emoji-mart-vue/data/all.json'
 
 const emojiIndex = new NimbleEmojiIndex(uncompress(data))
 emojiIndex.search('christmas').map((o) => o.native)
