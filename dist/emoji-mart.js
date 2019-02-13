@@ -545,7 +545,7 @@ module.exports = function (it, key) {
 
 var anObject = __webpack_require__(9);
 var IE8_DOM_DEFINE = __webpack_require__(48);
-var toPrimitive = __webpack_require__(27);
+var toPrimitive = __webpack_require__(28);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(10) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -752,601 +752,6 @@ module.exports = function (key) {
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(32);
-module.exports = function (it) {
-  return Object(defined(it));
-};
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof2 = __webpack_require__(53);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-var _getIterator2 = __webpack_require__(64);
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
-var _freeze = __webpack_require__(18);
-
-var _freeze2 = _interopRequireDefault(_freeze);
-
-var _getOwnPropertyNames = __webpack_require__(126);
-
-var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapping = {
-  name: 'a',
-  unified: 'b',
-  non_qualified: 'c',
-  has_img_apple: 'd',
-  has_img_google: 'e',
-  has_img_twitter: 'f',
-  has_img_emojione: 'g',
-  has_img_facebook: 'h',
-  has_img_messenger: 'i',
-  keywords: 'j',
-  sheet: 'k',
-  emoticons: 'l',
-  text: 'm',
-  short_names: 'n',
-  added_in: 'o'
-};
-
-var buildSearch = function buildSearch(emoji) {
-  var search = [];
-
-  var addToSearch = function addToSearch(strings, split) {
-    if (!strings) {
-      return;
-    }
-
-    ;(Array.isArray(strings) ? strings : [strings]).forEach(function (string) {
-      ;(split ? string.split(/[-|_|\s]+/) : [string]).forEach(function (s) {
-        s = s.toLowerCase();
-
-        if (search.indexOf(s) == -1) {
-          search.push(s);
-        }
-      });
-    });
-  };
-
-  addToSearch(emoji.short_names, true);
-  addToSearch(emoji.name, true);
-  addToSearch(emoji.keywords, false);
-  addToSearch(emoji.emoticons, false);
-
-  return search.join(',');
-};
-
-var compress = function compress(emoji) {
-  emoji.short_names = emoji.short_names.filter(function (short_name) {
-    return short_name !== emoji.short_name;
-  });
-  delete emoji.short_name;
-
-  emoji.sheet = [emoji.sheet_x, emoji.sheet_y];
-  delete emoji.sheet_x;
-  delete emoji.sheet_y;
-
-  emoji.added_in = parseInt(emoji.added_in);
-  if (emoji.added_in === 6) {
-    delete emoji.added_in;
-  }
-
-  for (var key in mapping) {
-    emoji[mapping[key]] = emoji[key];
-    delete emoji[key];
-  }
-
-  for (var _key in emoji) {
-    var value = emoji[_key];
-
-    if (Array.isArray(value) && !value.length) {
-      delete emoji[_key];
-    } else if (typeof value === 'string' && !value.length) {
-      delete emoji[_key];
-    } else if (value === null) {
-      delete emoji[_key];
-    }
-  }
-};
-
-function deepFreeze(object) {
-  // Retrieve the property names defined on object
-  var propNames = (0, _getOwnPropertyNames2.default)(object);
-
-  // Freeze properties before freezing self
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = (0, _getIterator3.default)(propNames), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var name = _step.value;
-
-      var value = object[name];
-      object[name] = value && (typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value)) === "object" ? deepFreeze(value) : value;
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-
-  return (0, _freeze2.default)(object);
-}
-
-var uncompress = function uncompress(data) {
-  if (!data.compressed) {
-    return data;
-  }
-  data.compressed = false;
-
-  for (var id in data.emojis) {
-    var emoji = data.emojis[id];
-
-    for (var key in mapping) {
-      emoji[key] = emoji[mapping[key]];
-      delete emoji[mapping[key]];
-    }
-
-    if (!emoji.short_names) emoji.short_names = [];
-    emoji.short_names.unshift(id);
-
-    emoji.sheet_x = emoji.sheet[0];
-    emoji.sheet_y = emoji.sheet[1];
-    delete emoji.sheet;
-
-    if (!emoji.text) emoji.text = '';
-
-    if (!emoji.added_in) emoji.added_in = 6;
-    emoji.added_in = emoji.added_in.toFixed(1);
-
-    emoji.search = buildSearch(emoji);
-  }
-  data = deepFreeze(data);
-  return data;
-};
-
-module.exports = { buildSearch: buildSearch, compress: compress, uncompress: uncompress };
-
-/***/ }),
-/* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__);
-/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7f853594_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__ = __webpack_require__(132);
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(130)
-}
-var normalizeComponent = __webpack_require__(4)
-/* script */
-
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7f853594_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/components/emoji/nimbleEmoji.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7f853594", Component.options)
-  } else {
-    hotAPI.reload("data-v-7f853594", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _Object = Object;
-
-exports.default = _Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var EmojiProps = {
-  native: {
-    type: Boolean,
-    default: false
-  },
-  tooltip: {
-    type: Boolean,
-    default: false
-  },
-  fallback: {
-    type: Function
-  },
-  skin: {
-    type: Number,
-    default: 1
-  },
-  set: {
-    type: String,
-    default: 'apple'
-  },
-  emoji: {
-    type: [String, Object],
-    required: true
-  }
-};
-
-var PickerProps = {
-  perLine: {
-    type: Number,
-    default: 9
-  },
-  emojiSize: {
-    type: Number,
-    default: 24
-  },
-  title: {
-    type: String,
-    default: 'Emoji Mart™'
-  },
-  emoji: {
-    type: String,
-    default: 'department_store'
-  },
-  color: {
-    type: String,
-    default: '#ae65c5'
-  },
-  set: {
-    type: String,
-    default: 'apple'
-  },
-  skin: {
-    type: Number,
-    default: null
-  },
-  defaultSkin: {
-    type: Number,
-    default: 1
-  },
-  native: {
-    type: Boolean,
-    default: false
-  },
-  emojisToShowFilter: {
-    type: Function
-  },
-  emojiTooltip: {
-    type: Boolean,
-    default: false
-  },
-  include: {
-    type: Array
-  },
-  exclude: {
-    type: Array
-  },
-  recent: {
-    type: Array
-  },
-  autoFocus: {
-    type: Boolean,
-    default: false
-  },
-  custom: {
-    type: Array,
-    default: function _default() {
-      return [];
-    }
-  },
-  i18n: {
-    type: Object,
-    default: function _default() {
-      return {};
-    }
-  },
-  showPreview: {
-    type: Boolean,
-    default: true
-  },
-  showSearch: {
-    type: Boolean,
-    default: true
-  },
-  showCategories: {
-    type: Boolean,
-    default: true
-  },
-  showSkinTones: {
-    type: Boolean,
-    default: true
-  },
-  infiniteScroll: {
-    type: Boolean,
-    default: true
-  },
-  pickerStyles: {
-    type: Object,
-    default: function _default() {
-      return {};
-    }
-  }
-};
-
-exports.EmojiProps = EmojiProps;
-exports.PickerProps = PickerProps;
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.EmojiView = exports.EmojiData = undefined;
-
-var _freeze = __webpack_require__(18);
-
-var _freeze2 = _interopRequireDefault(_freeze);
-
-var _classCallCheck2 = __webpack_require__(51);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(52);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _index = __webpack_require__(29);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SHEET_COLUMNS = 52;
-
-var EmojiData = exports.EmojiData = function () {
-  function EmojiData(emoji, skin, set, data) {
-    (0, _classCallCheck3.default)(this, EmojiData);
-
-    this._key = emoji;
-    this._data = (0, _index.getData)(emoji, skin, set, data);
-    this._sanitized = (0, _index.sanitize)(this._data);
-    for (var key in this._sanitized) {
-      this[key] = this._sanitized[key];
-    }
-    (0, _freeze2.default)(this);
-  }
-
-  (0, _createClass3.default)(EmojiData, [{
-    key: 'getPosition',
-    value: function getPosition() {
-      var multiply = 100 / (SHEET_COLUMNS - 1),
-          x = multiply * this._data.sheet_x,
-          y = multiply * this._data.sheet_y;
-      return x + '% ' + y + '%';
-    }
-  }]);
-  return EmojiData;
-}();
-
-var EmojiView = exports.EmojiView = function () {
-
-  /**
-   * emoji - EmojiData to display
-   * set - string, emoji set name
-   * native - boolean, whether to render native emoji
-   * fallback - fallback function to render missing emoji, optional
-   */
-  function EmojiView(emoji, set, native, fallback) {
-    (0, _classCallCheck3.default)(this, EmojiView);
-
-    this._emoji = emoji;
-    this._native = native;
-    this._set = set;
-    this._fallback = fallback;
-
-    this.canRender = this._canRender();
-    this.cssClass = this._cssClass();
-    this.cssStyle = this._cssStyle();
-    this.content = this._content();
-
-    (0, _freeze2.default)(this);
-  }
-
-  (0, _createClass3.default)(EmojiView, [{
-    key: '_canRender',
-    value: function _canRender() {
-      return this._isCustom() || this._isNative() || this._hasEmoji() || this._fallback;
-    }
-  }, {
-    key: '_cssClass',
-    value: function _cssClass() {
-      return ['emoji-set-' + this._set, 'emoji-type-' + this._emojiType()];
-    }
-  }, {
-    key: '_cssStyle',
-    value: function _cssStyle() {
-      if (this._isCustom()) {
-        return {
-          backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
-          backgroundSize: '100%'
-        };
-      }
-      if (this._hasEmoji()) {
-        return {
-          backgroundPosition: this._emoji.getPosition()
-        };
-      }
-      return {};
-    }
-  }, {
-    key: '_content',
-    value: function _content() {
-      if (this._isCustom()) {
-        return '';
-      }
-      if (this._isNative()) {
-        return this._emoji.native;
-      }
-      if (this._hasEmoji()) {
-        return '';
-      }
-      return this._fallback ? this._fallback(this._emoji) : null;
-    }
-  }, {
-    key: '_isNative',
-    value: function _isNative() {
-      return this._native;
-    }
-  }, {
-    key: '_isCustom',
-    value: function _isCustom() {
-      return this._emoji.custom;
-    }
-  }, {
-    key: '_hasEmoji',
-    value: function _hasEmoji() {
-      return this._emoji._data && this._emoji._data['has_img_' + this._set];
-    }
-  }, {
-    key: '_emojiType',
-    value: function _emojiType() {
-      if (this._isCustom()) {
-        return 'custom';
-      }
-      if (this._isNative()) {
-        return 'native';
-      }
-      if (this._hasEmoji()) {
-        return 'image';
-      }
-      return 'fallback';
-    }
-  }]);
-  return EmojiView;
-}();
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(8);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(14);
-var core = __webpack_require__(0);
-var fails = __webpack_require__(11);
-module.exports = function (KEY, exec) {
-  var fn = (core.Object || {})[KEY] || Object[KEY];
-  var exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
-};
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -1371,7 +776,7 @@ var _assign = __webpack_require__(63);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _data = __webpack_require__(22);
+var _data = __webpack_require__(23);
 
 var _stringFromCodePoint = __webpack_require__(129);
 
@@ -1578,6 +983,601 @@ exports.intersect = intersect;
 exports.deepMerge = deepMerge;
 exports.unifiedToNative = unifiedToNative;
 exports.measureScrollbar = measureScrollbar;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.13 ToObject(argument)
+var defined = __webpack_require__(32);
+module.exports = function (it) {
+  return Object(defined(it));
+};
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+exports.f = {}.propertyIsEnumerable;
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof2 = __webpack_require__(53);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+var _getIterator2 = __webpack_require__(64);
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _freeze = __webpack_require__(18);
+
+var _freeze2 = _interopRequireDefault(_freeze);
+
+var _getOwnPropertyNames = __webpack_require__(126);
+
+var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapping = {
+  name: 'a',
+  unified: 'b',
+  non_qualified: 'c',
+  has_img_apple: 'd',
+  has_img_google: 'e',
+  has_img_twitter: 'f',
+  has_img_emojione: 'g',
+  has_img_facebook: 'h',
+  has_img_messenger: 'i',
+  keywords: 'j',
+  sheet: 'k',
+  emoticons: 'l',
+  text: 'm',
+  short_names: 'n',
+  added_in: 'o'
+};
+
+var buildSearch = function buildSearch(emoji) {
+  var search = [];
+
+  var addToSearch = function addToSearch(strings, split) {
+    if (!strings) {
+      return;
+    }
+
+    ;(Array.isArray(strings) ? strings : [strings]).forEach(function (string) {
+      ;(split ? string.split(/[-|_|\s]+/) : [string]).forEach(function (s) {
+        s = s.toLowerCase();
+
+        if (search.indexOf(s) == -1) {
+          search.push(s);
+        }
+      });
+    });
+  };
+
+  addToSearch(emoji.short_names, true);
+  addToSearch(emoji.name, true);
+  addToSearch(emoji.keywords, false);
+  addToSearch(emoji.emoticons, false);
+
+  return search.join(',');
+};
+
+var compress = function compress(emoji) {
+  emoji.short_names = emoji.short_names.filter(function (short_name) {
+    return short_name !== emoji.short_name;
+  });
+  delete emoji.short_name;
+
+  emoji.sheet = [emoji.sheet_x, emoji.sheet_y];
+  delete emoji.sheet_x;
+  delete emoji.sheet_y;
+
+  emoji.added_in = parseInt(emoji.added_in);
+  if (emoji.added_in === 6) {
+    delete emoji.added_in;
+  }
+
+  for (var key in mapping) {
+    emoji[mapping[key]] = emoji[key];
+    delete emoji[key];
+  }
+
+  for (var _key in emoji) {
+    var value = emoji[_key];
+
+    if (Array.isArray(value) && !value.length) {
+      delete emoji[_key];
+    } else if (typeof value === 'string' && !value.length) {
+      delete emoji[_key];
+    } else if (value === null) {
+      delete emoji[_key];
+    }
+  }
+};
+
+function deepFreeze(object) {
+  // Retrieve the property names defined on object
+  var propNames = (0, _getOwnPropertyNames2.default)(object);
+
+  // Freeze properties before freezing self
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = (0, _getIterator3.default)(propNames), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var name = _step.value;
+
+      var value = object[name];
+      object[name] = value && (typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value)) === "object" ? deepFreeze(value) : value;
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  return (0, _freeze2.default)(object);
+}
+
+var uncompress = function uncompress(data) {
+  if (!data.compressed) {
+    return data;
+  }
+  data.compressed = false;
+
+  for (var id in data.emojis) {
+    var emoji = data.emojis[id];
+
+    for (var key in mapping) {
+      emoji[key] = emoji[mapping[key]];
+      delete emoji[mapping[key]];
+    }
+
+    if (!emoji.short_names) emoji.short_names = [];
+    emoji.short_names.unshift(id);
+
+    emoji.sheet_x = emoji.sheet[0];
+    emoji.sheet_y = emoji.sheet[1];
+    delete emoji.sheet;
+
+    if (!emoji.text) emoji.text = '';
+
+    if (!emoji.added_in) emoji.added_in = 6;
+    emoji.added_in = emoji.added_in.toFixed(1);
+
+    emoji.search = buildSearch(emoji);
+  }
+  data = deepFreeze(data);
+  return data;
+};
+
+module.exports = { buildSearch: buildSearch, compress: compress, uncompress: uncompress };
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7f853594_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__ = __webpack_require__(132);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(130)
+}
+var normalizeComponent = __webpack_require__(4)
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7f853594_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/components/emoji/nimbleEmoji.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7f853594", Component.options)
+  } else {
+    hotAPI.reload("data-v-7f853594", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _Object = Object;
+
+exports.default = _Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var EmojiProps = {
+  native: {
+    type: Boolean,
+    default: false
+  },
+  tooltip: {
+    type: Boolean,
+    default: false
+  },
+  fallback: {
+    type: Function
+  },
+  skin: {
+    type: Number,
+    default: 1
+  },
+  set: {
+    type: String,
+    default: 'apple'
+  },
+  emoji: {
+    type: [String, Object],
+    required: true
+  }
+};
+
+var PickerProps = {
+  perLine: {
+    type: Number,
+    default: 9
+  },
+  emojiSize: {
+    type: Number,
+    default: 24
+  },
+  title: {
+    type: String,
+    default: 'Emoji Mart™'
+  },
+  emoji: {
+    type: String,
+    default: 'department_store'
+  },
+  color: {
+    type: String,
+    default: '#ae65c5'
+  },
+  set: {
+    type: String,
+    default: 'apple'
+  },
+  skin: {
+    type: Number,
+    default: null
+  },
+  defaultSkin: {
+    type: Number,
+    default: 1
+  },
+  native: {
+    type: Boolean,
+    default: false
+  },
+  emojisToShowFilter: {
+    type: Function
+  },
+  emojiTooltip: {
+    type: Boolean,
+    default: false
+  },
+  include: {
+    type: Array
+  },
+  exclude: {
+    type: Array
+  },
+  recent: {
+    type: Array
+  },
+  autoFocus: {
+    type: Boolean,
+    default: false
+  },
+  custom: {
+    type: Array,
+    default: function _default() {
+      return [];
+    }
+  },
+  i18n: {
+    type: Object,
+    default: function _default() {
+      return {};
+    }
+  },
+  showPreview: {
+    type: Boolean,
+    default: true
+  },
+  showSearch: {
+    type: Boolean,
+    default: true
+  },
+  showCategories: {
+    type: Boolean,
+    default: true
+  },
+  showSkinTones: {
+    type: Boolean,
+    default: true
+  },
+  infiniteScroll: {
+    type: Boolean,
+    default: true
+  },
+  pickerStyles: {
+    type: Object,
+    default: function _default() {
+      return {};
+    }
+  }
+};
+
+exports.EmojiProps = EmojiProps;
+exports.PickerProps = PickerProps;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EmojiView = exports.EmojiData = undefined;
+
+var _freeze = __webpack_require__(18);
+
+var _freeze2 = _interopRequireDefault(_freeze);
+
+var _classCallCheck2 = __webpack_require__(51);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(52);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _index = __webpack_require__(20);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SHEET_COLUMNS = 52;
+
+var EmojiData = exports.EmojiData = function () {
+  function EmojiData(emoji, skin, set, data) {
+    (0, _classCallCheck3.default)(this, EmojiData);
+
+    this._key = emoji;
+    this._data = (0, _index.getData)(emoji, skin, set, data);
+    this._sanitized = (0, _index.sanitize)(this._data);
+    for (var key in this._sanitized) {
+      this[key] = this._sanitized[key];
+    }
+    (0, _freeze2.default)(this);
+  }
+
+  (0, _createClass3.default)(EmojiData, [{
+    key: 'getPosition',
+    value: function getPosition() {
+      var multiply = 100 / (SHEET_COLUMNS - 1),
+          x = multiply * this._data.sheet_x,
+          y = multiply * this._data.sheet_y;
+      return x + '% ' + y + '%';
+    }
+  }]);
+  return EmojiData;
+}();
+
+var EmojiView = exports.EmojiView = function () {
+
+  /**
+   * emoji - EmojiData to display
+   * set - string, emoji set name
+   * native - boolean, whether to render native emoji
+   * fallback - fallback function to render missing emoji, optional
+   */
+  function EmojiView(emoji, set, native, fallback) {
+    (0, _classCallCheck3.default)(this, EmojiView);
+
+    this._emoji = emoji;
+    this._native = native;
+    this._set = set;
+    this._fallback = fallback;
+
+    this.canRender = this._canRender();
+    this.cssClass = this._cssClass();
+    this.cssStyle = this._cssStyle();
+    this.content = this._content();
+
+    (0, _freeze2.default)(this);
+  }
+
+  (0, _createClass3.default)(EmojiView, [{
+    key: '_canRender',
+    value: function _canRender() {
+      return this._isCustom() || this._isNative() || this._hasEmoji() || this._fallback;
+    }
+  }, {
+    key: '_cssClass',
+    value: function _cssClass() {
+      return ['emoji-set-' + this._set, 'emoji-type-' + this._emojiType()];
+    }
+  }, {
+    key: '_cssStyle',
+    value: function _cssStyle() {
+      if (this._isCustom()) {
+        return {
+          backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
+          backgroundSize: '100%'
+        };
+      }
+      if (this._hasEmoji()) {
+        return {
+          backgroundPosition: this._emoji.getPosition()
+        };
+      }
+      return {};
+    }
+  }, {
+    key: '_content',
+    value: function _content() {
+      if (this._isCustom()) {
+        return '';
+      }
+      if (this._isNative()) {
+        return this._emoji.native;
+      }
+      if (this._hasEmoji()) {
+        return '';
+      }
+      return this._fallback ? this._fallback(this._emoji) : null;
+    }
+  }, {
+    key: '_isNative',
+    value: function _isNative() {
+      return this._native;
+    }
+  }, {
+    key: '_isCustom',
+    value: function _isCustom() {
+      return this._emoji.custom;
+    }
+  }, {
+    key: '_hasEmoji',
+    value: function _hasEmoji() {
+      return this._emoji._data && this._emoji._data['has_img_' + this._set];
+    }
+  }, {
+    key: '_emojiType',
+    value: function _emojiType() {
+      if (this._isCustom()) {
+        return 'custom';
+      }
+      if (this._isNative()) {
+        return 'native';
+      }
+      if (this._hasEmoji()) {
+        return 'image';
+      }
+      return 'fallback';
+    }
+  }]);
+  return EmojiView;
+}();
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(8);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// most Object methods by ES6 should accept primitives
+var $export = __webpack_require__(14);
+var core = __webpack_require__(0);
+var fails = __webpack_require__(11);
+module.exports = function (KEY, exec) {
+  var fn = (core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
+};
+
 
 /***/ }),
 /* 30 */
@@ -1973,9 +1973,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _emojiData = __webpack_require__(26);
+var _emojiData = __webpack_require__(27);
 
-var _nimbleEmoji = __webpack_require__(23);
+var _nimbleEmoji = __webpack_require__(24);
 
 var _nimbleEmoji2 = _interopRequireDefault(_nimbleEmoji);
 
@@ -2524,13 +2524,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(24);
+var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _sharedProps = __webpack_require__(25);
+var _sharedProps = __webpack_require__(26);
 
-var _emojiData = __webpack_require__(26);
+var _emojiData = __webpack_require__(27);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2649,7 +2649,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _nimbleEmoji = __webpack_require__(23);
+var _nimbleEmoji = __webpack_require__(24);
 
 var _nimbleEmoji2 = _interopRequireDefault(_nimbleEmoji);
 
@@ -3036,7 +3036,7 @@ var _createClass2 = __webpack_require__(52);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3267,7 +3267,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(24);
+var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -3275,13 +3275,13 @@ var _all = __webpack_require__(75);
 
 var _all2 = _interopRequireDefault(_all);
 
-var _data = __webpack_require__(22);
+var _data = __webpack_require__(23);
 
-var _nimbleEmoji = __webpack_require__(23);
+var _nimbleEmoji = __webpack_require__(24);
 
 var _nimbleEmoji2 = _interopRequireDefault(_nimbleEmoji);
 
-var _sharedProps = __webpack_require__(25);
+var _sharedProps = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3322,7 +3322,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(24);
+var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -3330,13 +3330,13 @@ var _all = __webpack_require__(75);
 
 var _all2 = _interopRequireDefault(_all);
 
-var _data = __webpack_require__(22);
+var _data = __webpack_require__(23);
 
 var _nimblePicker = __webpack_require__(77);
 
 var _nimblePicker2 = _interopRequireDefault(_nimblePicker);
 
-var _sharedProps = __webpack_require__(25);
+var _sharedProps = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3442,7 +3442,7 @@ var _getIterator2 = __webpack_require__(64);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _extends2 = __webpack_require__(24);
+var _extends2 = __webpack_require__(25);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -3460,11 +3460,11 @@ var _frequently = __webpack_require__(79);
 
 var _frequently2 = _interopRequireDefault(_frequently);
 
-var _utils = __webpack_require__(29);
+var _utils = __webpack_require__(20);
 
-var _sharedProps = __webpack_require__(25);
+var _sharedProps = __webpack_require__(26);
 
-var _emojiData = __webpack_require__(26);
+var _emojiData = __webpack_require__(27);
 
 var _anchors = __webpack_require__(43);
 
@@ -3912,7 +3912,7 @@ exports.default = { add: add, get: get };
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.frequently = exports.store = exports.uncompress = exports.NimbleEmojiIndex = exports.Category = exports.NimbleEmoji = exports.Emoji = exports.NimblePicker = exports.Picker = undefined;
+exports.frequently = exports.store = exports.uncompress = exports.getData = exports.NimbleEmojiIndex = exports.Category = exports.NimbleEmoji = exports.Emoji = exports.NimblePicker = exports.Picker = undefined;
 
 var _components = __webpack_require__(81);
 
@@ -3960,7 +3960,9 @@ var _store = __webpack_require__(42);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _data = __webpack_require__(22);
+var _utils = __webpack_require__(20);
+
+var _data = __webpack_require__(23);
 
 var _frequently = __webpack_require__(79);
 
@@ -3968,6 +3970,7 @@ var _frequently2 = _interopRequireDefault(_frequently);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+exports.getData = _utils.getData;
 exports.uncompress = _data.uncompress;
 exports.store = _store2.default;
 exports.frequently = _frequently2.default;
@@ -4037,7 +4040,7 @@ Object.defineProperty(exports, 'Emoji', {
   }
 });
 
-var _nimbleEmoji = __webpack_require__(23);
+var _nimbleEmoji = __webpack_require__(24);
 
 Object.defineProperty(exports, 'NimbleEmoji', {
   enumerable: true,
@@ -4363,7 +4366,7 @@ module.exports = __webpack_require__(0).Object.freeze;
 var isObject = __webpack_require__(8);
 var meta = __webpack_require__(47).onFreeze;
 
-__webpack_require__(28)('freeze', function ($freeze) {
+__webpack_require__(29)('freeze', function ($freeze) {
   return function freeze(it) {
     return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
@@ -4513,7 +4516,7 @@ module.exports = document && document.documentElement;
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(6);
-var toObject = __webpack_require__(20);
+var toObject = __webpack_require__(21);
 var IE_PROTO = __webpack_require__(35)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -4625,7 +4628,7 @@ var isArray = __webpack_require__(112);
 var anObject = __webpack_require__(9);
 var isObject = __webpack_require__(8);
 var toIObject = __webpack_require__(13);
-var toPrimitive = __webpack_require__(27);
+var toPrimitive = __webpack_require__(28);
 var createDesc = __webpack_require__(15);
 var _create = __webpack_require__(56);
 var gOPNExt = __webpack_require__(61);
@@ -4755,7 +4758,7 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(62).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(21).f = $propertyIsEnumerable;
+  __webpack_require__(22).f = $propertyIsEnumerable;
   __webpack_require__(41).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(33)) {
@@ -4848,7 +4851,7 @@ setToStringTag(global.JSON, 'JSON', true);
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(17);
 var gOPS = __webpack_require__(41);
-var pIE = __webpack_require__(21);
+var pIE = __webpack_require__(22);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -4877,10 +4880,10 @@ module.exports = Array.isArray || function isArray(arg) {
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(21);
+var pIE = __webpack_require__(22);
 var createDesc = __webpack_require__(15);
 var toIObject = __webpack_require__(13);
-var toPrimitive = __webpack_require__(27);
+var toPrimitive = __webpack_require__(28);
 var has = __webpack_require__(6);
 var IE8_DOM_DEFINE = __webpack_require__(48);
 var gOPD = Object.getOwnPropertyDescriptor;
@@ -4934,10 +4937,10 @@ module.exports = __webpack_require__(0).Object.keys;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(20);
+var toObject = __webpack_require__(21);
 var $keys = __webpack_require__(17);
 
-__webpack_require__(28)('keys', function () {
+__webpack_require__(29)('keys', function () {
   return function keys(it) {
     return $keys(toObject(it));
   };
@@ -4971,8 +4974,8 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(122) });
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys = __webpack_require__(17);
 var gOPS = __webpack_require__(41);
-var pIE = __webpack_require__(21);
-var toObject = __webpack_require__(20);
+var pIE = __webpack_require__(22);
+var toObject = __webpack_require__(21);
 var IObject = __webpack_require__(58);
 var $assign = Object.assign;
 
@@ -5076,7 +5079,7 @@ module.exports = function getOwnPropertyNames(it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 Object.getOwnPropertyNames(O)
-__webpack_require__(28)('getOwnPropertyNames', function () {
+__webpack_require__(29)('getOwnPropertyNames', function () {
   return __webpack_require__(61).f;
 });
 
@@ -5885,7 +5888,7 @@ module.exports = __webpack_require__(0).Array.from;
 
 var ctx = __webpack_require__(50);
 var $export = __webpack_require__(14);
-var toObject = __webpack_require__(20);
+var toObject = __webpack_require__(21);
 var call = __webpack_require__(153);
 var isArrayIter = __webpack_require__(154);
 var toLength = __webpack_require__(59);
