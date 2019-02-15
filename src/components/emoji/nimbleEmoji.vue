@@ -74,6 +74,7 @@ export default {
 .emoji-type-native {
   font-size: 18px;
   font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "EmojiOne Color", "Android Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
+  word-break: keep-all;
 }
 
 .emoji-type-image {
