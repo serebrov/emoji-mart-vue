@@ -360,6 +360,33 @@ hpx http-server ./docs
 
 And open [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
 
+## Building
+
+```sh
+# Checkout build branch 
+git checkout build
+
+# Merge latest master into it
+git merge master
+
+# Build
+npm run build
+npm run dev:docs
+
+# Add build files
+git add buiid/
+git add docs/
+git commit -m "Rebuild"
+
+# Push changes 
+git push origin HEAD
+
+# Tag the new release, add the description for tag
+# Hint: refer PRs with #17 (PR id) to later have links to PRs in github releases
+git tag 3.1.1 -a
+
+# Push the tags 
+git push origin --tags
 
 ## 🎩 Hat tips!
 
