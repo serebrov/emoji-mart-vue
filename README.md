@@ -1,10 +1,20 @@
-This fork of https://github.com/jm-david/emoji-mart-vue fixes the https://github.com/jm-david/emoji-mart-vue/issues/41 and also applies
-performance fixes (see https://github.com/jm-david/emoji-mart-vue/pull/47, https://github.com/jm-david/emoji-mart-vue/pull/43).
+This project is a fork of https://github.com/jm-david/emoji-mart-vue with many performance fixes.
 
-It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#build` (the latest build is on
-the `build` branch).
+The original component was very slow, around 2 seconds to show and even a bit longer to destroy, so it was unusable in a popup.
 
-> This project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
+This was the reason to fork and change it, the demo is [here](https://serebrov.github.io/emoji-mart-vue/), use the "Show / hide the picker" button to see create/destroy performance
+
+Major changes are:
+- Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for cateogires
+- Render emojis in categories without `NimbleEmoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
+- Frozen objects with emoji data to disable Vue change tracking
+- Do not create `NimbleEmojiIndex` globally, as it was loaded (along with the emoji data) even when not used
+- Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
+- Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
+
+It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#4.0.0.` (check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
+
+> The original project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
 
 <div align="center">
   <br><b>Emoji Mart (Vue)</b> is a Slack-like customizable<br>emoji picker component for VueJS
