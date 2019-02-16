@@ -1,6 +1,6 @@
 This project is a fork of https://github.com/jm-david/emoji-mart-vue with many performance fixes.
 
-The original component was very slow, around 2 seconds to show and even a bit longer to destroy, so it was unusable in a popup.
+The original component was [very slow to show/destroy](https://github.com/jm-david/emoji-mart-vue/pull/47), around 2 seconds to show and even a bit longer to destroy, so it was unusable in a popup.
 
 This was the reason to fork and change it, the demo is [here](https://serebrov.github.io/emoji-mart-vue/), use the "Show / hide the picker" button to see create/destroy performance
 
