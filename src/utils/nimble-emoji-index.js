@@ -51,7 +51,7 @@ export default class NimbleEmojiIndex {
 
       if (emojiId && !pool[emojiId]) {
         pool[emojiId] = getData(emoji, null, null, this.data)
-        this.emojis[emojiId] = getSanitizedData(pool[emojiId])
+        this.emojis[emojiId] = sanitize(pool[emojiId])
       }
     })
 
