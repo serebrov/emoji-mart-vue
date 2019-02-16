@@ -26,29 +26,36 @@
     @search="onSearch"
   />
 
-  <div class="emoji-mart-scroll" ref="scroll" @scroll="onScroll">
-    <category
-      v-show="searchEmojis"
-      :data="data"
-      :i18n="mergedI18n"
-      id="search"
-      name="Search"
-      :emojis="searchEmojis"
-      :emoji-props="emojiProps"
-    />
-    <category
-      v-for="category in filteredCategories"
-      v-show="!searchEmojis && (infiniteScroll || category == activeCategory)"
-      ref="categories"
-      :key="category.id"
-      :data="data"
-      :i18n="mergedI18n"
-      :id="category.id"
-      :name="category.name"
-      :emojis="category.emojis"
-      :emoji-props="emojiProps"
-    />
-  </div>
+  <category
+    v-show="searchEmojis"
+    :data="data"
+    :i18n="mergedI18n"
+    id="search"
+    name="Search"
+    :emojis="searchEmojis"
+    :emoji-props="emojiProps"
+  />
+  <DynamicScroller ref="dynScroller" :items="filteredCategoriesItems" :min-item-height="60" class="scroller" :emit-update="true" @update="onScrollUpdate">
+    <template slot-scope="{ item, active, index }">
+      <DynamicScrollerItem 
+        :item="item" 
+        :active="active" 
+        :data-index="index"
+      >
+        <category
+          v-show="item.show"
+          ref="categories"
+          :key="item.category.id"
+          :data="item.data"
+          :i18n="item.mergedI18n"
+          :id="item.category.id"
+          :name="item.category.name"
+          :emojis="item.category.emojis"
+          :emoji-props="item.emojiProps"
+        />
+      </DynamicScrollerItem>
+    </template>
+  </DynamicScroller>
 
   <div class="emoji-mart-bar" v-if="showPreview">
     <preview
@@ -78,6 +85,9 @@ import Anchors from '../anchors'
 import Category from '../category'
 import Preview from '../preview'
 import Search from '../search'
+
+import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
 const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
@@ -186,6 +196,20 @@ export default {
         return isIncluded && !isExcluded && hasEmojis
       })
     },
+    filteredCategoriesItems() {
+      let id = 0;
+      return this.filteredCategories.map((category) => {
+        return {
+            'id': id++,
+            'category': category,
+            'show': !this.searchEmojis && (this.infiniteScroll || category == this.activeCategory),
+            'mergedI18n': this.mergedI18n,
+            'data': this.data,
+            'emojisLength': category.emojis.length,
+            'emojiProps': this.emojiProps
+        }
+      })
+    },
     mergedI18n() {
       return Object.freeze(deepMerge(I18N, this.i18n))
     },
@@ -219,58 +243,21 @@ export default {
     this.categories[0].first = true
     Object.freeze(this.categories)
     this.activeCategory = this.filteredCategories[0]
+    this.skipScrollUpdate = false
   },
   methods: {
-    onScroll() {
-      if (this.infiniteScroll && !this.waitingForPaint) {
-        this.waitingForPaint = true
-        window.requestAnimationFrame(this.onScrollPaint.bind(this))
+    onScrollUpdate(startIndex, endIndex) {
+      if (this.skipScrollUpdate) {
+          this.skipScrollUpdate = false
+      } else {
+          this.activeCategory = this.filteredCategories[endIndex-1]
       }
-    },
-    onScrollPaint() {
-      this.waitingForPaint = false
-
-      let scrollTop = this.$refs.scroll.scrollTop,
-          activeCategory = this.filteredCategories[0]
-
-      for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
-        let category = this.filteredCategories[i],
-            component = this.$refs.categories[i]
-
-        if (component && component.$el.offsetTop > scrollTop) {
-          break
-        }
-
-        activeCategory = category
-      }
-
-      this.activeCategory = activeCategory
     },
     onAnchorClick(category) {
-      let i = this.filteredCategories.indexOf(category),
-          component = this.$refs.categories[i],
-          scrollToComponent = () => {
-            if (component) {
-              let top = component.$el.offsetTop
-
-              if (category.first) {
-                top = 0
-              }
-
-              this.$refs.scroll.scrollTop = top
-            }
-          }
-
-      if (this.searchEmojis) {
-        this.onSearch(null)
-        this.$refs.search.clear()
-
-        this.$nextTick(scrollToComponent)
-      } else if (this.infiniteScroll) {
-        scrollToComponent()
-      } else {
-        this.activeCategory = this.filteredCategories[i];
-      }
+      let i = this.filteredCategories.indexOf(category)
+      this.$refs.dynScroller.scrollToItem(i)
+      this.activeCategory = this.filteredCategories[i]
+      this.skipScrollUpdate = true
     },
     onSearch(emojis) {
       this.searchEmojis = emojis
@@ -302,7 +289,9 @@ export default {
     Anchors,
     Category,
     Preview,
-    Search
+    Search,
+    DynamicScroller,
+    DynamicScrollerItem
   }
 }
 
@@ -355,6 +344,18 @@ export default {
 .emoji-mart-scroll {
   position: relative;
   overflow-y: scroll;
+  flex: 1;
+  padding: 0 6px 6px 6px;
+  z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */
+  will-change: transform; /* avoids "repaints on scroll" in mobile Chrome */
+  -webkit-overflow-scrolling: touch;
+}
+</style>
+
+<style>
+.scroller {
+  height: 250px;
+  position: relative;
   flex: 1;
   padding: 0 6px 6px 6px;
   z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */
