@@ -7,7 +7,10 @@
 .emoji-mart {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   font-size: 16px;
-  display: inline-block;
+  /* display: inline-block; */
+  display: flex;
+  flex-direction: column;
+  height: 420px;
   color: #222427;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
@@ -16,6 +19,48 @@
 
 .emoji-mart .emoji-mart-emoji {
   padding: 6px;
+  position: relative;
+  display: inline-block;
+  font-size: 0;
+}
+
+.emoji-mart .emoji-mart-emoji span {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.emoji-mart .emoji-mart-preview-emoji .emoji-mart-emoji span {
+  width: 38px;
+  height: 38px;
+}
+
+.emoji-mart .emoji-type-native {
+  font-size: 18px;
+  font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "EmojiOne Color", "Android Emoji";
+  word-break: keep-all;
+}
+
+.emoji-mart .emoji-type-image {
+  background-size: 5200%;
+}
+.emoji-mart .emoji-type-image.emoji-set-emojione {
+  background-image: url("https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png");
+}
+.emoji-mart .emoji-type-image.emoji-set-messenger {
+  background-image: url("https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png");
+}
+.emoji-mart .emoji-type-image.emoji-set-apple {
+  background-image: url("https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png");
+}
+.emoji-mart .emoji-type-image.emoji-set-facebook {
+  background-image: url("https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png");
+}
+.emoji-mart .emoji-type-image.emoji-set-google {
+  background-image: url("https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png");
+}
+.emoji-mart .emoji-type-image.emoji-set-twitter {
+  background-image: url("https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png");
 }
 
 .emoji-mart-bar {
@@ -77,11 +122,14 @@
   max-height: 18px;
 }
 
-.emoji-mart-scroll {
-  overflow-y: scroll;
-  height: 270px;
+.emoji-mart .scroller {
+  height: 250px;
+  position: relative;
+  flex: 1;
   padding: 0 6px 6px 6px;
+  z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */
   will-change: transform; /* avoids "repaints on scroll" in mobile Chrome */
+  -webkit-overflow-scrolling: touch;
 }
 
 .emoji-mart-search {
@@ -96,6 +144,10 @@
   border-radius: 25px;
   border: 1px solid #d9d9d9;
   outline: 0;
+}
+
+.emoji-mart-category {
+  position: relative;
 }
 
 .emoji-mart-category .emoji-mart-emoji span {
@@ -113,12 +165,17 @@
   width: 100%; height: 100%;
   background-color: #f4f4f4;
   border-radius: 100%;
+  opacity: 0;
+}
+
+.emoji-mart-category .emoji-mart-emoji:hover:before {
+  opacity: 1;
 }
 
 .emoji-mart-category-label {
-  z-index: 2;
-  position: relative;
-  position: -webkit-sticky;
+  /* z-index: 2; */
+  /* position: relative; */
+  /* position: -webkit-sticky; */
   position: sticky;
   top: 0;
 }
@@ -211,7 +268,7 @@
 
 .emoji-mart-title-label {
   color: #999A9C;
-  font-size: 26px;
+  font-size: 21px;
   font-weight: 300;
 }
 
