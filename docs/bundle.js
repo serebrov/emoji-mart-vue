@@ -10560,27 +10560,34 @@ exports.default = {
   }),
   computed: {
     view: function view() {
-      return new _emojiData.EmojiView(this.emoji, this.set, this.native, this.fallback);
+      return new _emojiData.EmojiView(this._emoji, this.set, this.native, this.fallback);
     },
     emojiData: function emojiData() {
-      return this.emoji._data;
+      return this._emoji._data;
     },
     sanitizedData: function sanitizedData() {
-      return this.emoji._sanitized;
+      return this._emoji._sanitized;
     },
     title: function title() {
       return this.tooltip ? this.emojiData.short_names[0] : null;
     }
   },
+  created: function created() {
+    this._emoji = this.emoji;
+    if (typeof this.emoji == "string") {
+      this._emoji = new _emojiData.EmojiData(this.emoji, this.skin, this.set, this.data);
+    }
+  },
+
   methods: {
     onClick: function onClick() {
-      this.$emit('click', this.emoji);
+      this.$emit('click', this._emoji);
     },
     onMouseEnter: function onMouseEnter() {
-      this.$emit('mouseenter', this.emoji);
+      this.$emit('mouseenter', this._emoji);
     },
     onMouseLeave: function onMouseLeave() {
-      this.$emit('mouseleave', this.emoji);
+      this.$emit('mouseleave', this._emoji);
     }
   }
 };
