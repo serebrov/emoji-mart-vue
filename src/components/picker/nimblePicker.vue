@@ -243,58 +243,21 @@ export default {
     this.categories[0].first = true
     Object.freeze(this.categories)
     this.activeCategory = this.filteredCategories[0]
+    this.skipScrollUpdate = false
   },
   methods: {
-    onScroll() {
-      if (this.infiniteScroll && !this.waitingForPaint) {
-        this.waitingForPaint = true
-        window.requestAnimationFrame(this.onScrollPaint.bind(this))
+    onScrollUpdate(startIndex, endIndex) {
+      if (this.skipScrollUpdate) {
+          this.skipScrollUpdate = false
+      } else {
+          this.activeCategory = this.filteredCategories[endIndex-1]
       }
-    },
-    onScrollPaint() {
-      this.waitingForPaint = false
-
-      let scrollTop = this.$refs.scroll.scrollTop,
-          activeCategory = this.filteredCategories[0]
-
-      for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
-        let category = this.filteredCategories[i],
-            component = this.$refs.categories[i]
-
-        if (component && component.$el.offsetTop > scrollTop) {
-          break
-        }
-
-        activeCategory = category
-      }
-
-      this.activeCategory = activeCategory
     },
     onAnchorClick(category) {
-      let i = this.filteredCategories.indexOf(category),
-          component = this.$refs.categories[i],
-          scrollToComponent = () => {
-            if (component) {
-              let top = component.$el.offsetTop
-
-              if (category.first) {
-                top = 0
-              }
-
-              this.$refs.scroll.scrollTop = top
-            }
-          }
-
-      if (this.searchEmojis) {
-        this.onSearch(null)
-        this.$refs.search.clear()
-
-        this.$nextTick(scrollToComponent)
-      } else if (this.infiniteScroll) {
-        scrollToComponent()
-      } else {
-        this.activeCategory = this.filteredCategories[i];
-      }
+      let i = this.filteredCategories.indexOf(category)
+      this.$refs.dynScroller.scrollToItem(i)
+      this.activeCategory = this.filteredCategories[i]
+      this.skipScrollUpdate = true
     },
     onSearch(emojis) {
       this.searchEmojis = emojis
