@@ -18,8 +18,26 @@ the `build` branch).
 
 ## Components
 ### Picker
+
 ```js
 import { Picker } from 'emoji-mart-vue'
+```
+
+Import CSS with default styles:
+
+```js
+import 'emoji-mart-vue/css/emoji-mart.css'
+```
+
+Note: to have a custom look for the picker, either use own css file without including the standard one or add custom styles on top of standard.
+
+Note: CSS also includes background images for image-based emoji sets (apple, google, twitter, emojione, messenger, facebook). The images are loaded from the `unpkg.com`. To use self-hosted emojis sheet, override CSS like this:
+
+```css
+/* load emojione sheet from own server */
+.emoji-mart-body .emoji-type-image.emoji-set-emojione {
+	background-image: url(/img/emojione-4.0.4-sheets-256-64.png);
+}
 ```
 
 ```html
