@@ -350,7 +350,16 @@ $ npm build
 $ npm start
 ```
 
-Open [docs/index.html](docs/index.html) in browser.
+Open [docs/index.html](docs/index.html) in browser to see the demo.
+
+Or serve the dir (with [npx](https://www.npmjs.com/package/npx) and [http-server](https://www.npmjs.com/package/http-server):
+
+```sh
+hpx http-server ./docs
+```
+
+And open [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
+
 
 ## 🎩 Hat tips!
 
