@@ -112,6 +112,7 @@ categories: {
 
 #### Sheet sizes
 Sheets are served from [unpkg](https://unpkg.com), a global CDN that serves files published to [npm](https://www.npmjs.com).
+Note: URLs for background images are specified in the [css/emoji-mart.css](css/emoji-mart.css).
 
 | Set       | Size (`sheetSize: 16`) | Size (`sheetSize: 20`) | Size (`sheetSize: 32`) | Size (`sheetSize: 64`) |
 | --------- | ---------------------- | ---------------------- | ---------------------- | ---------------------- |
