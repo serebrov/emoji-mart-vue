@@ -40,6 +40,7 @@
 <script>
 
 import { Picker, Emoji } from '../src'
+import '../css/emoji-mart.css'
 
 const CUSTOM_EMOJIS = [
   {
