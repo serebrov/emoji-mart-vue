@@ -6,9 +6,9 @@
   </div>
 
   <template v-for="{ emojiObject, emojiView} in emojiObjects">
-    <span 
-      v-if="emojiView.canRender" 
-      :title="emojiObject._data.short_names[0]" 
+    <span
+      v-if="emojiView.canRender"
+      :title="emojiObject._data.short_names[0]"
       class="emoji-mart-emoji"
       @mouseenter="emojiProps.onEnter(emojiObject)"
       @mouseleave="emojiProps.onLeave(emojiObject)"

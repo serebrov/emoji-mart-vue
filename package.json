@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/jm-david/emoji-mart-vue",
   "dependencies": {
-    "postcss-loader": "^3.0.0"
+    "postcss-loader": "^3.0.0",
+    "vue-virtual-scroller": "^1.0.0-beta.5"
   },
   "peerDependencies": {
     "vue": "^2.0.0"
