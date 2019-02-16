@@ -5,7 +5,7 @@ The original component was very slow, around 2 seconds to show and even a bit lo
 This was the reason to fork and change it, the demo is [here](https://serebrov.github.io/emoji-mart-vue/), use the "Show / hide the picker" button to see create/destroy performance
 
 Major changes are:
-- Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for cateogires
+- Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories
 - Render emojis in categories without `NimbleEmoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
 - Frozen objects with emoji data to disable Vue change tracking
 - Do not create `NimbleEmojiIndex` globally, as it was loaded (along with the emoji data) even when not used
