@@ -343,12 +343,19 @@ Apple / Google / Twitter / EmojiOne / Messenger / Facebook
 **Emoji Mart** doesn’t automatically insert anything into a text input, nor does it show or hide itself. It simply returns an `emoji` object. It’s up to the developer to mount/unmount (it’s fast!) and position the picker. You can use the returned object as props for the `EmojiMart.Emoji` component. You could also use `emoji.colons` to insert text into a textarea or `emoji.native` to use the emoji.
 
 ## Development
+
 Build the component and the demo app.
 ```sh
 $ npm build
 $ npm start
 ```
 
+Open [docs/index.html](docs/index.html) in browser.
+
 ## 🎩 Hat tips!
+
+Original react emoji picker: [missive/emoji-mart](https://github.com/missive/emoji-mart).
+Vue port: [jm-david/emoji-mart-vue](https://github.com/jm-david/emoji-mart-vue)
+
 Powered by [iamcal/emoji-data](https://github.com/iamcal/emoji-data) and inspired by [iamcal/js-emoji](https://github.com/iamcal/js-emoji).<br>
 🙌🏼  [Cal Henderson](https://github.com/iamcal).
