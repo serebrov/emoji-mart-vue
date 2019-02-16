@@ -1,10 +1,20 @@
-This fork of https://github.com/jm-david/emoji-mart-vue fixes the https://github.com/jm-david/emoji-mart-vue/issues/41 and also applies
-performance fixes (see https://github.com/jm-david/emoji-mart-vue/pull/47, https://github.com/jm-david/emoji-mart-vue/pull/43).
+This project is a fork of https://github.com/jm-david/emoji-mart-vue with many performance fixes.
 
-It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#build` (the latest build is on
-the `build` branch).
+The original component was very slow, around 2 seconds to show and even a bit longer to destroy, so it was unusable in a popup.
 
-> This project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
+This was the reason to fork and change it, the demo is [here](https://serebrov.github.io/emoji-mart-vue/), use the "Show / hide the picker" button to see create/destroy performance
+
+Major changes are:
+- Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories
+- Render emojis in categories without `NimbleEmoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
+- Frozen objects with emoji data to disable Vue change tracking
+- Do not create `NimbleEmojiIndex` globally, as it was loaded (along with the emoji data) even when not used
+- Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
+- Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
+
+It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#4.0.0.` (check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
+
+> The original project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
 
 <div align="center">
   <br><b>Emoji Mart (Vue)</b> is a Slack-like customizable<br>emoji picker component for VueJS
@@ -102,6 +112,7 @@ categories: {
 
 #### Sheet sizes
 Sheets are served from [unpkg](https://unpkg.com), a global CDN that serves files published to [npm](https://www.npmjs.com).
+Note: URLs for background images are specified in the [css/emoji-mart.css](css/emoji-mart.css).
 
 | Set       | Size (`sheetSize: 16`) | Size (`sheetSize: 20`) | Size (`sheetSize: 32`) | Size (`sheetSize: 64`) |
 | --------- | ---------------------- | ---------------------- | ---------------------- | ---------------------- |
@@ -332,12 +343,55 @@ Apple / Google / Twitter / EmojiOne / Messenger / Facebook
 **Emoji Mart** doesn’t automatically insert anything into a text input, nor does it show or hide itself. It simply returns an `emoji` object. It’s up to the developer to mount/unmount (it’s fast!) and position the picker. You can use the returned object as props for the `EmojiMart.Emoji` component. You could also use `emoji.colons` to insert text into a textarea or `emoji.native` to use the emoji.
 
 ## Development
+
+Build the component and the demo app.
 ```sh
-$ yarn build
-$ yarn start
-$ yarn storybook
+$ npm build
+$ npm start
 ```
 
+Open [docs/index.html](docs/index.html) in browser to see the demo.
+
+Or serve the dir (with [npx](https://www.npmjs.com/package/npx) and [http-server](https://www.npmjs.com/package/http-server):
+
+```sh
+hpx http-server ./docs
+```
+
+And open [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
+
+## Building
+
+```sh
+# Checkout build branch 
+git checkout build
+
+# Merge latest master into it
+git merge master
+
+# Build
+npm run build
+npm run dev:docs
+
+# Add build files
+git add buiid/
+git add docs/
+git commit -m "Rebuild"
+
+# Push changes 
+git push origin HEAD
+
+# Tag the new release, add the description for tag
+# Hint: refer PRs with #17 (PR id) to later have links to PRs in github releases
+git tag 3.1.1 -a
+
+# Push the tags 
+git push origin --tags
+
 ## 🎩 Hat tips!
+
+Original react emoji picker: [missive/emoji-mart](https://github.com/missive/emoji-mart).
+Vue port: [jm-david/emoji-mart-vue](https://github.com/jm-david/emoji-mart-vue)
+
 Powered by [iamcal/emoji-data](https://github.com/iamcal/emoji-data) and inspired by [iamcal/js-emoji](https://github.com/iamcal/js-emoji).<br>
 🙌🏼  [Cal Henderson](https://github.com/iamcal).
