@@ -233,7 +233,10 @@ export class EmojiIndex {
         emojis = currentIndex.emojis
       }
       return currentIndex.results
-    //TODO: why do we need the "filter" call?
+    // The "filter" call removes undefined values from allResults
+    // array, for example, if we have "test " (with trailing space),
+    // we will get "[Array, undefined]" for allResults and after
+    // the "filter" call it will turn into "[Array]"
     }).filter((a) => a)
 
     var results = null;
