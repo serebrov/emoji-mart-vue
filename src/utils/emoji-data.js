@@ -1,4 +1,4 @@
-import { sanitize, intersect } from './index'
+import { intersect, unifiedToNative } from './index'
 import { buildSearch } from './data'
 
 const SHEET_COLUMNS = 52
@@ -455,4 +455,45 @@ export class EmojiView {
     return 'fallback';
   }
 
+}
+
+// TODO: add as a method to Emoji?
+function sanitize(emoji) {
+  var {
+      name,
+      short_names,
+      skin_tone,
+      skin_variations,
+      emoticons,
+      unified,
+      custom,
+      imageUrl,
+    } = emoji,
+    id = emoji.id || short_names[0],
+    colons = `:${id}:`
+
+  if (custom) {
+    return {
+      id,
+      name,
+      colons,
+      emoticons,
+      custom,
+      imageUrl,
+    }
+  }
+
+  if (skin_tone) {
+    colons += `:skin-tone-${skin_tone}:`
+  }
+
+  return {
+    id,
+    name,
+    colons,
+    emoticons,
+    unified: unified.toLowerCase(),
+    skin: skin_tone || (skin_variations ? 1 : null),
+    native: unifiedToNative(unified),
+  }
 }

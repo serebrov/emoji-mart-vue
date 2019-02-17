@@ -1,64 +1,10 @@
-import { buildSearch } from './data'
 import stringFromCodePoint from '../polyfills/stringFromCodePoint'
-
-const _JSON = JSON
-
-const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
-const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
 
 function unifiedToNative(unified) {
   var unicodes = unified.split('-'),
     codePoints = unicodes.map((u) => `0x${u}`)
 
   return stringFromCodePoint.apply(null, codePoints)
-}
-
-function sanitize(emoji) {
-  var {
-      name,
-      short_names,
-      skin_tone,
-      skin_variations,
-      emoticons,
-      unified,
-      custom,
-      imageUrl,
-    } = emoji,
-    id = emoji.id || short_names[0],
-    colons = `:${id}:`
-
-  if (custom) {
-    return {
-      id,
-      name,
-      colons,
-      emoticons,
-      custom,
-      imageUrl,
-    }
-  }
-
-  if (skin_tone) {
-    colons += `:skin-tone-${skin_tone}:`
-  }
-
-  return {
-    id,
-    name,
-    colons,
-    emoticons,
-    unified: unified.toLowerCase(),
-    skin: skin_tone || (skin_variations ? 1 : null),
-    native: unifiedToNative(unified),
-  }
-}
-
-function cloneEmoji(emoji) {
-  if (typeof emoji === 'string') {
-    return emoji;
-  }
-
-  return Object.assign({}, emoji);
 }
 
 function uniq(arr) {
@@ -117,7 +63,6 @@ function measureScrollbar() {
 }
 
 export {
-  sanitize,
   uniq,
   intersect,
   deepMerge,
