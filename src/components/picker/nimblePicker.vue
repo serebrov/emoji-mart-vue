@@ -28,6 +28,7 @@
 
   <category
     v-show="searchEmojis"
+    class="emoji-mart-search-results"
     :data="data"
     :i18n="mergedI18n"
     id="search"
@@ -35,7 +36,15 @@
     :emojis="searchEmojis"
     :emoji-props="emojiProps"
   />
-  <DynamicScroller ref="dynScroller" :items="filteredCategoriesItems" :min-item-height="60" class="scroller" :emit-update="true" @update="onScrollUpdate">
+  <DynamicScroller 
+    v-show="!searchEmojis"
+    ref="dynScroller" 
+    :items="filteredCategoriesItems" 
+    :min-item-height="60" 
+    class="scroller" 
+    :emit-update="true" 
+    @update="onScrollUpdate"
+  >
     <template slot-scope="{ item, active, index }">
       <DynamicScrollerItem 
         :item="item" 

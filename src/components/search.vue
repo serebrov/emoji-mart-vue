@@ -8,7 +8,7 @@
 
 <script>
 
-import NimbleEmojiIndex from '../utils/nimble-emoji-index'
+// import NimbleEmojiIndex from '../utils/nimble-emoji-index'
 
 export default {
   props: {
@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     emojiIndex() {
-      return new NimbleEmojiIndex(this.data)
+      return this.data // new NimbleEmojiIndex(this.data)
     }
   },
   watch: {
