@@ -35,7 +35,11 @@ export default {
     }
   },
   created() {
-    this._emoji = this.emoji;
+    if (typeof this.emoji == "string") {
+      this._emoji = this.data.emoji(this.emoji)
+    } else {
+      this._emoji = this.emoji
+    }
   },
   methods: {
     onClick() {
