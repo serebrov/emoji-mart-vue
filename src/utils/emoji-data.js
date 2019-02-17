@@ -1,17 +1,284 @@
 import { getData, sanitize } from './index'
+import { buildSearch } from './data'
 
 const SHEET_COLUMNS = 52
+const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
+// Skin tones
+const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
 
-export class EmojiData {
+/**
+ * Emoji data structure:
+ * {
+ *    "compressed": false,
+ *    "aliases": {
+ *      collision: "boom"
+ *      cooking: "fried_egg"
+ *      envelope: "email"
+ *      face_with_finger_covering_closed_lips: "shushing_face"
+ *      ...
+ *    },
+ *    "categories": [ {
+ *      id: "people", 
+ *      name: "Smileys & People", 
+ *      emojis: [ "grinning", "grin", "joy", ... ]
+ *    }, {
+ *      id: "nature", 
+ *      name: "Animals & Nature", 
+ *      emojis: [ "monkey_face", "money", "gorilla", ... ]
+ *    },
+ *    ...
+ *    ],
+ *    "emojis": [
+ *      smiley: {
+ *        added_in: "6.0",
+ *        emoticons: ["=)", "=-)"],
+ *        has_img_apple: true,
+ *        has_img_emojione: true,
+ *        has_img_facebook: true,
+ *        has_img_google: true,
+ *        has_img_messenger: true,
+ *        has_img_twitter: true,
+ *        keywords: ["face", "happy", "joy", "haha", ":D", ":)", "smile", "funny"],
+ *        name: "Smiling Face with Open Mouth",
+ *        non_qualified: undefined,
+ *        search: "smiley,smiling,face,with,open,mouth,happy,joy,haha,:d,:),smile,funny,=),=-)",
+ *        sheet_x: 30,
+ *        sheet_y: 27,
+ *        short_names: ["smiley"],
+ *        text: ":)",
+ *        unified: "1F603",
+ *      }, {
+ *      +1: {    // emoji with skin_variations
+ *          ..., // all the regular fields are present
+ *          name: "Thumbs Up Sign",
+ *          short_names: (2) ["+1", "thumbsup"],
+ *          skin_variations: {
+ *            1F3FB:             // each variation has additional set of fields:
+ *              added_in: "8.0",
+ *              has_img_apple: true,
+ *              has_img_emojione: true,
+ *              has_img_facebook: true,
+ *              has_img_google: true,
+ *              has_img_messenger: true,
+ *              has_img_twitter: true,
+ *              image: "1f44d-1f3fb.png",
+ *              non_qualified: null,
+ *              sheet_x: 14,
+ *              sheet_y: 50,
+ *              unified: "1F44D-1F3FB",
+ *            1F3FB: {…},
+ *            1F3FC: {…},
+ *            1F3FD: {…},
+ *            1F3FE: {…},
+ *            1F3FF: {…}
+*            },
+ *          ...
+ *      },
+ *      a: {  // emoji with non_qualified field set
+ *        added_in: "6.0",
+ *        emoticons: undefined,
+ *        has_img_apple: true,
+ *        ...
+ *        non_qualified: "1F170",
+ *        unified: "1F170-FE0F",
+ *     },
+ *     ...
+ *   ]
+ * }
+ */
 
-  constructor(emoji, skin, set, data) {
-    this._key = emoji
-    this._data = getData(emoji, skin, set, data)
+export class EmojiIndex {
+  constructor(data, emojisToShowFilter, include, exclude, custom) {
+    this._data = data;
+    // Callback to exclude specific emojis
+    this._emojisFilter = emojisToShowFilter || null;
+    // Categories to include / exclude
+    this._include = include || null;
+    this._exclude = exclude || null;
+    // Custom emojis
+    this._custom = custom || [];
+
+    this._index = [];
+    this._emoticons = [];
+    this._categories = [];
+    this._customCategory = { id: 'custom', name: 'Custom', emojis: [] }
+    this.buildIndex();
+  }
+
+  buildIndex() {
+    this._data.categories.forEach((categoryData) => {
+      if (!this.isCategoryNeeded(categoryData)) {
+        return;
+      }
+      let category = {
+        id: categoryData.id,
+        name: categoryData.name,
+        emojis: []
+      }
+      categoryData.emojis.forEach((emojiId) => {
+        let emoji = this.addEmoji(emojiId)
+        category.emojis.push(emoji)
+      })
+      this._categories.push(category);
+    })
+
+    if (this._custom.length > 0) {
+      for (let customEmoji in this._custom) {
+        let emoji = this.addCustomEmoji(customEmoji)
+        this._customCategory.emojis.push(emoji)
+      }
+    }
+    this._categories.push(this._customCategory);
+  }
+
+  /**
+   * Find the emoji from the string
+   */
+  findEmoji(emoji) {
+    // 1. Parse as :emoji_name:skin-tone-xx:
+    let matches = emoji.match(COLONS_REGEX)
+
+    if (matches) {
+      emoji = matches[1]
+      if (matches[2]) {
+        skin = parseInt(matches[2], 10)
+      }
+    }
+
+    // 2. Check if the specified emoji is an alias
+    if (this._data.aliases.hasOwnProperty(emoji)) {
+      emoji = this._data.aliases[emoji]
+    }
+
+    // 3. Check if we have the specified emoji
+    if (this._index.hasOwnProperty(emoji)) {
+      let emoji = this._index[emoji]
+      if (skin) {
+        return emoji.getSkin(skin)
+      }
+      return emoji
+    }
+    return null;
+  }
+
+  categories() {
+    return this._categories;
+  }
+
+  emoji(emojiId) {
+    return this._index[emojiId];
+  }
+
+  emojis() {
+    return this._index;
+  }
+
+  search(value, maxResults) {
+    return []
+  }
+
+  addCustomEmoji(customEmoji) {
+    let emojiData = Object.assign({}, customEmoji)
+    emojiData.custom = true
+    if (!emojiData.search) {
+      emojiData.search = buildSearch(emoji)
+    }
+    let emoji = new Emoji(emojiData)
+    this._index[emojiId] = emoji
+    this._customCategory.emojis.push(emoji)
+    return emoji
+  }
+
+  addEmoji(emojiId) {
+    // We expect the correct emoji id that is present in the emojis data.
+    let data = this._data.emojis[emojiId]
+
+    if (!this.isEmojiNeeded(data)) {
+      return false
+    }
+
+    let emoji = new Emoji(data);
+    this._index[emojiId] = emoji;
+
+    if (emoji.emoticons) {
+      emoji.emoticons.forEach((emoticon) => {
+        if (this._emoticons[emoticon]) {
+          return
+        }
+        this._emoticons[emoticon] = emojiId
+      })
+    }
+    return emoji
+  }
+
+  /**
+   * Check if we need to include given category.
+   *
+   * @param {object} category - The category object.
+   * @return {boolean} - Whether to include the emoji.
+   */
+  isCategoryNeeded(category) {
+    let isIncluded = this._include && this._include.length
+      ? this._include.indexOf(category.id) > -1 
+      : true
+    let isExcluded = this._exclude && this._exclude.length
+      ? this._exclude.indexOf(category.id) > -1
+      : false
+    if (!isIncluded || isExcluded) {
+      return false
+    }
+    return true
+  }
+
+  /**
+   * Check if we need to include given emoji.
+   *
+   * @param {object} emoji - The raw emoji object.
+   * @return {boolean} - Whether to include the emoji.
+   */
+  isEmojiNeeded(emoji) {
+    if (this._emojisFilter && this._emojisFilter(emoji)) {
+      return false;
+    }
+    return true;
+  }
+}
+
+export class Emoji {
+
+  constructor(data) {
+    this._data = Object.assign({}, data)
+    this._skins = null
+    if (this._data.skin_variations) {
+      this._skins = []
+      for (var skinIdx in SKINS) {
+        let skinKey = SKINS[skinIdx]
+        let variationData = this._data.skin_variations[skinKey]
+        let skinData = Object.assign({}, data)
+        for (let k in variationData) {
+          skinData[k] = variationData[k]
+        }
+        delete skinData.skin_variations
+        this._skins.push(new Emoji(skinData))
+      }
+    }
     this._sanitized = sanitize(this._data)
     for (let key in this._sanitized) {
       this[key] = this._sanitized[key]
     }
+    this.short_name = this._data.short_names[0]
     Object.freeze(this)
+  }
+
+  getSkin(skinIdx) {
+    if (skinIdx && skinIdx != 'native' && this._skins) {
+      let skin = this._skins[skinIdx-1]
+      if (!skin) {
+        debugger;
+      }
+      return skin
+    }
+    return this
   }
 
   getPosition() {
@@ -23,17 +290,19 @@ export class EmojiData {
 
 }
 
+
 export class EmojiView {
 
   /**
-   * emoji - EmojiData to display
+   * emoji - Emoji to display
    * set - string, emoji set name
    * native - boolean, whether to render native emoji
    * fallback - fallback function to render missing emoji, optional
    */
-  constructor(emoji, set, native, fallback) {
+  constructor(emoji, skin, set, native, fallback) {
     this._emoji = emoji
     this._native = native
+    this._skin = skin
     this._set = set
     this._fallback = fallback
 
@@ -43,6 +312,10 @@ export class EmojiView {
     this.content = this._content()
 
     Object.freeze(this)
+  }
+
+  _getEmoji() {
+    return this._emoji.getSkin(this._skin)
   }
 
   _canRender() {
@@ -59,13 +332,13 @@ export class EmojiView {
   _cssStyle() {
     if (this._isCustom()) {
       return {
-        backgroundImage: 'url(' + this._emoji._data.imageUrl + ')',
+        backgroundImage: 'url(' + this._getEmoji()._data.imageUrl + ')',
         backgroundSize: '100%',
       }
     }
     if (this._hasEmoji() && !this._isNative()) {
       return {
-        backgroundPosition: this._emoji.getPosition()
+        backgroundPosition: this._getEmoji().getPosition()
       }
     }
     return {}
@@ -76,12 +349,12 @@ export class EmojiView {
       return ''
     }
     if (this._isNative()) {
-      return this._emoji.native
+      return this._getEmoji().native
     }
     if (this._hasEmoji()) {
       return ''
     }
-    return this._fallback ? this._fallback(this._emoji) : null
+    return this._fallback ? this._fallback(this._getEmoji()) : null
   }
 
   _isNative() {
@@ -89,11 +362,11 @@ export class EmojiView {
   }
 
   _isCustom() {
-    return this._emoji.custom
+    return this._getEmoji().custom
   }
 
   _hasEmoji() {
-    return this._emoji._data && this._emoji._data['has_img_' + this._set]
+    return this._getEmoji()._data && this._getEmoji()._data['has_img_' + this._set]
   }
 
   _emojiType() {
