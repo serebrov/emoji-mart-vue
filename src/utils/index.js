@@ -61,85 +61,6 @@ function cloneEmoji(emoji) {
   return Object.assign({}, emoji);
 }
 
-function getData(_emoji, skin, set, data) {
-  var emoji = cloneEmoji(_emoji)
-  var emojiData = {}
-
-  if (typeof emoji == 'string') {
-    let matches = emoji.match(COLONS_REGEX)
-
-    if (matches) {
-      emoji = matches[1]
-
-      if (matches[2]) {
-        skin = parseInt(matches[2], 10)
-      }
-    }
-
-    if (data.aliases.hasOwnProperty(emoji)) {
-      emoji = data.aliases[emoji]
-    }
-
-    if (data.emojis.hasOwnProperty(emoji)) {
-      emojiData = Object.assign({}, data.emojis[emoji])
-    } else {
-      return null
-    }
-  } else if (emoji.id) {
-    if (data.aliases.hasOwnProperty(emoji.id)) {
-      emoji.id = data.aliases[emoji.id]
-    }
-
-    if (data.emojis.hasOwnProperty(emoji.id)) {
-      emojiData = Object.assign({}, data.emojis[emoji.id])
-      skin || (skin = emoji.skin)
-    }
-  }
-
-  if (!Object.keys(emojiData).length) {
-    emojiData = emoji
-    emojiData.custom = true
-
-    if (!emojiData.search) {
-      emojiData.search = buildSearch(emoji)
-    }
-  }
-
-  emojiData.emoticons || (emojiData.emoticons = [])
-  emojiData.variations || (emojiData.variations = [])
-
-  if (emojiData.skin_variations && skin > 1) {
-    emojiData = JSON.parse(_JSON.stringify(emojiData))
-
-    var skinKey = SKINS[skin - 1],
-      variationData = emojiData.skin_variations[skinKey]
-
-    if (!variationData.variations && emojiData.variations) {
-      delete emojiData.variations
-    }
-
-    if (
-      set == 'native' ||
-      variationData[`has_img_${set}`] == undefined ||
-      variationData[`has_img_${set}`]
-    ) {
-      emojiData.skin_tone = skin
-
-      for (let k in variationData) {
-        let v = variationData[k]
-        emojiData[k] = v
-      }
-    }
-  }
-
-  if (emojiData.variations && emojiData.variations.length) {
-    emojiData = JSON.parse(_JSON.stringify(emojiData))
-    emojiData.unified = emojiData.variations.shift()
-  }
-
-  return Object.freeze(emojiData)
-}
-
 function uniq(arr) {
   return arr.reduce((acc, item) => {
     if (acc.indexOf(item) === -1) {
@@ -196,7 +117,6 @@ function measureScrollbar() {
 }
 
 export {
-  getData,
   sanitize,
   uniq,
   intersect,
