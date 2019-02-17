@@ -2,6 +2,7 @@
 
 import data from '../../../data/all.json'
 import { uncompress } from '../../utils/data'
+import { EmojiIndex } from '../../utils/emoji-data'
 import NimblePicker from './nimblePicker'
 
 import { PickerProps } from '../../utils/shared-props'
@@ -13,7 +14,7 @@ export default {
     data: {
       type: Object,
       default() {
-        return uncompress(data)
+        return new EmojiIndex(uncompress(data))
       }
     }
   },

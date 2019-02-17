@@ -9,7 +9,7 @@
 <script>
 
 import { EmojiProps } from '../../utils/shared-props'
-import { EmojiData, EmojiView } from '../../utils/emoji-data'
+import { EmojiView } from '../../utils/emoji-data'
 
 const SHEET_COLUMNS = 52
 
@@ -24,26 +24,18 @@ export default {
   computed: {
     view() {
       return new EmojiView(
-        this._emoji, this.set, this.native, this.fallback
+        this._emoji, this.skin, this.set, this.native, this.fallback
       )
-    },
-    emojiData() {
-      return this._emoji._data
     },
     sanitizedData() {
       return this._emoji._sanitized
     },
     title() {
-      return this.tooltip ? this.emojiData.short_names[0] : null
+      return this.tooltip ? this._emoji.short_name : null
     }
   },
   created() {
     this._emoji = this.emoji;
-    if (typeof this.emoji == "string") {
-      this._emoji = new EmojiData(
-        this.emoji, this.skin, this.set, this.data
-      )
-    }
   },
   methods: {
     onClick() {

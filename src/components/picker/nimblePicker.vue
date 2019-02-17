@@ -80,7 +80,6 @@ import store from '../../utils/store'
 import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar } from '../../utils'
 import { PickerProps } from '../../utils/shared-props'
-import { EmojiData } from '../../utils/emoji-data'
 import Anchors from '../anchors'
 import Category from '../category'
 import Preview from '../preview'
@@ -183,17 +182,7 @@ export default {
     },
     filteredCategories() {
       return this.categories.filter((category) => {
-        let isIncluded = this.include && this.include.length ? this.include.indexOf(category.id) > -1 : true
-        let isExcluded = this.exclude && this.exclude.length ? this.exclude.indexOf(category.id) > -1 : false
-        let hasEmojis = category.emojis.length > 0
-
-        if (this.emojisToShowFilter) {
-          hasEmojis = category.emojis.some((emoji) => {
-            return this.emojisToShowFilter(this.data.emojis[emoji] || emoji)
-          })
-        }
-
-        return isIncluded && !isExcluded && hasEmojis
+        return category.emojis.length > 0;
       })
     },
     filteredCategoriesItems() {
@@ -214,31 +203,19 @@ export default {
       return Object.freeze(deepMerge(I18N, this.i18n))
     },
     idleEmoji() {
-      if (typeof this.emoji == "string") {
-        return new EmojiData(
-          this.emoji, this.skin, this.set, this.data
-        )
-      }
-      return this.emoji
+      return this.data.emoji(this.emoji)
     }
   },
   created() {
-    let categories = this.data.categories.map(c => {
-      let { id, name, emojis } = c
-
-      if (this.emojisToShowFilter) {
-        emojis = c.emojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
-      }
-      return Object.freeze({ id, name, emojis })
-    })
-
-    RECENT_CATEGORY.emojis = this.recentEmojis
-    CUSTOM_CATEGORY.emojis = this.customEmojis
+    RECENT_CATEGORY.emojis = []
+    for (let idx in this.recentEmojis) {
+      let emoji = this.recentEmojis[idx]
+      RECENT_CATEGORY.emojis.push(this.data.emoji(emoji))
+    }
 
     this.categories = []
     this.categories.push(RECENT_CATEGORY)
-    this.categories.push(...categories)
-    this.categories.push(CUSTOM_CATEGORY)
+    this.categories.push(...this.data.categories())
 
     this.categories[0].first = true
     Object.freeze(this.categories)
