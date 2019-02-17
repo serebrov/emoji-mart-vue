@@ -1,4 +1,4 @@
-import { getData, sanitize } from './index'
+import { sanitize, intersect } from './index'
 import { buildSearch } from './data'
 
 const SHEET_COLUMNS = 52
@@ -98,10 +98,11 @@ export class EmojiIndex {
     // Custom emojis
     this._custom = custom || [];
 
-    this._index = [];
+    this._emojis = [];
     this._emoticons = [];
     this._categories = [];
     this._customCategory = { id: 'custom', name: 'Custom', emojis: [] }
+    this._searchIndex = {}
     this.buildIndex();
   }
 
@@ -151,8 +152,8 @@ export class EmojiIndex {
     }
 
     // 3. Check if we have the specified emoji
-    if (this._index.hasOwnProperty(emoji)) {
-      let emoji = this._index[emoji]
+    if (this._emojis.hasOwnProperty(emoji)) {
+      let emoji = this._emojis[emoji]
       if (skin) {
         return emoji.getSkin(skin)
       }
@@ -166,15 +167,87 @@ export class EmojiIndex {
   }
 
   emoji(emojiId) {
-    return this._index[emojiId];
-  }
-
-  emojis() {
-    return this._index;
+    return this._emojis[emojiId];
   }
 
   search(value, maxResults) {
-    return []
+    maxResults || (maxResults = 75)
+    if (!value.length) {
+      return null;
+    }
+    if (value == '-' || value == '-1') {
+      return [this.emoji('-1')]
+    }
+
+    let values = value.toLowerCase().split(/[\s|,|\-|_]+/)
+    let allResults = []
+
+    if (values.length > 2) {
+      values = [values[0], values[1]]
+    }
+
+    allResults = values.map((value) => {
+      // Start searchin in the global list of emojis
+      let emojis = this._emojis
+      let currentIndex = this._searchIndex
+      let length = 0;
+
+      for (let charIndex = 0; charIndex < value.length; charIndex++) {
+        const char = value[charIndex]
+        length++
+
+        currentIndex[char] || (currentIndex[char] = {})
+        currentIndex = currentIndex[char]
+
+        if (!currentIndex.results) {
+          let scores = {}
+          currentIndex.results = []
+          currentIndex.emojis = {}
+
+          for (let emojiId in emojis) {
+            let emoji = emojis[emojiId]
+            // search is a comma-separated string with words, related
+            // to the emoji, for example:
+            // search: "smiley,smiling,face,joy,haha,:d,:),smile,funny,=),=-)",
+            let search = emoji._data.search
+            let sub = value.substr(0, length)
+            let subIndex = search.indexOf(sub)
+            if (subIndex != -1) {
+              let score = subIndex + 1
+              if (sub == emojiId) score = 0
+
+              currentIndex.results.push(emoji)
+              currentIndex.emojis[emojiId] = emoji
+
+              scores[emojiId] = score
+            }
+          }
+          currentIndex.results.sort((a, b) => {
+            var aScore = scores[a.id],
+              bScore = scores[b.id]
+            return aScore - bScore
+          })
+        }
+
+        // continue search in the reduced set of emojis
+        emojis = currentIndex.emojis
+      }
+      return currentIndex.results
+    //TODO: why do we need the "filter" call?
+    }).filter((a) => a)
+
+    var results = null;
+    if (allResults.length > 1) {
+      results = intersect.apply(null, allResults)
+    } else if (allResults.length) {
+      results = allResults[0]
+    } else {
+      results = []
+    }
+    if (results && results.length > maxResults) {
+      results = results.slice(0, maxResults)
+    }
+    return results
   }
 
   addCustomEmoji(customEmoji) {
@@ -184,7 +257,7 @@ export class EmojiIndex {
       emojiData.search = buildSearch(emoji)
     }
     let emoji = new Emoji(emojiData)
-    this._index[emojiId] = emoji
+    this._emojis[emojiId] = emoji
     this._customCategory.emojis.push(emoji)
     return emoji
   }
@@ -198,7 +271,7 @@ export class EmojiIndex {
     }
 
     let emoji = new Emoji(data);
-    this._index[emojiId] = emoji;
+    this._emojis[emojiId] = emoji;
 
     if (emoji.emoticons) {
       emoji.emoticons.forEach((emoticon) => {
