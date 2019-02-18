@@ -17,11 +17,6 @@
     ref="search"
     :data="data"
     :i18n="mergedI18n"
-    :emojis-to-show-filter="emojisToShowFilter"
-    :include="include"
-    :exclude="exclude"
-    :custom="customEmojis"
-    :recent="recentEmojis"
     :auto-focus="autoFocus"
     @search="onSearch"
   />
@@ -97,9 +92,6 @@ import Search from '../search'
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
-const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
-const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
-
 const I18N = {
   search: 'Search',
   notfound: 'No Emoji Found',
@@ -118,13 +110,6 @@ const I18N = {
   },
 }
 
-function makeCustomEmoji(emoji) {
-  return Object.assign({}, emoji, {
-    id: emoji.short_names[0],
-    custom: true
-  })
-}
-
 export default {
   props: {
     ...PickerProps,
@@ -134,33 +119,11 @@ export default {
     }
   },
   data() {
-    let customEmojis = this.custom.map(makeCustomEmoji),
-        recentEmojis = this.recent || frequently.get(this.perLine)
-
-    if (recentEmojis.length) {
-      recentEmojis = recentEmojis.map((id) => {
-        for (let customEmoji of customEmojis) {
-          if (customEmoji.id === id) {
-            return customEmoji
-          }
-        }
-
-        return id
-      })
-    }
-
-    if (this.emojisToShowFilter) {
-      customEmojis = customEmojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
-      recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
-    }
-
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       activeCategory: null,
       previewEmoji: null,
-      searchEmojis: null,
-      customEmojis: customEmojis,
-      recentEmojis: recentEmojis
+      searchEmojis: null
     }
   },
   computed: {
@@ -211,14 +174,7 @@ export default {
     }
   },
   created() {
-    RECENT_CATEGORY.emojis = []
-    for (let idx in this.recentEmojis) {
-      let emoji = this.recentEmojis[idx]
-      RECENT_CATEGORY.emojis.push(this.data.emoji(emoji))
-    }
-
     this.categories = []
-    this.categories.push(RECENT_CATEGORY)
     this.categories.push(...this.data.categories())
     this.categories = this.categories.filter((category) => {
       return category.emojis.length > 0;
@@ -247,12 +203,6 @@ export default {
       this.searchEmojis = emojis
     },
     onEmojiEnter(emoji) {
-      if (emoji.custom) {
-        // Use Array.prototype.find() when it is more widely supported.
-        const customEmoji = this.customEmojis.filter(_emoji => _emoji.id === emoji.id)[0]
-        emoji = Object.assign({}, emoji, customEmoji)
-      }
-
       this.previewEmoji = emoji
     },
     onEmojiLeave(emoji) {
