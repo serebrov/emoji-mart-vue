@@ -6,7 +6,7 @@
       :data="data"
       :i18n="mergedI18n"
       :color="color"
-      :categories="filteredCategories"
+      :categories="categories"
       :active-category="activeCategory"
       @click="onAnchorClick"
     />
@@ -17,17 +17,13 @@
     ref="search"
     :data="data"
     :i18n="mergedI18n"
-    :emojis-to-show-filter="emojisToShowFilter"
-    :include="include"
-    :exclude="exclude"
-    :custom="customEmojis"
-    :recent="recentEmojis"
     :auto-focus="autoFocus"
     @search="onSearch"
   />
 
   <category
     v-show="searchEmojis"
+    class="emoji-mart-search-results"
     :data="data"
     :i18n="mergedI18n"
     id="search"
@@ -35,7 +31,15 @@
     :emojis="searchEmojis"
     :emoji-props="emojiProps"
   />
-  <DynamicScroller ref="dynScroller" :items="filteredCategoriesItems" :min-item-height="60" class="scroller" :emit-update="true" @update="onScrollUpdate">
+  <DynamicScroller 
+    v-show="!searchEmojis"
+    ref="dynScroller" 
+    :items="scrollerCategories" 
+    :min-item-height="60" 
+    class="scroller" 
+    :emit-update="true" 
+    @update="onScrollUpdate"
+  >
     <template slot-scope="{ item, active, index }">
       <DynamicScrollerItem 
         :item="item" 
@@ -80,7 +84,6 @@ import store from '../../utils/store'
 import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar } from '../../utils'
 import { PickerProps } from '../../utils/shared-props'
-import { EmojiData } from '../../utils/emoji-data'
 import Anchors from '../anchors'
 import Category from '../category'
 import Preview from '../preview'
@@ -88,9 +91,6 @@ import Search from '../search'
 
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
-
-const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
-const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
 
 const I18N = {
   search: 'Search',
@@ -110,13 +110,6 @@ const I18N = {
   },
 }
 
-function makeCustomEmoji(emoji) {
-  return Object.assign({}, emoji, {
-    id: emoji.short_names[0],
-    custom: true
-  })
-}
-
 export default {
   props: {
     ...PickerProps,
@@ -126,33 +119,11 @@ export default {
     }
   },
   data() {
-    let customEmojis = this.custom.map(makeCustomEmoji),
-        recentEmojis = this.recent || frequently.get(this.perLine)
-
-    if (recentEmojis.length) {
-      recentEmojis = recentEmojis.map((id) => {
-        for (let customEmoji of customEmojis) {
-          if (customEmoji.id === id) {
-            return customEmoji
-          }
-        }
-
-        return id
-      })
-    }
-
-    if (this.emojisToShowFilter) {
-      customEmojis = customEmojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
-      recentEmojis = recentEmojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
-    }
-
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       activeCategory: null,
       previewEmoji: null,
-      searchEmojis: null,
-      customEmojis: customEmojis,
-      recentEmojis: recentEmojis
+      searchEmojis: null
     }
   },
   computed: {
@@ -181,24 +152,9 @@ export default {
     calculateWidth() {
       return (this.perLine * (this.emojiSize + 12)) + 12 + 2 + measureScrollbar()
     },
-    filteredCategories() {
-      return this.categories.filter((category) => {
-        let isIncluded = this.include && this.include.length ? this.include.indexOf(category.id) > -1 : true
-        let isExcluded = this.exclude && this.exclude.length ? this.exclude.indexOf(category.id) > -1 : false
-        let hasEmojis = category.emojis.length > 0
-
-        if (this.emojisToShowFilter) {
-          hasEmojis = category.emojis.some((emoji) => {
-            return this.emojisToShowFilter(this.data.emojis[emoji] || emoji)
-          })
-        }
-
-        return isIncluded && !isExcluded && hasEmojis
-      })
-    },
-    filteredCategoriesItems() {
+    scrollerCategories() {
       let id = 0;
-      return this.filteredCategories.map((category) => {
+      return this.categories.map((category) => {
         return {
             'id': id++,
             'category': category,
@@ -214,35 +170,19 @@ export default {
       return Object.freeze(deepMerge(I18N, this.i18n))
     },
     idleEmoji() {
-      if (typeof this.emoji == "string") {
-        return new EmojiData(
-          this.emoji, this.skin, this.set, this.data
-        )
-      }
-      return this.emoji
+      return this.data.emoji(this.emoji)
     }
   },
   created() {
-    let categories = this.data.categories.map(c => {
-      let { id, name, emojis } = c
-
-      if (this.emojisToShowFilter) {
-        emojis = c.emojis.filter(e => this.emojisToShowFilter(this.data.emojis[e] || e))
-      }
-      return Object.freeze({ id, name, emojis })
-    })
-
-    RECENT_CATEGORY.emojis = this.recentEmojis
-    CUSTOM_CATEGORY.emojis = this.customEmojis
-
     this.categories = []
-    this.categories.push(RECENT_CATEGORY)
-    this.categories.push(...categories)
-    this.categories.push(CUSTOM_CATEGORY)
+    this.categories.push(...this.data.categories())
+    this.categories = this.categories.filter((category) => {
+      return category.emojis.length > 0;
+    })
 
     this.categories[0].first = true
     Object.freeze(this.categories)
-    this.activeCategory = this.filteredCategories[0]
+    this.activeCategory = this.categories[0]
     this.skipScrollUpdate = false
   },
   methods: {
@@ -250,25 +190,19 @@ export default {
       if (this.skipScrollUpdate) {
           this.skipScrollUpdate = false
       } else {
-          this.activeCategory = this.filteredCategories[endIndex-1]
+          this.activeCategory = this.categories[endIndex-1]
       }
     },
     onAnchorClick(category) {
-      let i = this.filteredCategories.indexOf(category)
+      let i = this.categories.indexOf(category)
       this.$refs.dynScroller.scrollToItem(i)
-      this.activeCategory = this.filteredCategories[i]
+      this.activeCategory = this.categories[i]
       this.skipScrollUpdate = true
     },
     onSearch(emojis) {
       this.searchEmojis = emojis
     },
     onEmojiEnter(emoji) {
-      if (emoji.custom) {
-        // Use Array.prototype.find() when it is more widely supported.
-        const customEmoji = this.customEmojis.filter(_emoji => _emoji.id === emoji.id)[0]
-        emoji = Object.assign({}, emoji, customEmoji)
-      }
-
       this.previewEmoji = emoji
     },
     onEmojiLeave(emoji) {
