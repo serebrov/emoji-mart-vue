@@ -120,7 +120,8 @@ export class EmojiIndex {
       include,
       exclude,
       custom,
-      recent
+      recent,
+      recentLength = 20,
     } = {}
   ) {
     this._data = uncompress(data)
@@ -133,7 +134,7 @@ export class EmojiIndex {
     this._custom = custom || []
     // Recent emojis
     // TODO: make parameter configurable
-    this._recent = recent || frequently.get(8)
+    this._recent = recent || frequently.get(recentLength)
 
     this._emojis = []
     this._emoticons = []
