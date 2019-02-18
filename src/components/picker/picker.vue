@@ -7,6 +7,8 @@ import NimblePicker from './nimblePicker'
 
 import { PickerProps } from '../../utils/shared-props'
 
+let index = new EmojiIndex(uncompress(data))
+
 export default {
   functional: true,
   props: {
@@ -14,7 +16,7 @@ export default {
     data: {
       type: Object,
       default() {
-        return new EmojiIndex(uncompress(data))
+        return index
       }
     }
   },
