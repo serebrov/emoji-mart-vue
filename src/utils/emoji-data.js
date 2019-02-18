@@ -226,7 +226,14 @@ export class EmojiIndex {
   }
 
   emoji(emojiId) {
-    return this._emojis[emojiId]
+    if (this._data.aliases.hasOwnProperty(emojiId)) {
+      emojiId = this._data.aliases[emojiId]
+    }
+    let emoji = this._emojis[emojiId]
+    if (!emoji) {
+      throw new Error('Can not find emoji by id: ' + emojiId)
+    }
+    return emoji
   }
 
   search(value, maxResults) {
