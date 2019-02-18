@@ -87,7 +87,30 @@ const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
  * }
  */
 
+/**
+ * Wraps raw jason emoji data, serves as data source for
+ * emoji picker components.
+ *
+ * Usage:
+ *
+ *   import data from '../../../data/all.json' 
+ *   let index = new EmojiIndex(data)
+ *
+ */
 export class EmojiIndex {
+
+  /**
+   * Constructor.
+   *
+   * @param {object} data - Raw json data, see the structure above.
+   * @param {Function} emojisToShowFilter - optional, function to filter out
+   *   some emojis, function(emoji) { return true|false }
+   *   where `emoji` is an raw emoji object, see data.emojis above.
+   * @param {Array} include - optional, a list of category ids to include.
+   * @param {Array} exclude - optional, a list of category ids to exclude.
+   * @param {Array} custom - optional, a list custom emojis, each emoji is
+   *   an object, see data.emojis above for examples.
+   */
   constructor(data, emojisToShowFilter, include, exclude, custom) {
     this._data = data
     // Callback to exclude specific emojis
