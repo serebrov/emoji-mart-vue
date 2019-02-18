@@ -8,8 +8,6 @@
 
 <script>
 
-import NimbleEmojiIndex from '../utils/nimble-emoji-index'
-
 export default {
   props: {
     data: {
@@ -27,18 +25,6 @@ export default {
     autoFocus: {
       type: Boolean,
       default: false
-    },
-    emojisToShowFilter: {
-      type: Function
-    },
-    include: {
-      type: Array
-    },
-    exclude: {
-      type: Array
-    },
-    custom: {
-      type: Array
     }
   },
   data() {
@@ -48,19 +34,12 @@ export default {
   },
   computed: {
     emojiIndex() {
-      return new NimbleEmojiIndex(this.data)
+      return this.data
     }
   },
   watch: {
     value() {
-      let emojis = this.emojiIndex.search(this.value, {
-        emojisToShowFilter: this.emojisToShowFilter,
-        maxResults: this.maxResults,
-        include: this.include,
-        exclude: this.exclude,
-        custom: this.custom
-      })
-
+      let emojis = this.emojiIndex.search(this.value, this.maxResults)
       this.$emit('search', emojis)
     }
   },

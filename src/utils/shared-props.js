@@ -61,31 +61,13 @@ const PickerProps = {
     type: Boolean,
     default: false
   },
-  emojisToShowFilter: {
-    type: Function
-  },
   emojiTooltip: {
     type: Boolean,
     default: false
   },
-  include: {
-    type: Array
-  },
-  exclude: {
-    type: Array
-  },
-  recent: {
-    type: Array
-  },
   autoFocus: {
     type: Boolean,
     default: false
-  },
-  custom: {
-    type: Array,
-    default() {
-      return []
-    }
   },
   i18n: {
     type: Object,

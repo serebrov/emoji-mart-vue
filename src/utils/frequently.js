@@ -39,22 +39,23 @@ function add(emoji) {
   store.set('frequently', frequently)
 }
 
-function get(perLine) {
+function get(maxNumber) {
   if (!initialized) init()
   if (!frequently) {
     defaults = {}
 
     const result = []
 
-    for (let i = 0; i < perLine; i++) {
-      defaults[DEFAULTS[i]] = perLine - i
+    let defaultLength = Math.min(maxNumber, DEFAULTS.length)
+    for (let i = 0; i < defaultLength; i++) {
+      defaults[DEFAULTS[i]] = defaultLength - i
       result.push(DEFAULTS[i])
     }
 
     return result
   }
 
-  const quantity = perLine * 4
+  const quantity = maxNumber
   const frequentlyKeys = []
 
   for (let key in frequently) {

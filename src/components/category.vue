@@ -8,7 +8,7 @@
   <template v-for="{ emojiObject, emojiView} in emojiObjects">
     <span
       v-if="emojiView.canRender"
-      :title="emojiObject._data.short_names[0]"
+      :title="emojiObject.short_name"
       class="emoji-mart-emoji"
       @mouseenter="emojiProps.onEnter(emojiObject)"
       @mouseleave="emojiProps.onLeave(emojiObject)"
@@ -33,7 +33,7 @@
 
 <script>
 
-import { EmojiData, EmojiView } from '../utils/emoji-data'
+import { EmojiView } from '../utils/emoji-data'
 import NimbleEmoji from './emoji/nimbleEmoji'
 
 
@@ -75,10 +75,12 @@ export default {
     },
     emojiObjects() {
       return this.emojis.map((emoji) => {
-          let emojiObject = new EmojiData(
-            emoji, this.emojiProps.skin, this.emojiProps.set, this.data)
+          let emojiObject = emoji
           let emojiView = new EmojiView(
-            emojiObject, this.emojiProps.set, this.emojiProps.native, 
+            emoji, 
+            this.emojiProps.skin,
+            this.emojiProps.set,
+            this.emojiProps.native,
             this.emojiProps.fallback
           )
           return { emojiObject, emojiView }
