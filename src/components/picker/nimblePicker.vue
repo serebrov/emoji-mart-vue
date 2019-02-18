@@ -6,7 +6,7 @@
       :data="data"
       :i18n="mergedI18n"
       :color="color"
-      :categories="filteredCategories"
+      :categories="categories"
       :active-category="activeCategory"
       @click="onAnchorClick"
     />
@@ -39,7 +39,7 @@
   <DynamicScroller 
     v-show="!searchEmojis"
     ref="dynScroller" 
-    :items="filteredCategoriesItems" 
+    :items="scrollerCategories" 
     :min-item-height="60" 
     class="scroller" 
     :emit-update="true" 
@@ -189,14 +189,9 @@ export default {
     calculateWidth() {
       return (this.perLine * (this.emojiSize + 12)) + 12 + 2 + measureScrollbar()
     },
-    filteredCategories() {
-      return this.categories.filter((category) => {
-        return category.emojis.length > 0;
-      })
-    },
-    filteredCategoriesItems() {
+    scrollerCategories() {
       let id = 0;
-      return this.filteredCategories.map((category) => {
+      return this.categories.map((category) => {
         return {
             'id': id++,
             'category': category,
@@ -225,10 +220,13 @@ export default {
     this.categories = []
     this.categories.push(RECENT_CATEGORY)
     this.categories.push(...this.data.categories())
+    this.categories = this.categories.filter((category) => {
+      return category.emojis.length > 0;
+    })
 
     this.categories[0].first = true
     Object.freeze(this.categories)
-    this.activeCategory = this.filteredCategories[0]
+    this.activeCategory = this.categories[0]
     this.skipScrollUpdate = false
   },
   methods: {
@@ -236,13 +234,13 @@ export default {
       if (this.skipScrollUpdate) {
           this.skipScrollUpdate = false
       } else {
-          this.activeCategory = this.filteredCategories[endIndex-1]
+          this.activeCategory = this.categories[endIndex-1]
       }
     },
     onAnchorClick(category) {
-      let i = this.filteredCategories.indexOf(category)
+      let i = this.categories.indexOf(category)
       this.$refs.dynScroller.scrollToItem(i)
-      this.activeCategory = this.filteredCategories[i]
+      this.activeCategory = this.categories[i]
       this.skipScrollUpdate = true
     },
     onSearch(emojis) {
