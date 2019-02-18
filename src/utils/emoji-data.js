@@ -89,28 +89,28 @@ const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
 
 export class EmojiIndex {
   constructor(data, emojisToShowFilter, include, exclude, custom) {
-    this._data = data;
+    this._data = data
     // Callback to exclude specific emojis
-    this._emojisFilter = emojisToShowFilter || null;
+    this._emojisFilter = emojisToShowFilter || null
     // Categories to include / exclude
-    this._include = include || null;
-    this._exclude = exclude || null;
+    this._include = include || null
+    this._exclude = exclude || null
     // Custom emojis
-    this._custom = custom || [];
+    this._custom = custom || []
 
-    this._emojis = [];
-    this._emoticons = [];
-    this._categories = [];
+    this._emojis = []
+    this._emoticons = []
+    this._categories = []
     this._customCategory = { id: 'custom', name: 'Custom', emojis: [] }
     this._searchIndex = {}
-    this.buildIndex();
+    this.buildIndex()
     Object.freeze(this)
   }
 
   buildIndex() {
     this._data.categories.forEach((categoryData) => {
       if (!this.isCategoryNeeded(categoryData)) {
-        return;
+        return
       }
       let category = {
         id: categoryData.id,
@@ -121,7 +121,7 @@ export class EmojiIndex {
         let emoji = this.addEmoji(emojiId)
         category.emojis.push(emoji)
       })
-      this._categories.push(category);
+      this._categories.push(category)
     })
 
     if (this._custom.length > 0) {
@@ -130,7 +130,7 @@ export class EmojiIndex {
         this._customCategory.emojis.push(emoji)
       }
     }
-    this._categories.push(this._customCategory);
+    this._categories.push(this._customCategory)
   }
 
   /**
@@ -160,21 +160,21 @@ export class EmojiIndex {
       }
       return emoji
     }
-    return null;
+    return null
   }
 
   categories() {
-    return this._categories;
+    return this._categories
   }
 
   emoji(emojiId) {
-    return this._emojis[emojiId];
+    return this._emojis[emojiId]
   }
 
   search(value, maxResults) {
     maxResults || (maxResults = 75)
     if (!value.length) {
-      return null;
+      return null
     }
     if (value == '-' || value == '-1') {
       return [this.emoji('-1')]
@@ -191,7 +191,7 @@ export class EmojiIndex {
       // Start searchin in the global list of emojis
       let emojis = this._emojis
       let currentIndex = this._searchIndex
-      let length = 0;
+      let length = 0
 
       for (let charIndex = 0; charIndex < value.length; charIndex++) {
         const char = value[charIndex]
@@ -240,7 +240,7 @@ export class EmojiIndex {
     // the "filter" call it will turn into "[Array]"
     }).filter((a) => a)
 
-    var results = null;
+    var results = null
     if (allResults.length > 1) {
       results = intersect.apply(null, allResults)
     } else if (allResults.length) {
@@ -274,8 +274,8 @@ export class EmojiIndex {
       return false
     }
 
-    let emoji = new Emoji(data);
-    this._emojis[emojiId] = emoji;
+    let emoji = new Emoji(data)
+    this._emojis[emojiId] = emoji
 
     if (emoji.emoticons) {
       emoji.emoticons.forEach((emoticon) => {
@@ -315,9 +315,9 @@ export class EmojiIndex {
    */
   isEmojiNeeded(emoji) {
     if (this._emojisFilter && this._emojisFilter(emoji)) {
-      return false;
+      return false
     }
-    return true;
+    return true
   }
 }
 
@@ -349,11 +349,7 @@ export class Emoji {
 
   getSkin(skinIdx) {
     if (skinIdx && skinIdx != 'native' && this._skins) {
-      let skin = this._skins[skinIdx-1]
-      if (!skin) {
-        debugger;
-      }
-      return skin
+      return this._skins[skinIdx-1]
     }
     return this
   }
@@ -448,15 +444,15 @@ export class EmojiView {
 
   _emojiType() {
     if (this._isCustom()) {
-      return 'custom';
+      return 'custom'
     }
     if (this._isNative()) {
-      return 'native';
+      return 'native'
     }
     if (this._hasEmoji()) {
-      return 'image';
+      return 'image'
     }
-    return 'fallback';
+    return 'fallback'
   }
 
 }
