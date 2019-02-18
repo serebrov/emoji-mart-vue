@@ -5,6 +5,7 @@ The original component was [very slow to show/destroy](https://github.com/jm-dav
 This was the reason to fork and change it, the demo is [here](https://serebrov.github.io/emoji-mart-vue/), use the "Show / hide the picker" button to see create/destroy performance
 
 Major changes are:
+- Reworked emoji index class: use same index (so same data) for all components.
 - Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories
 - Render emojis in categories without `NimbleEmoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
 - Frozen objects with emoji data to disable Vue change tracking
@@ -24,7 +25,11 @@ It is not published to npm, to install from github, use `npm install --save sere
 
 ## Installation
 
-`npm install --save emoji-mart-vue`
+It is not published to npm, to install from github, use
+
+`npm install --save serebrov/emoji-mart-vue#4.0.0.`
+
+Check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
 
 ## Components
 ### Picker
@@ -63,16 +68,11 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 | **autoFocus** | | `false` | Auto focus the search input when mounted |
 | **color** | | `#ae65c5` | The top bar anchors select and hover color |
 | **emoji** | | `department_store` | The emoji shown when no emojis are hovered, set to an empty string to show nothing |
-| **include** | | `[]` | Only load included categories. Accepts [I18n categories keys](#i18n). Order will be respected, except for the `recent` category which will always be the first. |
-| **exclude** | | `[]` | Don't load excluded categories. Accepts [I18n categories keys](#i18n). |
-| **custom** | | `[]` | [Custom emojis](#custom-emojis) |
-| **recent** | | | Pass your own frequently used emojis as array of string IDs |
 | **emojiSize** | | `24` | The emoji width and height to calculate picker size; set the size for emoji itself via CSS |
-| **perLine** | | `9` | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. This will set *Frequently Used* length as well (`perLine * 4`) |
+| **perLine** | | `9` | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width.
 | **i18n** | | [`{…}`](#i18n) | [An object](#i18n) containing localized strings |
 | **native** | | `false` | Renders the native unicode emoji |
 | **set** | | `apple` | The emoji set: `'apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'` |
-| **emojisToShowFilter** | | ```((emoji) => true)``` | A Fn to choose whether an emoji should be displayed or not |
 | **showPreview** | | `true` | Display preview section |
 | **showSearch** | | `true` | Display search section |
 | **showCategories** | | `true` | Display categories |
@@ -123,7 +123,7 @@ Note: URLs for background images are specified in the [css/emoji-mart.css](css/e
 | messenger | 325 KB                 | 449 MB                 | 1.05 MB                | 2.69 MB                |
 | twitter   | 288 KB                 | 389 KB                 |  839 KB                | 1.82 MB                |
 
-#### Datasets
+#### Datasets and Custom Emojis
 While all sets are available by default, you may want to include only a single set data to reduce the size of your bundle.
 
 | Set       | Size (on disk) |
@@ -140,11 +140,56 @@ To use these data files (or any other custom data), use the `NimblePicker` compo
 
 ```js
 import data from 'emoji-mart-vue/data/messenger.json'
-import { NimblePicker, uncompress } from 'emoji-mart-vue'
+import { NimblePicker, EmojiIndex } from 'emoji-mart-vue'
+let index = new EmojiIndex(data)
 ```
 
 ```html
-<nimble-picker set="messenger" :data="uncompress(data)" />
+<nimble-picker set="messenger" :data="data" />
+```
+
+Using `EmojiIndex`, it is also possible to control which emojis data is included or excluded via constructor parameters:
+
+| Param | Default | Description |
+| ---- | ------- | ----------- |
+| **include** | `[]` | Only load included categories. Accepts [I18n categories keys](#i18n). Order will be respected, except for the `recent` category which will always be the first. |
+| **exclude** | `[]` | Don't load excluded categories. Accepts [I18n categories keys](#i18n). |
+| **custom** | `[]` | [Custom emojis](#custom-emojis) |
+| **recent** | | Pass your own frequently used emojis as array of string IDs |
+| **recentLength** | | Set the number of emojis for the recent category.
+| **emojisToShowFilter** | | ```((emoji) => true)``` | A Fn to choose whether an emoji should be displayed or not |
+
+Categories for `exclude` and `include` parameters are specified as category id, that are present in data arrays.
+
+Avaiable categories are: `people,` `nature,` `foods,` `activity,` `places,` `objects,` `symbols,` `flags`.
+
+For example:
+
+```js
+import data from 'emoji-mart-vue/data/messenger.json'
+import { NimblePicker, EmojiIndex } from 'emoji-mart-vue'
+
+let emojisToShowFilter = function(emoji) {
+   // check the emoji properties, see the examples of emoji object below
+   return true; // return true to include or false to exclude
+}
+let include = ['people', 'nature']
+// or exclude:
+// let exclude = ['flags']
+
+const custom = [
+  {
+    name: 'Octocat',
+    short_names: ['octocat'],
+    text: '',
+    emoticons: [],
+    keywords: ['github'],
+    imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
+  }
+]
+
+let index = new EmojiIndex(
+  data, { emojisToShowFilter, include, exclude, custom })
 ```
 
 #### Examples of `emoji` object:
@@ -233,36 +278,14 @@ function emojiFallback(emoji) {
 />
 ```
 
-## Custom emojis
-You can provide custom emojis which will show up in their own category.
-
-```js
-import { Picker } from 'emoji-mart-vue'
-
-const customEmojis = [
-  {
-    name: 'Octocat',
-    short_names: ['octocat'],
-    text: '',
-    emoticons: [],
-    keywords: ['github'],
-    imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
-  }
-]
-```
-
-```html
-<picker :custom="customEmojis" />
-```
-
 ## Headless search
 The `Picker` doesn’t have to be mounted for you to take advantage of the advanced search results.
 
 ```js
-import { NimbleEmojiIndex, uncompress } from 'emoji-mart-vue'
+import { EmojiIndex } from 'emoji-mart-vue'
 import data from 'emoji-mart-vue/data/all.json'
 
-const emojiIndex = new NimbleEmojiIndex(uncompress(data))
+const emojiIndex = new EmojiIndex(data)
 emojiIndex.search('christmas').map((o) => o.native)
 // => [🎄, 🎅🏼, 🔔, 🎁, ⛄️, ❄️]
 ```
@@ -270,9 +293,9 @@ emojiIndex.search('christmas').map((o) => o.native)
 ### With custom data
 ```js
 import data from 'emoji-mart-vue/data/messenger'
-import { NimbleEmojiIndex, uncompress } from 'emoji-mart-vue'
+import { EmojiIndex } from 'emoji-mart-vue'
 
-let emojiIndex = new NimbleEmojiIndex(uncompress(data))
+let emojiIndex = new EmojiIndex(data)
 emojiIndex.search('christmas')
 ```
 
