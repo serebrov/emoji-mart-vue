@@ -1,5 +1,5 @@
 import { intersect, unifiedToNative } from './index'
-import { buildSearch } from './data'
+import { uncompress, buildSearch } from './data'
 
 const SHEET_COLUMNS = 52
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
@@ -112,7 +112,7 @@ export class EmojiIndex {
    *   an object, see data.emojis above for examples.
    */
   constructor(data, emojisToShowFilter, include, exclude, custom) {
-    this._data = data
+    this._data = uncompress(data)
     // Callback to exclude specific emojis
     this._emojisFilter = emojisToShowFilter || null
     // Categories to include / exclude

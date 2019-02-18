@@ -1,13 +1,12 @@
 <script>
 
 import data from '../../../data/all.json'
-import { uncompress } from '../../utils/data'
 import { EmojiIndex } from '../../utils/emoji-data'
 import NimblePicker from './nimblePicker'
 
 import { PickerProps } from '../../utils/shared-props'
 
-let index = new EmojiIndex(uncompress(data))
+let index = new EmojiIndex(data)
 
 export default {
   functional: true,
