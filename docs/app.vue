@@ -15,7 +15,8 @@
   </div>
 
   <div v-if="isVisible" class="row">
-    <picker
+    <nimble-picker
+      :data="index"
       :set="activeSet"
       :native="native"
       :custom="custom"
@@ -39,7 +40,8 @@
 
 <script>
 
-import { Picker, Emoji } from '../src'
+import data from '../data/all.json'
+import { NimblePicker, Emoji, EmojiIndex } from '../src'
 import '../css/emoji-mart.css'
 
 const CUSTOM_EMOJIS = [
@@ -63,9 +65,12 @@ const CUSTOM_EMOJIS = [
   },
 ]
 
+let index = new EmojiIndex(data, { custom: CUSTOM_EMOJIS } )
+
 export default {
   data() {
     return {
+      index: index,
       activeSet: 'native',
       emoji: 'point_up',
       title: 'Pick your emoji…',
@@ -85,7 +90,7 @@ export default {
     }
   },
   components: {
-    Picker,
+    NimblePicker,
     Emoji
   }
 }
