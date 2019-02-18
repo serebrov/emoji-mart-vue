@@ -104,6 +104,7 @@ export class EmojiIndex {
     this._customCategory = { id: 'custom', name: 'Custom', emojis: [] }
     this._searchIndex = {}
     this.buildIndex();
+    Object.freeze(this)
   }
 
   buildIndex() {
