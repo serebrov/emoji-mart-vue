@@ -166,8 +166,7 @@ export class EmojiIndex {
     if (this.isCategoryNeeded('custom')) {
       if (this._custom.length > 0) {
         for (let customEmoji of this._custom) {
-          let emoji = this.addCustomEmoji(customEmoji)
-          this._customCategory.emojis.push(emoji)
+          this.addCustomEmoji(customEmoji)
         }
       }
       this._categories.push(this._customCategory)
