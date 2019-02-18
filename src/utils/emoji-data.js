@@ -1,5 +1,6 @@
 import { intersect, unifiedToNative } from './index'
 import { uncompress, buildSearch } from './data'
+import frequently from './frequently'
 
 const SHEET_COLUMNS = 52
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
@@ -103,6 +104,7 @@ export class EmojiIndex {
    * Constructor.
    *
    * @param {object} data - Raw json data, see the structure above.
+   * @param {object} options - additional options, as an object:
    * @param {Function} emojisToShowFilter - optional, function to filter out
    *   some emojis, function(emoji) { return true|false }
    *   where `emoji` is an raw emoji object, see data.emojis above.
@@ -111,7 +113,16 @@ export class EmojiIndex {
    * @param {Array} custom - optional, a list custom emojis, each emoji is
    *   an object, see data.emojis above for examples.
    */
-  constructor(data, emojisToShowFilter, include, exclude, custom) {
+  constructor(
+    data, 
+    {
+      emojisToShowFilter,
+      include,
+      exclude,
+      custom,
+      recent
+    } = {}
+  ) {
     this._data = uncompress(data)
     // Callback to exclude specific emojis
     this._emojisFilter = emojisToShowFilter || null
@@ -120,10 +131,14 @@ export class EmojiIndex {
     this._exclude = exclude || null
     // Custom emojis
     this._custom = custom || []
+    // Recent emojis
+    // TODO: make parameter configurable
+    this._recent = recent || frequently.get(8)
 
     this._emojis = []
     this._emoticons = []
     this._categories = []
+    this._recentCategory = { id: 'recent', name: 'Recent', emojis: [] }
     this._customCategory = { id: 'custom', name: 'Custom', emojis: [] }
     this._searchIndex = {}
     this.buildIndex()
@@ -147,13 +162,32 @@ export class EmojiIndex {
       this._categories.push(category)
     })
 
-    if (this._custom.length > 0) {
-      for (let customEmoji in this._custom) {
-        let emoji = this.addCustomEmoji(customEmoji)
-        this._customCategory.emojis.push(emoji)
+    if (this.isCategoryNeeded('custom')) {
+      if (this._custom.length > 0) {
+        for (let customEmoji of this._custom) {
+          let emoji = this.addCustomEmoji(customEmoji)
+          this._customCategory.emojis.push(emoji)
+        }
       }
+      this._categories.push(this._customCategory)
     }
-    this._categories.push(this._customCategory)
+
+    if (this.isCategoryNeeded('recent')) {
+      if (this._recent.length) {
+        this._recent.map((id) => {
+          for (let customEmoji of this._customCategory.emojis) {
+            if (customEmoji.id === id) {
+              this._recentCategory.emojis.push(customEmoji)
+              return
+            }
+          }
+          this._recentCategory.emojis.push(this.emoji(id))
+          return 
+        })
+      }
+      // Add recent category to the top
+      this._categories.unshift(this._recentCategory)
+    }
   }
 
   /**
@@ -278,13 +312,15 @@ export class EmojiIndex {
   }
 
   addCustomEmoji(customEmoji) {
-    let emojiData = Object.assign({}, customEmoji)
-    emojiData.custom = true
+    let emojiData = Object.assign({}, customEmoji, {
+      id: customEmoji.short_names[0],
+      custom: true
+    })
     if (!emojiData.search) {
-      emojiData.search = buildSearch(emoji)
+      emojiData.search = buildSearch(emojiData)
     }
     let emoji = new Emoji(emojiData)
-    this._emojis[emojiId] = emoji
+    this._emojis[emoji.id] = emoji
     this._customCategory.emojis.push(emoji)
     return emoji
   }
@@ -480,7 +516,6 @@ export class EmojiView {
 
 }
 
-// TODO: add as a method to Emoji?
 function sanitize(emoji) {
   var {
       name,
