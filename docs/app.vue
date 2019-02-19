@@ -7,6 +7,7 @@
 
   <div class="row">
     <button @click="toggleVisible">Show / hide the picker</button>
+    <button @click="toggleVisible" v-html="smile"></button>
   </div>
   <div class="row">
     <template v-for="set in ['native', 'apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook']">
@@ -81,6 +82,14 @@ export default {
   computed: {
     native () {
       return this.activeSet == 'native'
+    },
+    smile () {
+      // Static emoji example
+      let emoji = index.findEmoji(":smile:")
+      // Note, that position in the emoji sheet is calculated by
+      // `emoji` object
+      let style = `background-position: ${emoji.getPosition()}; background-image: url(https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5200%`
+      return `<div class='emoji' style="${style}"></div>`
     }
   },
   methods: {
