@@ -720,7 +720,7 @@ var EmojiIndex = exports.EmojiIndex = function () {
 
   }, {
     key: 'findEmoji',
-    value: function findEmoji(emoji) {
+    value: function findEmoji(emoji, skin) {
       // 1. Parse as :emoji_name:skin-tone-xx:
       var matches = emoji.match(COLONS_REGEX);
 
@@ -738,11 +738,11 @@ var EmojiIndex = exports.EmojiIndex = function () {
 
       // 3. Check if we have the specified emoji
       if (this._emojis.hasOwnProperty(emoji)) {
-        var _emoji = this._emojis[_emoji];
+        var emojiObject = this._emojis[emoji];
         if (skin) {
-          return _emoji.getSkin(skin);
+          return emojiObject.getSkin(skin);
         }
-        return _emoji;
+        return emojiObject;
       }
       return null;
     }
@@ -10128,6 +10128,7 @@ var CUSTOM_EMOJIS = [{
 //
 //
 //
+//
 
 
 var index = new _src.EmojiIndex(_all2.default, { custom: CUSTOM_EMOJIS });
@@ -10147,6 +10148,14 @@ exports.default = {
   computed: {
     native: function native() {
       return this.activeSet == 'native';
+    },
+    smile: function smile() {
+      // Static emoji example
+      var emoji = index.findEmoji(":smile:");
+      // Note, that position in the emoji sheet is calculated by
+      // `emoji` object
+      var style = 'background-position: ' + emoji.getPosition() + '; background-image: url(https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5200%';
+      return '<div class=\'emoji\' style="' + style + '"></div>';
     }
   },
   methods: {
@@ -16313,7 +16322,12 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("button", { on: { click: _vm.toggleVisible } }, [
         _vm._v("Show / hide the picker")
-      ])
+      ]),
+      _vm._v(" "),
+      _c("button", {
+        domProps: { innerHTML: _vm._s(_vm.smile) },
+        on: { click: _vm.toggleVisible }
+      })
     ]),
     _vm._v(" "),
     _c(

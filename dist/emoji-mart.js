@@ -693,7 +693,7 @@ var EmojiIndex = exports.EmojiIndex = function () {
 
   }, {
     key: 'findEmoji',
-    value: function findEmoji(emoji) {
+    value: function findEmoji(emoji, skin) {
       // 1. Parse as :emoji_name:skin-tone-xx:
       var matches = emoji.match(COLONS_REGEX);
 
@@ -711,11 +711,11 @@ var EmojiIndex = exports.EmojiIndex = function () {
 
       // 3. Check if we have the specified emoji
       if (this._emojis.hasOwnProperty(emoji)) {
-        var _emoji = this._emojis[_emoji];
+        var emojiObject = this._emojis[emoji];
         if (skin) {
-          return _emoji.getSkin(skin);
+          return emojiObject.getSkin(skin);
         }
-        return _emoji;
+        return emojiObject;
       }
       return null;
     }
