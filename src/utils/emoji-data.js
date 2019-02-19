@@ -193,7 +193,7 @@ export class EmojiIndex {
   /**
    * Find the emoji from the string
    */
-  findEmoji(emoji) {
+  findEmoji(emoji, skin) {
     // 1. Parse as :emoji_name:skin-tone-xx:
     let matches = emoji.match(COLONS_REGEX)
 
@@ -211,11 +211,11 @@ export class EmojiIndex {
 
     // 3. Check if we have the specified emoji
     if (this._emojis.hasOwnProperty(emoji)) {
-      let emoji = this._emojis[emoji]
+      let emojiObject = this._emojis[emoji]
       if (skin) {
-        return emoji.getSkin(skin)
+        return emojiObject.getSkin(skin)
       }
-      return emoji
+      return emojiObject
     }
     return null
   }
