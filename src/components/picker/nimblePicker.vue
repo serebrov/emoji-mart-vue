@@ -64,7 +64,7 @@
   <div class="emoji-mart-bar" v-if="showPreview">
     <preview
       :data="data"
-      :data-title="title"
+      :title="title"
       :emoji="previewEmoji"
       :idle-emoji="idleEmoji"
       :show-skin-tones="showSkinTones"
