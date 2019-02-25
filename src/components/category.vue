@@ -8,7 +8,7 @@
   <template v-for="{ emojiObject, emojiView} in emojiObjects">
     <span
       v-if="emojiView.canRender"
-      :title="emojiObject.short_name"
+      :data-title="emojiObject.short_name"
       class="emoji-mart-emoji"
       @mouseenter="emojiProps.onEnter(emojiObject)"
       @mouseleave="emojiProps.onLeave(emojiObject)"

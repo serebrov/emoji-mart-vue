@@ -35,7 +35,7 @@
     v-show="!searchEmojis"
     ref="dynScroller" 
     :items="scrollerCategories" 
-    :min-item-height="60" 
+    :min-item-size="60" 
     class="scroller" 
     :emit-update="true" 
     @update="onScrollUpdate"
