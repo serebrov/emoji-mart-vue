@@ -6,9 +6,9 @@ describe('#EmojiIndex', () => {
   describe('search', function() {
     it('should find pineapple emoji by id', () => {
 
-      let emoji = emojiIndex.search('pineapple')
+      let emojis = emojiIndex.search('pineapple')
 
-      expect(emoji).toEqual([
+      expect(emojis).toEqual([
         new Emoji({
           short_names: ['pineapple'],
           name: 'Pineapple',
@@ -31,10 +31,9 @@ describe('#EmojiIndex', () => {
         }),
       ])
 
-      console.log(emoji)
-      expect(emoji.id).toEqual('pineapple')
-      expect(emoji.colons).toEqual(':pineapple:')
-      expect(emoji.native).toEqual('🍍')
+      expect(emojis[0].id).toEqual('pineapple')
+      expect(emojis[0].colons).toEqual(':pineapple:')
+      expect(emojis[0].native).toEqual('🍍')
     })
 
 
