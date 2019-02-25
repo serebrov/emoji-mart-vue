@@ -48,22 +48,23 @@ describe('#EmojiIndex', () => {
       ).not.toContain('pineapple')
     })
 
-    /*
     it('can include/exclude categories', () => {
-      expect(emojiIndex.search('flag', { include: ['people'] })).toEqual([])
+      const emojiIndex = new EmojiIndex(data, {  include: ['people'] })
+      expect(emojiIndex.search('flag')).toEqual([])
     })
 
     it('can search for thinking_face', () => {
+      const emojiIndex = new EmojiIndex(data)
       expect(emojiIndex.search('thinking_fac').map((x) => x.id)).toEqual([
         'thinking_face',
       ])
     })
 
     it('can search for woman-facepalming', () => {
+      const emojiIndex = new EmojiIndex(data)
       expect(emojiIndex.search('woman-facep').map((x) => x.id)).toEqual([
         'woman-facepalming',
       ])
     })
-    */
   })
 })
