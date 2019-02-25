@@ -1,11 +1,11 @@
 import { EmojiIndex, Emoji } from '../src/utils/emoji-data'
 import data from '../data/all.json'
-const emojiIndex = new EmojiIndex(data)
 
 describe('#EmojiIndex', () => {
   describe('search', function() {
     it('should find pineapple emoji by id', () => {
 
+      const emojiIndex = new EmojiIndex(data)
       let emojis = emojiIndex.search('pineapple')
 
       expect(emojis).toEqual([
@@ -37,16 +37,18 @@ describe('#EmojiIndex', () => {
     })
 
 
-    /*
     it('should filter only emojis we care about, exclude pineapple', () => {
       let emojisToShowFilter = (data) => {
-        data.unified !== '1F34D'
+        return data.unified !== '1F34D'
       }
+      const emojiIndex = new EmojiIndex(data, { emojisToShowFilter })
+
       expect(
-        emojiIndex.search('apple', { emojisToShowFilter }).map((obj) => obj.id),
+        emojiIndex.search('apple').map((obj) => obj.id),
       ).not.toContain('pineapple')
     })
 
+    /*
     it('can include/exclude categories', () => {
       expect(emojiIndex.search('flag', { include: ['people'] })).toEqual([])
     })
