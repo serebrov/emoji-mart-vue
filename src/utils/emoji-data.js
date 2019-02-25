@@ -380,8 +380,8 @@ export class EmojiIndex {
    * @return {boolean} - Whether to include the emoji.
    */
   isEmojiNeeded(emoji) {
-    if (this._emojisFilter && this._emojisFilter(emoji)) {
-      return false
+    if (this._emojisFilter) {
+      return this._emojisFilter(emoji);
     }
     return true
   }
