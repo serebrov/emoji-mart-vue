@@ -1,21 +1,44 @@
-import emojiIndex from '../src/utils/emoji-index'
+import { EmojiIndex, Emoji } from '../src/utils/emoji-data'
+import data from '../data/all.json'
+const emojiIndex = new EmojiIndex(data)
 
-describe('#emojiIndex', () => {
+describe('#EmojiIndex', () => {
   describe('search', function() {
-    it('should work', () => {
-      expect(emojiIndex.search('pineapple')).toEqual([
-        {
-          id: 'pineapple',
+    it('should find pineapple emoji by id', () => {
+
+      let emoji = emojiIndex.search('pineapple')
+
+      expect(emoji).toEqual([
+        new Emoji({
+          short_names: ['pineapple'],
           name: 'Pineapple',
-          colons: ':pineapple:',
-          emoticons: [],
           unified: '1f34d',
-          skin: null,
-          native: '🍍',
-        },
+          added_in: "6.0",
+          emoticons: undefined,
+          has_img_apple: true,
+          has_img_emojione: true,
+          has_img_facebook: true,
+          has_img_google: true,
+          has_img_messenger: true,
+          has_img_twitter: true,
+          keywords: [ "fruit", "nature", "food" ],
+          non_qualified: undefined,
+          search: "pineapple,fruit,nature,food",
+          sheet_x: 7,
+          sheet_y: 15,
+          text: "",
+          unified: "1F34D"
+        }),
       ])
+
+      console.log(emoji)
+      expect(emoji.id).toEqual('pineapple')
+      expect(emoji.colons).toEqual(':pineapple:')
+      expect(emoji.native).toEqual('🍍')
     })
 
+
+    /*
     it('should filter only emojis we care about, exclude pineapple', () => {
       let emojisToShowFilter = (data) => {
         data.unified !== '1F34D'
@@ -40,5 +63,6 @@ describe('#emojiIndex', () => {
         'woman-facepalming',
       ])
     })
+    */
   })
 })
