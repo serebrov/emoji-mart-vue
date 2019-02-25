@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/jm-david/emoji-mart-vue",
   "dependencies": {
-    "postcss-loader": "^3.0.0",
     "vue-virtual-scroller": "^1.0.0-beta.5"
   },
   "peerDependencies": {
@@ -41,15 +40,9 @@
     "emoji-datasource": "4.0.4",
     "emojilib": "^2.2.1",
     "inflection": "1.10.0",
-    "jasmine-core": "^2.5.2",
-    "karma": "^1.4.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-cli": "^1.0.1",
-    "karma-jasmine": "^1.1.0",
-    "karma-webpack": "^2.0.4",
-    "mkdirp": "0.5.1",
+    "jest": "^24.1.0",
+    "postcss-loader": "^3.0.0",
     "prettier": "1.11.1",
-    "rimraf": "2.5.2",
     "size-limit": "^0.11.4",
     "url-loader": "^0.5.8",
     "vue": "^2.5.2",
