@@ -13069,7 +13069,7 @@ var render = function() {
           style: {
             color: category.id == _vm.activeCategory.id ? _vm.color : ""
           },
-          attrs: { title: _vm.i18n.categories[category.id] },
+          attrs: { "data-title": _vm.i18n.categories[category.id] },
           on: {
             click: function($event) {
               _vm.$emit("click", category)
@@ -16554,7 +16554,7 @@ var render = function() {
               _c("preview", {
                 attrs: {
                   data: _vm.data,
-                  title: _vm.title,
+                  "data-title": _vm.title,
                   emoji: _vm.previewEmoji,
                   "idle-emoji": _vm.idleEmoji,
                   "show-skin-tones": _vm.showSkinTones,
