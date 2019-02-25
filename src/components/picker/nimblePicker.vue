@@ -35,7 +35,7 @@
     v-show="!searchEmojis"
     ref="dynScroller" 
     :items="scrollerCategories" 
-    :min-item-height="60" 
+    :min-item-size="60" 
     class="scroller" 
     :emit-update="true" 
     @update="onScrollUpdate"
@@ -64,7 +64,7 @@
   <div class="emoji-mart-bar" v-if="showPreview">
     <preview
       :data="data"
-      :title="title"
+      :data-title="title"
       :emoji="previewEmoji"
       :idle-emoji="idleEmoji"
       :show-skin-tones="showSkinTones"
