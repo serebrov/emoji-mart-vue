@@ -1,7 +1,7 @@
 <template>
 
 <div class="emoji-mart" :style="customStyles">
-  <div class="emoji-mart-bar" v-if="showCategories">
+  <div class="emoji-mart-bar emoji-mart-anchors" v-if="showCategories">
     <anchors
       :data="data"
       :i18n="mergedI18n"
@@ -61,7 +61,7 @@
     </template>
   </DynamicScroller>
 
-  <div class="emoji-mart-bar" v-if="showPreview">
+  <div class="emoji-mart-bar emoji-mart-preview" v-if="showPreview">
     <preview
       :data="data"
       :title="title"

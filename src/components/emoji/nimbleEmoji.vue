@@ -24,32 +24,34 @@ export default {
   computed: {
     view() {
       return new EmojiView(
-        this._emoji, this.skin, this.set, this.native, this.fallback
+        this.emojiObject, this.skin, this.set, this.native, this.fallback
       )
     },
     sanitizedData() {
-      return this._emoji._sanitized
+      return this.emojiObject._sanitized
     },
     title() {
-      return this.tooltip ? this._emoji.short_name : null
+      return this.tooltip ? this.emojiObject.short_name : null
+    },
+    emojiObject() {
+      if (typeof this.emoji == "string") {
+        return this.data.emoji(this.emoji)
+      } else {
+        return this.emoji
+      }
     }
   },
   created() {
-    if (typeof this.emoji == "string") {
-      this._emoji = this.data.emoji(this.emoji)
-    } else {
-      this._emoji = this.emoji
-    }
   },
   methods: {
     onClick() {
-      this.$emit('click', this._emoji)
+      this.$emit('click', this.emojiObject)
     },
     onMouseEnter() {
-      this.$emit('mouseenter', this._emoji)
+      this.$emit('mouseenter', this.emojiObject)
     },
     onMouseLeave() {
-      this.$emit('mouseleave', this._emoji)
+      this.$emit('mouseleave', this.emojiObject)
     }
   }
 }
