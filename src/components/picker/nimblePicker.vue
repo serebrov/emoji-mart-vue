@@ -138,7 +138,7 @@ export default {
         native: this.native,
         skin: this.activeSkin,
         set: this.set,
-        tooltip: this.emojiTooltip,
+        emojiTooltip: this.emojiTooltip,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this)

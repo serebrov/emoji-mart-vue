@@ -437,8 +437,9 @@ export class EmojiView {
    * set - string, emoji set name
    * native - boolean, whether to render native emoji
    * fallback - fallback function to render missing emoji, optional
+   * emojiTooltip - wether we need to show the emoji tooltip, optional
    */
-  constructor(emoji, skin, set, native, fallback) {
+  constructor(emoji, skin, set, native, fallback, emojiTooltip) {
     this._emoji = emoji
     this._native = native
     this._skin = skin
@@ -449,6 +450,7 @@ export class EmojiView {
     this.cssClass = this._cssClass()
     this.cssStyle = this._cssStyle()
     this.content = this._content()
+    this.title = emojiTooltip === true ? emoji.short_name : null;
 
     Object.freeze(this)
   }

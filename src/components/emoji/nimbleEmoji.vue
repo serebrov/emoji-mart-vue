@@ -1,6 +1,6 @@
 <template>
 
-<span v-if="view.canRender" :data-title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
+<span v-if="view.canRender" :title="view.title" :data-title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
   <span  :class="view.cssClass" :style="view.cssStyle">{{view.content}}</span>
 </span>
 
