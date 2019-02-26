@@ -22,6 +22,7 @@
       :native="native"
       :custom="custom"
       :emoji="emoji"
+      :emojiTooltip="true"
       :title="title"
     />
   </div>

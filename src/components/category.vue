@@ -9,6 +9,7 @@
     <span
       v-if="emojiView.canRender"
       :data-title="emojiObject.short_name"
+      :title="emojiView.title"
       class="emoji-mart-emoji"
       @mouseenter="emojiProps.onEnter(emojiObject)"
       @mouseleave="emojiProps.onLeave(emojiObject)"
@@ -81,7 +82,8 @@ export default {
             this.emojiProps.skin,
             this.emojiProps.set,
             this.emojiProps.native,
-            this.emojiProps.fallback
+            this.emojiProps.fallback,
+            this.emojiProps.emojiTooltip
           )
           return { emojiObject, emojiView }
       })
