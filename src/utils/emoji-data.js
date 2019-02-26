@@ -409,6 +409,7 @@ export class Emoji {
     for (let key in this._sanitized) {
       this[key] = this._sanitized[key]
     }
+    this.short_names = this._data.short_names
     this.short_name = this._data.short_names[0]
     Object.freeze(this)
   }
