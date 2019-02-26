@@ -928,6 +928,7 @@ var Emoji = exports.Emoji = function () {
     for (var key in this._sanitized) {
       this[key] = this._sanitized[key];
     }
+    this.short_names = this._data.short_names;
     this.short_name = this._data.short_names[0];
     (0, _freeze2.default)(this);
   }
@@ -959,8 +960,9 @@ var EmojiView = exports.EmojiView = function () {
    * set - string, emoji set name
    * native - boolean, whether to render native emoji
    * fallback - fallback function to render missing emoji, optional
+   * emojiTooltip - wether we need to show the emoji tooltip, optional
    */
-  function EmojiView(emoji, skin, set, native, fallback) {
+  function EmojiView(emoji, skin, set, native, fallback, emojiTooltip) {
     (0, _classCallCheck3.default)(this, EmojiView);
 
     this._emoji = emoji;
@@ -973,6 +975,7 @@ var EmojiView = exports.EmojiView = function () {
     this.cssClass = this._cssClass();
     this.cssStyle = this._cssStyle();
     this.content = this._content();
+    this.title = emojiTooltip === true ? emoji.short_name : null;
 
     (0, _freeze2.default)(this);
   }
@@ -1140,7 +1143,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_65aec392_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7f853594_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__ = __webpack_require__(115);
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -1157,12 +1161,29 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimbleEmoji_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_65aec392_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7f853594_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimbleEmoji_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/emoji/nimbleEmoji.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7f853594", Component.options)
+  } else {
+    hotAPI.reload("data-v-7f853594", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -1815,7 +1836,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_58330d3d_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_anchors_vue__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_51188104_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_anchors_vue__ = __webpack_require__(77);
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -1832,12 +1854,29 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_anchors_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_58330d3d_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_anchors_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_51188104_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_anchors_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/anchors.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-51188104", Component.options)
+  } else {
+    hotAPI.reload("data-v-51188104", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -1909,7 +1948,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_560715e9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_376cda0e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__ = __webpack_require__(116);
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -1926,12 +1966,29 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_560715e9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_376cda0e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/category.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-376cda0e", Component.options)
+  } else {
+    hotAPI.reload("data-v-376cda0e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -1955,6 +2012,7 @@ var _nimbleEmoji2 = _interopRequireDefault(_nimbleEmoji);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
 //
 //
 //
@@ -2031,7 +2089,7 @@ exports.default = {
 
       return this.emojis.map(function (emoji) {
         var emojiObject = emoji;
-        var emojiView = new _emojiData.EmojiView(emoji, _this.emojiProps.skin, _this.emojiProps.set, _this.emojiProps.native, _this.emojiProps.fallback);
+        var emojiView = new _emojiData.EmojiView(emoji, _this.emojiProps.skin, _this.emojiProps.set, _this.emojiProps.native, _this.emojiProps.fallback, _this.emojiProps.emojiTooltip);
         return { emojiObject: emojiObject, emojiView: emojiView };
       });
     }
@@ -2587,32 +2645,33 @@ exports.default = {
   }),
   computed: {
     view: function view() {
-      return new _emojiData.EmojiView(this._emoji, this.skin, this.set, this.native, this.fallback);
+      return new _emojiData.EmojiView(this.emojiObject, this.skin, this.set, this.native, this.fallback);
     },
     sanitizedData: function sanitizedData() {
-      return this._emoji._sanitized;
+      return this.emojiObject._sanitized;
     },
     title: function title() {
-      return this.tooltip ? this._emoji.short_name : null;
+      return this.tooltip ? this.emojiObject.short_name : null;
+    },
+    emojiObject: function emojiObject() {
+      if (typeof this.emoji == "string") {
+        return this.data.emoji(this.emoji);
+      } else {
+        return this.emoji;
+      }
     }
   },
-  created: function created() {
-    if (typeof this.emoji == "string") {
-      this._emoji = this.data.emoji(this.emoji);
-    } else {
-      this._emoji = this.emoji;
-    }
-  },
+  created: function created() {},
 
   methods: {
     onClick: function onClick() {
-      this.$emit('click', this._emoji);
+      this.$emit('click', this.emojiObject);
     },
     onMouseEnter: function onMouseEnter() {
-      this.$emit('mouseenter', this._emoji);
+      this.$emit('mouseenter', this.emojiObject);
     },
     onMouseLeave: function onMouseLeave() {
-      this.$emit('mouseleave', this._emoji);
+      this.$emit('mouseleave', this.emojiObject);
     }
   }
 };
@@ -2626,7 +2685,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_72fb9c62_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_preview_vue__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_35056c30_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_preview_vue__ = __webpack_require__(118);
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -2643,12 +2703,29 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_preview_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_72fb9c62_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_preview_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_35056c30_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_preview_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/preview.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-35056c30", Component.options)
+  } else {
+    hotAPI.reload("data-v-35056c30", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -2784,7 +2861,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6a1bf56e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_skins_vue__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1c614894_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_skins_vue__ = __webpack_require__(117);
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -2801,12 +2879,29 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_skins_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6a1bf56e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_skins_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1c614894_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_skins_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/skins.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1c614894", Component.options)
+  } else {
+    hotAPI.reload("data-v-1c614894", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -2868,7 +2963,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_61af977d_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4ad41bb8_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__ = __webpack_require__(119);
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -2885,12 +2981,29 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_61af977d_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4ad41bb8_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/search.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4ad41bb8", Component.options)
+  } else {
+    hotAPI.reload("data-v-4ad41bb8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -3080,7 +3193,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5487bc60_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimblePicker_vue__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7bc71df8_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimblePicker_vue__ = __webpack_require__(139);
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -3097,12 +3211,29 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_nimblePicker_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5487bc60_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimblePicker_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7bc71df8_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_nimblePicker_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/picker/nimblePicker.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7bc71df8", Component.options)
+  } else {
+    hotAPI.reload("data-v-7bc71df8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -3290,7 +3421,7 @@ exports.default = {
         native: this.native,
         skin: this.activeSkin,
         set: this.set,
-        tooltip: this.emojiTooltip,
+        emojiTooltip: this.emojiTooltip,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this)
@@ -3589,10 +3720,54 @@ exports.default = SVGs;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"emoji-mart-anchors"},_vm._l((_vm.categories),function(category){return _c('span',{key:category.id,class:{ 'emoji-mart-anchor': true, 'emoji-mart-anchor-selected': category.id == _vm.activeCategory.id },style:({ 'color': (category.id == _vm.activeCategory.id ? _vm.color : '') }),attrs:{"data-title":_vm.i18n.categories[category.id]},on:{"click":function($event){_vm.$emit('click', category)}}},[_c('div',{domProps:{"innerHTML":_vm._s(_vm.svgs[category.id])}}),_vm._v(" "),_c('span',{staticClass:"emoji-mart-anchor-bar",style:({ backgroundColor: _vm.color })})])}))}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "emoji-mart-anchors" },
+    _vm._l(_vm.categories, function(category) {
+      return _c(
+        "span",
+        {
+          key: category.id,
+          class: {
+            "emoji-mart-anchor": true,
+            "emoji-mart-anchor-selected": category.id == _vm.activeCategory.id
+          },
+          style: {
+            color: category.id == _vm.activeCategory.id ? _vm.color : ""
+          },
+          attrs: { "data-title": _vm.i18n.categories[category.id] },
+          on: {
+            click: function($event) {
+              _vm.$emit("click", category)
+            }
+          }
+        },
+        [
+          _c("div", { domProps: { innerHTML: _vm._s(_vm.svgs[category.id]) } }),
+          _vm._v(" "),
+          _c("span", {
+            staticClass: "emoji-mart-anchor-bar",
+            style: { backgroundColor: _vm.color }
+          })
+        ]
+      )
+    })
+  )
+}
 var staticRenderFns = []
+render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-51188104", esExports)
+  }
+}
 
 /***/ }),
 /* 78 */
@@ -4406,53 +4581,360 @@ __webpack_require__(57)('getOwnPropertyNames', function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.view.canRender)?_c('span',{staticClass:"emoji-mart-emoji",attrs:{"data-title":_vm.title},on:{"mouseenter":_vm.onMouseEnter,"mouseleave":_vm.onMouseLeave,"click":_vm.onClick}},[_c('span',{class:_vm.view.cssClass,style:(_vm.view.cssStyle)},[_vm._v(_vm._s(_vm.view.content))])]):_vm._e()}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.view.canRender
+    ? _c(
+        "span",
+        {
+          staticClass: "emoji-mart-emoji",
+          attrs: { title: _vm.view.title, "data-title": _vm.title },
+          on: {
+            mouseenter: _vm.onMouseEnter,
+            mouseleave: _vm.onMouseLeave,
+            click: _vm.onClick
+          }
+        },
+        [
+          _c("span", { class: _vm.view.cssClass, style: _vm.view.cssStyle }, [
+            _vm._v(_vm._s(_vm.view.content))
+          ])
+        ]
+      )
+    : _vm._e()
+}
 var staticRenderFns = []
+render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7f853594", esExports)
+  }
+}
 
 /***/ }),
 /* 116 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.isVisible && (_vm.isSearch || _vm.hasResults))?_c('div',{class:{ 'emoji-mart-category': true, 'emoji-mart-no-results': !_vm.hasResults }},[_c('div',{staticClass:"emoji-mart-category-label"},[_c('span',[_vm._v(_vm._s(_vm.i18n.categories[_vm.id]))])]),_vm._v(" "),_vm._l((_vm.emojiObjects),function(ref){
-var emojiObject = ref.emojiObject;
-var emojiView = ref.emojiView;
-return [(emojiView.canRender)?_c('span',{staticClass:"emoji-mart-emoji",attrs:{"data-title":emojiObject.short_name},on:{"mouseenter":function($event){_vm.emojiProps.onEnter(emojiObject)},"mouseleave":function($event){_vm.emojiProps.onLeave(emojiObject)},"click":function($event){_vm.emojiProps.onClick(emojiObject)}}},[_c('span',{class:emojiView.cssClass,style:(emojiView.cssStyle)},[_vm._v(_vm._s(emojiView.content))])]):_vm._e()]}),_vm._v(" "),(!_vm.hasResults)?_c('div',[_c('nimble-emoji',{attrs:{"data":_vm.data,"emoji":"sleuth_or_spy","native":_vm.emojiProps.native,"skin":_vm.emojiProps.skin,"set":_vm.emojiProps.set}}),_vm._v(" "),_c('div',{staticClass:"emoji-mart-no-results-label"},[_vm._v(_vm._s(_vm.i18n.notfound))])],1):_vm._e()],2):_vm._e()}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.isVisible && (_vm.isSearch || _vm.hasResults)
+    ? _c(
+        "div",
+        {
+          class: {
+            "emoji-mart-category": true,
+            "emoji-mart-no-results": !_vm.hasResults
+          }
+        },
+        [
+          _c("div", { staticClass: "emoji-mart-category-label" }, [
+            _c("span", [_vm._v(_vm._s(_vm.i18n.categories[_vm.id]))])
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.emojiObjects, function(ref) {
+            var emojiObject = ref.emojiObject
+            var emojiView = ref.emojiView
+            return [
+              emojiView.canRender
+                ? _c(
+                    "span",
+                    {
+                      staticClass: "emoji-mart-emoji",
+                      attrs: {
+                        "data-title": emojiObject.short_name,
+                        title: emojiView.title
+                      },
+                      on: {
+                        mouseenter: function($event) {
+                          _vm.emojiProps.onEnter(emojiObject)
+                        },
+                        mouseleave: function($event) {
+                          _vm.emojiProps.onLeave(emojiObject)
+                        },
+                        click: function($event) {
+                          _vm.emojiProps.onClick(emojiObject)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          class: emojiView.cssClass,
+                          style: emojiView.cssStyle
+                        },
+                        [_vm._v(_vm._s(emojiView.content))]
+                      )
+                    ]
+                  )
+                : _vm._e()
+            ]
+          }),
+          _vm._v(" "),
+          !_vm.hasResults
+            ? _c(
+                "div",
+                [
+                  _c("nimble-emoji", {
+                    attrs: {
+                      data: _vm.data,
+                      emoji: "sleuth_or_spy",
+                      native: _vm.emojiProps.native,
+                      skin: _vm.emojiProps.skin,
+                      set: _vm.emojiProps.set
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "emoji-mart-no-results-label" }, [
+                    _vm._v(_vm._s(_vm.i18n.notfound))
+                  ])
+                ],
+                1
+              )
+            : _vm._e()
+        ],
+        2
+      )
+    : _vm._e()
+}
 var staticRenderFns = []
+render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-376cda0e", esExports)
+  }
+}
 
 /***/ }),
 /* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'emoji-mart-skin-swatches': true, 'emoji-mart-skin-swatches-opened': _vm.opened }},_vm._l((6),function(skinTone){return _c('span',{key:skinTone,class:{ 'emoji-mart-skin-swatch': true, 'emoji-mart-skin-swatch-selected': _vm.skin == skinTone }},[_c('span',{class:'emoji-mart-skin emoji-mart-skin-tone-' + skinTone,on:{"click":function($event){_vm.onClick(skinTone)}}})])}))}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      class: {
+        "emoji-mart-skin-swatches": true,
+        "emoji-mart-skin-swatches-opened": _vm.opened
+      }
+    },
+    _vm._l(6, function(skinTone) {
+      return _c(
+        "span",
+        {
+          key: skinTone,
+          class: {
+            "emoji-mart-skin-swatch": true,
+            "emoji-mart-skin-swatch-selected": _vm.skin == skinTone
+          }
+        },
+        [
+          _c("span", {
+            class: "emoji-mart-skin emoji-mart-skin-tone-" + skinTone,
+            on: {
+              click: function($event) {
+                _vm.onClick(skinTone)
+              }
+            }
+          })
+        ]
+      )
+    })
+  )
+}
 var staticRenderFns = []
+render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1c614894", esExports)
+  }
+}
 
 /***/ }),
 /* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"emoji-mart-preview"},[(_vm.emoji)?[_c('div',{staticClass:"emoji-mart-preview-emoji"},[_c('nimble-emoji',{attrs:{"data":_vm.data,"emoji":_vm.emoji,"native":_vm.emojiProps.native,"skin":_vm.emojiProps.skin,"set":_vm.emojiProps.set}})],1),_vm._v(" "),_c('div',{staticClass:"emoji-mart-preview-data"},[_c('div',{staticClass:"emoji-mart-preview-name"},[_vm._v(_vm._s(_vm.emoji.name))]),_vm._v(" "),_c('div',{staticClass:"emoji-mart-preview-shortnames"},_vm._l((_vm.emojiShortNames),function(shortName){return _c('span',{key:shortName,staticClass:"emoji-mart-preview-shortname"},[_vm._v(":"+_vm._s(shortName)+":")])})),_vm._v(" "),_c('div',{staticClass:"emoji-mart-preview-emoticons"},_vm._l((_vm.emojiEmoticons),function(emoticon){return _c('span',{key:emoticon,staticClass:"emoji-mart-preview-emoticon"},[_vm._v(_vm._s(emoticon))])}))])]:[_c('div',{staticClass:"emoji-mart-preview-emoji"},[_c('nimble-emoji',{attrs:{"data":_vm.data,"emoji":_vm.idleEmoji,"native":_vm.emojiProps.native,"skin":_vm.emojiProps.skin,"set":_vm.emojiProps.set}})],1),_vm._v(" "),_c('div',{staticClass:"emoji-mart-preview-data"},[_c('span',{staticClass:"emoji-mart-title-label"},[_vm._v(_vm._s(_vm.title))])]),_vm._v(" "),(_vm.showSkinTones)?_c('div',{staticClass:"emoji-mart-preview-skins"},[_c('skins',{attrs:{"skin":_vm.skinProps.skin},on:{"change":function($event){_vm.$emit('change', $event)}}})],1):_vm._e()]],2)}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "emoji-mart-preview" },
+    [
+      _vm.emoji
+        ? [
+            _c(
+              "div",
+              { staticClass: "emoji-mart-preview-emoji" },
+              [
+                _c("nimble-emoji", {
+                  attrs: {
+                    data: _vm.data,
+                    emoji: _vm.emoji,
+                    native: _vm.emojiProps.native,
+                    skin: _vm.emojiProps.skin,
+                    set: _vm.emojiProps.set
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "emoji-mart-preview-data" }, [
+              _c("div", { staticClass: "emoji-mart-preview-name" }, [
+                _vm._v(_vm._s(_vm.emoji.name))
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "emoji-mart-preview-shortnames" },
+                _vm._l(_vm.emojiShortNames, function(shortName) {
+                  return _c(
+                    "span",
+                    {
+                      key: shortName,
+                      staticClass: "emoji-mart-preview-shortname"
+                    },
+                    [_vm._v(":" + _vm._s(shortName) + ":")]
+                  )
+                })
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "emoji-mart-preview-emoticons" },
+                _vm._l(_vm.emojiEmoticons, function(emoticon) {
+                  return _c(
+                    "span",
+                    {
+                      key: emoticon,
+                      staticClass: "emoji-mart-preview-emoticon"
+                    },
+                    [_vm._v(_vm._s(emoticon))]
+                  )
+                })
+              )
+            ])
+          ]
+        : [
+            _c(
+              "div",
+              { staticClass: "emoji-mart-preview-emoji" },
+              [
+                _c("nimble-emoji", {
+                  attrs: {
+                    data: _vm.data,
+                    emoji: _vm.idleEmoji,
+                    native: _vm.emojiProps.native,
+                    skin: _vm.emojiProps.skin,
+                    set: _vm.emojiProps.set
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "emoji-mart-preview-data" }, [
+              _c("span", { staticClass: "emoji-mart-title-label" }, [
+                _vm._v(_vm._s(_vm.title))
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.showSkinTones
+              ? _c(
+                  "div",
+                  { staticClass: "emoji-mart-preview-skins" },
+                  [
+                    _c("skins", {
+                      attrs: { skin: _vm.skinProps.skin },
+                      on: {
+                        change: function($event) {
+                          _vm.$emit("change", $event)
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e()
+          ]
+    ],
+    2
+  )
+}
 var staticRenderFns = []
+render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-35056c30", esExports)
+  }
+}
 
 /***/ }),
 /* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"emoji-mart-search"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.value),expression:"value"}],attrs:{"type":"text","placeholder":_vm.i18n.search},domProps:{"value":(_vm.value)},on:{"input":function($event){if($event.target.composing){ return; }_vm.value=$event.target.value}}})])}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "emoji-mart-search" }, [
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.value,
+          expression: "value"
+        }
+      ],
+      attrs: { type: "text", placeholder: _vm.i18n.search },
+      domProps: { value: _vm.value },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.value = $event.target.value
+        }
+      }
+    })
+  ])
+}
 var staticRenderFns = []
+render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4ad41bb8", esExports)
+  }
+}
 
 /***/ }),
 /* 120 */
@@ -4463,6 +4945,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_emoji_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -4485,6 +4968,23 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/emoji/emoji.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-924ece46", Component.options)
+  } else {
+    hotAPI.reload("data-v-924ece46", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -4498,6 +4998,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_picker_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -4520,6 +5021,23 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "src/components/picker/picker.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-344c59cf", Component.options)
+  } else {
+    hotAPI.reload("data-v-344c59cf", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -6546,7 +7064,20 @@ if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(137).default
-var update = add("04618570", content, true, {});
+var update = add("04618570", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../css-loader/index.js!../../postcss-loader/src/index.js!./vue-virtual-scroller.css", function() {
+     var newContent = require("!!../../css-loader/index.js!../../postcss-loader/src/index.js!./vue-virtual-scroller.css");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 /* 135 */
@@ -6916,14 +7447,161 @@ function listToStyles (parentId, list) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"emoji-mart",style:(_vm.customStyles)},[(_vm.showCategories)?_c('div',{staticClass:"emoji-mart-bar"},[_c('anchors',{attrs:{"data":_vm.data,"i18n":_vm.mergedI18n,"color":_vm.color,"categories":_vm.categories,"active-category":_vm.activeCategory},on:{"click":_vm.onAnchorClick}})],1):_vm._e(),_vm._v(" "),(_vm.showSearch)?_c('search',{ref:"search",attrs:{"data":_vm.data,"i18n":_vm.mergedI18n,"auto-focus":_vm.autoFocus},on:{"search":_vm.onSearch}}):_vm._e(),_vm._v(" "),_c('category',{directives:[{name:"show",rawName:"v-show",value:(_vm.searchEmojis),expression:"searchEmojis"}],staticClass:"emoji-mart-search-results",attrs:{"data":_vm.data,"i18n":_vm.mergedI18n,"id":"search","name":"Search","emojis":_vm.searchEmojis,"emoji-props":_vm.emojiProps}}),_vm._v(" "),_c('DynamicScroller',{directives:[{name:"show",rawName:"v-show",value:(!_vm.searchEmojis),expression:"!searchEmojis"}],ref:"dynScroller",staticClass:"scroller",attrs:{"items":_vm.scrollerCategories,"min-item-size":60,"emit-update":true},on:{"update":_vm.onScrollUpdate},scopedSlots:_vm._u([{key:"default",fn:function(ref){
-var item = ref.item;
-var active = ref.active;
-var index = ref.index;
-return [_c('DynamicScrollerItem',{attrs:{"item":item,"active":active,"data-index":index}},[_c('category',{directives:[{name:"show",rawName:"v-show",value:(item.show),expression:"item.show"}],key:item.category.id,ref:"categories",attrs:{"data":item.data,"i18n":item.mergedI18n,"id":item.category.id,"name":item.category.name,"emojis":item.category.emojis,"emoji-props":item.emojiProps}})],1)]}}])}),_vm._v(" "),(_vm.showPreview)?_c('div',{staticClass:"emoji-mart-bar"},[_c('preview',{attrs:{"data":_vm.data,"title":_vm.title,"emoji":_vm.previewEmoji,"idle-emoji":_vm.idleEmoji,"show-skin-tones":_vm.showSkinTones,"emoji-props":_vm.emojiProps,"skin-props":_vm.skinProps},on:{"change":_vm.onSkinChange}})],1):_vm._e()],1)}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "emoji-mart", style: _vm.customStyles },
+    [
+      _vm.showCategories
+        ? _c(
+            "div",
+            { staticClass: "emoji-mart-bar emoji-mart-anchors" },
+            [
+              _c("anchors", {
+                attrs: {
+                  data: _vm.data,
+                  i18n: _vm.mergedI18n,
+                  color: _vm.color,
+                  categories: _vm.categories,
+                  "active-category": _vm.activeCategory
+                },
+                on: { click: _vm.onAnchorClick }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showSearch
+        ? _c("search", {
+            ref: "search",
+            attrs: {
+              data: _vm.data,
+              i18n: _vm.mergedI18n,
+              "auto-focus": _vm.autoFocus
+            },
+            on: { search: _vm.onSearch }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _c("category", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.searchEmojis,
+            expression: "searchEmojis"
+          }
+        ],
+        staticClass: "emoji-mart-search-results",
+        attrs: {
+          data: _vm.data,
+          i18n: _vm.mergedI18n,
+          id: "search",
+          name: "Search",
+          emojis: _vm.searchEmojis,
+          "emoji-props": _vm.emojiProps
+        }
+      }),
+      _vm._v(" "),
+      _c("DynamicScroller", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.searchEmojis,
+            expression: "!searchEmojis"
+          }
+        ],
+        ref: "dynScroller",
+        staticClass: "scroller",
+        attrs: {
+          items: _vm.scrollerCategories,
+          "min-item-size": 60,
+          "emit-update": true
+        },
+        on: { update: _vm.onScrollUpdate },
+        scopedSlots: _vm._u([
+          {
+            key: "default",
+            fn: function(ref) {
+              var item = ref.item
+              var active = ref.active
+              var index = ref.index
+              return [
+                _c(
+                  "DynamicScrollerItem",
+                  {
+                    attrs: { item: item, active: active, "data-index": index }
+                  },
+                  [
+                    _c("category", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: item.show,
+                          expression: "item.show"
+                        }
+                      ],
+                      key: item.category.id,
+                      ref: "categories",
+                      attrs: {
+                        data: item.data,
+                        i18n: item.mergedI18n,
+                        id: item.category.id,
+                        name: item.category.name,
+                        emojis: item.category.emojis,
+                        "emoji-props": item.emojiProps
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            }
+          }
+        ])
+      }),
+      _vm._v(" "),
+      _vm.showPreview
+        ? _c(
+            "div",
+            { staticClass: "emoji-mart-bar emoji-mart-preview" },
+            [
+              _c("preview", {
+                attrs: {
+                  data: _vm.data,
+                  title: _vm.title,
+                  emoji: _vm.previewEmoji,
+                  "idle-emoji": _vm.idleEmoji,
+                  "show-skin-tones": _vm.showSkinTones,
+                  "emoji-props": _vm.emojiProps,
+                  "skin-props": _vm.skinProps
+                },
+                on: { change: _vm.onSkinChange }
+              })
+            ],
+            1
+          )
+        : _vm._e()
+    ],
+    1
+  )
+}
 var staticRenderFns = []
+render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7bc71df8", esExports)
+  }
+}
 
 /***/ })
 /******/ ]);
