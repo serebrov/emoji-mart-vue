@@ -158,7 +158,9 @@ export class EmojiIndex {
       }
       categoryData.emojis.forEach((emojiId) => {
         let emoji = this.addEmoji(emojiId)
-        category.emojis.push(emoji)
+        if (emoji) {
+          category.emojis.push(emoji)
+        }
       })
       this._categories.push(category)
     })
@@ -239,7 +241,7 @@ export class EmojiIndex {
 
   hasEmoji(emojiId) {
     if (this._data.aliases.hasOwnProperty(emojiId)) {
-      return true
+      emojiId = this._data.aliases[emojiId]
     }
     if (this._emojis[emojiId]) {
       return true
