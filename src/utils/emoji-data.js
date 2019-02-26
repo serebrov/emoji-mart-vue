@@ -181,8 +181,10 @@ export class EmojiIndex {
               return
             }
           }
-          this._recentCategory.emojis.push(this.emoji(id))
-          return 
+          if (this.hasEmoji(id)) {
+            this._recentCategory.emojis.push(this.emoji(id))
+          }
+          return
         })
       }
       // Add recent category to the top
@@ -233,6 +235,16 @@ export class EmojiIndex {
       throw new Error('Can not find emoji by id: ' + emojiId)
     }
     return emoji
+  }
+
+  hasEmoji(emojiId) {
+    if (this._data.aliases.hasOwnProperty(emojiId)) {
+      return true
+    }
+    if (this._emojis[emojiId]) {
+      return true
+    }
+    return false
   }
 
   search(value, maxResults) {
