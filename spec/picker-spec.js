@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
-import { Picker, NimblePicker } from '../src/components'
+import { Picker, NimblePicker, Category } from '../src/components'
 
 // const { click } = TestUtils.Simulate
 
@@ -23,9 +23,17 @@ const render = (props = {}) => {
 
 describe('Picker', () => {
   const picker = mount(Picker)
+  // const picker = mount(Picker, {
+  //   stubs: ['DynamicScroller']
+  // })
 
   it('works', () => {
+    expect(picker.isVueInstance()).toBeTruthy()
     expect(picker.html()).toContain('woman-gesturing-ok')
+  })
+
+  test('renders correctly', () => {
+    expect(picker.element).toMatchSnapshot()
   })
 })
 
@@ -41,18 +49,27 @@ describe('NimblePicker', () => {
     expect(picker.html()).toContain('woman-gesturing-ok"')
   })
 
-  /*
   describe('categories', () => {
-    it('shows 10 by default', () => {
-      subject = render()
-      expect(subject.categories.length).toEqual(10)
+    it('shows 5 by default', () => {
+      // Due to the virtual scroller, not all the categories
+      // are rendered at once
+      expect(picker.findAll(Category).length).toBe(5)
     })
 
+    /*
     it('will not show some based upon our filter', () => {
-      subject = render({ emojisToShowFilter: (unified) => false })
-      expect(subject.categories.length).toEqual(2)
+      let index = new EmojiIndex(
+        data, { emojisToShowFilter: (unified) => false })
+      const picker = mount(Picker, {
+        propsData: {
+          data: index
+        }
+      })
+      expect(picker.findAll(Category).length).toBe(2)
     })
+    */
 
+    /*
     it('maintains category ids after it is filtered', () => {
       subject = render({ emojisToShowFilter: (emoji) => true })
       const categoriesWithIds = subject.categories.filter(
@@ -60,6 +77,6 @@ describe('NimblePicker', () => {
       )
       expect(categoriesWithIds.length).toEqual(10)
     })
+    */
   })
-  */
 })
