@@ -1,7 +1,8 @@
 import { mount } from '@vue/test-utils'
 
-// import data from '../data/all.json'
-import { NimblePicker } from '../src/components'
+import data from '../data/all.json'
+import { EmojiIndex } from '../src/utils/emoji-data'
+import { Picker, NimblePicker } from '../src/components'
 
 // const { click } = TestUtils.Simulate
 
@@ -20,12 +21,24 @@ const render = (props = {}) => {
 }
 */
 
-describe('NimblePicker', () => {
-  const picker = mount(NimblePicker)
+describe('Picker', () => {
+  const picker = mount(Picker)
 
   it('works', () => {
-    console.log(picker.html())
-    expect(picker.html()).toContain('test')
+    expect(picker.html()).toContain('woman-gesturing-ok')
+  })
+})
+
+describe('NimblePicker', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index
+    }
+  })
+
+  it('works', () => {
+    expect(picker.html()).toContain('woman-gesturing-ok"')
   })
 
   /*
