@@ -71,7 +71,17 @@
       :emoji-props="emojiProps"
       :skin-props="skinProps"
       @change="onSkinChange"
-    />
+    >
+      <template slot="previewName" slot-scope="scope">
+        <slot name="previewName" v-bind="scope"></slot>
+      </template>
+      <template slot="previewShortNames" slot-scope="scope">
+        <slot name="previewShortNames" v-bind="scope"></slot>
+      </template>
+      <template slot="previewEmoticons" slot-scope="scope">
+        <slot name="previewEmoticons" v-bind="scope"/>
+      </template>
+    </preview>
   </div>
 </div>
 
