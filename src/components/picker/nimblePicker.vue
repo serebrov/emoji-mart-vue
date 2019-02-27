@@ -70,7 +70,7 @@
       :show-skin-tones="showSkinTones"
       :emoji-props="emojiProps"
       :skin-props="skinProps"
-      @change="onSkinChange"
+      :on-skin-change="onSkinChange"
     >
       <template slot="previewEmojiTemplate" slot-scope="scope">
         <slot name="previewEmojiTemplate" v-bind="scope"></slot>

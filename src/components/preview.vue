@@ -10,6 +10,7 @@
           :show-skin-tones="showSkinTones"
           :emoji-props="emojiProps"
           :skin-props="skinProps"
+          :on-skin-change="onSkinChange"
     >
       <div class="emoji-mart-preview-emoji">
         <nimble-emoji
@@ -42,6 +43,7 @@
           :show-skin-tones="showSkinTones"
           :emoji-props="emojiProps"
           :skin-props="skinProps"
+          :on-skin-change="onSkinChange"
     >
       <div class="emoji-mart-preview-emoji">
         <nimble-emoji
@@ -58,7 +60,7 @@
       </div>
 
       <div v-if="showSkinTones" class="emoji-mart-preview-skins">
-        <skins :skin="skinProps.skin" @change="$emit('change', $event)" />
+        <skins :skin="skinProps.skin" @change="onSkinChange($event)" />
       </div>
     </slot>
   </template>
@@ -98,6 +100,10 @@ export default {
     },
     skinProps: {
       type: Object,
+      required: true
+    },
+    onSkinChange: {
+      type: Function,
       required: true
     }
   },
