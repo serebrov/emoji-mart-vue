@@ -114,7 +114,7 @@ export class EmojiIndex {
    *   an object, see data.emojis above for examples.
    */
   constructor(
-    data, 
+    data,
     {
       emojisToShowFilter,
       include,
@@ -136,8 +136,10 @@ export class EmojiIndex {
     // TODO: make parameter configurable
     this._recent = recent || frequently.get(recentLength)
 
-    this._emojis = []
-    this._emoticons = []
+    this._emojis = {}
+    this._nativeEmojis = {}
+    this._emoticons = {}
+
     this._categories = []
     this._recentCategory = { id: 'recent', name: 'Recent', emojis: [] }
     this._customCategory = { id: 'custom', name: 'Custom', emojis: [] }
@@ -217,6 +219,11 @@ export class EmojiIndex {
       }
       return emojiObject
     }
+
+    // 4. Check if we have the specified native emoji
+    if (this._nativeEmojis.hasOwnProperty(emoji)) {
+      return this._nativeEmojis[emoji]
+    }
     return null
   }
 
@@ -233,6 +240,13 @@ export class EmojiIndex {
       throw new Error('Can not find emoji by id: ' + emojiId)
     }
     return emoji
+  }
+
+  nativeEmoji(unicodeEmoji) {
+    if (this._nativeEmojis.hasOwnProperty(unicodeEmoji)) {
+      return this._nativeEmojis[unicodeEmoji]
+    }
+    return null
   }
 
   search(value, maxResults) {
@@ -342,6 +356,17 @@ export class EmojiIndex {
 
     let emoji = new Emoji(data)
     this._emojis[emojiId] = emoji
+    if (emoji.native) {
+      this._nativeEmojis[emoji.native] = emoji
+    }
+    if (emoji._skins) {
+      for (let idx in emoji._skins) {
+        let skin = emoji._skins[idx];
+        if (skin.native) {
+          this._nativeEmojis[skin.native] = skin;
+        }
+      }
+    }
 
     if (emoji.emoticons) {
       emoji.emoticons.forEach((emoticon) => {
