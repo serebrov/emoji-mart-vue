@@ -3,11 +3,13 @@
 <div class="emoji-mart-preview">
   <template v-if="emoji">
     <slot name="previewEmojiTemplate"
+          :title="title"
           :data="data"
           :emoji="emoji"
-          :native="emojiProps.native"
-          :skin="emojiProps.skin"
-          :set="emojiProps.set"
+          :idle-emoji="idleEmoji"
+          :show-skin-tones="showSkinTones"
+          :emoji-props="emojiProps"
+          :skin-props="skinProps"
     >
       <div class="emoji-mart-preview-emoji">
         <nimble-emoji
@@ -33,11 +35,13 @@
 
   <template v-else>
     <slot name="previewIdleTemplate"
+          :title="title"
           :data="data"
           :emoji="emoji"
-          :native="emojiProps.native"
-          :skin="emojiProps.skin"
-          :set="emojiProps.set"
+          :idle-emoji="idleEmoji"
+          :show-skin-tones="showSkinTones"
+          :emoji-props="emojiProps"
+          :skin-props="skinProps"
     >
       <div class="emoji-mart-preview-emoji">
         <nimble-emoji
