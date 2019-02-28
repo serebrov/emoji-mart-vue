@@ -12,20 +12,22 @@
     />
   </div>
 
-  <search
-    v-if="showSearch"
-    ref="search"
-    :data="data"
-    :i18n="mergedI18n"
-    :auto-focus="autoFocus"
-    :on-search="onSearch"
-    @search="onSearch"
+  <slot name="searchTemplate"
+        :data="data"
+        :i18n="i18n"
+        :auto-focus="autoFocus"
+        :on-search="onSearch"
   >
-    {// this works in vue 2.6, but not in 2.5 - the fallback content is empty}
-    <template slot="searchTemplate" slot-scope="scope">
-      <slot name="searchTemplate" v-bind="scope"/>
-    </template>
-  </search>
+    <search
+      v-if="showSearch"
+      ref="search"
+      :data="data"
+      :i18n="mergedI18n"
+      :auto-focus="autoFocus"
+      :on-search="onSearch"
+      @search="onSearch"
+    />
+  </slot>
 
   <category
     v-show="searchEmojis"
@@ -67,25 +69,28 @@
     </template>
   </DynamicScroller>
 
-  <div class="emoji-mart-bar emoji-mart-preview" v-if="showPreview">
-    <preview
-      :data="data"
-      :title="title"
-      :emoji="previewEmoji"
-      :idle-emoji="idleEmoji"
-      :show-skin-tones="showSkinTones"
-      :emoji-props="emojiProps"
-      :skin-props="skinProps"
-      :on-skin-change="onSkinChange"
-    >
-      <template slot="previewEmojiTemplate" slot-scope="scope">
-        <slot name="previewEmojiTemplate" v-bind="scope"></slot>
-      </template>
-      <template slot="previewIdleTemplate" slot-scope="scope">
-        <slot name="previewIdleTemplate" v-bind="scope"></slot>
-      </template>
-    </preview>
-  </div>
+  <slot name="previewTemplate"
+        :data="data"
+        :title="title"
+        :emoji="previewEmoji"
+        :idle-emoji="idleEmoji"
+        :show-skin-tones="showSkinTones"
+        :emoji-props="emojiProps"
+        :skin-props="skinProps"
+        :on-skin-change="onSkinChange"
+  >
+    <div class="emoji-mart-bar emoji-mart-preview" v-if="showPreview">
+      <preview
+        :data="data"
+        :title="title"
+        :emoji="previewEmoji"
+        :idle-emoji="idleEmoji"
+        :show-skin-tones="showSkinTones"
+        :emoji-props="emojiProps"
+        :skin-props="skinProps"
+        :on-skin-change="onSkinChange"/>
+    </div>
+  </slot>
 </div>
 
 </template>

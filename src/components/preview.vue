@@ -2,16 +2,6 @@
 
 <div class="emoji-mart-preview">
   <template v-if="emoji">
-    <slot name="previewEmojiTemplate"
-          :title="title"
-          :data="data"
-          :emoji="emoji"
-          :idle-emoji="idleEmoji"
-          :show-skin-tones="showSkinTones"
-          :emoji-props="emojiProps"
-          :skin-props="skinProps"
-          :on-skin-change="onSkinChange"
-    >
       <div class="emoji-mart-preview-emoji">
         <nimble-emoji
           :data="data"
@@ -31,20 +21,9 @@
           <span v-for="emoticon in emojiEmoticons" :key="emoticon" class="emoji-mart-preview-emoticon">{{ emoticon }}</span>
         </div>
       </div>
-    </slot>
   </template>
 
   <template v-else>
-    <slot name="previewIdleTemplate"
-          :title="title"
-          :data="data"
-          :emoji="emoji"
-          :idle-emoji="idleEmoji"
-          :show-skin-tones="showSkinTones"
-          :emoji-props="emojiProps"
-          :skin-props="skinProps"
-          :on-skin-change="onSkinChange"
-    >
       <div class="emoji-mart-preview-emoji">
         <nimble-emoji
           :data="data"
@@ -62,7 +41,6 @@
       <div v-if="showSkinTones" class="emoji-mart-preview-skins">
         <skins :skin="skinProps.skin" @change="onSkinChange($event)" />
       </div>
-    </slot>
   </template>
 </div>
 

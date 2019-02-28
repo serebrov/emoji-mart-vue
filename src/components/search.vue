@@ -1,18 +1,7 @@
 <template>
-<div>
-<slot name="searchTemplate"
-      :data="data"
-      :i18n="i18n"
-      :auto-focus="autoFocus"
-      :on-search="onSearch"
->
   <div class="emoji-mart-search">
     <input type="text" :placeholder="i18n.search" v-model="value">
   </div>
-
-</slot>
-</div>
-
 </template>
 
 <script>
