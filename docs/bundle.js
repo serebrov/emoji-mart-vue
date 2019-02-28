@@ -1034,8 +1034,8 @@ var EmojiView = exports.EmojiView = function () {
   }
 
   (0, _createClass3.default)(EmojiView, [{
-    key: '_getEmoji',
-    value: function _getEmoji() {
+    key: 'getEmoji',
+    value: function getEmoji() {
       return this._emoji.getSkin(this._skin);
     }
   }, {
@@ -1053,13 +1053,13 @@ var EmojiView = exports.EmojiView = function () {
     value: function _cssStyle() {
       if (this._isCustom()) {
         return {
-          backgroundImage: 'url(' + this._getEmoji()._data.imageUrl + ')',
+          backgroundImage: 'url(' + this.getEmoji()._data.imageUrl + ')',
           backgroundSize: '100%'
         };
       }
       if (this._hasEmoji() && !this._isNative()) {
         return {
-          backgroundPosition: this._getEmoji().getPosition()
+          backgroundPosition: this.getEmoji().getPosition()
         };
       }
       return {};
@@ -1071,12 +1071,12 @@ var EmojiView = exports.EmojiView = function () {
         return '';
       }
       if (this._isNative()) {
-        return this._getEmoji().native;
+        return this.getEmoji().native;
       }
       if (this._hasEmoji()) {
         return '';
       }
-      return this._fallback ? this._fallback(this._getEmoji()) : null;
+      return this._fallback ? this._fallback(this.getEmoji()) : null;
     }
   }, {
     key: '_isNative',
@@ -1086,12 +1086,12 @@ var EmojiView = exports.EmojiView = function () {
   }, {
     key: '_isCustom',
     value: function _isCustom() {
-      return this._getEmoji().custom;
+      return this.getEmoji().custom;
     }
   }, {
     key: '_hasEmoji',
     value: function _hasEmoji() {
-      return this._getEmoji()._data && this._getEmoji()._data['has_img_' + this._set];
+      return this.getEmoji()._data && this.getEmoji()._data['has_img_' + this._set];
     }
   }, {
     key: '_emojiType',
@@ -14082,13 +14082,13 @@ var render = function() {
                       },
                       on: {
                         mouseenter: function($event) {
-                          return _vm.emojiProps.onEnter(emojiObject)
+                          _vm.emojiProps.onEnter(emojiView.getEmoji())
                         },
                         mouseleave: function($event) {
-                          return _vm.emojiProps.onLeave(emojiObject)
+                          _vm.emojiProps.onLeave(emojiView.getEmoji())
                         },
                         click: function($event) {
-                          return _vm.emojiProps.onClick(emojiObject)
+                          _vm.emojiProps.onClick(emojiView.getEmoji())
                         }
                       }
                     },
