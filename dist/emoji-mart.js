@@ -1007,8 +1007,8 @@ var EmojiView = exports.EmojiView = function () {
   }
 
   (0, _createClass3.default)(EmojiView, [{
-    key: '_getEmoji',
-    value: function _getEmoji() {
+    key: 'getEmoji',
+    value: function getEmoji() {
       return this._emoji.getSkin(this._skin);
     }
   }, {
@@ -1026,13 +1026,13 @@ var EmojiView = exports.EmojiView = function () {
     value: function _cssStyle() {
       if (this._isCustom()) {
         return {
-          backgroundImage: 'url(' + this._getEmoji()._data.imageUrl + ')',
+          backgroundImage: 'url(' + this.getEmoji()._data.imageUrl + ')',
           backgroundSize: '100%'
         };
       }
       if (this._hasEmoji() && !this._isNative()) {
         return {
-          backgroundPosition: this._getEmoji().getPosition()
+          backgroundPosition: this.getEmoji().getPosition()
         };
       }
       return {};
@@ -1044,12 +1044,12 @@ var EmojiView = exports.EmojiView = function () {
         return '';
       }
       if (this._isNative()) {
-        return this._getEmoji().native;
+        return this.getEmoji().native;
       }
       if (this._hasEmoji()) {
         return '';
       }
-      return this._fallback ? this._fallback(this._getEmoji()) : null;
+      return this._fallback ? this._fallback(this.getEmoji()) : null;
     }
   }, {
     key: '_isNative',
@@ -1059,12 +1059,12 @@ var EmojiView = exports.EmojiView = function () {
   }, {
     key: '_isCustom',
     value: function _isCustom() {
-      return this._getEmoji().custom;
+      return this.getEmoji().custom;
     }
   }, {
     key: '_hasEmoji',
     value: function _hasEmoji() {
-      return this._getEmoji()._data && this._getEmoji()._data['has_img_' + this._set];
+      return this.getEmoji()._data && this.getEmoji()._data['has_img_' + this._set];
     }
   }, {
     key: '_emojiType',
@@ -1942,7 +1942,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_fdfbf780_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3527fac9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__ = __webpack_require__(116);
 var normalizeComponent = __webpack_require__(2)
 /* script */
 
@@ -1959,7 +1959,7 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_category_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_fdfbf780_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3527fac9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_category_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -4480,7 +4480,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.isVisible && (_vm.isSearch || _vm.hasResults))?_c('div',{class:{ 'emoji-mart-category': true, 'emoji-mart-no-results': !_vm.hasResults }},[_c('div',{staticClass:"emoji-mart-category-label"},[_c('span',[_vm._v(_vm._s(_vm.i18n.categories[_vm.id]))])]),_vm._v(" "),_vm._l((_vm.emojiObjects),function(ref){
 var emojiObject = ref.emojiObject;
 var emojiView = ref.emojiView;
-return [(emojiView.canRender)?_c('span',{staticClass:"emoji-mart-emoji",attrs:{"data-title":emojiObject.short_name,"title":emojiView.title},on:{"mouseenter":function($event){_vm.emojiProps.onEnter(emojiObject)},"mouseleave":function($event){_vm.emojiProps.onLeave(emojiObject)},"click":function($event){_vm.emojiProps.onClick(emojiObject)}}},[_c('span',{class:emojiView.cssClass,style:(emojiView.cssStyle)},[_vm._v(_vm._s(emojiView.content))])]):_vm._e()]}),_vm._v(" "),(!_vm.hasResults)?_c('div',[_c('nimble-emoji',{attrs:{"data":_vm.data,"emoji":"sleuth_or_spy","native":_vm.emojiProps.native,"skin":_vm.emojiProps.skin,"set":_vm.emojiProps.set}}),_vm._v(" "),_c('div',{staticClass:"emoji-mart-no-results-label"},[_vm._v(_vm._s(_vm.i18n.notfound))])],1):_vm._e()],2):_vm._e()}
+return [(emojiView.canRender)?_c('span',{staticClass:"emoji-mart-emoji",attrs:{"data-title":emojiObject.short_name,"title":emojiView.title},on:{"mouseenter":function($event){_vm.emojiProps.onEnter(emojiView.getEmoji())},"mouseleave":function($event){_vm.emojiProps.onLeave(emojiView.getEmoji())},"click":function($event){_vm.emojiProps.onClick(emojiView.getEmoji())}}},[_c('span',{class:emojiView.cssClass,style:(emojiView.cssStyle)},[_vm._v(_vm._s(emojiView.content))])]):_vm._e()]}),_vm._v(" "),(!_vm.hasResults)?_c('div',[_c('nimble-emoji',{attrs:{"data":_vm.data,"emoji":"sleuth_or_spy","native":_vm.emojiProps.native,"skin":_vm.emojiProps.skin,"set":_vm.emojiProps.set}}),_vm._v(" "),_c('div',{staticClass:"emoji-mart-no-results-label"},[_vm._v(_vm._s(_vm.i18n.notfound))])],1):_vm._e()],2):_vm._e()}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
