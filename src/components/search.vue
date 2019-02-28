@@ -1,7 +1,16 @@
 <template>
+<div>
+<slot name="searchTemplate"
+      :data="data"
+      :i18n="i18n"
+      :auto-focus="autoFocus"
+      :on-search="onSearch"
+>
+  <div class="emoji-mart-search">
+    <input type="text" :placeholder="i18n.search" v-model="value">
+  </div>
 
-<div class="emoji-mart-search">
-  <input type="text" :placeholder="i18n.search" v-model="value">
+</slot>
 </div>
 
 </template>
@@ -18,13 +27,13 @@ export default {
       type: Object,
       required: true
     },
-    maxResults: {
-      type: Number,
-      default: 75
-    },
     autoFocus: {
       type: Boolean,
       default: false
+    },
+    onSearch: {
+      type: Function,
+      required: true
     }
   },
   data() {
@@ -39,8 +48,7 @@ export default {
   },
   watch: {
     value() {
-      let emojis = this.emojiIndex.search(this.value, this.maxResults)
-      this.$emit('search', emojis)
+      this.$emit('search', this.value)
     }
   },
   methods: {

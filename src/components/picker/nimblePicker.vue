@@ -18,8 +18,14 @@
     :data="data"
     :i18n="mergedI18n"
     :auto-focus="autoFocus"
+    :on-search="onSearch"
     @search="onSearch"
-  />
+  >
+    {// this works in vue 2.6, but not in 2.5 - the fallback content is empty}
+    <template slot="searchTemplate" slot-scope="scope">
+      <slot name="searchTemplate" v-bind="scope"/>
+    </template>
+  </search>
 
   <category
     v-show="searchEmojis"
@@ -206,7 +212,8 @@ export default {
       this.activeCategory = this.categories[i]
       this.skipScrollUpdate = true
     },
-    onSearch(emojis) {
+    onSearch(value) {
+      let emojis = this.data.search(value, this.maxSearchResults)
       this.searchEmojis = emojis
     },
     onEmojiEnter(emoji) {
