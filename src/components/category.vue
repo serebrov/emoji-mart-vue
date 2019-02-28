@@ -11,9 +11,9 @@
       :data-title="emojiObject.short_name"
       :title="emojiView.title"
       class="emoji-mart-emoji"
-      @mouseenter="emojiProps.onEnter(emojiObject)"
-      @mouseleave="emojiProps.onLeave(emojiObject)"
-      @click="emojiProps.onClick(emojiObject)">
+      @mouseenter="emojiProps.onEnter(emojiView.getEmoji())"
+      @mouseleave="emojiProps.onLeave(emojiView.getEmoji())"
+      @click="emojiProps.onClick(emojiView.getEmoji())">
       <span  :class="emojiView.cssClass" :style="emojiView.cssStyle">{{emojiView.content}}</span>
     </span>
   </template>

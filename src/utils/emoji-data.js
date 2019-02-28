@@ -481,7 +481,7 @@ export class EmojiView {
     Object.freeze(this)
   }
 
-  _getEmoji() {
+  getEmoji() {
     return this._emoji.getSkin(this._skin)
   }
 
@@ -499,13 +499,13 @@ export class EmojiView {
   _cssStyle() {
     if (this._isCustom()) {
       return {
-        backgroundImage: 'url(' + this._getEmoji()._data.imageUrl + ')',
+        backgroundImage: 'url(' + this.getEmoji()._data.imageUrl + ')',
         backgroundSize: '100%',
       }
     }
     if (this._hasEmoji() && !this._isNative()) {
       return {
-        backgroundPosition: this._getEmoji().getPosition()
+        backgroundPosition: this.getEmoji().getPosition()
       }
     }
     return {}
@@ -516,12 +516,12 @@ export class EmojiView {
       return ''
     }
     if (this._isNative()) {
-      return this._getEmoji().native
+      return this.getEmoji().native
     }
     if (this._hasEmoji()) {
       return ''
     }
-    return this._fallback ? this._fallback(this._getEmoji()) : null
+    return this._fallback ? this._fallback(this.getEmoji()) : null
   }
 
   _isNative() {
@@ -529,11 +529,11 @@ export class EmojiView {
   }
 
   _isCustom() {
-    return this._getEmoji().custom
+    return this.getEmoji().custom
   }
 
   _hasEmoji() {
-    return this._getEmoji()._data && this._getEmoji()._data['has_img_' + this._set]
+    return this.getEmoji()._data && this.getEmoji()._data['has_img_' + this._set]
   }
 
   _emojiType() {
