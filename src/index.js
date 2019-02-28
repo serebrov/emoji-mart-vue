@@ -8,6 +8,7 @@ export {
   Emoji,
   NimbleEmoji,
   Category,
+  Skins,
 } from './components'
 
 export { EmojiIndex } from './utils/emoji-data'

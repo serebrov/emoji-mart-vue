@@ -1308,6 +1308,10 @@ var PickerProps = {
     type: Number,
     default: 9
   },
+  maxSearchResults: {
+    type: Number,
+    default: 75
+  },
   emojiSize: {
     type: Number,
     default: 24
@@ -10277,6 +10281,39 @@ var CUSTOM_EMOJIS = [{
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var index = new _src.EmojiIndex(_all2.default, { custom: CUSTOM_EMOJIS });
@@ -10312,8 +10349,10 @@ exports.default = {
     }
   },
   components: {
+    Picker: _src.Picker,
     NimblePicker: _src.NimblePicker,
-    Emoji: _src.Emoji
+    Emoji: _src.Emoji,
+    NimbleEmoji: _src.NimbleEmoji
   }
 };
 
@@ -11319,6 +11358,10 @@ exports.default = {
     skinProps: {
       type: Object,
       required: true
+    },
+    onSkinChange: {
+      type: Function,
+      required: true
     }
   },
   computed: {
@@ -11514,8 +11557,6 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
 
 
 exports.default = {
@@ -11528,13 +11569,13 @@ exports.default = {
       type: Object,
       required: true
     },
-    maxResults: {
-      type: Number,
-      default: 75
-    },
     autoFocus: {
       type: Boolean,
       default: false
+    },
+    onSearch: {
+      type: Function,
+      required: true
     }
   },
   data: function data() {
@@ -11550,8 +11591,7 @@ exports.default = {
   },
   watch: {
     value: function value() {
-      var emojis = this.emojiIndex.search(this.value, this.maxResults);
-      this.$emit('search', emojis);
+      this.$emit('search', this.value);
     }
   },
   methods: {
@@ -11876,6 +11916,24 @@ var I18N = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 exports.default = {
@@ -11971,7 +12029,8 @@ exports.default = {
       this.activeCategory = this.categories[i];
       this.skipScrollUpdate = true;
     },
-    onSearch: function onSearch(emojis) {
+    onSearch: function onSearch(value) {
+      var emojis = this.data.search(value, this.maxSearchResults);
       this.searchEmojis = emojis;
     },
     onEmojiEnter: function onEmojiEnter(emoji) {
@@ -12889,7 +12948,7 @@ module.exports = function listToStyles (parentId, list) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.frequently = exports.store = exports.uncompress = exports.EmojiIndex = exports.Category = exports.NimbleEmoji = exports.Emoji = exports.NimblePicker = exports.Picker = undefined;
+exports.frequently = exports.store = exports.uncompress = exports.EmojiIndex = exports.Skins = exports.Category = exports.NimbleEmoji = exports.Emoji = exports.NimblePicker = exports.Picker = undefined;
 
 var _components = __webpack_require__(89);
 
@@ -12921,6 +12980,12 @@ Object.defineProperty(exports, 'Category', {
   enumerable: true,
   get: function get() {
     return _components.Category;
+  }
+});
+Object.defineProperty(exports, 'Skins', {
+  enumerable: true,
+  get: function get() {
+    return _components.Skins;
   }
 });
 
@@ -13104,7 +13169,7 @@ var render = function() {
           attrs: { "data-title": _vm.i18n.categories[category.id] },
           on: {
             click: function($event) {
-              _vm.$emit("click", category)
+              return _vm.$emit("click", category)
             }
           }
         },
@@ -13117,7 +13182,8 @@ var render = function() {
           })
         ]
       )
-    })
+    }),
+    0
   )
 }
 var staticRenderFns = []
@@ -14016,13 +14082,13 @@ var render = function() {
                       },
                       on: {
                         mouseenter: function($event) {
-                          _vm.emojiProps.onEnter(emojiObject)
+                          return _vm.emojiProps.onEnter(emojiObject)
                         },
                         mouseleave: function($event) {
-                          _vm.emojiProps.onLeave(emojiObject)
+                          return _vm.emojiProps.onLeave(emojiObject)
                         },
                         click: function($event) {
-                          _vm.emojiProps.onClick(emojiObject)
+                          return _vm.emojiProps.onClick(emojiObject)
                         }
                       }
                     },
@@ -14110,13 +14176,14 @@ var render = function() {
             class: "emoji-mart-skin emoji-mart-skin-tone-" + skinTone,
             on: {
               click: function($event) {
-                _vm.onClick(skinTone)
+                return _vm.onClick(skinTone)
               }
             }
           })
         ]
       )
-    })
+    }),
+    0
   )
 }
 var staticRenderFns = []
@@ -14179,7 +14246,8 @@ var render = function() {
                     },
                     [_vm._v(":" + _vm._s(shortName) + ":")]
                   )
-                })
+                }),
+                0
               ),
               _vm._v(" "),
               _c(
@@ -14194,7 +14262,8 @@ var render = function() {
                     },
                     [_vm._v(_vm._s(emoticon))]
                   )
-                })
+                }),
+                0
               )
             ])
           ]
@@ -14231,7 +14300,7 @@ var render = function() {
                       attrs: { skin: _vm.skinProps.skin },
                       on: {
                         change: function($event) {
-                          _vm.$emit("change", $event)
+                          return _vm.onSkinChange($event)
                         }
                       }
                     })
@@ -16489,17 +16558,29 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.showSearch
-        ? _c("search", {
-            ref: "search",
-            attrs: {
-              data: _vm.data,
-              i18n: _vm.mergedI18n,
-              "auto-focus": _vm.autoFocus
-            },
-            on: { search: _vm.onSearch }
-          })
-        : _vm._e(),
+      _vm._t(
+        "searchTemplate",
+        [
+          _vm.showSearch
+            ? _c("search", {
+                ref: "search",
+                attrs: {
+                  data: _vm.data,
+                  i18n: _vm.mergedI18n,
+                  "auto-focus": _vm.autoFocus,
+                  "on-search": _vm.onSearch
+                },
+                on: { search: _vm.onSearch }
+              })
+            : _vm._e()
+        ],
+        {
+          data: _vm.data,
+          i18n: _vm.i18n,
+          autoFocus: _vm.autoFocus,
+          onSearch: _vm.onSearch
+        }
+      ),
       _vm._v(" "),
       _c("category", {
         directives: [
@@ -16581,29 +16662,44 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _vm.showPreview
-        ? _c(
-            "div",
-            { staticClass: "emoji-mart-bar emoji-mart-preview" },
-            [
-              _c("preview", {
-                attrs: {
-                  data: _vm.data,
-                  title: _vm.title,
-                  emoji: _vm.previewEmoji,
-                  "idle-emoji": _vm.idleEmoji,
-                  "show-skin-tones": _vm.showSkinTones,
-                  "emoji-props": _vm.emojiProps,
-                  "skin-props": _vm.skinProps
-                },
-                on: { change: _vm.onSkinChange }
-              })
-            ],
-            1
-          )
-        : _vm._e()
+      _vm._t(
+        "previewTemplate",
+        [
+          _vm.showPreview
+            ? _c(
+                "div",
+                { staticClass: "emoji-mart-bar emoji-mart-preview" },
+                [
+                  _c("preview", {
+                    attrs: {
+                      data: _vm.data,
+                      title: _vm.title,
+                      emoji: _vm.previewEmoji,
+                      "idle-emoji": _vm.idleEmoji,
+                      "show-skin-tones": _vm.showSkinTones,
+                      "emoji-props": _vm.emojiProps,
+                      "skin-props": _vm.skinProps,
+                      "on-skin-change": _vm.onSkinChange
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e()
+        ],
+        {
+          data: _vm.data,
+          title: _vm.title,
+          emoji: _vm.previewEmoji,
+          idleEmoji: _vm.idleEmoji,
+          showSkinTones: _vm.showSkinTones,
+          emojiProps: _vm.emojiProps,
+          skinProps: _vm.skinProps,
+          onSkinChange: _vm.onSkinChange
+        }
+      )
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -16738,7 +16834,88 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(1),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      [
+        _c("div", [_vm._v("Custom templates example")]),
+        _vm._v(" "),
+        _c("Picker", {
+          attrs: { native: true },
+          scopedSlots: _vm._u([
+            {
+              key: "searchTemplate",
+              fn: function(slotProps) {
+                return [
+                  _c("input", {
+                    attrs: { type: "text", placeholder: slotProps.i18n.search },
+                    on: {
+                      input: function($event) {
+                        return slotProps.onSearch($event.target.value)
+                      }
+                    }
+                  })
+                ]
+              }
+            },
+            {
+              key: "previewTemplate",
+              fn: function(slotProps) {
+                return [
+                  _c("div", { staticClass: "emoji-mart-preview" }, [
+                    _c(
+                      "div",
+                      { staticClass: "emoji-mart-preview-emoji" },
+                      [
+                        _c("NimbleEmoji", {
+                          attrs: {
+                            data: slotProps.data,
+                            emoji: slotProps.emoji
+                              ? slotProps.emoji
+                              : "point_up",
+                            native: slotProps.emojiProps.native,
+                            skin: slotProps.emojiProps.skin,
+                            set: slotProps.emojiProps.set
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "emoji-mart-preview-data" }, [
+                      _c("div", { staticClass: "emoji-mart-preview-name" }, [
+                        _vm._v(
+                          _vm._s(
+                            slotProps.emoji
+                              ? "~" + slotProps.emoji.name + "~"
+                              : "Choose..."
+                          )
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "emoji-mart-preview-shortnames" },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              slotProps.emoji ? slotProps.emoji.colons : ""
+                            )
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              }
+            }
+          ])
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
