@@ -29,6 +29,10 @@ const PickerProps = {
     type: Number,
     default: 9
   },
+  maxSearchResults: {
+    type: Number,
+    default: 75
+  },
   emojiSize: {
     type: Number,
     default: 24
