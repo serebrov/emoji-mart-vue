@@ -46,28 +46,27 @@
             v-on:input="slotProps.onSearch($event.target.value)"
             >
         </template>
-        <template slot="previewEmojiTemplate" slot-scope="slotProps">
-            <div>
-                <div class="emoji-mart-preview-emoji">
-                  <NimbleEmoji
-                    :data="slotProps.data"
-                    :emoji="slotProps.emoji"
-                    :native="slotProps.emojiProps.native"
-                    :skin="slotProps.emojiProps.skin"
-                    :set="slotProps.emojiProps.set"
-                  />
-                </div>
-
-                <div class="emoji-mart-preview-data">
-                  <div class="emoji-mart-preview-name">{{
-                    slotProps.emoji ? '~' + slotProps.emoji.name + '~' : ''
-                  }}</div>
-                  <div class="emoji-mart-preview-shortnames">{{
-                    slotProps.emoji ? slotProps.emoji.colons : '' 
-                  }}</div>
-                </div>
-            </div>
-          </template>
+        <template slot="previewTemplate" slot-scope="slotProps">
+          <div class="emoji-mart-preview">
+              <div class="emoji-mart-preview-emoji">
+                <NimbleEmoji
+                  :data="slotProps.data"
+                  :emoji="slotProps.emoji ? slotProps.emoji : 'point_up'"
+                  :native="slotProps.emojiProps.native"
+                  :skin="slotProps.emojiProps.skin"
+                  :set="slotProps.emojiProps.set"
+                />
+              </div>
+              <div class="emoji-mart-preview-data">
+                <div class="emoji-mart-preview-name">{{
+                  slotProps.emoji ? '~' + slotProps.emoji.name + '~' : 'Choose...'
+                }}</div>
+                <div class="emoji-mart-preview-shortnames">{{
+                  slotProps.emoji ? slotProps.emoji.colons : ''
+                }}</div>
+              </div>
+          </div>
+        </template>
     </Picker>
   </div>
 </div>
