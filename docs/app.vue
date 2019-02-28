@@ -36,6 +36,40 @@
       height="20px"
     ></iframe>
   </div>
+
+  <div class="row">
+    <div>Custom templates example</div>
+    <Picker :native="true">
+        <template slot="searchTemplate" slot-scope="slotProps">
+          <input type="text" 
+            :placeholder="slotProps.i18n.search" 
+            v-on:input="slotProps.onSearch($event.target.value)"
+            >
+        </template>
+        <template slot="previewEmojiTemplate" slot-scope="slotProps">
+            <div>
+                <div class="emoji-mart-preview-emoji">
+                  <NimbleEmoji
+                    :data="slotProps.data"
+                    :emoji="slotProps.emoji"
+                    :native="slotProps.emojiProps.native"
+                    :skin="slotProps.emojiProps.skin"
+                    :set="slotProps.emojiProps.set"
+                  />
+                </div>
+
+                <div class="emoji-mart-preview-data">
+                  <div class="emoji-mart-preview-name">{{
+                    slotProps.emoji ? '~' + slotProps.emoji.name + '~' : ''
+                  }}</div>
+                  <div class="emoji-mart-preview-shortnames">{{
+                    slotProps.emoji ? slotProps.emoji.colons : '' 
+                  }}</div>
+                </div>
+            </div>
+          </template>
+    </Picker>
+  </div>
 </div>
 
 </template>
@@ -43,7 +77,7 @@
 <script>
 
 import data from '../data/all.json'
-import { NimblePicker, Emoji, EmojiIndex } from '../src'
+import { Picker, NimblePicker, NimbleEmoji, Emoji, EmojiIndex } from '../src'
 import '../css/emoji-mart.css'
 
 const CUSTOM_EMOJIS = [
@@ -100,8 +134,10 @@ export default {
     }
   },
   components: {
+    Picker,
     NimblePicker,
-    Emoji
+    Emoji,
+    NimbleEmoji
   }
 }
 
