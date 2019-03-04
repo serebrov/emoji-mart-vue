@@ -9,10 +9,11 @@
     <span
       v-if="emojiView.canRender"
       :data-title="emojiObject.short_name"
+      :title="emojiView.title"
       class="emoji-mart-emoji"
-      @mouseenter="emojiProps.onEnter(emojiObject)"
-      @mouseleave="emojiProps.onLeave(emojiObject)"
-      @click="emojiProps.onClick(emojiObject)">
+      @mouseenter="emojiProps.onEnter(emojiView.getEmoji())"
+      @mouseleave="emojiProps.onLeave(emojiView.getEmoji())"
+      @click="emojiProps.onClick(emojiView.getEmoji())">
       <span  :class="emojiView.cssClass" :style="emojiView.cssStyle">{{emojiView.content}}</span>
     </span>
   </template>
@@ -81,7 +82,8 @@ export default {
             this.emojiProps.skin,
             this.emojiProps.set,
             this.emojiProps.native,
-            this.emojiProps.fallback
+            this.emojiProps.fallback,
+            this.emojiProps.emojiTooltip
           )
           return { emojiObject, emojiView }
       })

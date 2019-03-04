@@ -2,25 +2,25 @@
 
 <div class="emoji-mart-preview">
   <template v-if="emoji">
-    <div class="emoji-mart-preview-emoji">
-      <nimble-emoji
-        :data="data"
-        :emoji="emoji"
-        :native="emojiProps.native"
-        :skin="emojiProps.skin"
-        :set="emojiProps.set"
-      />
-    </div>
+      <div class="emoji-mart-preview-emoji">
+        <nimble-emoji
+          :data="data"
+          :emoji="emoji"
+          :native="emojiProps.native"
+          :skin="emojiProps.skin"
+          :set="emojiProps.set"
+        />
+      </div>
 
-    <div class="emoji-mart-preview-data">
-      <div class="emoji-mart-preview-name">{{ emoji.name }}</div>
-      <div class="emoji-mart-preview-shortnames">
-        <span v-for="shortName in emojiShortNames" :key="shortName" class="emoji-mart-preview-shortname">:{{ shortName }}:</span>
+      <div class="emoji-mart-preview-data">
+        <div class="emoji-mart-preview-name">{{ emoji.name }}</div>
+        <div class="emoji-mart-preview-shortnames">
+          <span v-for="shortName in emojiShortNames" :key="shortName" class="emoji-mart-preview-shortname">:{{ shortName }}:</span>
+        </div>
+        <div class="emoji-mart-preview-emoticons">
+          <span v-for="emoticon in emojiEmoticons" :key="emoticon" class="emoji-mart-preview-emoticon">{{ emoticon }}</span>
+        </div>
       </div>
-      <div class="emoji-mart-preview-emoticons">
-        <span v-for="emoticon in emojiEmoticons" :key="emoticon" class="emoji-mart-preview-emoticon">{{ emoticon }}</span>
-      </div>
-    </div>
   </template>
 
   <template v-else>
@@ -39,7 +39,7 @@
     </div>
 
     <div v-if="showSkinTones" class="emoji-mart-preview-skins">
-      <skins :skin="skinProps.skin" @change="$emit('change', $event)" />
+      <skins :skin="skinProps.skin" @change="onSkinChange($event)" />
     </div>
   </template>
 </div>
@@ -78,6 +78,10 @@ export default {
     },
     skinProps: {
       type: Object,
+      required: true
+    },
+    onSkinChange: {
+      type: Function,
       required: true
     }
   },

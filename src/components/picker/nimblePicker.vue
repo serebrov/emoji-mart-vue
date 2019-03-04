@@ -1,7 +1,7 @@
 <template>
 
 <div class="emoji-mart" :style="customStyles">
-  <div class="emoji-mart-bar" v-if="showCategories">
+  <div class="emoji-mart-bar emoji-mart-anchors" v-if="showCategories">
     <anchors
       :data="data"
       :i18n="mergedI18n"
@@ -12,14 +12,22 @@
     />
   </div>
 
-  <search
-    v-if="showSearch"
-    ref="search"
-    :data="data"
-    :i18n="mergedI18n"
-    :auto-focus="autoFocus"
-    @search="onSearch"
-  />
+  <slot name="searchTemplate"
+        :data="data"
+        :i18n="i18n"
+        :auto-focus="autoFocus"
+        :on-search="onSearch"
+  >
+    <search
+      v-if="showSearch"
+      ref="search"
+      :data="data"
+      :i18n="mergedI18n"
+      :auto-focus="autoFocus"
+      :on-search="onSearch"
+      @search="onSearch"
+    />
+  </slot>
 
   <category
     v-show="searchEmojis"
@@ -61,18 +69,28 @@
     </template>
   </DynamicScroller>
 
-  <div class="emoji-mart-bar" v-if="showPreview">
-    <preview
-      :data="data"
-      :title="title"
-      :emoji="previewEmoji"
-      :idle-emoji="idleEmoji"
-      :show-skin-tones="showSkinTones"
-      :emoji-props="emojiProps"
-      :skin-props="skinProps"
-      @change="onSkinChange"
-    />
-  </div>
+  <slot name="previewTemplate"
+        :data="data"
+        :title="title"
+        :emoji="previewEmoji"
+        :idle-emoji="idleEmoji"
+        :show-skin-tones="showSkinTones"
+        :emoji-props="emojiProps"
+        :skin-props="skinProps"
+        :on-skin-change="onSkinChange"
+  >
+    <div class="emoji-mart-bar emoji-mart-preview" v-if="showPreview">
+      <preview
+        :data="data"
+        :title="title"
+        :emoji="previewEmoji"
+        :idle-emoji="idleEmoji"
+        :show-skin-tones="showSkinTones"
+        :emoji-props="emojiProps"
+        :skin-props="skinProps"
+        :on-skin-change="onSkinChange"/>
+    </div>
+  </slot>
 </div>
 
 </template>
@@ -138,7 +156,7 @@ export default {
         native: this.native,
         skin: this.activeSkin,
         set: this.set,
-        tooltip: this.emojiTooltip,
+        emojiTooltip: this.emojiTooltip,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this)
@@ -199,7 +217,8 @@ export default {
       this.activeCategory = this.categories[i]
       this.skipScrollUpdate = true
     },
-    onSearch(emojis) {
+    onSearch(value) {
+      let emojis = this.data.search(value, this.maxSearchResults)
       this.searchEmojis = emojis
     },
     onEmojiEnter(emoji) {

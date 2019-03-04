@@ -114,7 +114,7 @@ export class EmojiIndex {
    *   an object, see data.emojis above for examples.
    */
   constructor(
-    data, 
+    data,
     {
       emojisToShowFilter,
       include,
@@ -136,8 +136,10 @@ export class EmojiIndex {
     // TODO: make parameter configurable
     this._recent = recent || frequently.get(recentLength)
 
-    this._emojis = []
-    this._emoticons = []
+    this._emojis = {}
+    this._nativeEmojis = {}
+    this._emoticons = {}
+
     this._categories = []
     this._recentCategory = { id: 'recent', name: 'Recent', emojis: [] }
     this._customCategory = { id: 'custom', name: 'Custom', emojis: [] }
@@ -221,6 +223,11 @@ export class EmojiIndex {
       }
       return emojiObject
     }
+
+    // 4. Check if we have the specified native emoji
+    if (this._nativeEmojis.hasOwnProperty(emoji)) {
+      return this._nativeEmojis[emoji]
+    }
     return null
   }
 
@@ -247,6 +254,13 @@ export class EmojiIndex {
       return true
     }
     return false
+  }
+  
+  nativeEmoji(unicodeEmoji) {
+    if (this._nativeEmojis.hasOwnProperty(unicodeEmoji)) {
+      return this._nativeEmojis[unicodeEmoji]
+    }
+    return null
   }
 
   search(value, maxResults) {
@@ -356,6 +370,17 @@ export class EmojiIndex {
 
     let emoji = new Emoji(data)
     this._emojis[emojiId] = emoji
+    if (emoji.native) {
+      this._nativeEmojis[emoji.native] = emoji
+    }
+    if (emoji._skins) {
+      for (let idx in emoji._skins) {
+        let skin = emoji._skins[idx];
+        if (skin.native) {
+          this._nativeEmojis[skin.native] = skin;
+        }
+      }
+    }
 
     if (emoji.emoticons) {
       emoji.emoticons.forEach((emoticon) => {
@@ -423,6 +448,7 @@ export class Emoji {
     for (let key in this._sanitized) {
       this[key] = this._sanitized[key]
     }
+    this.short_names = this._data.short_names
     this.short_name = this._data.short_names[0]
     Object.freeze(this)
   }
@@ -451,8 +477,9 @@ export class EmojiView {
    * set - string, emoji set name
    * native - boolean, whether to render native emoji
    * fallback - fallback function to render missing emoji, optional
+   * emojiTooltip - wether we need to show the emoji tooltip, optional
    */
-  constructor(emoji, skin, set, native, fallback) {
+  constructor(emoji, skin, set, native, fallback, emojiTooltip) {
     this._emoji = emoji
     this._native = native
     this._skin = skin
@@ -463,11 +490,12 @@ export class EmojiView {
     this.cssClass = this._cssClass()
     this.cssStyle = this._cssStyle()
     this.content = this._content()
+    this.title = emojiTooltip === true ? emoji.short_name : null;
 
     Object.freeze(this)
   }
 
-  _getEmoji() {
+  getEmoji() {
     return this._emoji.getSkin(this._skin)
   }
 
@@ -485,13 +513,13 @@ export class EmojiView {
   _cssStyle() {
     if (this._isCustom()) {
       return {
-        backgroundImage: 'url(' + this._getEmoji()._data.imageUrl + ')',
+        backgroundImage: 'url(' + this.getEmoji()._data.imageUrl + ')',
         backgroundSize: '100%',
       }
     }
     if (this._hasEmoji() && !this._isNative()) {
       return {
-        backgroundPosition: this._getEmoji().getPosition()
+        backgroundPosition: this.getEmoji().getPosition()
       }
     }
     return {}
@@ -502,12 +530,12 @@ export class EmojiView {
       return ''
     }
     if (this._isNative()) {
-      return this._getEmoji().native
+      return this.getEmoji().native
     }
     if (this._hasEmoji()) {
       return ''
     }
-    return this._fallback ? this._fallback(this._getEmoji()) : null
+    return this._fallback ? this._fallback(this.getEmoji()) : null
   }
 
   _isNative() {
@@ -515,11 +543,11 @@ export class EmojiView {
   }
 
   _isCustom() {
-    return this._getEmoji().custom
+    return this.getEmoji().custom
   }
 
   _hasEmoji() {
-    return this._getEmoji()._data && this._getEmoji()._data['has_img_' + this._set]
+    return this.getEmoji()._data && this.getEmoji()._data['has_img_' + this._set]
   }
 
   _emojiType() {
