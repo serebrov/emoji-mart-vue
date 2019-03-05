@@ -4,28 +4,8 @@ import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
 import { Picker, NimblePicker, Category } from '../src/components'
 
-// const { click } = TestUtils.Simulate
-
-/*
-const {
-  renderIntoDocument,
-  scryRenderedComponentsWithType,
-  findRenderedComponentWithType,
-} = TestUtils
-*/
-
-/*
-const render = (props = {}) => {
-  const defaultProps = { data }
-  return renderIntoDocument(<NimblePicker {...defaultProps} {...props} />)
-}
-*/
-
 describe('Picker', () => {
   const picker = mount(Picker)
-  // const picker = mount(Picker, {
-  //   stubs: ['DynamicScroller']
-  // })
 
   it('works', () => {
     expect(picker.isVueInstance()).toBeTruthy()
@@ -66,7 +46,7 @@ describe('categories', () => {
   const picker = mount(Picker, {
     propsData: {
       data: index,
-      // Set idle emoji (in preview) to "+1"
+      // Set idle emoji (in preview) to "flag-tf"
       emoji: 'flag-tf'
     }
   })
