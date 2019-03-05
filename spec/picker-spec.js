@@ -78,9 +78,6 @@ describe('emjois', () => {
   })
 
   it('emoji can be selected', () => {
-    expect(picker.isVueInstance()).toBeTruthy()
-    expect(picker.html()).toContain('woman-gesturing-ok')
-
     let emoji = picker.find('[data-title="grinning"]')
     emoji.trigger('click')
 
