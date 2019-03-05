@@ -6,7 +6,7 @@ exports[`Picker renders correctly 1`] = `
   style="width: 338px;"
 >
   <div
-    class="emoji-mart-bar"
+    class="emoji-mart-bar emoji-mart-bar-anchors"
   >
     <div
       class="emoji-mart-anchors"
@@ -7819,7 +7819,7 @@ exports[`Picker renders correctly 1`] = `
   </div>
    
   <div
-    class="emoji-mart-bar"
+    class="emoji-mart-bar emoji-mart-bar-preview"
   >
     <div
       class="emoji-mart-preview"
