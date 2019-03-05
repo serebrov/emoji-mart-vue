@@ -71,7 +71,6 @@ describe('categories', () => {
 describe('emjois', () => {
   let index = new EmojiIndex(data)
   const picker = mount(NimblePicker, {
-    attachToDocument: true,
     propsData: {
       data: index
     }
@@ -89,5 +88,29 @@ describe('emjois', () => {
     expect(emojiData.name).toBe('Grinning Face')
     expect(emojiData.colons).toBe(':grinning:')
     expect(emojiData.native).toBe('😀')
+  })
+})
+
+describe('emjois skin', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+      skin: 6
+    }
+  })
+
+  it('emoji with skin tone can be selected', () => {
+    let emoji = picker.find('[data-title="+1"]')
+    emoji.trigger('click')
+
+    let events = picker.emitted().select
+    expect(events.length).toBe(1)
+    let emojiData = events[0][0]
+    expect(emojiData).toBe(index.emoji('+1').getSkin(6))
+    expect(emojiData.id).toBe('+1')
+    expect(emojiData.name).toBe('Thumbs Up Sign')
+    expect(emojiData.colons).toBe(':+1:')
+    expect(emojiData.native).toBe('👍🏿')
   })
 })
