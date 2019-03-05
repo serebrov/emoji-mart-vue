@@ -67,3 +67,30 @@ describe('categories', () => {
     expect(categories.at(2).vm.emojis.length).toBe(250)
   })
 })
+
+describe('emjois', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    attachToDocument: true,
+    propsData: {
+      data: index
+    }
+  })
+
+  it('emoji can be selected', () => {
+    expect(picker.isVueInstance()).toBeTruthy()
+    expect(picker.html()).toContain('woman-gesturing-ok')
+
+    let emoji = picker.find('[data-title="grinning"]')
+    emoji.trigger('click')
+
+    let events = picker.emitted().select
+    expect(events.length).toBe(1)
+    let emojiData = events[0][0]
+    expect(emojiData).toBe(index.emoji('grinning'))
+    expect(emojiData.id).toBe('grinning')
+    expect(emojiData.name).toBe('Grinning Face')
+    expect(emojiData.colons).toBe(':grinning:')
+    expect(emojiData.native).toBe('😀')
+  })
+})
