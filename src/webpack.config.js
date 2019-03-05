@@ -31,7 +31,6 @@ module.exports = Object.assign({
       test: /\.js$/,
       include: [
         path.resolve('src'),
-        path.resolve('data'),
       ],
       use: {
         loader: 'babel-loader',
