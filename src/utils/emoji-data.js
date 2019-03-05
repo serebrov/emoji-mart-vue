@@ -120,8 +120,8 @@ export class EmojiIndex {
       exclude,
       custom,
       recent,
-      recentLength = 20
-    } = {}
+      recentLength = 20,
+    } = {},
   ) {
     this._data = uncompress(data)
     // Callback to exclude specific emojis
@@ -148,16 +148,16 @@ export class EmojiIndex {
   }
 
   buildIndex() {
-    this._data.categories.forEach(categoryData => {
+    this._data.categories.forEach((categoryData) => {
       if (!this.isCategoryNeeded(categoryData)) {
         return
       }
       let category = {
         id: categoryData.id,
         name: categoryData.name,
-        emojis: []
+        emojis: [],
       }
-      categoryData.emojis.forEach(emojiId => {
+      categoryData.emojis.forEach((emojiId) => {
         let emoji = this.addEmoji(emojiId)
         if (emoji) {
           category.emojis.push(emoji)
@@ -181,7 +181,7 @@ export class EmojiIndex {
 
     if (this.isCategoryNeeded('recent')) {
       if (this._recent.length) {
-        this._recent.map(id => {
+        this._recent.map((id) => {
           for (let customEmoji of this._customCategory.emojis) {
             if (customEmoji.id === id) {
               this._recentCategory.emojis.push(customEmoji)
@@ -285,7 +285,7 @@ export class EmojiIndex {
     }
 
     allResults = values
-      .map(value => {
+      .map((value) => {
         // Start searchin in the global list of emojis
         let emojis = this._emojis
         let currentIndex = this._searchIndex
@@ -337,7 +337,7 @@ export class EmojiIndex {
         // we will get "[Array, undefined]" for allResults and after
         // the "filter" call it will turn into "[Array]"
       })
-      .filter(a => a)
+      .filter((a) => a)
 
     var results = null
     if (allResults.length > 1) {
@@ -356,7 +356,7 @@ export class EmojiIndex {
   addCustomEmoji(customEmoji) {
     let emojiData = Object.assign({}, customEmoji, {
       id: customEmoji.short_names[0],
-      custom: true
+      custom: true,
     })
     if (!emojiData.search) {
       emojiData.search = buildSearch(emojiData)
@@ -390,7 +390,7 @@ export class EmojiIndex {
     }
 
     if (emoji.emoticons) {
-      emoji.emoticons.forEach(emoticon => {
+      emoji.emoticons.forEach((emoticon) => {
         if (this._emoticons[emoticon]) {
           return
         }
@@ -518,12 +518,12 @@ export class EmojiView {
     if (this._isCustom()) {
       return {
         backgroundImage: 'url(' + this.getEmoji()._data.imageUrl + ')',
-        backgroundSize: '100%'
+        backgroundSize: '100%',
       }
     }
     if (this._hasEmoji() && !this._isNative()) {
       return {
-        backgroundPosition: this.getEmoji().getPosition()
+        backgroundPosition: this.getEmoji().getPosition(),
       }
     }
     return {}
@@ -579,7 +579,7 @@ function sanitize(emoji) {
       emoticons,
       unified,
       custom,
-      imageUrl
+      imageUrl,
     } = emoji,
     id = emoji.id || short_names[0],
     colons = `:${id}:`
@@ -591,7 +591,7 @@ function sanitize(emoji) {
       colons,
       emoticons,
       custom,
-      imageUrl
+      imageUrl,
     }
   }
 
@@ -606,6 +606,6 @@ function sanitize(emoji) {
     emoticons,
     unified: unified.toLowerCase(),
     skin: skin_tone || (skin_variations ? 1 : null),
-    native: unifiedToNative(unified)
+    native: unifiedToNative(unified),
   }
 }

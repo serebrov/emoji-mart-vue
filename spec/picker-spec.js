@@ -21,8 +21,8 @@ describe('NimblePicker', () => {
   let index = new EmojiIndex(data)
   const picker = mount(NimblePicker, {
     propsData: {
-      data: index
-    }
+      data: index,
+    },
   })
 
   it('works', () => {
@@ -38,17 +38,17 @@ describe('NimblePicker', () => {
 
 describe('categories', () => {
   let index = new EmojiIndex(data, {
-    emojisToShowFilter: emoji => {
+    emojisToShowFilter: (emoji) => {
       return emoji.short_names[0].match(/^flag.*/) !== null
-    }
+    },
   })
   // let index = new EmojiIndex(data)
   const picker = mount(Picker, {
     propsData: {
       data: index,
       // Set idle emoji (in preview) to "flag-tf"
-      emoji: 'flag-tf'
-    }
+      emoji: 'flag-tf',
+    },
   })
 
   it('will not show some based upon our filter', () => {
@@ -72,8 +72,8 @@ describe('emjois', () => {
   let index = new EmojiIndex(data)
   const picker = mount(NimblePicker, {
     propsData: {
-      data: index
-    }
+      data: index,
+    },
   })
 
   it('emoji can be selected', () => {
@@ -96,8 +96,8 @@ describe('emjois skin', () => {
   const picker = mount(NimblePicker, {
     propsData: {
       data: index,
-      skin: 6
-    }
+      skin: 6,
+    },
   })
 
   it('emoji with skin tone can be selected', () => {

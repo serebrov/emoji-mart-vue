@@ -31,6 +31,6 @@
 //
 //     SyntaxError: Unexpected token .
 //
-//       91 | 
+//       91 |
 //       92 | import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 //     > 93 | import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'

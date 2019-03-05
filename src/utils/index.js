@@ -62,10 +62,4 @@ function measureScrollbar() {
   return scrollbarWidth
 }
 
-export {
-  uniq,
-  intersect,
-  deepMerge,
-  unifiedToNative,
-  measureScrollbar,
-}
+export { uniq, intersect, deepMerge, unifiedToNative, measureScrollbar }

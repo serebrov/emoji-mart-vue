@@ -4,7 +4,6 @@ import data from '../data/all.json'
 describe('#EmojiIndex', () => {
   describe('search', function() {
     it('should find pineapple emoji by id', () => {
-
       const emojiIndex = new EmojiIndex(data)
       let emojis = emojiIndex.search('pineapple')
 
@@ -13,7 +12,7 @@ describe('#EmojiIndex', () => {
           short_names: ['pineapple'],
           name: 'Pineapple',
           unified: '1f34d',
-          added_in: "6.0",
+          added_in: '6.0',
           emoticons: undefined,
           has_img_apple: true,
           has_img_emojione: true,
@@ -21,13 +20,13 @@ describe('#EmojiIndex', () => {
           has_img_google: true,
           has_img_messenger: true,
           has_img_twitter: true,
-          keywords: [ "fruit", "nature", "food" ],
+          keywords: ['fruit', 'nature', 'food'],
           non_qualified: undefined,
-          search: "pineapple,fruit,nature,food",
+          search: 'pineapple,fruit,nature,food',
           sheet_x: 7,
           sheet_y: 15,
-          text: "",
-          unified: "1F34D"
+          text: '',
+          unified: '1F34D',
         }),
       ])
 
@@ -36,20 +35,19 @@ describe('#EmojiIndex', () => {
       expect(emojis[0].native).toEqual('🍍')
     })
 
-
     it('should filter only emojis we care about, exclude pineapple', () => {
       let emojisToShowFilter = (data) => {
         return data.unified !== '1F34D'
       }
       const emojiIndex = new EmojiIndex(data, { emojisToShowFilter })
 
-      expect(
-        emojiIndex.search('apple').map((obj) => obj.id),
-      ).not.toContain('pineapple')
+      expect(emojiIndex.search('apple').map((obj) => obj.id)).not.toContain(
+        'pineapple',
+      )
     })
 
     it('can include/exclude categories', () => {
-      const emojiIndex = new EmojiIndex(data, {  include: ['people'] })
+      const emojiIndex = new EmojiIndex(data, { include: ['people'] })
       expect(emojiIndex.search('flag')).toEqual([])
     })
 
