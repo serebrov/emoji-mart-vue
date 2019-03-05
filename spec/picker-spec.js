@@ -54,14 +54,12 @@ describe('NimblePicker', () => {
     // are rendered at once
     expect(picker.findAll(Category).length).toBe(5)
   })
-
 })
 
-/*
 describe('categories', () => {
   let index = new EmojiIndex(data, {
-    emojisToShowFilter: (emoji) => {
-      return emoji.short_names[0].match(/[0-9+-]+/) !== null
+    emojisToShowFilter: emoji => {
+      return emoji.short_names[0].match(/^flag.*/) !== null
     }
   })
   // let index = new EmojiIndex(data)
@@ -69,24 +67,23 @@ describe('categories', () => {
     propsData: {
       data: index,
       // Set idle emoji (in preview) to "+1"
-      emoji: '+1'
+      emoji: 'flag-tf'
     }
   })
 
   it('will not show some based upon our filter', () => {
-    expect(picker.findAll(Category).length).toBe(5)
-    // Filter out all emojis, except numeric like +1
-    // // debugger;
-    // // let result = picker.findAll(Category)[0]
-    // expect(picker.findAll(Category).length).toBe(2)
-  })
-
-  it('maintains category ids after it is filtered', () => {
-    subject = render({ emojisToShowFilter: (emoji) => true })
-    const categoriesWithIds = subject.categories.filter(
-      (category) => category.id,
-    )
-    expect(categoriesWithIds.length).toEqual(10)
+    let categories = picker.findAll(Category)
+    expect(categories.length).toBe(3)
+    // Hidden category with search results
+    expect(categories.at(0).vm.name).toBe('Search')
+    expect(categories.at(0).vm.id).toBe('search')
+    // Visible cateogires - Flags and Activity
+    expect(categories.at(1).vm.name).toBe('Activities')
+    expect(categories.at(1).vm.id).toBe('activity')
+    // only 1 emoji from Activities matches
+    expect(categories.at(1).vm.emojis.length).toBe(1)
+    expect(categories.at(2).vm.name).toBe('Flags')
+    expect(categories.at(2).vm.id).toBe('flags')
+    expect(categories.at(2).vm.emojis.length).toBe(250)
   })
 })
-*/
