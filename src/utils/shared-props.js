@@ -1,113 +1,110 @@
 const EmojiProps = {
   native: {
     type: Boolean,
-    default: false
+    default: false,
   },
   tooltip: {
     type: Boolean,
-    default: false
+    default: false,
   },
   fallback: {
-    type: Function
+    type: Function,
   },
   skin: {
     type: Number,
-    default: 1
+    default: 1,
   },
   set: {
     type: String,
-    default: 'apple'
+    default: 'apple',
   },
   emoji: {
     type: [String, Object],
-    required: true
-  }
+    required: true,
+  },
 }
 
 const PickerProps = {
   perLine: {
     type: Number,
-    default: 9
+    default: 9,
   },
   maxSearchResults: {
     type: Number,
-    default: 75
+    default: 75,
   },
   emojiSize: {
     type: Number,
-    default: 24
+    default: 24,
   },
   title: {
     type: String,
-    default: 'Emoji Mart™'
+    default: 'Emoji Mart™',
   },
   emoji: {
     type: String,
-    default: 'department_store'
+    default: 'department_store',
   },
   color: {
     type: String,
-    default: '#ae65c5'
+    default: '#ae65c5',
   },
   set: {
     type: String,
-    default: 'apple'
+    default: 'apple',
   },
   skin: {
     type: Number,
-    default: null
+    default: null,
   },
   defaultSkin: {
     type: Number,
-    default: 1
+    default: 1,
   },
   native: {
     type: Boolean,
-    default: false
+    default: false,
   },
   emojiTooltip: {
     type: Boolean,
-    default: false
+    default: false,
   },
   autoFocus: {
     type: Boolean,
-    default: false
+    default: false,
   },
   i18n: {
     type: Object,
     default() {
       return {}
-    }
+    },
   },
   showPreview: {
     type: Boolean,
-    default: true
+    default: true,
   },
   showSearch: {
     type: Boolean,
-    default: true
+    default: true,
   },
   showCategories: {
     type: Boolean,
-    default: true
+    default: true,
   },
   showSkinTones: {
     type: Boolean,
-    default: true
+    default: true,
   },
   infiniteScroll: {
     type: Boolean,
-    default: true
+    default: true,
   },
   pickerStyles: {
     type: Object,
     default() {
       return {}
-    }
-  }
+    },
+  },
 }
 
-export {
-  EmojiProps,
-  PickerProps
-}
+export { EmojiProps, PickerProps }
