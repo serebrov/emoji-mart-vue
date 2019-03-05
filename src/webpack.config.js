@@ -21,7 +21,9 @@ module.exports = {
       commonjs: 'vue',
       amd: 'vue',
     },
-  }],
+  },
+  /^.*data\/.*\.json$/
+  ],
 
   module: {
     loaders: [
