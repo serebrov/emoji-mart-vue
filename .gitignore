@@ -4,3 +4,4 @@ dist-es/
 stats.json
 report.html
 *.tags
+Session.vim
