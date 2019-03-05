@@ -38,7 +38,7 @@
   </div>
 
   <div class="row">
-    <div>Custom templates example</div>
+    <div>Custom Search And Preview Templates Example</div>
     <Picker :native="true">
         <template slot="searchTemplate" slot-scope="slotProps">
           <input type="text" 
