@@ -164,7 +164,9 @@ export class EmojiIndex {
           category.emojis.push(emoji)
         }
       })
-      this._categories.push(category)
+      if (category.emojis.length) {
+        this._categories.push(category)
+      }
     })
 
     if (this.isCategoryNeeded('custom')) {
@@ -173,7 +175,9 @@ export class EmojiIndex {
           this.addCustomEmoji(customEmoji)
         }
       }
-      this._categories.push(this._customCategory)
+      if (this._customCategory.emojis.length) {
+        this._categories.push(this._customCategory)
+      }
     }
 
     if (this.isCategoryNeeded('recent')) {
@@ -192,7 +196,9 @@ export class EmojiIndex {
         })
       }
       // Add recent category to the top
-      this._categories.unshift(this._recentCategory)
+      if (this._recentCategory.emojis.length) {
+        this._categories.unshift(this._recentCategory)
+      }
     }
   }
 
