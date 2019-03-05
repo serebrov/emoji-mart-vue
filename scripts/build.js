@@ -1,7 +1,6 @@
 var fs = require('fs'),
   emojiLib = require('emojilib'),
-  inflection = require('inflection'),
-  mkdirp = require('mkdirp')
+  inflection = require('inflection')
 
 var { compress } = require('../src/utils/data')
 

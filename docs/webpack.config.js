@@ -1,6 +1,7 @@
 var path = require('path')
 var pack = require('../package.json')
 var webpack = require('webpack')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 var PROD = process.env.NODE_ENV === 'production'
 var TEST = process.env.NODE_ENV === 'test'
@@ -20,19 +21,23 @@ var config = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
         include: [
           path.resolve('src'),
           path.resolve('docs'),
         ],
+        use: {
+          loader: 'babel-loader',
+        }
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
         include: [
           path.resolve('src'),
           path.resolve('docs'),
-        ]
+        ],
+        use: {
+          loader: 'vue-loader',
+        }
       },
       {
         test: /\.css$/,
@@ -40,9 +45,11 @@ var config = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000
+          }
         }
       }
     ],
@@ -56,9 +63,17 @@ var config = {
     new webpack.DefinePlugin({
       EMOJI_DATASOURCE_VERSION: `'${pack.devDependencies['emoji-datasource']}'`,
     }),
+    new VueLoaderPlugin(),
   ],
 
   bail: true,
+
+  mode: 'development',
+  devtool: 'inline-source-map',
+  watch: true,
+  devServer: {
+      inline: true
+  }
 }
 
 module.exports = config

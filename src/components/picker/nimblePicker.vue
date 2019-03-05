@@ -1,7 +1,7 @@
 <template>
 
 <div class="emoji-mart" :style="customStyles">
-  <div class="emoji-mart-bar emoji-mart-anchors" v-if="showCategories">
+  <div class="emoji-mart-bar emoji-mart-bar-anchors" v-if="showCategories">
     <anchors
       :data="data"
       :i18n="mergedI18n"
@@ -79,7 +79,7 @@
         :skin-props="skinProps"
         :on-skin-change="onSkinChange"
   >
-    <div class="emoji-mart-bar emoji-mart-preview" v-if="showPreview">
+    <div class="emoji-mart-bar emoji-mart-bar-preview" v-if="showPreview">
       <preview
         :data="data"
         :title="title"

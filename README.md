@@ -14,6 +14,8 @@ Major changes are:
 * Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
 * Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
 * Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
+* Updated to babel 7
+* Added tests
 
 It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#4.0.0.` (check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
 
@@ -38,13 +40,13 @@ Check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases
 ### Picker
 
 ```js
-import { Picker } from "emoji-mart-vue";
+import { Picker } from 'emoji-mart-vue'
 ```
 
 Import CSS with default styles:
 
 ```js
-import "emoji-mart-vue/css/emoji-mart.css";
+import 'emoji-mart-vue/css/emoji-mart.css'
 ```
 
 Note: to have a custom look for the picker, either use own css file without including the standard one or add custom styles on top of standard.
@@ -143,9 +145,9 @@ While all sets are available by default, you may want to include only a single s
 To use these data files (or any other custom data), use the `NimblePicker` component:
 
 ```js
-import data from "emoji-mart-vue/data/messenger.json";
-import { NimblePicker, EmojiIndex } from "emoji-mart-vue";
-let index = new EmojiIndex(data);
+import data from 'emoji-mart-vue/data/messenger.json'
+import { NimblePicker, EmojiIndex } from 'emoji-mart-vue'
+let index = new EmojiIndex(data)
 ```
 
 ```html
@@ -170,34 +172,34 @@ Avaiable categories are: `people,` `nature,` `foods,` `activity,` `places,` `obj
 For example:
 
 ```js
-import data from "emoji-mart-vue/data/messenger.json";
-import { NimblePicker, EmojiIndex } from "emoji-mart-vue";
+import data from 'emoji-mart-vue/data/messenger.json'
+import { NimblePicker, EmojiIndex } from 'emoji-mart-vue'
 
 let emojisToShowFilter = function(emoji) {
 	// check the emoji properties, see the examples of emoji object below
-	return true; // return true to include or false to exclude
-};
-let include = ["people", "nature"];
+	return true // return true to include or false to exclude
+}
+let include = ['people', 'nature']
 // or exclude:
 // let exclude = ['flags']
 
 const custom = [
 	{
-		name: "Octocat",
-		short_names: ["octocat"],
-		text: "",
+		name: 'Octocat',
+		short_names: ['octocat'],
+		text: '',
 		emoticons: [],
-		keywords: ["github"],
-		imageUrl: "https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7"
-	}
-];
+		keywords: ['github'],
+		imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7',
+	},
+]
 
 let index = new EmojiIndex(data, {
 	emojisToShowFilter,
 	include,
 	exclude,
-	custom
-});
+	custom,
+})
 ```
 
 #### Examples of `emoji` object:
@@ -240,7 +242,7 @@ let index = new EmojiIndex(data, {
 ### Emoji
 
 ```js
-import { Emoji } from "emoji-mart-vue";
+import { Emoji } from 'emoji-mart-vue'
 ```
 
 ```html
@@ -275,7 +277,7 @@ To have the component render `:shrug:` you would need to:
 
 ```js
 function emojiFallback(emoji) {
-	return `:${emoji.short_names[0]}:`;
+	return `:${emoji.short_names[0]}:`
 }
 ```
 
@@ -293,22 +295,22 @@ function emojiFallback(emoji) {
 The `Picker` doesn’t have to be mounted for you to take advantage of the advanced search results.
 
 ```js
-import { EmojiIndex } from "emoji-mart-vue";
-import data from "emoji-mart-vue/data/all.json";
+import { EmojiIndex } from 'emoji-mart-vue'
+import data from 'emoji-mart-vue/data/all.json'
 
-const emojiIndex = new EmojiIndex(data);
-emojiIndex.search("christmas").map(o => o.native);
+const emojiIndex = new EmojiIndex(data)
+emojiIndex.search('christmas').map((o) => o.native)
 // => [🎄, 🎅🏼, 🔔, 🎁, ⛄️, ❄️]
 ```
 
 ### With custom data
 
 ```js
-import data from "emoji-mart-vue/data/messenger";
-import { EmojiIndex } from "emoji-mart-vue";
+import data from 'emoji-mart-vue/data/messenger'
+import { EmojiIndex } from 'emoji-mart-vue'
 
-let emojiIndex = new EmojiIndex(data);
-emojiIndex.search("christmas");
+let emojiIndex = new EmojiIndex(data)
+emojiIndex.search('christmas')
 ```
 
 ## Storage
@@ -316,17 +318,17 @@ emojiIndex.search("christmas");
 By default EmojiMart will store user chosen skin and frequently used emojis in `localStorage`. That can however be overwritten should you want to store these in your own storage.
 
 ```js
-import { store } from "emoji-mart-vue";
+import { store } from 'emoji-mart-vue'
 
 store.setHandlers({
-	getter: key => {
+	getter: (key) => {
 		// Get from your own storage (sync)
 	},
 
 	setter: (key, value) => {
 		// Persist in your own storage (can be async)
-	}
-});
+	},
+})
 ```
 
 Possible keys are:
@@ -407,6 +409,12 @@ hpx http-server ./docs
 ```
 
 And open [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
+
+## Tests
+
+Run tests with `npm run jest`.
+
+To debug tests, run `npm run jest-debug` and then open `chrome://inspect` in Chrome and open the node inspector client from there.
 
 ## Building
 

@@ -38,7 +38,9 @@
   </div>
 
   <div class="row">
-    <div>Custom templates example</div>
+  </div>
+  <div class="row">
+    <div>Custom Search And Preview Templates Example</div>
     <Picker :native="true">
         <template slot="searchTemplate" slot-scope="slotProps">
           <input type="text" 
@@ -69,12 +71,16 @@
         </template>
     </Picker>
   </div>
+
+  <div class="row">
+    <div>Filtered picker example</div>
+    <NimblePicker :native="true" emoji="flag-tf" :data="indexFiltered"/>
+  </div>
 </div>
 
 </template>
 
 <script>
-
 import data from '../data/all.json'
 import { Picker, NimblePicker, NimbleEmoji, Emoji, EmojiIndex } from '../src'
 import '../css/emoji-mart.css'
@@ -97,15 +103,25 @@ const CUSTOM_EMOJIS = [
     short_names: ['shipit', 'squirrel'],
     keywords: ['github'],
     imageUrl: 'https://github.githubassets.com/images/icons/emoji/shipit.png'
-  },
+  }
 ]
 
-let index = new EmojiIndex(data, { custom: CUSTOM_EMOJIS } )
+let index = new EmojiIndex(data, {
+  custom: CUSTOM_EMOJIS
+})
+
+let indexFiltered = new EmojiIndex(data, {
+  custom: CUSTOM_EMOJIS,
+  emojisToShowFilter: emoji => {
+    return emoji.short_names[0].match(/^flag.*/) !== null
+  }
+})
 
 export default {
   data() {
     return {
       index: index,
+      indexFiltered: indexFiltered,
       activeSet: 'native',
       emoji: 'point_up',
       title: 'Pick your emoji…',
@@ -114,12 +130,12 @@ export default {
     }
   },
   computed: {
-    native () {
+    native() {
       return this.activeSet == 'native'
     },
-    smile () {
+    smile() {
       // Static emoji example
-      let emoji = index.findEmoji(":smile:")
+      let emoji = index.findEmoji(':smile:')
       // Note, that position in the emoji sheet is calculated by
       // `emoji` object
       let style = `background-position: ${emoji.getPosition()}; background-image: url(https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5200%`
@@ -127,7 +143,6 @@ export default {
     }
   },
   methods: {
-
     toggleVisible() {
       this.isVisible = !this.isVisible
     }
@@ -139,16 +154,16 @@ export default {
     NimbleEmoji
   }
 }
-
 </script>
 
 <style scoped>
-
-button + button { margin-left: .5em }
+button + button {
+  margin-left: 0.5em;
+}
 button {
-  padding: .4em .6em;
+  padding: 0.4em 0.6em;
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, .1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
   outline: 0;
   cursor: pointer;
@@ -179,5 +194,4 @@ h1 {
 .emoji-mart-title-label {
   font-size: 21px;
 }
-
 </style>
