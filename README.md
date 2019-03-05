@@ -14,6 +14,8 @@ Major changes are:
 * Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
 * Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
 * Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
+* Updated to babel 7
+* Added tests
 
 It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#4.0.0.` (check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
 
@@ -188,15 +190,15 @@ const custom = [
 		text: '',
 		emoticons: [],
 		keywords: ['github'],
-		imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
-	}
+		imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7',
+	},
 ]
 
 let index = new EmojiIndex(data, {
 	emojisToShowFilter,
 	include,
 	exclude,
-	custom
+	custom,
 })
 ```
 
@@ -297,7 +299,7 @@ import { EmojiIndex } from 'emoji-mart-vue'
 import data from 'emoji-mart-vue/data/all.json'
 
 const emojiIndex = new EmojiIndex(data)
-emojiIndex.search('christmas').map(o => o.native)
+emojiIndex.search('christmas').map((o) => o.native)
 // => [🎄, 🎅🏼, 🔔, 🎁, ⛄️, ❄️]
 ```
 
@@ -319,13 +321,13 @@ By default EmojiMart will store user chosen skin and frequently used emojis in `
 import { store } from 'emoji-mart-vue'
 
 store.setHandlers({
-	getter: key => {
+	getter: (key) => {
 		// Get from your own storage (sync)
 	},
 
 	setter: (key, value) => {
 		// Persist in your own storage (can be async)
-	}
+	},
 })
 ```
 
