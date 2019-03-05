@@ -13169,7 +13169,7 @@ var render = function() {
           attrs: { "data-title": _vm.i18n.categories[category.id] },
           on: {
             click: function($event) {
-              return _vm.$emit("click", category)
+              _vm.$emit("click", category)
             }
           }
         },
@@ -13182,8 +13182,7 @@ var render = function() {
           })
         ]
       )
-    }),
-    0
+    })
   )
 }
 var staticRenderFns = []
@@ -14176,14 +14175,13 @@ var render = function() {
             class: "emoji-mart-skin emoji-mart-skin-tone-" + skinTone,
             on: {
               click: function($event) {
-                return _vm.onClick(skinTone)
+                _vm.onClick(skinTone)
               }
             }
           })
         ]
       )
-    }),
-    0
+    })
   )
 }
 var staticRenderFns = []
@@ -14246,8 +14244,7 @@ var render = function() {
                     },
                     [_vm._v(":" + _vm._s(shortName) + ":")]
                   )
-                }),
-                0
+                })
               ),
               _vm._v(" "),
               _c(
@@ -14262,8 +14259,7 @@ var render = function() {
                     },
                     [_vm._v(_vm._s(emoticon))]
                   )
-                }),
-                0
+                })
               )
             ])
           ]
@@ -14300,7 +14296,7 @@ var render = function() {
                       attrs: { skin: _vm.skinProps.skin },
                       on: {
                         change: function($event) {
-                          return _vm.onSkinChange($event)
+                          _vm.onSkinChange($event)
                         }
                       }
                     })
@@ -16853,7 +16849,7 @@ var render = function() {
                     attrs: { type: "text", placeholder: slotProps.i18n.search },
                     on: {
                       input: function($event) {
-                        return slotProps.onSearch($event.target.value)
+                        slotProps.onSearch($event.target.value)
                       }
                     }
                   })

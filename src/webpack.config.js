@@ -22,7 +22,9 @@ module.exports = Object.assign({
       commonjs: 'vue',
       amd: 'vue',
     },
-  }],
+  },
+  /^.*data\/.*\.json$/
+  ],
 
   module: {
     rules: [ {
