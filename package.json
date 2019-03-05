@@ -7,12 +7,7 @@
     "type": "git",
     "url": "git@github.com:jm-david/emoji-mart-vue.git"
   },
-  "keywords": [
-    "vue",
-    "vuejs",
-    "emoji",
-    "picker"
-  ],
+  "keywords": ["vue", "vuejs", "emoji", "picker"],
   "author": "Etienne Lemay",
   "license": "BSD-3-Clause",
   "bugs": {
@@ -63,11 +58,14 @@
     "clean": "rm -rf dist/",
     "build:data": "node scripts/build-data",
     "build:dist": "webpack --config src/webpack.config.js",
+    "build:dist-stats":
+      "webpack --config src/webpack.config.js --profile --json > stats.json",
     "build:docs": "webpack --config docs/webpack.config.js",
     "build": "npm run clean && npm run build:data && npm run build:dist",
     "dev:docs": "webpack -w --config docs/webpack.config.js",
     "start": "npm run dev:docs",
-    "stats": "webpack --config ./spec/webpack.config.js --json > spec/stats.json",
+    "stats":
+      "webpack --config ./spec/webpack.config.js --json > spec/stats.json",
     "test": "NODE_ENV=test karma start && size-limit",
     "prepublishOnly": "npm run build",
     "prettier": "prettier --write \"{src,spec}/**/*.js\""
@@ -83,9 +81,5 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "last 3 version",
-    "IE >= 11",
-    "iOS >= 9"
-  ]
+  "browserslist": ["last 3 version", "IE >= 11", "iOS >= 9"]
 }
