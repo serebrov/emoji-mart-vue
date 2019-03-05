@@ -38,7 +38,7 @@
     "jest-serializer-vue": "^2.0.2",
     "jest-transform-stub": "^2.0.0",
     "postcss-loader": "^3.0.0",
-    "prettier": "1.11.1",
+    "prettier": "1.16.4",
     "size-limit": "^0.11.4",
     "url-loader": "^0.5.8",
     "vue": "^2.5.18",
@@ -65,34 +65,27 @@
     "size-limit": "size-limit",
     "test": "NODE_ENV=test jest && size-limit",
     "jest": "jest --detectOpenHandles --forceExit",
-    "jest-debug": "node --inspect=0.0.0.0:9230 --inspect-brk node_modules/.bin/jest --runInBand",
+    "jest-debug":
+      "node --inspect=0.0.0.0:9230 --inspect-brk node_modules/.bin/jest --runInBand",
     "jest-clear": "jest --clearCache",
     "prepublishOnly": "npm run build",
+    "prettier-check": "prettier --check \"{src,spec}/**/*.js\"",
     "prettier": "prettier --write \"{src,spec}/**/*.js\""
   },
   "jest": {
-    "testMatch": [
-      "**/spec/*-spec.+(ts|tsx|js)"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "vue"
-    ],
-    "snapshotSerializers": [
-      "jest-serializer-vue"
-    ],
+    "testMatch": ["**/spec/*-spec.+(ts|tsx|js)"],
+    "moduleFileExtensions": ["js", "vue"],
+    "snapshotSerializers": ["jest-serializer-vue"],
     "transform": {
       ".+\\.vue$": "vue-jest",
       ".+\\.jsx?$": "babel-jest",
-      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$":
+        "jest-transform-stub"
     },
     "moduleNameMapper": {
       ".+\\.css$": "<rootDir>/spec/css-stub.js"
     },
-    "transformIgnorePatterns": [
-      "^.+\\.css$",
-      "<rootDir>/node_modules/"
-    ]
+    "transformIgnorePatterns": ["^.+\\.css$", "<rootDir>/node_modules/"]
   },
   "size-limit": [
     {
