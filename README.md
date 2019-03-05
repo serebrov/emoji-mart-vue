@@ -6,16 +6,18 @@ This was the reason to fork and change it, the demo is [here](https://serebrov.g
 
 Major changes are:
 
-* Reworked emoji index class: use same index (so same data) for all components.
-* Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories
-* Render emojis in categories without `NimbleEmoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
-* Frozen objects with emoji data to disable Vue change tracking
-* Do not create `NimbleEmojiIndex` globally, as it was loaded (along with the emoji data) even when not used
-* Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
-* Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
-* Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
-* Updated to babel 7
-* Added tests
+- Reworked emoji index class: use same index (so same data) for all components.
+- Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories
+- Render emojis in categories without `NimbleEmoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
+- Frozen objects with emoji data to disable Vue change tracking
+- Do not create `NimbleEmojiIndex` globally, as it was loaded (along with the emoji data) even when not used
+- Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
+- Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
+- Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
+- Updated to babel 7
+- Added tests
+
+[![Build Status](https://travis-ci.org/serebrov/emoji-mart-vue.svg?branch=master)](https://travis-ci.org/serebrov/emoji-mart-vue)
 
 It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#4.0.0.` (check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
 
@@ -65,7 +67,9 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 <picker @select="addEmoji" />
 <picker title="Pick your emoji…" emoji="point_up" />
 <picker :style="{ position: 'absolute', bottom: '20px', right: '20px' }" />
-<picker :i18n="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }" />
+<picker
+	:i18n="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }"
+/>
 ```
 
 | Prop               | Required | Default            | Description                                                                                          |
@@ -282,12 +286,7 @@ function emojiFallback(emoji) {
 ```
 
 ```html
-<emoji
-  set="messenger"
-  emoji="shrug"
-  :size="24"
-  :fallback="emojiFallback"
-/>
+<emoji set="messenger" emoji="shrug" :size="24" :fallback="emojiFallback" />
 ```
 
 ## Headless search
