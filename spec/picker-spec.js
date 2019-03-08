@@ -114,3 +114,24 @@ describe('emjois skin', () => {
     expect(emojiData.native).toBe('👍🏿')
   })
 })
+
+describe('emjoi tooltip', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+    },
+  })
+
+  it('emoji title is set to emoji id when emojiTooltip is true', () => {
+    picker.setProps({ emojiTooltip: true })
+    let emoji = picker.find('[data-title="+1"]')
+    expect(emoji.element.title).toBe('+1')
+  })
+
+  it('emoji title is not set when emojiTooltip is false', () => {
+    picker.setProps({ emojiTooltip: false })
+    let emoji = picker.find('[data-title="+1"]')
+    expect(emoji.element.title).toBe('')
+  })
+})
