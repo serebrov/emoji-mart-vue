@@ -6,4 +6,5 @@ services:
 script:
   - docker build -t emoji-mart-vue:latest .
   - docker run emoji-mart-vue:latest npm run prettier-check
+  # The CODECOV_TOKEN is in travis repository settings
   - docker run emoji-mart-vue:latest bash -c "npm run jest && codecov -t $CODECOV_TOKEN"
