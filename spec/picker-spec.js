@@ -135,3 +135,26 @@ describe('emjoi tooltip', () => {
     expect(emoji.element.title).toBe('')
   })
 })
+
+describe('emjoi preview', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+      emoji: 'point_up',
+    },
+  })
+
+  it('preview shows point_up when no emoji is hovered', () => {
+    let emoji = picker.find(Preview).find(NimbleEmoji)
+    expect(emoji.vm.emojiObject.id).toBe('point_up')
+  })
+
+  it('preview shows the hovered emoji', () => {
+    let emoji = picker.find('[data-title="+1"]')
+    emoji.trigger('mouseenter')
+
+    let previewEmoji = picker.find(Preview).find(NimbleEmoji)
+    expect(previewEmoji.vm.emojiObject.id).toBe('+1')
+  })
+})
