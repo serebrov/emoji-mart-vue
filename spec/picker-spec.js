@@ -8,6 +8,7 @@ import {
   NimblePicker,
   Category,
   Preview,
+  Search,
   NimbleEmoji,
 } from '../src/components'
 
@@ -96,7 +97,6 @@ describe('anchors', () => {
   it('contain all categories', () => {
     let anchors = picker.find(Anchors)
     let categories = anchors.findAll('span.emoji-mart-anchor')
-    debugger
     let names = []
     for (let idx = 0; idx < categories.length; idx++) {
       names.push(categories.at(idx).element.attributes['data-title'].value)
@@ -204,5 +204,34 @@ describe('emjoi preview', () => {
 
     let previewEmoji = picker.find(Preview).find(NimbleEmoji)
     expect(previewEmoji.vm.emojiObject.id).toBe('+1')
+  })
+})
+
+describe('search', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+      skin: 6,
+    },
+  })
+
+  it('emoji can be filtered via search', (done) => {
+    let search = picker.find(Search)
+    let input = search.find('input')
+    input.element.value = '+1'
+    input.trigger('input')
+
+    picker.vm.$nextTick(() => {
+      let categories = picker.findAll(Category)
+      let searchCategory = categories.at(0)
+      expect(searchCategory.vm.id).toBe('search')
+      expect(searchCategory.vm.emojiObjects.length).toBe(1)
+      expect(searchCategory.vm.emojiObjects[0].emojiObject).toEqual(
+        index.emoji('+1'),
+      )
+
+      done()
+    })
   })
 })
