@@ -2,7 +2,15 @@ import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
-import { Picker, NimblePicker, Category } from '../src/components'
+import {
+  Anchors,
+  Picker,
+  NimblePicker,
+  Category,
+  Preview,
+  Search,
+  NimbleEmoji,
+} from '../src/components'
 
 describe('Picker', () => {
   const picker = mount(Picker)
@@ -68,6 +76,46 @@ describe('categories', () => {
   })
 })
 
+describe('anchors', () => {
+  let index = new EmojiIndex(data, {
+    custom: [
+      {
+        name: 'Octocat',
+        short_names: ['octocat'],
+        keywords: ['github'],
+        imageUrl:
+          'https://github.githubassets.com/images/icons/emoji/octocat.png',
+      },
+    ],
+  })
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+    },
+  })
+
+  it('contain all categories', () => {
+    let anchors = picker.find(Anchors)
+    let categories = anchors.findAll('span.emoji-mart-anchor')
+    let names = []
+    for (let idx = 0; idx < categories.length; idx++) {
+      names.push(categories.at(idx).element.attributes['data-title'].value)
+    }
+    expect(names).toEqual([
+      'Frequently Used',
+      'Smileys & People',
+      'Animals & Nature',
+      'Food & Drink',
+      'Activity',
+      'Travel & Places',
+      'Objects',
+      'Symbols',
+      'Flags',
+      'Custom',
+    ])
+  })
+})
+
 describe('emjois', () => {
   let index = new EmojiIndex(data)
   const picker = mount(NimblePicker, {
@@ -112,5 +160,78 @@ describe('emjois skin', () => {
     expect(emojiData.name).toBe('Thumbs Up Sign')
     expect(emojiData.colons).toBe(':+1:')
     expect(emojiData.native).toBe('👍🏿')
+  })
+})
+
+describe('emjoi tooltip', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+    },
+  })
+
+  it('emoji title is set to emoji id when emojiTooltip is true', () => {
+    picker.setProps({ emojiTooltip: true })
+    let emoji = picker.find('[data-title="+1"]')
+    expect(emoji.element.title).toBe('+1')
+  })
+
+  it('emoji title is not set when emojiTooltip is false', () => {
+    picker.setProps({ emojiTooltip: false })
+    let emoji = picker.find('[data-title="+1"]')
+    expect(emoji.element.title).toBe('')
+  })
+})
+
+describe('emjoi preview', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+      emoji: 'point_up',
+    },
+  })
+
+  it('preview shows point_up when no emoji is hovered', () => {
+    let emoji = picker.find(Preview).find(NimbleEmoji)
+    expect(emoji.vm.emojiObject.id).toBe('point_up')
+  })
+
+  it('preview shows the hovered emoji', () => {
+    let emoji = picker.find('[data-title="+1"]')
+    emoji.trigger('mouseenter')
+
+    let previewEmoji = picker.find(Preview).find(NimbleEmoji)
+    expect(previewEmoji.vm.emojiObject.id).toBe('+1')
+  })
+})
+
+describe('search', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+      skin: 6,
+    },
+  })
+
+  it('emoji can be filtered via search', (done) => {
+    let search = picker.find(Search)
+    let input = search.find('input')
+    input.element.value = '+1'
+    input.trigger('input')
+
+    picker.vm.$nextTick(() => {
+      let categories = picker.findAll(Category)
+      let searchCategory = categories.at(0)
+      expect(searchCategory.vm.id).toBe('search')
+      expect(searchCategory.vm.emojiObjects.length).toBe(1)
+      expect(searchCategory.vm.emojiObjects[0].emojiObject).toEqual(
+        index.emoji('+1'),
+      )
+
+      done()
+    })
   })
 })
