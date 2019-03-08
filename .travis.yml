@@ -6,4 +6,4 @@ services:
 script:
   - docker build -t emoji-mart-vue:latest .
   - docker run emoji-mart-vue:latest npm run prettier-check
-  - docker run emoji-mart-vue:latest bash -c "npm run jest && codecov"
+  - docker run emoji-mart-vue:latest bash -c "npm run jest && codecov -t $CODECOV_TOKEN"
