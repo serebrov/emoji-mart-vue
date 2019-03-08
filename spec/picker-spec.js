@@ -2,7 +2,14 @@ import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
-import { Picker, NimblePicker, Category } from '../src/components'
+import {
+  Anchors,
+  Picker,
+  NimblePicker,
+  Category,
+  Preview,
+  NimbleEmoji,
+} from '../src/components'
 
 describe('Picker', () => {
   const picker = mount(Picker)
@@ -65,6 +72,47 @@ describe('categories', () => {
     expect(categories.at(2).vm.name).toBe('Flags')
     expect(categories.at(2).vm.id).toBe('flags')
     expect(categories.at(2).vm.emojis.length).toBe(250)
+  })
+})
+
+describe('anchors', () => {
+  let index = new EmojiIndex(data, {
+    custom: [
+      {
+        name: 'Octocat',
+        short_names: ['octocat'],
+        keywords: ['github'],
+        imageUrl:
+          'https://github.githubassets.com/images/icons/emoji/octocat.png',
+      },
+    ],
+  })
+  const picker = mount(NimblePicker, {
+    propsData: {
+      data: index,
+    },
+  })
+
+  it('contain all categories', () => {
+    let anchors = picker.find(Anchors)
+    let categories = anchors.findAll('span.emoji-mart-anchor')
+    debugger
+    let names = []
+    for (let idx = 0; idx < categories.length; idx++) {
+      names.push(categories.at(idx).element.attributes['data-title'].value)
+    }
+    expect(names).toEqual([
+      'Frequently Used',
+      'Smileys & People',
+      'Animals & Nature',
+      'Food & Drink',
+      'Activity',
+      'Travel & Places',
+      'Objects',
+      'Symbols',
+      'Flags',
+      'Custom',
+    ])
   })
 })
 
