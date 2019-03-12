@@ -153,6 +153,7 @@ export default {
     },
     emojiProps() {
       return {
+        emojiSize: this.emojiSize,
         native: this.native,
         skin: this.activeSkin,
         set: this.set,

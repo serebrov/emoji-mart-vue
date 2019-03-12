@@ -85,6 +85,13 @@ export default {
             this.emojiProps.fallback,
             this.emojiProps.emojiTooltip
           )
+          Object.assign(
+            emojiView.cssStyle,
+            {
+              width: this.emojiProps.emojiSize + 'px',
+              height: this.emojiProps.emojiSize + 'px',
+            }
+          )
           return { emojiObject, emojiView }
       })
     }
