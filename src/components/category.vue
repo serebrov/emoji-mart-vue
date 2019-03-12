@@ -89,7 +89,8 @@ export default {
             emojiView.cssStyle,
             {
               width: this.emojiProps.emojiSize + 'px',
-              height: this.emojiProps.emojiSize + 'px'
+              height: this.emojiProps.emojiSize + 'px',
+              fontSize: this.emojiProps.emojiSize + 'px'
             }
           )
           return { emojiObject, emojiView }
