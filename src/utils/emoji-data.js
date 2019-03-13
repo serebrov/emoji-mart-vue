@@ -470,8 +470,8 @@ export class Emoji {
 
   getPosition() {
     let multiply = 100 / (SHEET_COLUMNS - 1),
-      x = multiply * this._data.sheet_x,
-      y = multiply * this._data.sheet_y
+      x = Math.round(multiply * this._data.sheet_x * 100) / 100,
+      y = Math.round(multiply * this._data.sheet_y * 100) / 100
     return `${x}% ${y}%`
   }
 }
@@ -535,7 +535,7 @@ export class EmojiView {
         // font-size is used for native emoji which we need
         // to scale with 0.8 factor to have them look approximately
         // the same size as image-based emojl.
-        fontSize: emojiSize * 0.8 + 'px',
+        fontSize: Math.round(emojiSize * 0.8 * 10) / 10 + 'px',
       })
     }
     return cssStyle
