@@ -85,7 +85,13 @@
     "moduleNameMapper": {
       ".+\\.css$": "<rootDir>/spec/css-stub.js"
     },
-    "transformIgnorePatterns": ["^.+\\.css$", "<rootDir>/node_modules/"]
+    "transformIgnorePatterns": ["^.+\\.css$", "<rootDir>/node_modules/"],
+    "collectCoverageFrom": [
+      "src/**",
+      "!src/vendor/**",
+      "!src/polyfills/**",
+      "!src/webpack.config.js"
+    ]
   },
   "size-limit": [
     {
