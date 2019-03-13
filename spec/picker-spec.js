@@ -161,6 +161,7 @@ describe('emjois skin', () => {
     expect(emojiData.colons).toBe(':+1:')
     expect(emojiData.native).toBe('👍🏿')
   })
+
 })
 
 describe('emjoi tooltip', () => {
