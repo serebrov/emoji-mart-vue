@@ -532,6 +532,9 @@ export class EmojiView {
       cssStyle = Object.assign(cssStyle, {
         width: emojiSize + 'px',
         height: emojiSize + 'px',
+        // font-size is used for native emoji which we need
+        // to scale with 0.8 factor to have them look approximately
+        // the same size as image-based emojl.
         fontSize: emojiSize * 0.8 + 'px',
       })
     }
