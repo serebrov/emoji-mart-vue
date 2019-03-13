@@ -79,7 +79,7 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 | **autoFocus**      |          | `false`            | Auto focus the search input when mounted                                                             |
 | **color**          |          | `#ae65c5`          | The top bar anchors select and hover color                                                           |
 | **emoji**          |          | `department_store` | The emoji shown when no emojis are hovered, set to an empty string to show nothing                   |
-| **emojiSize**      |          | `24`               | The emoji width and height; also affects font size for native emoji (it is 80% of emojiSize); also the picker width is cacluated dynamically based on emojiSize |
+| **emojiSize**      |          | `24`               | The emoji width and height; affects font size for native emoji (it is 80% of emojiSize); also the picker width is cacluated dynamically based on emojiSize |
 | **perLine**        |          | `9`                | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. |
 | **i18n**           |          | [`{…}`](#i18n)     | [An object](#i18n) containing localized strings                                                      |
 | **native**         |          | `false`            | Renders the native unicode emoji                                                                     |
