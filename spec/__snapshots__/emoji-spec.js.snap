@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Emoji native renders correctly native emoji 1`] = `
+<span
+  class="emoji-mart-emoji"
+>
+  <span
+    class="emoji-set-apple emoji-type-native"
+  >
+    ☝️
+  </span>
+</span>
+`;
+
 exports[`Emoji renders correctly 1`] = `
 <span
   class="emoji-mart-emoji"
