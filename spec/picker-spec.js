@@ -8,7 +8,6 @@ import {
   NimblePicker,
   Category,
   Preview,
-  Search,
   NimbleEmoji,
 } from '../src/components'
 
@@ -274,34 +273,5 @@ describe('emjoiSize', () => {
     expect(emojiSpan.style.cssText).toBe(
       'background-position: 27.45% 96.08%; font-size: 16px;',
     )
-  })
-})
-
-describe('search', () => {
-  let index = new EmojiIndex(data)
-  const picker = mount(NimblePicker, {
-    propsData: {
-      data: index,
-      skin: 6,
-    },
-  })
-
-  it('emoji can be filtered via search', (done) => {
-    let search = picker.find(Search)
-    let input = search.find('input')
-    input.element.value = '+1'
-    input.trigger('input')
-
-    picker.vm.$nextTick(() => {
-      let categories = picker.findAll(Category)
-      let searchCategory = categories.at(0)
-      expect(searchCategory.vm.id).toBe('search')
-      expect(searchCategory.vm.emojiObjects.length).toBe(1)
-      expect(searchCategory.vm.emojiObjects[0].emojiObject).toEqual(
-        index.emoji('+1'),
-      )
-
-      done()
-    })
   })
 })
