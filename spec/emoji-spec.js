@@ -45,6 +45,30 @@ describe('Emoji', () => {
       unified: '261d-fe0f',
     })
   })
+
+  it('emits click event', () => {
+    emoji.trigger('click')
+    let events = emoji.emitted().click
+    expect(events.length).toBe(1)
+    let emojiData = events[0][0]
+    expect(emojiData).toEqual(index.emoji('point_up'))
+  })
+
+  it('emits mouseenter event', () => {
+    emoji.trigger('mouseenter')
+    let events = emoji.emitted().click
+    expect(events.length).toBe(1)
+    let emojiData = events[0][0]
+    expect(emojiData).toEqual(index.emoji('point_up'))
+  })
+
+  it('emits mouseleave event', () => {
+    emoji.trigger('mouseleave')
+    let events = emoji.emitted().click
+    expect(events.length).toBe(1)
+    let emojiData = events[0][0]
+    expect(emojiData).toEqual(index.emoji('point_up'))
+  })
 })
 
 describe('Emoji native', () => {
