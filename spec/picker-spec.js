@@ -207,6 +207,52 @@ describe('emjoi preview', () => {
   })
 })
 
+describe('emjoiSize', () => {
+  const picker = mount(Picker)
+
+  it('default emojiSize is 24', () => {
+    let emoji = picker.find('[data-title="+1"]')
+    // The inner span with applied inline style.
+    let emojiSpan = emoji.element.childNodes[0]
+    expect(emojiSpan.style['width']).toBe('24px')
+    expect(emojiSpan.style.cssText).toBe(
+      'background-position: 27.45% 96.08%; width: 24px; height: 24px;',
+    )
+  })
+
+  it('emojiSize can be changed', () => {
+    picker.setProps({ emojiSize: 20 })
+    let emoji = picker.find('[data-title="+1"]')
+    // The inner span with applied inline style.
+    let emojiSpan = emoji.element.childNodes[0]
+    expect(emojiSpan.style.cssText).toBe(
+      'background-position: 27.45% 96.08%; width: 20px; height: 20px;',
+    )
+  })
+
+  it('native emoji font size is 19.2px by default', () => {
+    picker.setProps({ emojiSize: 24, native: true })
+    let emoji = picker.find('[data-title="+1"]')
+    // The inner span with applied inline style.
+    let emojiSpan = emoji.element.childNodes[0]
+    // Font-size is 80% of width/height value.
+    expect(emojiSpan.style.cssText).toBe(
+      'background-position: 27.45% 96.08%; font-size: 19.2px;',
+    )
+  })
+
+  it('native emoji font size is smaller when emojiSize is smaller', () => {
+    picker.setProps({ emojiSize: 20, native: true })
+    let emoji = picker.find('[data-title="+1"]')
+    // The inner span with applied inline style.
+    let emojiSpan = emoji.element.childNodes[0]
+    // Font-size is 80% of width/height value.
+    expect(emojiSpan.style.cssText).toBe(
+      'background-position: 27.45% 96.08%; font-size: 16px;',
+    )
+  })
+})
+
 describe('search', () => {
   let index = new EmojiIndex(data)
   const picker = mount(NimblePicker, {
