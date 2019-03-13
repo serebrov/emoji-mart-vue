@@ -101,7 +101,7 @@ describe('anchors', () => {
     },
   })
 
-  it('contain all categories', () => {
+  it('contains all categories', () => {
     let anchors = picker.find(Anchors)
     let categories = anchors.findAll('span.emoji-mart-anchor')
     let names = []
@@ -120,6 +120,23 @@ describe('anchors', () => {
       'Flags',
       'Custom',
     ])
+  })
+
+  it('can be clicked to scroll to the category', () => {
+    let anchors = picker.find(Anchors)
+
+    let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+    let symbols = anchorsCategories.at(7)
+    expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
+
+    symbols.trigger('click')
+    let events = anchors.emitted().click
+    expect(events.length).toBe(1)
+    let category = events[0][0]
+    expect(category.id).toBe('symbols')
+    expect(category.name).toBe('Symbols')
+
+    expect(anchors.vm.activeCategory.id).toBe('symbols')
   })
 })
 
