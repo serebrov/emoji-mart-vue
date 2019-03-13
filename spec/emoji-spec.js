@@ -33,6 +33,18 @@ describe('Emoji', () => {
     expect(emoji.vm.emojiObject).toEqual(expectedEmoji)
     expect(emoji.vm.view).toEqual(expectedView)
   })
+
+  it('has correct sanitized data', () => {
+    expect(emoji.vm.sanitizedData).toEqual({
+      colons: ':point_up:',
+      emoticons: undefined,
+      id: 'point_up',
+      name: 'White Up Pointing Index',
+      native: '☝️',
+      skin: 1,
+      unified: '261d-fe0f',
+    })
+  })
 })
 
 describe('Emoji native', () => {
