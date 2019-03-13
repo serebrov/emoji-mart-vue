@@ -56,4 +56,24 @@ describe('Emoji native', () => {
   })
 })
 
+describe('Emoji title', () => {
+  const emoji = mount(Emoji, {
+    propsData: {
+      emoji: 'point_up',
+    },
+  })
+
+  it('has no title by default', () => {
+    expect(emoji.vm.title).toBe(null)
+  })
+
+  it('has short name as a title if tooltip property is set to true', () => {
+    emoji.setProps({ tooltip: true })
+    expect(emoji.vm.title).toBe('point_up')
+  })
+
+  it('does not have title if tooltop property is set to false', () => {
+    emoji.setProps({ tooltip: false })
+    expect(emoji.vm.title).toBe(null)
+  })
 })
