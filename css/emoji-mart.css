@@ -26,8 +26,6 @@
 
 .emoji-mart .emoji-mart-emoji span {
   display: inline-block;
-  width: 24px;
-  height: 24px;
 }
 
 .emoji-mart .emoji-mart-preview-emoji .emoji-mart-emoji span {
@@ -37,7 +35,6 @@
 }
 
 .emoji-mart .emoji-type-native {
-  font-size: 18px;
   font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "EmojiOne Color", "Android Emoji";
   word-break: keep-all;
 }

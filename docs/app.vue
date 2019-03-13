@@ -74,7 +74,7 @@
 
   <div class="row">
     <div>Filtered picker example</div>
-    <NimblePicker :native="true" emoji="flag-tf" :data="indexFiltered"/>
+    <NimblePicker :native="true" emoji="flag-tf" :emojiSize="18" :data="indexFiltered"/>
   </div>
 </div>
 

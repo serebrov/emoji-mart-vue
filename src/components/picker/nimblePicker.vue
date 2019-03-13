@@ -157,6 +157,7 @@ export default {
         skin: this.activeSkin,
         set: this.set,
         emojiTooltip: this.emojiTooltip,
+        emojiSize: this.emojiSize,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this)
