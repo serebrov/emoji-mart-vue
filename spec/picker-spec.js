@@ -40,7 +40,14 @@ describe('NimblePicker', () => {
   it('shows 5 categories by default', () => {
     // Due to the virtual scroller, not all the categories
     // are rendered at once
-    expect(picker.findAll(Category).length).toBe(5)
+    let categories = picker.findAll(Category)
+    expect(categories.length).toBe(5)
+    // Hidden category with search results
+    expect(categories.at(0).vm.name).toBe('Search')
+    expect(categories.at(1).vm.name).toBe('Recent')
+    expect(categories.at(2).vm.name).toBe('Smileys & People')
+    expect(categories.at(3).vm.name).toBe('Animals & Nature')
+    expect(categories.at(4).vm.name).toBe('Food & Drink')
   })
 })
 
@@ -161,7 +168,6 @@ describe('emjois skin', () => {
     expect(emojiData.colons).toBe(':+1:')
     expect(emojiData.native).toBe('👍🏿')
   })
-
 })
 
 describe('emjoi tooltip', () => {
