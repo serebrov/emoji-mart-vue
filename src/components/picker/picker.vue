@@ -1,6 +1,6 @@
 <script>
 
-import data from '../../../data/all.json'
+import data from '../data/all.json'
 import { EmojiIndex } from '../../utils/emoji-data'
 import NimblePicker from './nimblePicker'
 

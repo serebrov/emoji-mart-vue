@@ -1,5 +1,5 @@
 <script>
-import data from '../../../data/all.json'
+import data from '../data/all.json'
 import { uncompress } from '../../utils/data'
 import { EmojiIndex } from '../../utils/emoji-data'
 import NimbleEmoji from './nimbleEmoji'
