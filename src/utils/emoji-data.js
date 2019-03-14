@@ -361,7 +361,7 @@ export class EmojiIndex {
     if (!emojiData.search) {
       emojiData.search = buildSearch(emojiData)
     }
-    let emoji = new Emoji(emojiData)
+    let emoji = new EmojiData(emojiData)
     this._emojis[emoji.id] = emoji
     this._customCategory.emojis.push(emoji)
     return emoji
@@ -375,7 +375,7 @@ export class EmojiIndex {
       return false
     }
 
-    let emoji = new Emoji(data)
+    let emoji = new EmojiData(data)
     this._emojis[emojiId] = emoji
     if (emoji.native) {
       this._nativeEmojis[emoji.native] = emoji
@@ -435,7 +435,7 @@ export class EmojiIndex {
   }
 }
 
-export class Emoji {
+export class EmojiData {
   constructor(data) {
     this._data = Object.assign({}, data)
     this._skins = null
@@ -449,7 +449,7 @@ export class Emoji {
           skinData[k] = variationData[k]
         }
         delete skinData.skin_variations
-        this._skins.push(new Emoji(skinData))
+        this._skins.push(new EmojiData(skinData))
       }
     }
     this._sanitized = sanitize(this._data)
@@ -470,8 +470,8 @@ export class Emoji {
 
   getPosition() {
     let multiply = 100 / (SHEET_COLUMNS - 1),
-      x = multiply * this._data.sheet_x,
-      y = multiply * this._data.sheet_y
+      x = Math.round(multiply * this._data.sheet_x * 100) / 100,
+      y = Math.round(multiply * this._data.sheet_y * 100) / 100
     return `${x}% ${y}%`
   }
 }
@@ -483,8 +483,9 @@ export class EmojiView {
    * native - boolean, whether to render native emoji
    * fallback - fallback function to render missing emoji, optional
    * emojiTooltip - wether we need to show the emoji tooltip, optional
+   * emojiSize - emoji size in pixels, optional
    */
-  constructor(emoji, skin, set, native, fallback, emojiTooltip) {
+  constructor(emoji, skin, set, native, fallback, emojiTooltip, emojiSize) {
     this._emoji = emoji
     this._native = native
     this._skin = skin
@@ -493,7 +494,7 @@ export class EmojiView {
 
     this.canRender = this._canRender()
     this.cssClass = this._cssClass()
-    this.cssStyle = this._cssStyle()
+    this.cssStyle = this._cssStyle(emojiSize)
     this.content = this._content()
     this.title = emojiTooltip === true ? emoji.short_name : null
 
@@ -514,19 +515,37 @@ export class EmojiView {
     return ['emoji-set-' + this._set, 'emoji-type-' + this._emojiType()]
   }
 
-  _cssStyle() {
+  _cssStyle(emojiSize) {
+    let cssStyle = {}
     if (this._isCustom()) {
-      return {
+      cssStyle = {
         backgroundImage: 'url(' + this.getEmoji()._data.imageUrl + ')',
         backgroundSize: '100%',
       }
     }
     if (this._hasEmoji() && !this._isNative()) {
-      return {
+      cssStyle = {
         backgroundPosition: this.getEmoji().getPosition(),
       }
     }
-    return {}
+    if (emojiSize) {
+      if (this._isNative()) {
+        // Set font-size for native emoji.
+        cssStyle = Object.assign(cssStyle, {
+          // font-size is used for native emoji which we need
+          // to scale with 0.8 factor to have them look approximately
+          // the same size as image-based emojl.
+          fontSize: Math.round(emojiSize * 0.8 * 10) / 10 + 'px',
+        })
+      } else {
+        // Set width/height for image emoji.
+        cssStyle = Object.assign(cssStyle, {
+          width: emojiSize + 'px',
+          height: emojiSize + 'px',
+        })
+      }
+    }
+    return cssStyle
   }
 
   _content() {

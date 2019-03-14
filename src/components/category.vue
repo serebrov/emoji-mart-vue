@@ -78,12 +78,13 @@ export default {
       return this.emojis.map((emoji) => {
           let emojiObject = emoji
           let emojiView = new EmojiView(
-            emoji, 
+            emoji,
             this.emojiProps.skin,
             this.emojiProps.set,
             this.emojiProps.native,
             this.emojiProps.fallback,
-            this.emojiProps.emojiTooltip
+            this.emojiProps.emojiTooltip,
+            this.emojiProps.emojiSize,
           )
           return { emojiObject, emojiView }
       })

@@ -19,6 +19,8 @@ Major changes are:
 
 [![Build Status](https://travis-ci.org/serebrov/emoji-mart-vue.svg?branch=master)](https://travis-ci.org/serebrov/emoji-mart-vue)
 
+[![codecov](https://codecov.io/gh/serebrov/emoji-mart-vue/branch/master/graph/badge.svg)](https://codecov.io/gh/serebrov/emoji-mart-vue)
+
 It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#4.0.0.` (check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
 
 > The original project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
@@ -77,7 +79,7 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 | **autoFocus**      |          | `false`            | Auto focus the search input when mounted                                                             |
 | **color**          |          | `#ae65c5`          | The top bar anchors select and hover color                                                           |
 | **emoji**          |          | `department_store` | The emoji shown when no emojis are hovered, set to an empty string to show nothing                   |
-| **emojiSize**      |          | `24`               | The emoji width and height to calculate picker size; set the size for emoji itself via CSS           |
+| **emojiSize**      |          | `24`               | The emoji width and height; affects font size for native emoji (it is 80% of emojiSize); also the picker width is cacluated dynamically based on emojiSize |
 | **perLine**        |          | `9`                | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. |
 | **i18n**           |          | [`{…}`](#i18n)     | [An object](#i18n) containing localized strings                                                      |
 | **native**         |          | `false`            | Renders the native unicode emoji                                                                     |
