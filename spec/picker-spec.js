@@ -8,7 +8,6 @@ import {
   NimblePicker,
   Category,
   Preview,
-  Search,
   NimbleEmoji,
 } from '../src/components'
 
@@ -40,7 +39,14 @@ describe('NimblePicker', () => {
   it('shows 5 categories by default', () => {
     // Due to the virtual scroller, not all the categories
     // are rendered at once
-    expect(picker.findAll(Category).length).toBe(5)
+    let categories = picker.findAll(Category)
+    expect(categories.length).toBe(5)
+    // Hidden category with search results
+    expect(categories.at(0).vm.name).toBe('Search')
+    expect(categories.at(1).vm.name).toBe('Recent')
+    expect(categories.at(2).vm.name).toBe('Smileys & People')
+    expect(categories.at(3).vm.name).toBe('Animals & Nature')
+    expect(categories.at(4).vm.name).toBe('Food & Drink')
   })
 })
 
@@ -94,7 +100,7 @@ describe('anchors', () => {
     },
   })
 
-  it('contain all categories', () => {
+  it('contains all categories', () => {
     let anchors = picker.find(Anchors)
     let categories = anchors.findAll('span.emoji-mart-anchor')
     let names = []
@@ -113,6 +119,23 @@ describe('anchors', () => {
       'Flags',
       'Custom',
     ])
+  })
+
+  it('can be clicked to scroll to the category', () => {
+    let anchors = picker.find(Anchors)
+
+    let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+    let symbols = anchorsCategories.at(7)
+    expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
+
+    symbols.trigger('click')
+    let events = anchors.emitted().click
+    expect(events.length).toBe(1)
+    let category = events[0][0]
+    expect(category.id).toBe('symbols')
+    expect(category.name).toBe('Symbols')
+
+    expect(anchors.vm.activeCategory.id).toBe('symbols')
   })
 })
 
@@ -250,34 +273,5 @@ describe('emjoiSize', () => {
     expect(emojiSpan.style.cssText).toBe(
       'background-position: 27.45% 96.08%; font-size: 16px;',
     )
-  })
-})
-
-describe('search', () => {
-  let index = new EmojiIndex(data)
-  const picker = mount(NimblePicker, {
-    propsData: {
-      data: index,
-      skin: 6,
-    },
-  })
-
-  it('emoji can be filtered via search', (done) => {
-    let search = picker.find(Search)
-    let input = search.find('input')
-    input.element.value = '+1'
-    input.trigger('input')
-
-    picker.vm.$nextTick(() => {
-      let categories = picker.findAll(Category)
-      let searchCategory = categories.at(0)
-      expect(searchCategory.vm.id).toBe('search')
-      expect(searchCategory.vm.emojiObjects.length).toBe(1)
-      expect(searchCategory.vm.emojiObjects[0].emojiObject).toEqual(
-        index.emoji('+1'),
-      )
-
-      done()
-    })
   })
 })

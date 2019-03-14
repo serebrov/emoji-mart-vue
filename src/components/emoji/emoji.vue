@@ -1,7 +1,7 @@
 <script>
-
 import data from '../../../data/all.json'
-import {uncompress} from '../../utils/data'
+import { uncompress } from '../../utils/data'
+import { EmojiIndex } from '../../utils/emoji-data'
 import NimbleEmoji from './nimbleEmoji'
 
 import { EmojiProps } from '../../utils/shared-props'
@@ -13,15 +13,15 @@ export default {
     data: {
       type: Object,
       default() {
-        return uncompress(data)
-      }
-    }
+        let index = new EmojiIndex(data)
+        return index
+      },
+    },
   },
   render(h, ctx) {
     let { data, props, children } = ctx
 
     return h(NimbleEmoji, { ...data, props }, children)
-  }
+  },
 }
-
 </script>
