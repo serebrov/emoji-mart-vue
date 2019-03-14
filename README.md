@@ -35,7 +35,7 @@ It is not published to npm, to install from github, use `npm install --save sere
 
 It is not published to npm, to install from github, use
 
-`npm install --save serebrov/emoji-mart-vue#5.4.8.`
+`npm install --save serebrov/emoji-mart-vue#5.4.9.`
 
 Check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
 
