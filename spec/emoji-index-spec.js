@@ -1,4 +1,4 @@
-import { EmojiIndex, Emoji } from '../src/utils/emoji-data'
+import { EmojiIndex, EmojiData } from '../src/utils/emoji-data'
 import data from '../data/all.json'
 
 describe('#EmojiIndex', () => {
@@ -8,7 +8,7 @@ describe('#EmojiIndex', () => {
       let emojis = emojiIndex.search('pineapple')
 
       expect(emojis).toEqual([
-        new Emoji({
+        new EmojiData({
           short_names: ['pineapple'],
           name: 'Pineapple',
           unified: '1f34d',
