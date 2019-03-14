@@ -62,7 +62,27 @@ module.exports = Object.assign(
     },
 
     resolve: {
-      extensions: ['.vue', '.js'],
+      extensions: ['.vue', '.js', '.json'],
+      /**
+       * Note: this is a hack to make path to json files same in
+       * the original source and in the bundle.
+       * The bundle is under dist/emoji-mart.js, so to refer the
+       * data files from it, the correct path is '../data/all.json'.
+       * This alias makes data accessible under same path for
+       * unminified sources.
+       *
+       * Before (in the original fork, json files were put into
+       * the bundle, so it was quite bug.
+       * Probably the better solution is to do the same as the
+       * oridinal react project does: it doesn't pack all the code
+       * into the single bundle, it just compiles several versions
+       * of code via babel (dist, dist-es and dist-modern) and
+       * leaves packaging to the application that uses the component.
+       * See https://github.com/missive/emoji-mart/blob/master/package.json.
+       **/
+      alias: {
+        '../data': path.resolve(__dirname, '../data/'),
+      },
     },
 
     plugins: [

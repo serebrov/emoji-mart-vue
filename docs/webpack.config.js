@@ -56,7 +56,10 @@ var config = {
   },
 
   resolve: {
-    extensions: ['.vue', '.js'],
+    extensions: ['.vue', '.js', '.json'],
+    alias: {
+      '../data': path.resolve(__dirname, '../data/'),
+    },
   },
 
   plugins: [
