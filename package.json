@@ -83,7 +83,8 @@
         "jest-transform-stub"
     },
     "moduleNameMapper": {
-      ".+\\.css$": "<rootDir>/spec/css-stub.js"
+      ".+\\.css$": "<rootDir>/spec/css-stub.js",
+      "../data/all.json$": "<rootDir>/data/all.json"
     },
     "transformIgnorePatterns": ["^.+\\.css$", "<rootDir>/node_modules/"],
     "collectCoverageFrom": [
