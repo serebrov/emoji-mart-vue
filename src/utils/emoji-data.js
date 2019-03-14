@@ -361,7 +361,7 @@ export class EmojiIndex {
     if (!emojiData.search) {
       emojiData.search = buildSearch(emojiData)
     }
-    let emoji = new Emoji(emojiData)
+    let emoji = new EmojiData(emojiData)
     this._emojis[emoji.id] = emoji
     this._customCategory.emojis.push(emoji)
     return emoji
@@ -375,7 +375,7 @@ export class EmojiIndex {
       return false
     }
 
-    let emoji = new Emoji(data)
+    let emoji = new EmojiData(data)
     this._emojis[emojiId] = emoji
     if (emoji.native) {
       this._nativeEmojis[emoji.native] = emoji
@@ -435,7 +435,7 @@ export class EmojiIndex {
   }
 }
 
-export class Emoji {
+export class EmojiData {
   constructor(data) {
     this._data = Object.assign({}, data)
     this._skins = null
@@ -449,7 +449,7 @@ export class Emoji {
           skinData[k] = variationData[k]
         }
         delete skinData.skin_variations
-        this._skins.push(new Emoji(skinData))
+        this._skins.push(new EmojiData(skinData))
       }
     }
     this._sanitized = sanitize(this._data)

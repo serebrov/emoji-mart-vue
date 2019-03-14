@@ -7,9 +7,12 @@ export {
   NimblePicker,
   Emoji,
   NimbleEmoji,
+  Anchors,
+  Preview,
+  Search,
   Category,
   Skins,
 } from './components'
 
-export { EmojiIndex } from './utils/emoji-data'
+export { EmojiIndex, EmojiView, EmojiData, sanitize } from './utils/emoji-data'
 export { uncompress, store, frequently }
