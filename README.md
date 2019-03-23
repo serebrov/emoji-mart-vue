@@ -535,7 +535,7 @@ git checkout build
 git merge master
 
 # Build
-npm run build
+NODE_ENV=production npm run build
 npm run dev:docs
 
 # Add build files
