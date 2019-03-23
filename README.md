@@ -100,6 +100,114 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 | **select**      | Params: `(emoji) => {}` |
 | **skin-change** | Params: `(skin) => {}`  |
 
+The `select` event can be handled to insert the emoji into the text area or use it in any other way.
+This component does not enforce the usage pattern and it's up to the application how to handle the emoji after it was selected.
+
+For example:
+
+```
+<picker @select="this.selectEmoji" />
+
+...
+
+selectEmoji(emoji) {
+  // Assuming the `textContainer` method that returns the
+  // text container component with `enterText` method.
+  const textContainer = this.textContainer()
+  // Enter the native emoji
+  textContainer.enterText(emoji.native)
+}
+```
+
+The above will use `emoji.native` to insert native emoji into the input.
+
+This is the simplest way to use that works relatively well in latest versions of native browsers.
+
+Although, the support for native unicode emoji is still not perfect: unicode emojis are part of the font and the font needs to be colorful. But there is no yet single standard for colorful fonts implemented by major browsers, so the browser leaves rendering to the operating system.
+
+This way, how the emoji will look, depends on the operating system and native unicode emoji will look different on different platforms. Also older operating system versions don't support all emojis, so it may be necessary to limit emojis to some smaller subset.
+
+More consistent solution is more complex: we can use `emoji.colons` to insert emoji in the "colons" syntax (such as `:smile:`) and use regular expressions to find and render the colons emoji as images.
+In this case, most likely, the application will keep text emoji representation in the database and replace before rendering wherever needed (browser, mobile app, email).
+
+The `emoji.getPosition()` might be useful in this case to get the emoji position on the emoji sprite sheet.
+
+The replacement can be done approximately like this:
+
+```
+const COLONS_REGEX = new RegExp(
+  '([^:]+)?(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)',
+  'g'
+)
+
+/**
+ * Replace emojis insdie the `text` with `<span>`s.
+ */
+export function wrapEmoji(text: string): string {
+  return text.replace(COLONS_REGEX, function(match, p1, p2) {
+    const before = p1 || ''
+    // We add "data-text='{emoji.native}'", don't replace it
+    if (endsWith(before, 'alt="') || endsWith(before, 'data-text="')) {
+      return match
+    }
+    let emoji = emojiIndex.findEmoji(p2)
+    if (!emoji) {
+      return match
+    }
+    return before + emojiToHtml(emoji)
+  })
+  return text;
+}
+
+/**
+ * Conevert Emoji to HTML to represent it as an image.
+ */
+export function emojiToHtml(emoji: Emoji): string {
+  let style = `background-position: ${emoji.getPosition()}`
+  // The src="data:image..." is needed to prevent border around img tags.
+  return `<img data-text="${emoji.native}" alt="${
+    emoji.colons
+  }" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class='emoji-text' style="${style}">`
+}
+
+```
+
+Similarly, we can use `emoji.native` to insert native emoji and then find and replace them with images. In this case, the application can keep the native emoji in the database and replace with images where needed - in this case, it can do the replacement for browser, but keep unicode emoji for native app.
+
+The replacement can be done like this (using the [emoji-regex](https://www.npmjs.com/package/emoji-regex) package):
+
+```
+// npm install emoji-regex
+import emojiRegex from 'emoji-regex'
+
+import data from 'emoji-mart-vue/data/all.json'
+import { EmojiIndex } from 'emoji-mart-vue'
+
+const unicodeEmojiRegex = emojiRegex()
+
+export function wrapEmoji(text: string): string {
+  return text.replace(unicodeEmojiRegex, function(match, offset) {
+    const before = text.substring(0, offset)
+    if (endsWith(before, 'alt="') || endsWith(before, 'data-text="')) {
+      // Emoji inside the replaced <img>
+      return match
+    }
+    // Find emoji object by native emoji.
+    let emoji = emojiIndex.nativeEmoji(match)
+    if (!emoji) {
+      // Can't find unicode emoji in our index
+      return match
+    }
+    // See `emojiToHtml` function above.
+    return emojiToHtml(emoji)
+  })
+}
+
+```
+
+Here we can use `emojiIndex.hativeEmoji(native_emoji)` to get the emoji object by native emoji and then convert it to the HTML image.
+
+
 #### I18n
 
 ```js
