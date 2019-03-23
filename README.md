@@ -120,13 +120,14 @@ selectEmoji(emoji) {
 
 The above will use `emoji.native` to insert native emoji into the input.
 
-This is the simplest way to use that works relatively well in latest versions of native browsers.
+This is the simplest way to use the component, that works relatively well in latest versions of native browsers.
+Here, we rely on native unicode emoji support, which, theoretically, should be handled just like any other unicode characters.
 
-Although, the support for native unicode emoji is still not perfect: unicode emojis are part of the font and the font needs to be colorful. But there is no yet single standard for colorful fonts implemented by major browsers, so the browser leaves rendering to the operating system.
+Although, the support for native unicode emoji is still not perfect: unicode emoji characters are part of the font and the font needs to be colorful. But there is no yet a single standard for [color fonts](https://www.colorfonts.wtf/) implemented by browsers, so the browser leaves emoji rendering to the operating system.
 
-This way, how the emoji will look, depends on the operating system and native unicode emoji will look different on different platforms. Also older operating system versions don't support all emojis, so it may be necessary to limit emojis to some smaller subset.
+This way, how the emoji will look depends on the operating system and native unicode emoji will look different on different platforms. Also older operating system versions don't not support all the emojis that are currently in the [unicode standard](https://unicode.org/emoji/charts/full-emoji-list.html), so it may be necessary to limit emojis to some smaller subset.
 
-More consistent solution is more complex: we can use `emoji.colons` to insert emoji in the "colons" syntax (such as `:smile:`) and use regular expressions to find and render the colons emoji as images.
+More consistent solution is also more complex: we can use `emoji.colons` to insert emoji in the "colons" syntax (such as `:smile:`) and use regular expressions to find and render the colons emoji as images.
 In this case, most likely, the application will keep text emoji representation in the database and replace before rendering wherever needed (browser, mobile app, email).
 
 The `emoji.getPosition()` might be useful in this case to get the emoji position on the emoji sprite sheet.
@@ -159,7 +160,7 @@ export function wrapEmoji(text: string): string {
 }
 
 /**
- * Conevert Emoji to HTML to represent it as an image.
+ * Convert Emoji to HTML to represent it as an image.
  */
 export function emojiToHtml(emoji: Emoji): string {
   let style = `background-position: ${emoji.getPosition()}`
