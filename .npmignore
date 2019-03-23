@@ -1,10 +1,10 @@
+node_modules/
 dist/report.html
-scripts/
 .*
 
-src/
 docs/
 spec/
-example/
-karma.conf.js
+coverage/
 yarn.lock
+stats.json
+report.html
