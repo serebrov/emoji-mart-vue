@@ -1,4 +1,8 @@
-This project is a fork of https://github.com/jm-david/emoji-mart-vue with many performance fixes.
+[![Build Status](https://travis-ci.org/serebrov/emoji-mart-vue.svg?branch=master)](https://travis-ci.org/serebrov/emoji-mart-vue)
+
+[![codecov](https://codecov.io/gh/serebrov/emoji-mart-vue/branch/master/graph/badge.svg)](https://codecov.io/gh/serebrov/emoji-mart-vue)
+
+This project is a fork of https://github.com/jm-david/emoji-mart-vue with many performance fixes, tests and some structural code changes.
 
 The original component was [very slow to show/destroy](https://github.com/jm-david/emoji-mart-vue/pull/47), around 2 seconds to show and even a bit longer to destroy, so it was unusable in a popup.
 
@@ -17,11 +21,6 @@ Major changes are:
 - Updated to babel 7
 - Added tests
 
-[![Build Status](https://travis-ci.org/serebrov/emoji-mart-vue.svg?branch=master)](https://travis-ci.org/serebrov/emoji-mart-vue)
-
-[![codecov](https://codecov.io/gh/serebrov/emoji-mart-vue/branch/master/graph/badge.svg)](https://codecov.io/gh/serebrov/emoji-mart-vue)
-
-It is not published to npm, to install from github, use `npm install --save serebrov/emoji-mart-vue#4.0.0.` (check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
 
 > The original project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
 
@@ -33,11 +32,11 @@ It is not published to npm, to install from github, use `npm install --save sere
 
 ## Installation
 
-It is not published to npm, to install from github, use
+Install from npm: `npm install --save emoji-mart-vue-fast`.
 
-`npm install --save serebrov/emoji-mart-vue#5.4.9.`
+It is also possible to install directly from github (could be useful for forks): `npm install --save serebrov/emoji-mart-vue#5.4.9.`
 
-Check the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases) for available versions).
+Here is the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases).
 
 ## Components
 
@@ -558,8 +557,7 @@ git tag 3.1.1 -a
 # Push the tags
 git push origin --tags
 
-# Publish to npm
-npm publish
+# Publish to npm with `npm publish`
 
 ## 🎩 Hat tips!
 
