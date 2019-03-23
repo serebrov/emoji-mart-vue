@@ -68,7 +68,6 @@
     "jest-debug":
       "node --inspect=0.0.0.0:9230 --inspect-brk node_modules/.bin/jest --runInBand",
     "jest-clear": "jest --clearCache",
-    "prepublishOnly": "npm run build",
     "prettier-check": "prettier --check \"{src,spec}/**/*.js\"",
     "prettier": "prettier --write \"{src,spec}/**/*.js\""
   },
