@@ -528,6 +528,11 @@ To debug tests, run `npm run jest-debug` and then open `chrome://inspect` in Chr
 ## Building
 
 ```sh
+# Checkout master branch, update version
+git checkout master
+# Edit package.json, update version
+vim package.json
+
 # Checkout build branch
 git checkout build
 
@@ -542,9 +547,6 @@ npm run dev:docs
 git add buiid/
 git add docs/
 git commit -m "Rebuild"
-
-# Edit package.json, update version
-vim package.json
 
 # Push changes
 git push origin HEAD
