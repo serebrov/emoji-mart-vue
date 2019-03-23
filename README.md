@@ -543,15 +543,21 @@ git add buiid/
 git add docs/
 git commit -m "Rebuild"
 
+# Edit package.json, update version
+vim package.json
+
 # Push changes
 git push origin HEAD
 
-# Tag the new release, add the description for tag
+# Tag the new release (same as package.json version), add the description for tag
 # Hint: refer PRs with #17 (PR id) to later have links to PRs in github releases
 git tag 3.1.1 -a
 
 # Push the tags
 git push origin --tags
+
+# Publish to npm
+npm publish
 
 ## 🎩 Hat tips!
 
