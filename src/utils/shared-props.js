@@ -22,6 +22,10 @@ const EmojiProps = {
     type: [String, Object],
     required: true,
   },
+  size: {
+    type: Number,
+    default: null,
+  },
 }
 
 const PickerProps = {
