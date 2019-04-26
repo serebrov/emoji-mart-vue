@@ -360,9 +360,23 @@ import { Emoji } from 'emoji-mart-vue-fast'
 ```
 
 ```html
-<emoji :emoji="{ id: 'santa', skin: 3 }" :size="16" />
-<emoji emoji=":santa::skin-tone-3:" :size="16" />
-<emoji emoji="santa" set="emojione" :size="16" />
+<emoji emoji=":santa::skin-tone-3:" :size="32" />
+<emoji emoji="santa" set="emojione" :size="32" />
+<emoji :emoji="santaEmojiObject" :size="32" />
+
+<script>
+import data from '../data/all.json'
+let index = new EmojiIndex(data)
+
+export default {
+  computed: {
+    santaEmojiObject() {
+      return index.findEmoji(':santa:')
+    },
+  },
+}
+</script>
+
 ```
 
 | Prop                                         | Required | Default                                                                                              | Description                                                                                                        |
