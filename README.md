@@ -26,7 +26,7 @@ Major changes are:
 
 <div align="center">
   <br><b>Emoji Mart (Vue)</b> is a Slack-like customizable<br>emoji picker component for VueJS
-  <br><a href="https://jm-david.github.io/emoji-mart-vue">Demo</a> • <a href="https://github.com/jm-david/emoji-mart-vue/releases">Changelog</a>
+  <br><a href="https://serebrov.github.io/emoji-mart-vue">Demo</a> • <a href="https://github.com/serebrov/emoji-mart-vue/releases">Changelog</a>
   <br><img src="https://cloud.githubusercontent.com/assets/436043/17186519/9e71e8fe-5403-11e6-9314-21365c56a601.png">
 </div>
 
@@ -43,13 +43,13 @@ Here is the list of [releases](https://github.com/serebrov/emoji-mart-vue/releas
 ### Picker
 
 ```js
-import { Picker } from 'emoji-mart-vue'
+import { Picker } from 'emoji-mart-vue-fast'
 ```
 
 Import CSS with default styles:
 
 ```js
-import 'emoji-mart-vue/css/emoji-mart.css'
+import 'emoji-mart-vue-fast/css/emoji-mart.css'
 ```
 
 Note: to have a custom look for the picker, either use own css file without including the standard one or add custom styles on top of standard.
@@ -120,13 +120,14 @@ selectEmoji(emoji) {
 
 The above will use `emoji.native` to insert native emoji into the input.
 
-This is the simplest way to use that works relatively well in latest versions of native browsers.
+This is the simplest way to use the component, that works relatively well in latest versions of native browsers.
+Here, we rely on native unicode emoji support, which, theoretically, should be handled just like any other unicode characters.
 
-Although, the support for native unicode emoji is still not perfect: unicode emojis are part of the font and the font needs to be colorful. But there is no yet single standard for colorful fonts implemented by major browsers, so the browser leaves rendering to the operating system.
+Although, the support for native unicode emoji is still not perfect: unicode emoji characters are part of the font and the font needs to be colorful. But there is no yet a single standard for [color fonts](https://www.colorfonts.wtf/) implemented by browsers, so the browser leaves emoji rendering to the operating system.
 
-This way, how the emoji will look, depends on the operating system and native unicode emoji will look different on different platforms. Also older operating system versions don't support all emojis, so it may be necessary to limit emojis to some smaller subset.
+This way, how the emoji will look depends on the operating system and native unicode emoji will look different on different platforms. Also older operating system versions don't not support all the emojis that are currently in the [unicode standard](https://unicode.org/emoji/charts/full-emoji-list.html), so it may be necessary to limit emojis to some smaller subset.
 
-More consistent solution is more complex: we can use `emoji.colons` to insert emoji in the "colons" syntax (such as `:smile:`) and use regular expressions to find and render the colons emoji as images.
+More consistent solution is also more complex: we can use `emoji.colons` to insert emoji in the "colons" syntax (such as `:smile:`) and use regular expressions to find and render the colons emoji as images.
 In this case, most likely, the application will keep text emoji representation in the database and replace before rendering wherever needed (browser, mobile app, email).
 
 The `emoji.getPosition()` might be useful in this case to get the emoji position on the emoji sprite sheet.
@@ -159,7 +160,7 @@ export function wrapEmoji(text: string): string {
 }
 
 /**
- * Conevert Emoji to HTML to represent it as an image.
+ * Convert Emoji to HTML to represent it as an image.
  */
 export function emojiToHtml(emoji: Emoji): string {
   let style = `background-position: ${emoji.getPosition()}`
@@ -179,8 +180,8 @@ The replacement can be done like this (using the [emoji-regex](https://www.npmjs
 // npm install emoji-regex
 import emojiRegex from 'emoji-regex'
 
-import data from 'emoji-mart-vue/data/all.json'
-import { EmojiIndex } from 'emoji-mart-vue'
+import data from 'emoji-mart-vue-fast/data/all.json'
+import { EmojiIndex } from 'emoji-mart-vue-fast'
 
 const unicodeEmojiRegex = emojiRegex()
 
@@ -258,8 +259,8 @@ While all sets are available by default, you may want to include only a single s
 To use these data files (or any other custom data), use the `NimblePicker` component:
 
 ```js
-import data from 'emoji-mart-vue/data/messenger.json'
-import { NimblePicker, EmojiIndex } from 'emoji-mart-vue'
+import data from 'emoji-mart-vue-fast/data/messenger.json'
+import { NimblePicker, EmojiIndex } from 'emoji-mart-vue-fast'
 let index = new EmojiIndex(data)
 ```
 
@@ -285,8 +286,8 @@ Avaiable categories are: `people,` `nature,` `foods,` `activity,` `places,` `obj
 For example:
 
 ```js
-import data from 'emoji-mart-vue/data/messenger.json'
-import { NimblePicker, EmojiIndex } from 'emoji-mart-vue'
+import data from 'emoji-mart-vue-fast/data/messenger.json'
+import { NimblePicker, EmojiIndex } from 'emoji-mart-vue-fast'
 
 let emojisToShowFilter = function(emoji) {
 	// check the emoji properties, see the examples of emoji object below
@@ -355,13 +356,27 @@ let index = new EmojiIndex(data, {
 ### Emoji
 
 ```js
-import { Emoji } from 'emoji-mart-vue'
+import { Emoji } from 'emoji-mart-vue-fast'
 ```
 
 ```html
-<emoji :emoji="{ id: 'santa', skin: 3 }" :size="16" />
-<emoji emoji=":santa::skin-tone-3:" :size="16" />
-<emoji emoji="santa" set="emojione" :size="16" />
+<emoji emoji=":santa::skin-tone-3:" :size="32" />
+<emoji emoji="santa" set="emojione" :size="32" />
+<emoji :emoji="santaEmojiObject" :size="32" />
+
+<script>
+import data from '../data/all.json'
+let index = new EmojiIndex(data)
+
+export default {
+  computed: {
+    santaEmojiObject() {
+      return index.findEmoji(':santa:')
+    },
+  },
+}
+</script>
+
 ```
 
 | Prop                                         | Required | Default                                                                                              | Description                                                                                                        |
@@ -403,8 +418,8 @@ function emojiFallback(emoji) {
 The `Picker` doesn’t have to be mounted for you to take advantage of the advanced search results.
 
 ```js
-import { EmojiIndex } from 'emoji-mart-vue'
-import data from 'emoji-mart-vue/data/all.json'
+import { EmojiIndex } from 'emoji-mart-vue-fast'
+import data from 'emoji-mart-vue-fast/data/all.json'
 
 const emojiIndex = new EmojiIndex(data)
 emojiIndex.search('christmas').map((o) => o.native)
@@ -414,8 +429,8 @@ emojiIndex.search('christmas').map((o) => o.native)
 ### With custom data
 
 ```js
-import data from 'emoji-mart-vue/data/messenger'
-import { EmojiIndex } from 'emoji-mart-vue'
+import data from 'emoji-mart-vue-fast/data/messenger'
+import { EmojiIndex } from 'emoji-mart-vue-fast'
 
 let emojiIndex = new EmojiIndex(data)
 emojiIndex.search('christmas')
@@ -426,7 +441,7 @@ emojiIndex.search('christmas')
 By default EmojiMart will store user chosen skin and frequently used emojis in `localStorage`. That can however be overwritten should you want to store these in your own storage.
 
 ```js
-import { store } from 'emoji-mart-vue'
+import { store } from 'emoji-mart-vue-fast'
 
 store.setHandlers({
 	getter: (key) => {

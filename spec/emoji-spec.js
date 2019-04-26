@@ -113,3 +113,28 @@ describe('Emoji title', () => {
     expect(emoji.vm.title).toBe(null)
   })
 })
+
+describe('Emoji size', () => {
+  const emoji = mount(Emoji, {
+    propsData: {
+      emoji: 'point_up',
+    },
+  })
+
+  it('has no size by default', () => {
+    expect(emoji.vm.size).toBe(null)
+    expect(emoji.vm.view.cssStyle).toEqual({
+      backgroundPosition: '92.16% 50.98%',
+    })
+  })
+
+  it('size can be set', () => {
+    emoji.setProps({ size: 32 })
+    expect(emoji.vm.size).toBe(32)
+    expect(emoji.vm.view.cssStyle).toEqual({
+      backgroundPosition: '92.16% 50.98%',
+      height: '32px',
+      width: '32px',
+    })
+  })
+})

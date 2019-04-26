@@ -17,47 +17,47 @@
   background: #fff;
 }
 
-.emoji-mart .emoji-mart-emoji {
+.emoji-mart-emoji {
   padding: 6px;
   position: relative;
   display: inline-block;
   font-size: 0;
 }
 
-.emoji-mart .emoji-mart-emoji span {
+.emoji-mart-emoji span {
   display: inline-block;
 }
 
-.emoji-mart .emoji-mart-preview-emoji .emoji-mart-emoji span {
+.emoji-mart-preview-emoji .emoji-mart-emoji span {
   width: 38px;
   height: 38px;
   font-size: 32px;
 }
 
-.emoji-mart .emoji-type-native {
+.emoji-type-native {
   font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "EmojiOne Color", "Android Emoji";
   word-break: keep-all;
 }
 
-.emoji-mart .emoji-type-image {
+.emoji-type-image {
   background-size: 5200%;
 }
-.emoji-mart .emoji-type-image.emoji-set-emojione {
+.emoji-type-image.emoji-set-emojione {
   background-image: url("https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png");
 }
-.emoji-mart .emoji-type-image.emoji-set-messenger {
+.emoji-type-image.emoji-set-messenger {
   background-image: url("https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png");
 }
-.emoji-mart .emoji-type-image.emoji-set-apple {
+.emoji-type-image.emoji-set-apple {
   background-image: url("https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png");
 }
-.emoji-mart .emoji-type-image.emoji-set-facebook {
+.emoji-type-image.emoji-set-facebook {
   background-image: url("https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png");
 }
-.emoji-mart .emoji-type-image.emoji-set-google {
+.emoji-type-image.emoji-set-google {
   background-image: url("https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png");
 }
-.emoji-mart .emoji-type-image.emoji-set-twitter {
+.emoji-type-image.emoji-set-twitter {
   background-image: url("https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png");
 }
 

@@ -1,13 +1,20 @@
 <template>
-
-<span v-if="view.canRender" :title="view.title" :data-title="title" class="emoji-mart-emoji" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onClick">
-  <span  :class="view.cssClass" :style="view.cssStyle">{{view.content}}</span>
-</span>
-
+  <span
+    v-if="view.canRender"
+    :title="view.title"
+    :data-title="title"
+    class="emoji-mart-emoji"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
+    @click="onClick"
+  >
+    <span :class="view.cssClass" :style="view.cssStyle">{{
+      view.content
+    }}</span>
+  </span>
 </template>
 
 <script>
-
 import { EmojiProps } from '../../utils/shared-props'
 import { EmojiView } from '../../utils/emoji-data'
 
@@ -18,13 +25,19 @@ export default {
     ...EmojiProps,
     data: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     view() {
       return new EmojiView(
-        this.emojiObject, this.skin, this.set, this.native, this.fallback
+        this.emojiObject,
+        this.skin,
+        this.set,
+        this.native,
+        this.fallback,
+        this.tooltip,
+        this.size,
       )
     },
     sanitizedData() {
@@ -34,15 +47,14 @@ export default {
       return this.tooltip ? this.emojiObject.short_name : null
     },
     emojiObject() {
-      if (typeof this.emoji == "string") {
-        return this.data.emoji(this.emoji)
+      if (typeof this.emoji == 'string') {
+        return this.data.findEmoji(this.emoji)
       } else {
         return this.emoji
       }
-    }
+    },
   },
-  created() {
-  },
+  created() {},
   methods: {
     onClick() {
       this.$emit('click', this.emojiObject)
@@ -52,8 +64,7 @@ export default {
     },
     onMouseLeave() {
       this.$emit('mouseleave', this.emojiObject)
-    }
-  }
+    },
+  },
 }
-
 </script>
