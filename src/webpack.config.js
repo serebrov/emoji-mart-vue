@@ -74,7 +74,7 @@ module.exports = Object.assign(
        * unminified sources.
        *
        * Before (in the original fork, json files were put into
-       * the bundle, so it was quite bug.
+       * the bundle, so it was quite big.
        * Probably the better solution is to do the same as the
        * oridinal react project does: it doesn't pack all the code
        * into the single bundle, it just compiles several versions
