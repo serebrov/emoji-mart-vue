@@ -14,6 +14,8 @@ module.exports = Object.assign(
       filename: 'emoji-mart.js',
       library: 'EmojiMart',
       libraryTarget: 'umd',
+      // See https://github.com/webpack/webpack/issues/6784
+      globalObject: "typeof self !== 'undefined' ? self : this",
     },
 
     externals: !TEST && [
