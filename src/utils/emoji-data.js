@@ -589,7 +589,7 @@ export class EmojiView {
   }
 }
 
-function sanitize(emoji) {
+export function sanitize(emoji) {
   var {
       name,
       short_names,

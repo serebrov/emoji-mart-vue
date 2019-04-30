@@ -1,102 +1,98 @@
 <template>
-
-<div class="emoji-mart" :style="customStyles">
-  <div class="emoji-mart-bar emoji-mart-bar-anchors" v-if="showCategories">
-    <anchors
-      :data="data"
-      :i18n="mergedI18n"
-      :color="color"
-      :categories="categories"
-      :active-category="activeCategory"
-      @click="onAnchorClick"
-    />
-  </div>
-
-  <slot name="searchTemplate"
+  <div class="emoji-mart" :style="customStyles">
+    <div class="emoji-mart-bar emoji-mart-bar-anchors" v-if="showCategories">
+      <anchors
         :data="data"
-        :i18n="i18n"
-        :auto-focus="autoFocus"
-        :on-search="onSearch"
-  >
-    <search
-      v-if="showSearch"
-      ref="search"
+        :i18n="mergedI18n"
+        :color="color"
+        :categories="categories"
+        :active-category="activeCategory"
+        @click="onAnchorClick"
+      />
+    </div>
+
+    <slot
+      name="searchTemplate"
       :data="data"
-      :i18n="mergedI18n"
+      :i18n="i18n"
       :auto-focus="autoFocus"
       :on-search="onSearch"
-      @search="onSearch"
+    >
+      <search
+        v-if="showSearch"
+        ref="search"
+        :data="data"
+        :i18n="mergedI18n"
+        :auto-focus="autoFocus"
+        :on-search="onSearch"
+        @search="onSearch"
+      />
+    </slot>
+
+    <category
+      v-show="searchEmojis"
+      class="emoji-mart-search-results"
+      :data="data"
+      :i18n="mergedI18n"
+      id="search"
+      name="Search"
+      :emojis="searchEmojis"
+      :emoji-props="emojiProps"
     />
-  </slot>
+    <DynamicScroller
+      v-show="!searchEmojis"
+      ref="dynScroller"
+      :items="scrollerCategories"
+      :min-item-size="60"
+      class="scroller"
+      :emit-update="true"
+      @update="onScrollUpdate"
+    >
+      <template slot-scope="{ item, active, index }">
+        <DynamicScrollerItem :item="item" :active="active" :data-index="index">
+          <category
+            v-show="item.show"
+            ref="categories"
+            :key="item.category.id"
+            :data="item.data"
+            :i18n="item.mergedI18n"
+            :id="item.category.id"
+            :name="item.category.name"
+            :emojis="item.category.emojis"
+            :emoji-props="item.emojiProps"
+          />
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
 
-  <category
-    v-show="searchEmojis"
-    class="emoji-mart-search-results"
-    :data="data"
-    :i18n="mergedI18n"
-    id="search"
-    name="Search"
-    :emojis="searchEmojis"
-    :emoji-props="emojiProps"
-  />
-  <DynamicScroller 
-    v-show="!searchEmojis"
-    ref="dynScroller" 
-    :items="scrollerCategories" 
-    :min-item-size="60" 
-    class="scroller" 
-    :emit-update="true" 
-    @update="onScrollUpdate"
-  >
-    <template slot-scope="{ item, active, index }">
-      <DynamicScrollerItem 
-        :item="item" 
-        :active="active" 
-        :data-index="index"
-      >
-        <category
-          v-show="item.show"
-          ref="categories"
-          :key="item.category.id"
-          :data="item.data"
-          :i18n="item.mergedI18n"
-          :id="item.category.id"
-          :name="item.category.name"
-          :emojis="item.category.emojis"
-          :emoji-props="item.emojiProps"
+    <slot
+      name="previewTemplate"
+      :data="data"
+      :title="title"
+      :emoji="previewEmoji"
+      :idle-emoji="idleEmoji"
+      :show-skin-tones="showSkinTones"
+      :emoji-props="emojiProps"
+      :skin-props="skinProps"
+      :on-skin-change="onSkinChange"
+    >
+      <div class="emoji-mart-bar emoji-mart-bar-preview" v-if="showPreview">
+        <preview
+          :data="data"
+          :title="title"
+          :emoji="previewEmoji"
+          :idle-emoji="idleEmoji"
+          :show-skin-tones="showSkinTones"
+          :emoji-props="emojiProps"
+          :skin-props="skinProps"
+          :on-skin-change="onSkinChange"
         />
-      </DynamicScrollerItem>
-    </template>
-  </DynamicScroller>
-
-  <slot name="previewTemplate"
-        :data="data"
-        :title="title"
-        :emoji="previewEmoji"
-        :idle-emoji="idleEmoji"
-        :show-skin-tones="showSkinTones"
-        :emoji-props="emojiProps"
-        :skin-props="skinProps"
-        :on-skin-change="onSkinChange"
-  >
-    <div class="emoji-mart-bar emoji-mart-bar-preview" v-if="showPreview">
-      <preview
-        :data="data"
-        :title="title"
-        :emoji="previewEmoji"
-        :idle-emoji="idleEmoji"
-        :show-skin-tones="showSkinTones"
-        :emoji-props="emojiProps"
-        :skin-props="skinProps"
-        :on-skin-change="onSkinChange"/>
-    </div>
-  </slot>
-</div>
-
+      </div>
+    </slot>
+  </div>
 </template>
 
 <script>
-
 import '../../vendor/raf-polyfill'
 import store from '../../utils/store'
 import frequently from '../../utils/frequently'
@@ -108,7 +104,7 @@ import Preview from '../preview'
 import Search from '../search'
 
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+// import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 const I18N = {
   search: 'Search',
@@ -133,22 +129,22 @@ export default {
     ...PickerProps,
     data: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       activeCategory: null,
       previewEmoji: null,
-      searchEmojis: null
+      searchEmojis: null,
     }
   },
   computed: {
     customStyles() {
       return {
         width: this.calculateWidth + 'px',
-        ...this.pickerStyles
+        ...this.pickerStyles,
       }
     },
     emojiProps() {
@@ -160,28 +156,30 @@ export default {
         emojiSize: this.emojiSize,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
-        onClick: this.onEmojiClick.bind(this)
+        onClick: this.onEmojiClick.bind(this),
       }
     },
     skinProps() {
       return {
-        skin: this.activeSkin
+        skin: this.activeSkin,
       }
     },
     calculateWidth() {
-      return (this.perLine * (this.emojiSize + 12)) + 12 + 2 + measureScrollbar()
+      return this.perLine * (this.emojiSize + 12) + 12 + 2 + measureScrollbar()
     },
     scrollerCategories() {
-      let id = 0;
+      let id = 0
       return this.categories.map((category) => {
         return {
-            'id': id++,
-            'category': category,
-            'show': !this.searchEmojis && (this.infiniteScroll || category == this.activeCategory),
-            'mergedI18n': this.mergedI18n,
-            'data': this.data,
-            'emojisLength': category.emojis.length,
-            'emojiProps': this.emojiProps
+          id: id++,
+          category: category,
+          show:
+            !this.searchEmojis &&
+            (this.infiniteScroll || category == this.activeCategory),
+          mergedI18n: this.mergedI18n,
+          data: this.data,
+          emojisLength: category.emojis.length,
+          emojiProps: this.emojiProps,
         }
       })
     },
@@ -190,13 +188,13 @@ export default {
     },
     idleEmoji() {
       return this.data.emoji(this.emoji)
-    }
+    },
   },
   created() {
     this.categories = []
     this.categories.push(...this.data.categories())
     this.categories = this.categories.filter((category) => {
-      return category.emojis.length > 0;
+      return category.emojis.length > 0
     })
 
     this.categories[0].first = true
@@ -207,9 +205,9 @@ export default {
   methods: {
     onScrollUpdate(startIndex, endIndex) {
       if (this.skipScrollUpdate) {
-          this.skipScrollUpdate = false
+        this.skipScrollUpdate = false
       } else {
-          this.activeCategory = this.categories[endIndex-1]
+        this.activeCategory = this.categories[endIndex - 1]
       }
     },
     onAnchorClick(category) {
@@ -237,7 +235,7 @@ export default {
       store.update({ skin })
 
       this.$emit('skin-change', skin)
-    }
+    },
   },
   components: {
     Anchors,
@@ -245,8 +243,7 @@ export default {
     Preview,
     Search,
     DynamicScroller,
-    DynamicScrollerItem
-  }
+    DynamicScrollerItem,
+  },
 }
-
 </script>
