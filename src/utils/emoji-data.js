@@ -521,6 +521,8 @@ export class EmojiView {
       cssStyle = {
         backgroundImage: 'url(' + this.getEmoji()._data.imageUrl + ')',
         backgroundSize: '100%',
+        width: emojiSize + 'px',
+        height: emojiSize + 'px',
       }
     }
     if (this._hasEmoji() && !this._isNative()) {

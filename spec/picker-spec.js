@@ -36,17 +36,20 @@ describe('NimblePicker', () => {
     expect(picker.html()).toContain('woman-gesturing-ok"')
   })
 
-  it('shows 5 categories by default', () => {
+  it('renders 8 categories', () => {
     // Due to the virtual scroller, not all the categories
     // are rendered at once
     let categories = picker.findAll(Category)
-    expect(categories.length).toBe(5)
+    expect(categories.length).toBe(8)
     // Hidden category with search results
     expect(categories.at(0).vm.name).toBe('Search')
     expect(categories.at(1).vm.name).toBe('Recent')
     expect(categories.at(2).vm.name).toBe('Smileys & People')
     expect(categories.at(3).vm.name).toBe('Animals & Nature')
     expect(categories.at(4).vm.name).toBe('Food & Drink')
+    expect(categories.at(5).vm.name).toBe('Activities')
+    expect(categories.at(6).vm.name).toBe('Travel & Places')
+    expect(categories.at(7).vm.name).toBe('Objects')
   })
 })
 

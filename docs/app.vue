@@ -13,6 +13,7 @@
       <button @click="toggleVisible">Show / hide the picker</button>
       <button @click="toggleVisible" v-html="smile"></button>
     </div>
+
     <div class="row">
       <template
         v-for="set in [
@@ -40,7 +41,6 @@
         :data="index"
         :set="activeSet"
         :native="native"
-        :custom="custom"
         :emoji="emoji"
         :emojiTooltip="true"
         :title="title"
@@ -49,7 +49,7 @@
 
     <div class="row-small">
       <iframe
-        src="https://ghbtns.com/github-btn.html?user=jm-david&repo=emoji-mart-vue&type=star&count=true"
+        src="https://ghbtns.com/github-btn.html?user=serebrov&repo=emoji-mart-vue&type=star&count=true"
         frameBorder="0"
         scrolling="0"
         width="90px"
@@ -153,7 +153,6 @@ export default {
       activeSet: 'native',
       emoji: 'point_up',
       title: 'Pick your emoji…',
-      custom: CUSTOM_EMOJIS,
       isVisible: true,
     }
   },

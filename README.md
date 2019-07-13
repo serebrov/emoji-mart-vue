@@ -519,8 +519,13 @@ Apple / Google / Twitter / EmojiOne / Messenger / Facebook
 Build the component and the demo app.
 
 ```sh
-$ npm build
-$ npm start
+# Build the component and watch for file changes.
+$ npm run build
+```
+
+```sh
+# Build the demo app and watch for file changes.
+$ npm run dev:docs
 ```
 
 Open [docs/index.html](docs/index.html) in browser to see the demo.
@@ -528,7 +533,7 @@ Open [docs/index.html](docs/index.html) in browser to see the demo.
 Or serve the dir (with [npx](https://www.npmjs.com/package/npx) and [http-server](https://www.npmjs.com/package/http-server):
 
 ```sh
-hpx http-server ./docs
+npx http-server ./docs
 ```
 
 And open [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
