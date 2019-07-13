@@ -41,7 +41,6 @@
         :data="index"
         :set="activeSet"
         :native="native"
-        :custom="custom"
         :emoji="emoji"
         :emojiTooltip="true"
         :title="title"
@@ -154,7 +153,6 @@ export default {
       activeSet: 'native',
       emoji: 'point_up',
       title: 'Pick your emoji…',
-      custom: CUSTOM_EMOJIS,
       isVisible: true,
     }
   },
