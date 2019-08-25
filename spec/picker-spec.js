@@ -2,16 +2,15 @@ import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
-import {
-  Anchors,
-  Picker,
-  Category,
-  Preview,
-  Emoji,
-} from '../src/components'
+import { Anchors, Picker, Category, Preview, Emoji } from '../src/components'
 
 describe('Picker', () => {
-  const picker = mount(Picker)
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+    },
+  })
 
   it('works', () => {
     expect(picker.isVueInstance()).toBeTruthy()
@@ -233,7 +232,12 @@ describe('emjoi preview', () => {
 })
 
 describe('emjoiSize', () => {
-  const picker = mount(Picker)
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+    },
+  })
 
   it('default emojiSize is 24', () => {
     let emoji = picker.find('[data-title="+1"]')

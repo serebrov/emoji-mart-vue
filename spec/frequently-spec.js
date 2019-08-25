@@ -5,7 +5,12 @@ import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
 
 describe('Picker frequnt category', () => {
-  const picker = mount(Picker)
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+    },
+  })
 
   it('Has default emojis initially', () => {
     let categories = picker.findAll(Category)
