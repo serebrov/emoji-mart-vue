@@ -510,6 +510,77 @@ Apple / Google / Twitter / EmojiOne / Messenger / Facebook
 
 <img width="214" alt="sets" src="https://user-images.githubusercontent.com/436043/33786868-d4226e60-dc38-11e7-840a-e4cf490f5f4a.png">
 
+## Convenience Wrappers
+
+Below are convenience wrappers for `Emoji` and `Picker` components that make usage simpler.
+These were present before in the project source, but, since they are using `all.json` for data, that resulted in bigger bundle sizes (as `all.json` was also included into the any app that is using emoji picker, even if it doesn't need `all.json`).
+
+So the components were removed and included here as an example.
+
+Picker component wrapper with default settings:
+
+```javascript
+<script>
+import data from '../data/all.json'
+import { EmojiIndex } from '../../utils/emoji-data'
+import NimblePicker from './nimblePicker'
+
+import { PickerProps } from '../../utils/shared-props'
+
+let index = new EmojiIndex(data)
+
+export default {
+  functional: true,
+  props: {
+    ...PickerProps,
+    data: {
+      type: Object,
+      default() {
+        return index
+      },
+    },
+  },
+  render(h, ctx) {
+    let { data, props, children } = ctx
+
+    return h(NimblePicker, { ...data, props }, children)
+  },
+}
+</script>
+```
+
+Emoji component wrapper with default settings:
+
+```javascript
+<script>
+import data from '../data/all.json'
+import { uncompress } from '../../utils/data'
+import { EmojiIndex } from '../../utils/emoji-data'
+import NimbleEmoji from './nimbleEmoji'
+
+import { EmojiProps } from '../../utils/shared-props'
+
+export default {
+  functional: true,
+  props: {
+    ...EmojiProps,
+    data: {
+      type: Object,
+      default() {
+        let index = new EmojiIndex(data)
+        return index
+      },
+    },
+  },
+  render(h, ctx) {
+    let { data, props, children } = ctx
+
+    return h(NimbleEmoji, { ...data, props }, children)
+  },
+}
+</script>
+```
+
 ## Not opinionated
 
 **Emoji Mart** doesn’t automatically insert anything into a text input, nor does it show or hide itself. It simply returns an `emoji` object. It’s up to the developer to mount/unmount (it’s fast!) and position the picker. You can use the returned object as props for the `EmojiMart.Emoji` component. You could also use `emoji.colons` to insert text into a textarea or `emoji.native` to use the emoji.
