@@ -45,7 +45,9 @@ Here is the list of [releases](https://github.com/serebrov/emoji-mart-vue/releas
 ### Picker
 
 ```js
-import { Picker } from 'emoji-mart-vue-fast'
+import data from '../data/all.json'
+import { Picker, EmojiIndex } from 'emoji-mart-vue-fast'
+let emojiIndex = new EmojiIndex(data)
 ```
 
 Import CSS with default styles:
@@ -66,11 +68,11 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 ```
 
 ```html
-<picker set="emojione" />
-<picker @select="addEmoji" />
-<picker title="Pick your emoji…" emoji="point_up" />
-<picker :style="{ position: 'absolute', bottom: '20px', right: '20px' }" />
-<picker
+<picker :data="emojiIndex" set="emojione" />
+<picker :data="emojiIndex" @select="addEmoji" />
+<picker :data="emojiIndex" title="Pick your emoji…" emoji="point_up" />
+<picker :data="emojiIndex" :style="{ position: 'absolute', bottom: '20px', right: '20px' }" />
+<picker :data="emojiIndex" 
 	:i18n="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }"
 />
 ```
@@ -107,7 +109,7 @@ This component does not enforce the usage pattern and it's up to the application
 For example:
 
 ```
-<picker @select="this.selectEmoji" />
+<picker :data="emojiIndex" @select="this.selectEmoji" />
 
 ...
 
@@ -358,13 +360,14 @@ let index = new EmojiIndex(data, {
 ### Emoji
 
 ```js
-import { Emoji } from 'emoji-mart-vue-fast'
+import data from 'emoji-mart-vue-fast/data/all.json'
+import { Emoji, EmojiIndex } from 'emoji-mart-vue-fast'
 ```
 
 ```html
-<emoji emoji=":santa::skin-tone-3:" :size="32" />
-<emoji emoji="santa" set="emojione" :size="32" />
-<emoji :emoji="santaEmojiObject" :size="32" />
+<emoji :data="index" emoji=":santa::skin-tone-3:" :size="32" />
+<emoji :data="index" emoji="santa" set="emojione" :size="32" />
+<emoji :data="index" :emoji="santaEmojiObject" :size="32" />
 
 <script>
 import data from '../data/all.json'
@@ -556,7 +559,6 @@ Emoji component wrapper with default settings:
 ```javascript
 <script>
 import data from 'emoji-mart-vue-fast/data/all.json'
-import { uncompress } from 'emoji-mart-vue-fast/src/utils/data'
 import { EmojiIndex } from 'emoji-mart-vue-fast/src/utils/emoji-data'
 import EmojiMartEmoji from 'emoji-mart-vue-fast/src/components/Emoji'
 

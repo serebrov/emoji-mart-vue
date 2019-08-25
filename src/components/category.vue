@@ -35,7 +35,7 @@
 <script>
 
 import { EmojiView } from '../utils/emoji-data'
-import Emoji from './emoji/Emoji'
+import Emoji from './Emoji'
 
 
 export default {

@@ -48,7 +48,7 @@
 
 <script>
 
-import Emoji from './emoji/Emoji'
+import Emoji from './Emoji'
 import Skins from './skins'
 
 export default {
