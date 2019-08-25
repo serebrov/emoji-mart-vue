@@ -5,10 +5,9 @@ import { EmojiIndex } from '../src/utils/emoji-data'
 import {
   Anchors,
   Picker,
-  NimblePicker,
   Category,
   Preview,
-  NimbleEmoji,
+  Emoji,
 } from '../src/components'
 
 describe('Picker', () => {
@@ -24,9 +23,9 @@ describe('Picker', () => {
   })
 })
 
-describe('NimblePicker', () => {
+describe('Picker', () => {
   let index = new EmojiIndex(data)
-  const picker = mount(NimblePicker, {
+  const picker = mount(Picker, {
     propsData: {
       data: index,
     },
@@ -97,7 +96,7 @@ describe('anchors', () => {
       },
     ],
   })
-  const picker = mount(NimblePicker, {
+  const picker = mount(Picker, {
     propsData: {
       data: index,
     },
@@ -144,7 +143,7 @@ describe('anchors', () => {
 
 describe('emjois', () => {
   let index = new EmojiIndex(data)
-  const picker = mount(NimblePicker, {
+  const picker = mount(Picker, {
     propsData: {
       data: index,
     },
@@ -167,7 +166,7 @@ describe('emjois', () => {
 
 describe('emjois skin', () => {
   let index = new EmojiIndex(data)
-  const picker = mount(NimblePicker, {
+  const picker = mount(Picker, {
     propsData: {
       data: index,
       skin: 6,
@@ -191,7 +190,7 @@ describe('emjois skin', () => {
 
 describe('emjoi tooltip', () => {
   let index = new EmojiIndex(data)
-  const picker = mount(NimblePicker, {
+  const picker = mount(Picker, {
     propsData: {
       data: index,
     },
@@ -212,7 +211,7 @@ describe('emjoi tooltip', () => {
 
 describe('emjoi preview', () => {
   let index = new EmojiIndex(data)
-  const picker = mount(NimblePicker, {
+  const picker = mount(Picker, {
     propsData: {
       data: index,
       emoji: 'point_up',
@@ -220,7 +219,7 @@ describe('emjoi preview', () => {
   })
 
   it('preview shows point_up when no emoji is hovered', () => {
-    let emoji = picker.find(Preview).find(NimbleEmoji)
+    let emoji = picker.find(Preview).find(Emoji)
     expect(emoji.vm.emojiObject.id).toBe('point_up')
   })
 
@@ -228,7 +227,7 @@ describe('emjoi preview', () => {
     let emoji = picker.find('[data-title="+1"]')
     emoji.trigger('mouseenter')
 
-    let previewEmoji = picker.find(Preview).find(NimbleEmoji)
+    let previewEmoji = picker.find(Preview).find(Emoji)
     expect(previewEmoji.vm.emojiObject.id).toBe('+1')
   })
 })

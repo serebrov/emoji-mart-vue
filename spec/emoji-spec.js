@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
 import { EmojiIndex, EmojiView } from '../src/utils/emoji-data'
-import { Emoji, NimbleEmoji } from '../src/components'
+import { Emoji } from '../src/components'
 
 describe('Emoji', () => {
   const index = new EmojiIndex(data)

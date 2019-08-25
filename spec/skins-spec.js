@@ -2,11 +2,11 @@ import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
-import { NimblePicker, Skins } from '../src/components'
+import { Picker, Skins } from '../src/components'
 
 describe('emjois skin', () => {
   let index = new EmojiIndex(data)
-  const picker = mount(NimblePicker, {
+  const picker = mount(Picker, {
     propsData: {
       data: index,
       skin: 6,

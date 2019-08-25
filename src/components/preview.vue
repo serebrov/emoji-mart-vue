@@ -3,7 +3,7 @@
 <div class="emoji-mart-preview">
   <template v-if="emoji">
       <div class="emoji-mart-preview-emoji">
-        <nimble-emoji
+        <emoji
           :data="data"
           :emoji="emoji"
           :native="emojiProps.native"
@@ -25,7 +25,7 @@
 
   <template v-else>
     <div class="emoji-mart-preview-emoji">
-      <nimble-emoji
+      <emoji
         :data="data"
         :emoji="idleEmoji"
         :native="emojiProps.native"
@@ -48,7 +48,7 @@
 
 <script>
 
-import NimbleEmoji from './emoji/nimbleEmoji'
+import Emoji from './emoji/Emoji'
 import Skins from './skins'
 
 export default {
@@ -101,7 +101,7 @@ export default {
     }
   },
   components: {
-    NimbleEmoji,
+    Emoji,
     Skins
   }
 }
