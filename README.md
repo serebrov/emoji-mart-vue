@@ -12,15 +12,17 @@ Major changes are:
 
 - Reworked emoji index class: use same index (so same data) for all components.
 - Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories
-- Render emojis in categories without `NimbleEmoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
+- Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
 - Frozen objects with emoji data to disable Vue change tracking
-- Do not create `NimbleEmojiIndex` globally, as it was loaded (along with the emoji data) even when not used
+- Do not create `EmojiIndex` globally, before it was loaded (along with the emoji data) even when it was not actually used
 - Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
 - Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
 - Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
 - Updated to babel 7
 - Added tests
 
+Breaking change in v6: removed `Emoji` and `Picker` [wrappers](#convenience-wrappers), renamed `NimbleEmoji` to `Emoji` and `NimblePicker` to `Picker`.
+See the `Convenience Wrappers` section below for details.
 
 > The original project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
 
@@ -43,7 +45,9 @@ Here is the list of [releases](https://github.com/serebrov/emoji-mart-vue/releas
 ### Picker
 
 ```js
-import { Picker } from 'emoji-mart-vue-fast'
+import data from '../data/all.json'
+import { Picker, EmojiIndex } from 'emoji-mart-vue-fast'
+let emojiIndex = new EmojiIndex(data)
 ```
 
 Import CSS with default styles:
@@ -64,11 +68,11 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 ```
 
 ```html
-<picker set="emojione" />
-<picker @select="addEmoji" />
-<picker title="Pick your emoji…" emoji="point_up" />
-<picker :style="{ position: 'absolute', bottom: '20px', right: '20px' }" />
-<picker
+<picker :data="emojiIndex" set="emojione" />
+<picker :data="emojiIndex" @select="addEmoji" />
+<picker :data="emojiIndex" title="Pick your emoji…" emoji="point_up" />
+<picker :data="emojiIndex" :style="{ position: 'absolute', bottom: '20px', right: '20px' }" />
+<picker :data="emojiIndex" 
 	:i18n="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }"
 />
 ```
@@ -105,7 +109,7 @@ This component does not enforce the usage pattern and it's up to the application
 For example:
 
 ```
-<picker @select="this.selectEmoji" />
+<picker :data="emojiIndex" @select="this.selectEmoji" />
 
 ...
 
@@ -244,7 +248,7 @@ Note: URLs for background images are specified in the [css/emoji-mart.css](css/e
 
 #### Datasets and Custom Emojis
 
-While all sets are available by default, you may want to include only a single set data to reduce the size of your bundle.
+While the default setup assumes `all.json` usage with all sets available, you may want to include only a single set data to reduce the size of your bundle.
 
 | Set       | Size (on disk) |
 | --------- | -------------- |
@@ -256,16 +260,16 @@ While all sets are available by default, you may want to include only a single s
 | messenger | 197 KB         |
 | twitter   | 484 KB         |
 
-To use these data files (or any other custom data), use the `NimblePicker` component:
+To use these data files (or any other custom data), use the `Picker` component like this:
 
 ```js
 import data from 'emoji-mart-vue-fast/data/messenger.json'
-import { NimblePicker, EmojiIndex } from 'emoji-mart-vue-fast'
+import { Picker, EmojiIndex } from 'emoji-mart-vue-fast'
 let index = new EmojiIndex(data)
 ```
 
 ```html
-<nimble-picker set="messenger" :data="data" />
+<picker set="messenger" :data="data" />
 ```
 
 Using `EmojiIndex`, it is also possible to control which emojis data is included or excluded via constructor parameters:
@@ -287,7 +291,7 @@ For example:
 
 ```js
 import data from 'emoji-mart-vue-fast/data/messenger.json'
-import { NimblePicker, EmojiIndex } from 'emoji-mart-vue-fast'
+import { Picker, EmojiIndex } from 'emoji-mart-vue-fast'
 
 let emojisToShowFilter = function(emoji) {
 	// check the emoji properties, see the examples of emoji object below
@@ -356,13 +360,14 @@ let index = new EmojiIndex(data, {
 ### Emoji
 
 ```js
-import { Emoji } from 'emoji-mart-vue-fast'
+import data from 'emoji-mart-vue-fast/data/all.json'
+import { Emoji, EmojiIndex } from 'emoji-mart-vue-fast'
 ```
 
 ```html
-<emoji emoji=":santa::skin-tone-3:" :size="32" />
-<emoji emoji="santa" set="emojione" :size="32" />
-<emoji :emoji="santaEmojiObject" :size="32" />
+<emoji :data="index" emoji=":santa::skin-tone-3:" :size="32" />
+<emoji :data="index" emoji="santa" set="emojione" :size="32" />
+<emoji :data="index" :emoji="santaEmojiObject" :size="32" />
 
 <script>
 import data from '../data/all.json'
@@ -509,6 +514,76 @@ It can however be overwritten as per user preference.
 Apple / Google / Twitter / EmojiOne / Messenger / Facebook
 
 <img width="214" alt="sets" src="https://user-images.githubusercontent.com/436043/33786868-d4226e60-dc38-11e7-840a-e4cf490f5f4a.png">
+
+## Convenience Wrappers
+
+Below are convenience wrappers for `Emoji` and `Picker` components that make usage simpler.
+These were present before in the project source, but, since they are using `all.json` for data, that resulted in bigger bundle sizes (as `all.json` was also included into the any app that is using emoji picker, even if it doesn't need `all.json`).
+
+So the components were removed and included here as an example.
+
+Picker component wrapper with default settings:
+
+```javascript
+<script>
+import data from 'emoji-mart-vue-fast/data/all.json'
+import { EmojiIndex } from 'emoji-mart-vue-fast/src/utils/emoji-data'
+import EmojiMartPicker from 'emoji-mart-vue-fast/src/components/Picker'
+
+import { PickerProps } from 'emoji-mart-vue-fast/src/utils/shared-props'
+
+let index = new EmojiIndex(data)
+
+export default {
+  functional: true,
+  props: {
+    ...PickerProps,
+    data: {
+      type: Object,
+      default() {
+        return index
+      },
+    },
+  },
+  render(h, ctx) {
+    let { data, props, children } = ctx
+
+    return h(EmojiMartPicker, { ...data, props }, children)
+  },
+}
+</script>
+```
+
+Emoji component wrapper with default settings:
+
+```javascript
+<script>
+import data from 'emoji-mart-vue-fast/data/all.json'
+import { EmojiIndex } from 'emoji-mart-vue-fast/src/utils/emoji-data'
+import EmojiMartEmoji from 'emoji-mart-vue-fast/src/components/Emoji'
+
+import { EmojiProps } from 'emoji-mart-vue-fast/src/utils/shared-props'
+
+export default {
+  functional: true,
+  props: {
+    ...EmojiProps,
+    data: {
+      type: Object,
+      default() {
+        let index = new EmojiIndex(data)
+        return index
+      },
+    },
+  },
+  render(h, ctx) {
+    let { data, props, children } = ctx
+
+    return h(EmojiMartEmoji, { ...data, props }, children)
+  },
+}
+</script>
+```
 
 ## Not opinionated
 

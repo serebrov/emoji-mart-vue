@@ -2,12 +2,13 @@ import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
 import { EmojiIndex, EmojiView } from '../src/utils/emoji-data'
-import { Emoji, NimbleEmoji } from '../src/components'
+import { Emoji } from '../src/components'
 
 describe('Emoji', () => {
   const index = new EmojiIndex(data)
   const emoji = mount(Emoji, {
     propsData: {
+      data: index,
       emoji: 'point_up',
     },
   })
@@ -75,6 +76,7 @@ describe('Emoji native', () => {
   const index = new EmojiIndex(data)
   const emoji = mount(Emoji, {
     propsData: {
+      data: index,
       native: true,
       emoji: 'point_up',
     },
@@ -93,8 +95,10 @@ describe('Emoji native', () => {
 })
 
 describe('Emoji title', () => {
+  const index = new EmojiIndex(data)
   const emoji = mount(Emoji, {
     propsData: {
+      data: index,
       emoji: 'point_up',
     },
   })
@@ -115,8 +119,10 @@ describe('Emoji title', () => {
 })
 
 describe('Emoji size', () => {
+  const index = new EmojiIndex(data)
   const emoji = mount(Emoji, {
     propsData: {
+      data: index,
       emoji: 'point_up',
     },
   })

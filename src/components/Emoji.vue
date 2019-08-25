@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { EmojiProps } from '../../utils/shared-props'
-import { EmojiView } from '../../utils/emoji-data'
+import { EmojiProps } from '../utils/shared-props'
+import { EmojiView } from '../utils/emoji-data'
 
 const SHEET_COLUMNS = 52
 
