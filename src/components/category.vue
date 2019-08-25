@@ -19,7 +19,7 @@
   </template>
 
   <div v-if="!hasResults">
-    <nimble-emoji
+    <emoji
       :data="data"
       emoji="sleuth_or_spy"
       :native="emojiProps.native"
@@ -35,7 +35,7 @@
 <script>
 
 import { EmojiView } from '../utils/emoji-data'
-import NimbleEmoji from './emoji/nimbleEmoji'
+import Emoji from './Emoji'
 
 
 export default {
@@ -91,7 +91,7 @@ export default {
     }
   },
   components: {
-    NimbleEmoji
+    Emoji
   }
 }
 

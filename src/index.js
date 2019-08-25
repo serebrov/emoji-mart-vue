@@ -4,9 +4,7 @@ import frequently from './utils/frequently'
 
 export {
   Picker,
-  NimblePicker,
   Emoji,
-  NimbleEmoji,
   Anchors,
   Preview,
   Search,

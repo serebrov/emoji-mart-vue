@@ -54,8 +54,10 @@ describe('search no focus', () => {
     document.activeElement.blur()
     expect(document.activeElement).toBe(document.body)
 
+    let index = new EmojiIndex(data)
     const picker = mount(Picker, {
       propsData: {
+        data: index,
         autoFocus: false,
       },
     })
@@ -70,8 +72,10 @@ describe('search no focus', () => {
     document.activeElement.blur()
     expect(document.activeElement).toBe(document.body)
 
+    let index = new EmojiIndex(data)
     const picker = mount(Picker, {
       propsData: {
+        data: index,
         autoFocus: true,
       },
     })

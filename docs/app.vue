@@ -37,13 +37,14 @@
     </div>
 
     <div v-if="isVisible" class="row">
-      <nimble-picker
+      <picker
         :data="index"
         :set="activeSet"
         :native="native"
         :emoji="emoji"
         :emojiTooltip="true"
         :title="title"
+        :emojiSize="30"
       />
     </div>
 
@@ -71,7 +72,7 @@
         <template slot="previewTemplate" slot-scope="slotProps">
           <div class="emoji-mart-preview">
             <div class="emoji-mart-preview-emoji">
-              <NimbleEmoji
+              <Emoji
                 :data="slotProps.data"
                 :emoji="slotProps.emoji ? slotProps.emoji : 'point_up'"
                 :native="slotProps.emojiProps.native"
@@ -98,7 +99,7 @@
 
     <div class="row">
       <div>Filtered picker example</div>
-      <NimblePicker
+      <Picker
         :native="true"
         emoji="flag-tf"
         :emojiSize="18"
@@ -110,7 +111,7 @@
 
 <script>
 import data from '../data/all.json'
-import { Picker, NimblePicker, NimbleEmoji, Emoji, EmojiIndex } from '../src'
+import { Picker, Emoji, EmojiIndex } from '../src'
 import '../css/emoji-mart.css'
 
 const CUSTOM_EMOJIS = [
@@ -179,9 +180,7 @@ export default {
   },
   components: {
     Picker,
-    NimblePicker,
     Emoji,
-    NimbleEmoji,
   },
 }
 </script>
