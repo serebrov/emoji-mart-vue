@@ -524,8 +524,7 @@ export class EmojiView {
         width: emojiSize + 'px',
         height: emojiSize + 'px',
       }
-    }
-    if (this._hasEmoji() && !this._isNative()) {
+    } else if (this._hasEmoji() && !this._isNative()) {
       cssStyle = {
         backgroundPosition: this.getEmoji().getPosition(),
       }
@@ -572,9 +571,22 @@ export class EmojiView {
   }
 
   _hasEmoji() {
-    return (
-      this.getEmoji()._data && this.getEmoji()._data['has_img_' + this._set]
-    )
+    if (!this.getEmoji()._data) {
+      // Return false if we have no data.
+      return false
+    }
+    const hasImage = this.getEmoji()._data['has_img_' + this._set]
+    if (hasImage === undefined) {
+      // If there is no has_img_xxx in the data, we are working with
+      // specific data file, like messenger.json, so we assume all
+      // emojis are available (the :set setting for picker should
+      // match the data file).
+      return true
+    }
+    // Otherwise, we are using all.json and can switch between different
+    // sets - in this case the `has_img_{set_name}` is a boolean that
+    // indicates if there is such image or not for a given set.
+    return hasImage
   }
 
   _emojiType() {

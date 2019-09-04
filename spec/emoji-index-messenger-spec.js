@@ -1,5 +1,5 @@
 import { EmojiIndex, EmojiData, EmojiView } from '../src/utils/emoji-data'
-import data from '../data/all.json'
+import data from '../data/messenger.json'
 
 describe('#EmojiIndex', () => {
   describe('search', function() {
@@ -14,12 +14,16 @@ describe('#EmojiIndex', () => {
           unified: '1f34d',
           added_in: '6.0',
           emoticons: undefined,
-          has_img_apple: true,
-          has_img_emojione: true,
-          has_img_facebook: true,
-          has_img_google: true,
-          has_img_messenger: true,
-          has_img_twitter: true,
+          // The has_img_xxx are deleted from specific files
+          // (as we assume that we using only one data file and
+          // only one set, like 'messenger' - the file by definition
+          // contains all messenger emojis).
+          has_img_apple: undefined,
+          has_img_emojione: undefined,
+          has_img_facebook: undefined,
+          has_img_google: undefined,
+          has_img_messenger: undefined,
+          has_img_twitter: undefined,
           keywords: ['fruit', 'nature', 'food'],
           non_qualified: undefined,
           search: 'pineapple,fruit,nature,food',
@@ -34,7 +38,7 @@ describe('#EmojiIndex', () => {
       expect(emojis[0].colons).toEqual(':pineapple:')
       expect(emojis[0].native).toEqual('🍍')
 
-      let emojiView = new EmojiView(emojis[0], 1, 'apple', true, undefined)
+      let emojiView = new EmojiView(emojis[0], 1, 'messenger', true, undefined)
       expect(emojiView._hasEmoji()).toEqual(true)
       expect(emojiView.canRender).toEqual(true)
     })
@@ -55,18 +59,9 @@ describe('#EmojiIndex', () => {
       expect(emojiIndex.search('flag')).toEqual([])
     })
 
-    it('can search for thinking_face', () => {
+    it('can search for thumbsup', () => {
       const emojiIndex = new EmojiIndex(data)
-      expect(emojiIndex.search('thinking_fac').map((x) => x.id)).toEqual([
-        'thinking_face',
-      ])
-    })
-
-    it('can search for woman-facepalming', () => {
-      const emojiIndex = new EmojiIndex(data)
-      expect(emojiIndex.search('woman-facep').map((x) => x.id)).toEqual([
-        'woman-facepalming',
-      ])
+      expect(emojiIndex.search('thumbsup').map((x) => x.id)).toEqual(['+1'])
     })
   })
 })
