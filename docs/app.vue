@@ -4,9 +4,9 @@
       <h1>Emoji Mart Vue 🏬</h1>
     </div>
     <div class="row">
-      <emoji emoji=":santa::skin-tone-3:" :size="32" />
-      <emoji emoji="santa" set="emojione" :size="32" />
-      <emoji :emoji="santaEmojiObject" :size="32" />
+      <emoji :data="index" emoji=":santa::skin-tone-3:" :size="32" />
+      <emoji :data="index" emoji="santa" set="emojione" :size="32" />
+      <emoji :data="index" :emoji="santaEmojiObject" :size="32" />
     </div>
 
     <div class="row">
@@ -61,7 +61,7 @@
     <div class="row"></div>
     <div class="row">
       <div>Custom Search And Preview Templates Example</div>
-      <Picker :native="true">
+      <Picker :data="index" :native="true">
         <template slot="searchTemplate" slot-scope="slotProps">
           <input
             type="text"
