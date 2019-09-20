@@ -76,7 +76,11 @@
     <div class="row"></div>
     <h2>Custom Search And Preview Templates Example</h2>
     <div class="row">
-      <Picker :data="index" :native="true">
+      Also here we use "StaticPicker" which does not use virtual scroller (it is
+      slower, but easier to customize with css)
+    </div>
+    <div class="row">
+      <StaticPicker :data="index" :native="true">
         <template slot="searchTemplate" slot-scope="slotProps">
           <input
             type="text"
@@ -109,7 +113,7 @@
             </div>
           </div>
         </template>
-      </Picker>
+      </StaticPicker>
     </div>
 
     <div class="row"></div>
@@ -127,7 +131,7 @@
 
 <script>
 import data from '../data/all.json'
-import { Picker, Emoji, EmojiIndex } from '../src'
+import { Picker, StaticPicker, Emoji, EmojiIndex } from '../src'
 import '../css/emoji-mart.css'
 
 import { QBtn, QDialog } from 'quasar-framework/dist/quasar.mat.esm'
@@ -203,6 +207,7 @@ export default {
   },
   components: {
     Picker,
+    StaticPicker,
     Emoji,
     QBtn,
     QDialog,
