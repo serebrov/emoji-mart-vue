@@ -11,7 +11,7 @@ This was the reason to fork and change it, the demo is [here](https://serebrov.g
 Major changes are:
 
 - Reworked emoji index class: use same index (so same data) for all components.
-- Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories
+- Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories (note: there is `StaticPicker` version that doesn't use virtual scroller)
 - Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
 - Frozen objects with emoji data to disable Vue change tracking
 - Do not create `EmojiIndex` globally, before it was loaded (along with the emoji data) even when it was not actually used
@@ -356,6 +356,14 @@ let index = new EmojiIndex(data, {
   imageUrl: 'https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7'
 }
 ```
+
+### StaticPicker
+
+Same as `Picker`, but doesn't use [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller).
+It is a bit slower, but easier to customize (especially, if you need a custom scroll bar style).
+
+Note: `vue-virtual-scroller` also may lead to rendering problems when `Picker` is used inside the dialog (in particluar, QDialog from Quasar Framework).
+The `StaticPicker` might also be useful here, see #57 for other workarounds (disable animation, trigger vue-virtual-scroller update after rendering).
 
 ### Emoji
 
