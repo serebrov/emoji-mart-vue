@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <div class="row">
       <h1>Emoji Mart Vue 🏬</h1>
     </div>
@@ -45,8 +45,11 @@
         :emojiTooltip="true"
         :title="title"
         :emojiSize="30"
+        @select="showEmoji"
       />
     </div>
+
+    <div class="row">{{ emojisOutput }}</div>
 
     <div class="row-small">
       <iframe
@@ -59,8 +62,20 @@
     </div>
 
     <div class="row"></div>
+    <h2>QDialog Example</h2>
     <div class="row">
-      <div>Custom Search And Preview Templates Example</div>
+      <q-btn label="Open QDialog" @click="emojiPickerDialog = true" />
+    </div>
+
+    <q-dialog v-model="emojiPickerDialog">
+      <template v-slot:body style="height:450px">
+        <picker :data="index" :emojiSize="24" :native="true"></picker>
+      </template>
+    </q-dialog>
+
+    <div class="row"></div>
+    <h2>Custom Search And Preview Templates Example</h2>
+    <div class="row">
       <Picker :data="index" :native="true">
         <template slot="searchTemplate" slot-scope="slotProps">
           <input
@@ -97,8 +112,9 @@
       </Picker>
     </div>
 
+    <div class="row"></div>
+    <h2>Filtered picker example</h2>
     <div class="row">
-      <div>Filtered picker example</div>
       <Picker
         :native="true"
         emoji="flag-tf"
@@ -113,6 +129,8 @@
 import data from '../data/all.json'
 import { Picker, Emoji, EmojiIndex } from '../src'
 import '../css/emoji-mart.css'
+
+import { QBtn, QDialog } from 'quasar-framework/dist/quasar.mat.esm'
 
 const CUSTOM_EMOJIS = [
   {
@@ -155,6 +173,8 @@ export default {
       emoji: 'point_up',
       title: 'Pick your emoji…',
       isVisible: true,
+      emojiPickerDialog: false,
+      emojisOutput: '',
     }
   },
   computed: {
@@ -177,10 +197,15 @@ export default {
     toggleVisible() {
       this.isVisible = !this.isVisible
     },
+    showEmoji(emoji) {
+      this.emojisOutput = this.emojisOutput + emoji.native
+    },
   },
   components: {
     Picker,
     Emoji,
+    QBtn,
+    QDialog,
   },
 }
 </script>
@@ -203,8 +228,36 @@ button[disabled] {
   cursor: default;
 }
 
+.modal {
+  color: red;
+}
+
+/**
+ * See https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors
+ * the `>>>` allows to apply scoped css to child element that is generated
+ * dynamically
+**/
+.modal >>> .modal-scroll {
+  color: red;
+  max-height: none;
+}
+.modal .modal-body {
+  max-height: none;
+}
+
 h1 {
   font-family: Courier;
+  font-size: 2rem;
+}
+
+h2 {
+  font-family: Courier;
+  font-size: 1.25rem;
+  margin-top: 2rem;
+}
+
+.app .row {
+  display: block;
 }
 
 .row + .row {
