@@ -224,7 +224,9 @@ export default {
       for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
         let category = this.filteredCategories[i],
           component = this.$refs.categories[i]
-        if (component && component.$el.offsetTop > scrollTop) {
+        // The `-50` offset switches active category (selected in the
+        // anchors bar) a bit eariler, before it actually reaches the top.
+        if (component && component.$el.offsetTop - 50 > scrollTop) {
           break
         }
         activeCategory = category
