@@ -190,8 +190,9 @@
 }
 .emoji-mart-static .emoji-mart-category-label {
   z-index: 2;
-  /* position: relative; */
-  position: -webkit-sticky;
+  position: relative;
+  /* position: sticky; */
+  /* position: -webkit-sticky; */
 }
 
 .emoji-mart-category-label span {
