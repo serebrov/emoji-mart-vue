@@ -4,6 +4,7 @@ import frequently from './utils/frequently'
 
 export {
   Picker,
+  StaticPicker,
   Emoji,
   Anchors,
   Preview,

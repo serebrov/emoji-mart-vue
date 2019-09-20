@@ -75,6 +75,16 @@
   border-bottom-right-radius: 5px;
 }
 
+.emoji-mart-scroll {
+  position: relative;
+  overflow-y: scroll;
+  flex: 1;
+  padding: 0 6px 6px 6px;
+  z-index: 0; /* Fix for rendering sticky positioned category labels on Chrome */
+  will-change: transform; /* avoids "repaints on scroll" in mobile Chrome */
+  -webkit-overflow-scrolling: touch;
+}
+
 .emoji-mart-anchors {
   display: flex;
   flex-direction: row;
@@ -175,11 +185,13 @@
 }
 
 .emoji-mart-category-label {
-  /* z-index: 2; */
-  /* position: relative; */
-  /* position: -webkit-sticky; */
   position: sticky;
   top: 0;
+}
+.emoji-mart-static .emoji-mart-category-label {
+  z-index: 2;
+  /* position: relative; */
+  position: -webkit-sticky;
 }
 
 .emoji-mart-category-label span {
