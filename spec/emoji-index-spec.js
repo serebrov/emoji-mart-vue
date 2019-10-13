@@ -69,4 +69,58 @@ describe('#EmojiIndex', () => {
       ])
     })
   })
+
+  describe('categories', function() {
+    it('should return categories', () => {
+      const emojiIndex = new EmojiIndex(data)
+      const categories = emojiIndex.categories()
+
+      expect(categories.length).toBe(9)
+      expect(categories.map((c) => c.id)).toEqual([
+        'recent',
+        'people',
+        'nature',
+        'foods',
+        'activity',
+        'places',
+        'objects',
+        'symbols',
+        'flags',
+      ])
+    })
+
+    it('should filter out excluded categories', () => {
+      const emojiIndex = new EmojiIndex(data, { exclude: 'people' })
+      const categories = emojiIndex.categories()
+
+      expect(categories.length).toBe(8)
+      expect(categories.map((c) => c.id)).toEqual([
+        'recent',
+        'nature',
+        'foods',
+        'activity',
+        'places',
+        'objects',
+        'symbols',
+        'flags',
+      ])
+    })
+
+    it('should filter out the "recent" category', () => {
+      const emojiIndex = new EmojiIndex(data, { exclude: 'recent' })
+      const categories = emojiIndex.categories()
+
+      expect(categories.length).toBe(8)
+      expect(categories.map((c) => c.id)).toEqual([
+        'people',
+        'nature',
+        'foods',
+        'activity',
+        'places',
+        'objects',
+        'symbols',
+        'flags',
+      ])
+    })
+  })
 })
