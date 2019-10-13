@@ -149,7 +149,7 @@ export class EmojiIndex {
 
   buildIndex() {
     this._data.categories.forEach((categoryData) => {
-      if (!this.isCategoryNeeded(categoryData)) {
+      if (!this.isCategoryNeeded(categoryData.id)) {
         return
       }
       let category = {
@@ -403,17 +403,17 @@ export class EmojiIndex {
   /**
    * Check if we need to include given category.
    *
-   * @param {object} category - The category object.
+   * @param {string} category_id - The category id.
    * @return {boolean} - Whether to include the emoji.
    */
-  isCategoryNeeded(category) {
+  isCategoryNeeded(category_id) {
     let isIncluded =
       this._include && this._include.length
-        ? this._include.indexOf(category.id) > -1
+        ? this._include.indexOf(category_id) > -1
         : true
     let isExcluded =
       this._exclude && this._exclude.length
-        ? this._exclude.indexOf(category.id) > -1
+        ? this._exclude.indexOf(category_id) > -1
         : false
     if (!isIncluded || isExcluded) {
       return false
