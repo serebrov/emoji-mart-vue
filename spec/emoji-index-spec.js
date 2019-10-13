@@ -93,14 +93,33 @@ describe('#EmojiIndex', () => {
       const emojiIndex = new EmojiIndex(data, { exclude: 'people' })
       const categories = emojiIndex.categories()
 
-      expect(categories.length).toBe(8)
+      expect(categories.length).toBe(7)
       expect(categories.map((c) => c.id)).toEqual([
-        'recent',
+        // 'frequently' module only has emojis from 'people' by default,
+        // so when we filter it out, 'recent' also disappears.
+        // 'recent',
         'nature',
         'foods',
         'activity',
         'places',
         'objects',
+        'symbols',
+        'flags',
+      ])
+    })
+
+    it('should filter out excluded categories - objects', () => {
+      const emojiIndex = new EmojiIndex(data, { exclude: 'objects' })
+      const categories = emojiIndex.categories()
+
+      expect(categories.length).toBe(8)
+      expect(categories.map((c) => c.id)).toEqual([
+        'recent',
+        'people',
+        'nature',
+        'foods',
+        'activity',
+        'places',
         'symbols',
         'flags',
       ])
