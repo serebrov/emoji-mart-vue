@@ -7,7 +7,7 @@
         :color="color"
         :categories="categories"
         :active-category="activeCategory"
-        @click="onAnchorClick"
+        @click.prevent="onAnchorClick"
       />
     </div>
 
