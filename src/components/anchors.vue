@@ -1,47 +1,48 @@
 <template>
 
-<div class="emoji-mart-anchors">
+    <div class="emoji-mart-anchors">
   <span
-    v-for="category in categories"
-    :key="category.id"
-    :class="{ 'emoji-mart-anchor': true, 'emoji-mart-anchor-selected': category.id == activeCategory.id }"
-    :style="{ 'color': (category.id == activeCategory.id ? color : '') }"
-    :data-title="i18n.categories[category.id]"
-    @click.prevent="$emit('click', category)">
+          v-for="category in categories"
+          :key="category.id"
+          :class="{ 'emoji-mart-anchor': true, 'emoji-mart-anchor-selected': category.id == activeCategory.id }"
+          :style="{ 'color': (category.id == activeCategory.id ? color : '') }"
+          :data-title="i18n.categories[category.id]"
+          @click.prevent="$emit('click', category)"
+          @mousedown.prevent>
     <div v-html="svgs[category.id]"/>
     <span class="emoji-mart-anchor-bar" :style="{ backgroundColor: color }"></span>
   </span>
-</div>
+    </div>
 
 </template>
 
 <script>
 
-import svgs from '../svgs'
+  import svgs from '../svgs'
 
-export default {
-  props: {
-    i18n: {
-      type: Object,
-      required: true
+  export default {
+    props: {
+      i18n: {
+        type: Object,
+        required: true,
+      },
+      color: {
+        type: String,
+      },
+      categories: {
+        type: Array,
+        required: true,
+      },
+      activeCategory: {
+        type: Object,
+        default() {
+          return {}
+        },
+      },
     },
-    color: {
-      type: String
+    created() {
+      this.svgs = svgs
     },
-    categories: {
-      type: Array,
-      required: true
-    },
-    activeCategory: {
-      type: Object,
-      default() {
-        return {}
-      }
-    }
-  },
-  created() {
-    this.svgs = svgs
   }
-}
 
 </script>
