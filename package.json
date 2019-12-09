@@ -57,7 +57,7 @@
     "webpack-dev-server": "^3.2.1"
   },
   "scripts": {
-    "clean": "rm -rf dist/",
+    "clean": "RD /S /Q dist/ | exit 0",
     "build:data": "node scripts/build-data",
     "build:dist": "webpack --config src/webpack.config.js",
     "build:dist-stats": "webpack --config src/webpack.config.js --profile --json > stats.json",
