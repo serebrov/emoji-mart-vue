@@ -18,8 +18,6 @@
 import { EmojiProps } from '../utils/shared-props'
 import { EmojiView } from '../utils/emoji-data'
 
-const SHEET_COLUMNS = 52
-
 export default {
   props: {
     ...EmojiProps,
