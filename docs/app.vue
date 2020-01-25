@@ -5,7 +5,7 @@
     </div>
     <div class="row">
       <emoji :data="index" emoji=":santa::skin-tone-3:" :size="32" />
-      <emoji :data="index" emoji="santa" set="emojione" :size="32" />
+      <emoji :data="index" emoji="santa" set="twitter" :size="32" />
       <emoji :data="index" :emoji="santaEmojiObject" :size="32" />
     </div>
 
@@ -21,8 +21,6 @@
           'apple',
           'google',
           'twitter',
-          'emojione',
-          'messenger',
           'facebook',
         ]"
       >
@@ -190,7 +188,7 @@ export default {
       let emoji = index.findEmoji(':smile:')
       // Note, that position in the emoji sheet is calculated by
       // `emoji` object
-      let style = `background-position: ${emoji.getPosition()}; background-image: url(https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5200%`
+      let style = `background-position: ${emoji.getPosition()}; background-image: url(https://unpkg.com/emoji-datasource-twitter@5.0.1/img/twitter/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5200%`
       return `<div class='emoji' style="${style}"></div>`
     },
     santaEmojiObject() {
