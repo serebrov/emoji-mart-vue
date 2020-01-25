@@ -89,7 +89,9 @@ describe('#EmojiIndex', () => {
     })
 
     it('should filter out excluded categories', () => {
-      const emojiIndex = new EmojiIndex(data, { exclude: ['smileys', 'people'] })
+      const emojiIndex = new EmojiIndex(data, {
+        exclude: ['smileys', 'people'],
+      })
       const categories = emojiIndex.categories()
 
       expect(categories.length).toBe(7)
