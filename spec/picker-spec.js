@@ -42,12 +42,12 @@ describe('Picker', () => {
     // Hidden category with search results
     expect(categories.at(0).vm.name).toBe('Search')
     expect(categories.at(1).vm.name).toBe('Recent')
-    expect(categories.at(2).vm.name).toBe('Smileys & People')
-    expect(categories.at(3).vm.name).toBe('Animals & Nature')
-    expect(categories.at(4).vm.name).toBe('Food & Drink')
-    expect(categories.at(5).vm.name).toBe('Activities')
-    expect(categories.at(6).vm.name).toBe('Travel & Places')
-    expect(categories.at(7).vm.name).toBe('Objects')
+    expect(categories.at(2).vm.name).toBe('Smileys & Emotion')
+    expect(categories.at(3).vm.name).toBe('People & Body')
+    expect(categories.at(4).vm.name).toBe('Animals & Nature')
+    expect(categories.at(5).vm.name).toBe('Food & Drink')
+    expect(categories.at(6).vm.name).toBe('Activities')
+    expect(categories.at(7).vm.name).toBe('Travel & Places')
   })
 })
 
@@ -110,7 +110,8 @@ describe('anchors', () => {
     }
     expect(names).toEqual([
       'Frequently Used',
-      'Smileys & People',
+      'Smileys & Emotion',
+      'People & Body',
       'Animals & Nature',
       'Food & Drink',
       'Activity',
@@ -126,7 +127,7 @@ describe('anchors', () => {
     let anchors = picker.find(Anchors)
 
     let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
-    let symbols = anchorsCategories.at(7)
+    let symbols = anchorsCategories.at(8)
     expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
 
     symbols.trigger('click')
@@ -245,7 +246,7 @@ describe('emjoiSize', () => {
     let emojiSpan = emoji.element.childNodes[0]
     expect(emojiSpan.style['width']).toBe('24px')
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 27.45% 96.08%; width: 24px; height: 24px;',
+      'background-position: 23.21% 67.86%; width: 24px; height: 24px;',
     )
   })
 
@@ -255,7 +256,7 @@ describe('emjoiSize', () => {
     // The inner span with applied inline style.
     let emojiSpan = emoji.element.childNodes[0]
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 27.45% 96.08%; width: 20px; height: 20px;',
+      'background-position: 23.21% 67.86%; width: 20px; height: 20px;',
     )
   })
 
@@ -266,7 +267,7 @@ describe('emjoiSize', () => {
     let emojiSpan = emoji.element.childNodes[0]
     // Font-size is 80% of width/height value.
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 27.45% 96.08%; font-size: 19.2px;',
+      'background-position: 23.21% 67.86%; font-size: 19.2px;',
     )
   })
 
@@ -277,7 +278,7 @@ describe('emjoiSize', () => {
     let emojiSpan = emoji.element.childNodes[0]
     // Font-size is 80% of width/height value.
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 27.45% 96.08%; font-size: 16px;',
+      'background-position: 23.21% 67.86%; font-size: 16px;',
     )
   })
 })

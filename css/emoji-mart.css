@@ -40,25 +40,20 @@
 }
 
 .emoji-type-image {
-  background-size: 5200%;
-}
-.emoji-type-image.emoji-set-emojione {
-  background-image: url("https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png");
-}
-.emoji-type-image.emoji-set-messenger {
-  background-image: url("https://unpkg.com/emoji-datasource-messenger@4.0.4/img/messenger/sheets-256/64.png");
+  /* Emoji sheet has 56 colunts, see also utils/emoji-data.js, SHEET_COLUMNS variable */
+  background-size: 5600%;
 }
 .emoji-type-image.emoji-set-apple {
-  background-image: url("https://unpkg.com/emoji-datasource-apple@4.0.4/img/apple/sheets-256/64.png");
+  background-image: url("https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png");
 }
 .emoji-type-image.emoji-set-facebook {
-  background-image: url("https://unpkg.com/emoji-datasource-facebook@4.0.4/img/facebook/sheets-256/64.png");
+  background-image: url("https://unpkg.com/emoji-datasource-facebook@5.0.1/img/facebook/sheets-256/64.png");
 }
 .emoji-type-image.emoji-set-google {
-  background-image: url("https://unpkg.com/emoji-datasource-google@4.0.4/img/google/sheets-256/64.png");
+  background-image: url("https://unpkg.com/emoji-datasource-google@5.0.1/img/google/sheets-256/64.png");
 }
 .emoji-type-image.emoji-set-twitter {
-  background-image: url("https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png");
+  background-image: url("https://unpkg.com/emoji-datasource-twitter@5.0.1/img/twitter/sheets-256/64.png");
 }
 
 .emoji-mart-bar {
