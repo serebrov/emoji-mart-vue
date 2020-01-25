@@ -40,7 +40,8 @@
 }
 
 .emoji-type-image {
-  background-size: 5200%;
+  /* Emoji sheet has 56 colunts, see also utils/emoji-data.js, SHEET_COLUMNS variable */
+  background-size: 5600%;
 }
 .emoji-type-image.emoji-set-apple {
   background-image: url("https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png");

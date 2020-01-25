@@ -2,7 +2,7 @@ import { intersect, unifiedToNative } from './index'
 import { uncompress, buildSearch } from './data'
 import frequently from './frequently'
 
-const SHEET_COLUMNS = 52
+const SHEET_COLUMNS = 56
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
 // Skin tones
 const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
@@ -465,7 +465,7 @@ export class EmojiData {
   }
 
   getPosition() {
-    let multiply = 100 / (SHEET_COLUMNS - 1),
+    let multiply = 100 / SHEET_COLUMNS,
       x = Math.round(multiply * this._data.sheet_x * 100) / 100,
       y = Math.round(multiply * this._data.sheet_y * 100) / 100
     return `${x}% ${y}%`
