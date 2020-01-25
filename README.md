@@ -20,9 +20,15 @@ Major changes are:
 - Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
 - Updated to babel 7
 - Added tests
+- Updated to emojis v12 (see the breaking change note below)
 
 Breaking change in v6: removed `Emoji` and `Picker` [wrappers](#convenience-wrappers), renamed `NimbleEmoji` to `Emoji` and `NimblePicker` to `Picker`.
 See the `Convenience Wrappers` section below for details.
+
+Breaking change in v7: switched to Unicode v12 emoji set which results in several breaking changes:
+- Removed 'emojione' set (removed from [emoji-datasource](https://github.com/iamcal/emoji-data) by [JoyPixels request](https://github.com/iamcal/emoji-data/blob/master/CHANGES.md#2018-07-05--v410))
+- Removed 'messenger' set - it was [merged](https://github.com/iamcal/emoji-data/blob/master/CHANGES.md#2020-01-10--v500) into 'facebook' set
+- Changed emoji categories: removed 'Smileys & People', added 'Smileys & Emotions' and 'People & Body' instead
 
 > The original project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
 
@@ -58,17 +64,17 @@ import 'emoji-mart-vue-fast/css/emoji-mart.css'
 
 Note: to have a custom look for the picker, either use own css file without including the standard one or add custom styles on top of standard.
 
-Note: CSS also includes background images for image-based emoji sets (apple, google, twitter, emojione, messenger, facebook). The images are loaded from the `unpkg.com`. To use self-hosted emojis sheet, override CSS like this:
+Note: CSS also includes background images for image-based emoji sets (apple, google, twitter, facebook). The images are loaded from the `unpkg.com`. To use self-hosted emojis sheet, override CSS like this:
 
 ```css
-/* load emojione sheet from own server */
-.emoji-mart-body .emoji-type-image.emoji-set-emojione {
-	background-image: url(/img/emojione-4.0.4-sheets-256-64.png);
+/* load twitter sheet from own server */
+.emoji-mart-body .emoji-type-image.emoji-set-twitter {
+	background-image: url(/img/twitter-5.0.1-sheets-256-64.png);
 }
 ```
 
 ```html
-<picker :data="emojiIndex" set="emojione" />
+<picker :data="emojiIndex" set="twitter" />
 <picker :data="emojiIndex" @select="addEmoji" />
 <picker :data="emojiIndex" title="Pick your emoji…" emoji="point_up" />
 <picker :data="emojiIndex" :style="{ position: 'absolute', bottom: '20px', right: '20px' }" />
@@ -86,7 +92,7 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 | **perLine**        |          | `9`                | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. |
 | **i18n**           |          | [`{…}`](#i18n)     | [An object](#i18n) containing localized strings                                                      |
 | **native**         |          | `false`            | Renders the native unicode emoji                                                                     |
-| **set**            |          | `apple`            | The emoji set: `'apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'`                   |
+| **set**            |          | `apple`            | The emoji set: `'apple', 'google', 'twitter', 'facebook'`                   |
 | **showPreview**    |          | `true`             | Display preview section                                                                              |
 | **showSearch**     |          | `true`             | Display search section                                                                               |
 | **showCategories** |          | `true`             | Display categories                                                                                   |
@@ -240,10 +246,8 @@ Note: URLs for background images are specified in the [css/emoji-mart.css](css/e
 | Set       | Size (`sheetSize: 16`) | Size (`sheetSize: 20`) | Size (`sheetSize: 32`) | Size (`sheetSize: 64`) |
 | --------- | ---------------------- | ---------------------- | ---------------------- | ---------------------- |
 | apple     | 334 KB                 | 459 KB                 | 1.08 MB                | 2.94 MB                |
-| emojione  | 315 KB                 | 435 KB                 | 1020 KB                | 2.33 MB                |
 | facebook  | 322 KB                 | 439 KB                 | 1020 KB                | 2.50 MB                |
 | google    | 301 KB                 | 409 KB                 | 907 KB                 | 2.17 MB                |
-| messenger | 325 KB                 | 449 MB                 | 1.05 MB                | 2.69 MB                |
 | twitter   | 288 KB                 | 389 KB                 | 839 KB                 | 1.82 MB                |
 
 #### Datasets and Custom Emojis
@@ -254,22 +258,20 @@ While the default setup assumes `all.json` usage with all sets available, you ma
 | --------- | -------------- |
 | all       | 570 KB         |
 | apple     | 484 KB         |
-| emojione  | 485 KB         |
 | facebook  | 421 KB         |
 | google    | 483 KB         |
-| messenger | 197 KB         |
 | twitter   | 484 KB         |
 
 To use these data files (or any other custom data), use the `Picker` component like this:
 
 ```js
-import data from 'emoji-mart-vue-fast/data/messenger.json'
+import data from 'emoji-mart-vue-fast/data/facebook.json'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast'
 let index = new EmojiIndex(data)
 ```
 
 ```html
-<picker set="messenger" :data="data" />
+<picker set="facebook" :data="data" />
 ```
 
 Using `EmojiIndex`, it is also possible to control which emojis data is included or excluded via constructor parameters:
@@ -290,7 +292,7 @@ Avaiable categories are: `people,` `nature,` `foods,` `activity,` `places,` `obj
 For example:
 
 ```js
-import data from 'emoji-mart-vue-fast/data/messenger.json'
+import data from 'emoji-mart-vue-fast/data/facebook.json'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast'
 
 let emojisToShowFilter = function(emoji) {
@@ -374,7 +376,7 @@ import { Emoji, EmojiIndex } from 'emoji-mart-vue-fast'
 
 ```html
 <emoji :data="index" emoji=":santa::skin-tone-3:" :size="32" />
-<emoji :data="index" emoji="santa" set="emojione" :size="32" />
+<emoji :data="index" emoji="santa" set="twitter" :size="32" />
 <emoji :data="index" :emoji="santaEmojiObject" :size="32" />
 
 <script>
@@ -398,7 +400,7 @@ export default {
 | **size**                                     |    ✓     |                                                                                                      | The emoji width and height.                                                                                        |
 | **native**                                   |          | `false`                                                                                              | Renders the native unicode emoji                                                                                   |
 | [**fallback**](#unsupported-emojis-fallback) |          |                                                                                                      | Params: `(emoji) => {}`                                                                                            |
-| **set**                                      |          | `apple`                                                                                              | The emoji set: `'apple', 'google', 'twitter', 'emojione'`                                                          |
+| **set**                                      |          | `apple`                                                                                              | The emoji set: `'apple', 'google', 'twitter', 'facebook'`                                                          |
 | **sheetSize**                                |          | `64`                                                                                                 | The emoji [sheet size](#sheet-sizes): `16, 20, 32, 64`                                                             |
 | **backgroundImageFn**                        |          | `` ((set, sheetSize) => `https://unpkg.com/emoji-datasource@3.0.0/sheet_${set}_${sheetSize}.png`) `` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
 | **skin**                                     |          | `1`                                                                                                  | Skin color: `1, 2, 3, 4, 5, 6`                                                                                     |
@@ -412,7 +414,7 @@ export default {
 
 #### Unsupported emojis fallback
 
-Certain sets don’t support all emojis (i.e. Messenger & Facebook don’t support `:shrug:`). By default the Emoji component will not render anything so that the emojis’ don’t take space in the picker when not available. When using the standalone Emoji component, you can however render anything you want by providing the `fallback` props.
+Certain sets don’t support all emojis (i.e. Facebook don’t support `:shrug:`). By default the Emoji component will not render anything so that the emojis’ don’t take space in the picker when not available. When using the standalone Emoji component, you can however render anything you want by providing the `fallback` props.
 
 To have the component render `:shrug:` you would need to:
 
@@ -423,7 +425,7 @@ function emojiFallback(emoji) {
 ```
 
 ```html
-<emoji set="messenger" emoji="shrug" :size="24" :fallback="emojiFallback" />
+<emoji set="facebook" emoji="shrug" :size="24" :fallback="emojiFallback" />
 ```
 
 ## Headless search
@@ -442,7 +444,7 @@ emojiIndex.search('christmas').map((o) => o.native)
 ### With custom data
 
 ```js
-import data from 'emoji-mart-vue-fast/data/messenger'
+import data from 'emoji-mart-vue-fast/data/facebook'
 import { EmojiIndex } from 'emoji-mart-vue-fast'
 
 let emojiIndex = new EmojiIndex(data)
@@ -519,7 +521,7 @@ It can however be overwritten as per user preference.
 
 #### Multiple sets supported
 
-Apple / Google / Twitter / EmojiOne / Messenger / Facebook
+Apple / Google / Twitter / Facebook
 
 <img width="214" alt="sets" src="https://user-images.githubusercontent.com/436043/33786868-d4226e60-dc38-11e7-840a-e4cf490f5f4a.png">
 

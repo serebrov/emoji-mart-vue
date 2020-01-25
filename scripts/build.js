@@ -5,7 +5,8 @@ var fs = require('fs'),
 var { compress } = require('../src/utils/data')
 
 var categories = [
-  ['Smileys & People', 'people'],
+  ['Smileys & Emotion', 'smileys'],
+  ['People & Body', 'people'],
   ['Animals & Nature', 'nature'],
   ['Food & Drink', 'foods'],
   ['Activities', 'activity'],
@@ -15,7 +16,7 @@ var categories = [
   ['Flags', 'flags'],
 ]
 
-var sets = ['apple', 'emojione', 'facebook', 'google', 'messenger', 'twitter']
+var sets = ['apple', 'facebook', 'google', 'twitter']
 
 module.exports = (options) => {
   delete require.cache[require.resolve('emoji-datasource')]
@@ -85,6 +86,9 @@ module.exports = (options) => {
 
     if (datum.category != 'Skin Tones') {
       categoryIndex = categoriesIndex[category]
+      if (!data.categories[categoryIndex]) {
+        throw Error(`Missing category: ${categoryIndex}, ${category}`)
+      }
       data.categories[categoryIndex].emojis.push(datum.short_name)
       data.emojis[datum.short_name] = datum
     }

@@ -2,7 +2,7 @@ import { intersect, unifiedToNative } from './index'
 import { uncompress, buildSearch } from './data'
 import frequently from './frequently'
 
-const SHEET_COLUMNS = 52
+const SHEET_COLUMNS = 56
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
 // Skin tones
 const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
@@ -20,7 +20,7 @@ const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
  *    },
  *    "categories": [ {
  *      id: "people",
- *      name: "Smileys & People",
+ *      name: "Smileys & Emotion",
  *      emojis: [ "grinning", "grin", "joy", ... ]
  *    }, {
  *      id: "nature",
@@ -34,10 +34,8 @@ const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
  *        added_in: "6.0",
  *        emoticons: ["=)", "=-)"],
  *        has_img_apple: true,
- *        has_img_emojione: true,
  *        has_img_facebook: true,
  *        has_img_google: true,
- *        has_img_messenger: true,
  *        has_img_twitter: true,
  *        keywords: ["face", "happy", "joy", "haha", ":D", ":)", "smile", "funny"],
  *        name: "Smiling Face with Open Mouth",
@@ -57,10 +55,8 @@ const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
  *            1F3FB:             // each variation has additional set of fields:
  *              added_in: "8.0",
  *              has_img_apple: true,
- *              has_img_emojione: true,
  *              has_img_facebook: true,
  *              has_img_google: true,
- *              has_img_messenger: true,
  *              has_img_twitter: true,
  *              image: "1f44d-1f3fb.png",
  *              non_qualified: null,
@@ -469,7 +465,7 @@ export class EmojiData {
   }
 
   getPosition() {
-    let multiply = 100 / (SHEET_COLUMNS - 1),
+    let multiply = 100 / SHEET_COLUMNS,
       x = Math.round(multiply * this._data.sheet_x * 100) / 100,
       y = Math.round(multiply * this._data.sheet_y * 100) / 100
     return `${x}% ${y}%`
@@ -578,7 +574,7 @@ export class EmojiView {
     const hasImage = this.getEmoji()._data['has_img_' + this._set]
     if (hasImage === undefined) {
       // If there is no has_img_xxx in the data, we are working with
-      // specific data file, like messenger.json, so we assume all
+      // specific data file, like facebook.json, so we assume all
       // emojis are available (the :set setting for picker should
       // match the data file).
       return true

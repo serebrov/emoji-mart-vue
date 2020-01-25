@@ -18,7 +18,7 @@ exports[`Emoji renders correctly 1`] = `
 >
   <span
     class="emoji-set-apple emoji-type-image"
-    style="background-position: 92.16% 50.98%;"
+    style="background-position: 94.64% 3.57%;"
   >
     
   </span>
@@ -31,7 +31,7 @@ exports[`Emoji renders correctly native emoji 1`] = `
 >
   <span
     class="emoji-set-apple emoji-type-native"
-    style="background-position: 92.16% 50.98%;"
+    style="background-position: 94.64% 3.57%;"
   >
     ☝️
   </span>

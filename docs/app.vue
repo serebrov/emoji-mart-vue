@@ -5,7 +5,7 @@
     </div>
     <div class="row">
       <emoji :data="index" emoji=":santa::skin-tone-3:" :size="32" />
-      <emoji :data="index" emoji="santa" set="emojione" :size="32" />
+      <emoji :data="index" emoji="santa" set="twitter" :size="32" />
       <emoji :data="index" :emoji="santaEmojiObject" :size="32" />
     </div>
 
@@ -16,15 +16,7 @@
 
     <div class="row">
       <template
-        v-for="set in [
-          'native',
-          'apple',
-          'google',
-          'twitter',
-          'emojione',
-          'messenger',
-          'facebook',
-        ]"
+        v-for="set in ['native', 'apple', 'google', 'twitter', 'facebook']"
       >
         <button
           :key="set"
@@ -118,13 +110,19 @@
 
     <div class="row"></div>
     <h2>Filtered picker example</h2>
-    <div class="row">
+    <div class="row" v-show="flagsVisible">
       <Picker
         :native="true"
         emoji="flag-tf"
         :emojiSize="18"
         :data="indexFiltered"
+        ref="flags"
       />
+    </div>
+    <div class="row">
+      <button @click="toggleFlagsVisible">
+        Show / hide the flags picker (with v-show)
+      </button>
     </div>
   </div>
 </template>
@@ -179,6 +177,7 @@ export default {
       isVisible: true,
       emojiPickerDialog: false,
       emojisOutput: '',
+      flagsVisible: true,
     }
   },
   computed: {
@@ -190,7 +189,7 @@ export default {
       let emoji = index.findEmoji(':smile:')
       // Note, that position in the emoji sheet is calculated by
       // `emoji` object
-      let style = `background-position: ${emoji.getPosition()}; background-image: url(https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5200%`
+      let style = `background-position: ${emoji.getPosition()}; background-image: url(https://unpkg.com/emoji-datasource-twitter@5.0.1/img/twitter/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5200%`
       return `<div class='emoji' style="${style}"></div>`
     },
     santaEmojiObject() {
@@ -200,6 +199,12 @@ export default {
   methods: {
     toggleVisible() {
       this.isVisible = !this.isVisible
+    },
+    toggleFlagsVisible() {
+      this.flagsVisible = !this.flagsVisible
+      if (!this.flagsVisible) {
+        this.$refs.flags.onAnchorClick(this.$refs.flags.categories[0])
+      }
     },
     showEmoji(emoji) {
       this.emojisOutput = this.emojisOutput + emoji.native
