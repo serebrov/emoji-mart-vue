@@ -16,13 +16,7 @@
 
     <div class="row">
       <template
-        v-for="set in [
-          'native',
-          'apple',
-          'google',
-          'twitter',
-          'facebook',
-        ]"
+        v-for="set in ['native', 'apple', 'google', 'twitter', 'facebook']"
       >
         <button
           :key="set"
@@ -116,13 +110,19 @@
 
     <div class="row"></div>
     <h2>Filtered picker example</h2>
-    <div class="row">
+    <div class="row" v-show="flagsVisible">
       <Picker
         :native="true"
         emoji="flag-tf"
         :emojiSize="18"
         :data="indexFiltered"
+        ref="flags"
       />
+    </div>
+    <div class="row">
+      <button @click="toggleFlagsVisible">
+        Show / hide the flags picker (with v-show)
+      </button>
     </div>
   </div>
 </template>
@@ -177,6 +177,7 @@ export default {
       isVisible: true,
       emojiPickerDialog: false,
       emojisOutput: '',
+      flagsVisible: true,
     }
   },
   computed: {
@@ -198,6 +199,12 @@ export default {
   methods: {
     toggleVisible() {
       this.isVisible = !this.isVisible
+    },
+    toggleFlagsVisible() {
+      this.flagsVisible = !this.flagsVisible
+      if (!this.flagsVisible) {
+        this.$refs.flags.onAnchorClick(this.$refs.flags.categories[0])
+      }
     },
     showEmoji(emoji) {
       this.emojisOutput = this.emojisOutput + emoji.native
