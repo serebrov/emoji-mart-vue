@@ -140,8 +140,11 @@ In practice, the support for native unicode emoji is still not perfect: unicode 
 This way, how the emoji will look depends on the operating system and native unicode emoji will look different on different platforms. Also older operating system versions don't not support all the emojis that are currently in the [unicode standard](https://unicode.org/emoji/charts/full-emoji-list.html), so it may be necessary to limit emojis to some smaller subset.
 
 More consistent solution is also more complex: we can use `emoji.colons` to insert emoji in the "colons" syntax (such as `:smile:`) and use regular expressions to find and render the colons emoji as images.
+
 In this case the application can keep text emoji representation and replace before rendering wherever needed (browser, mobile app, email).
+
 The good part here is that we get rid of most of the problems, related to unicode, we work with plain text. For example, in the database the application could have a text like "Hello :smile:" which will be turned into emoji with javascript and even if we leave it as a text (due to the bug or lack of javascript support), it will still make sense.
+
 The bad part is that conflicts are possible - if someone enters the `:smile:` text, it will turn into emoji.
 
 The `emoji.getPosition()` might be useful in this case to get the emoji position on the emoji sprite sheet.
@@ -189,6 +192,7 @@ export function emojiToHtml(emoji: Emoji): string {
 Another solution is to use `emoji.native` to insert native emoji and then find and replace them with images.
 
 In this case, the application can keep the native emoji in the database and replace with images where needed - in this case, it can do the replacement for browser, but keep unicode emoji for native app.
+
 The good side here is that conflicts are unlikely, we have native unicode emoji as a part of the text and replace them with images for better browser / os support. It means that if browsers improve the color font support in the future, we can just remove the image replacement part and the rest will be working.
 
 The replacement can be done like this (using the [emoji-regex](https://www.npmjs.com/package/emoji-regex) package):
