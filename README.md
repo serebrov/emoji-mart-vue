@@ -109,7 +109,9 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 | **select**      | Params: `(emoji) => {}` |
 | **skin-change** | Params: `(skin) => {}`  |
 
-The `select` event can be handled to insert the emoji into the text area or use it in any other way.
+#### Picker Usage And Native Emoji vs Images
+
+The `select` event described above can be handled to insert the emoji into the text area or use it in any other way.
 This component does not enforce the usage pattern and it's up to the application how to handle the emoji after it was selected.
 
 For example:
@@ -130,15 +132,20 @@ selectEmoji(emoji) {
 
 The above will use `emoji.native` to insert native emoji into the input.
 
-This is the simplest way to use the component, that works relatively well in latest versions of native browsers.
-Here, we rely on native unicode emoji support, which, theoretically, should be handled just like any other unicode characters.
+This is the simplest way to use the component and it works relatively well in latest versions of native browsers and latest operating systems.
+Here, we rely on native unicode emojis support, which, theoretically, should be handled just like any other unicode characters.
 
-Although, the support for native unicode emoji is still not perfect: unicode emoji characters are part of the font and the font needs to be colorful. But there is no yet a single standard for [color fonts](https://www.colorfonts.wtf/) implemented by browsers, so the browser leaves emoji rendering to the operating system.
+In practice, the support for native unicode emoji is still not perfect: unicode emoji characters are part of the font and the font needs to be colorful. But there is no yet a single standard for [color fonts](https://www.colorfonts.wtf/) implemented by browsers, so the browser leaves emoji rendering to the operating system.
 
 This way, how the emoji will look depends on the operating system and native unicode emoji will look different on different platforms. Also older operating system versions don't not support all the emojis that are currently in the [unicode standard](https://unicode.org/emoji/charts/full-emoji-list.html), so it may be necessary to limit emojis to some smaller subset.
 
 More consistent solution is also more complex: we can use `emoji.colons` to insert emoji in the "colons" syntax (such as `:smile:`) and use regular expressions to find and render the colons emoji as images.
-In this case, most likely, the application will keep text emoji representation in the database and replace before rendering wherever needed (browser, mobile app, email).
+
+In this case the application can keep text emoji representation and replace before rendering wherever needed (browser, mobile app, email).
+
+The good part here is that we get rid of most of the problems, related to unicode, we work with plain text. For example, in the database the application could have a text like "Hello :smile:" which will be turned into emoji with javascript and even if we leave it as a text (due to the bug or lack of javascript support), it will still make sense.
+
+The bad part is that conflicts are possible - if someone enters the `:smile:` text, it will turn into emoji.
 
 The `emoji.getPosition()` might be useful in this case to get the emoji position on the emoji sprite sheet.
 
@@ -182,7 +189,11 @@ export function emojiToHtml(emoji: Emoji): string {
 
 ```
 
-Similarly, we can use `emoji.native` to insert native emoji and then find and replace them with images. In this case, the application can keep the native emoji in the database and replace with images where needed - in this case, it can do the replacement for browser, but keep unicode emoji for native app.
+Another solution is to use `emoji.native` to insert native emoji and then find and replace them with images.
+
+In this case, the application can keep the native emoji in the database and replace with images where needed - in this case, it can do the replacement for browser, but keep unicode emoji for native app.
+
+The good side here is that conflicts are unlikely, we have native unicode emoji as a part of the text and replace them with images for better browser / os support. It means that if browsers improve the color font support in the future, we can just remove the image replacement part and the rest will be working.
 
 The replacement can be done like this (using the [emoji-regex](https://www.npmjs.com/package/emoji-regex) package):
 
@@ -215,7 +226,7 @@ export function wrapEmoji(text: string): string {
 
 ```
 
-Here we can use `emojiIndex.hativeEmoji(native_emoji)` to get the emoji object by native emoji and then convert it to the HTML image.
+Here we can use `emojiIndex.nativeEmoji(emoji_char)` to get the emoji object by native emoji and then convert it to the HTML image.
 
 
 #### I18n

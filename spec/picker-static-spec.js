@@ -198,7 +198,7 @@ describe('emjois skin', () => {
     expect(emojiData).toBe(index.emoji('+1').getSkin(6))
     expect(emojiData.id).toBe('+1')
     expect(emojiData.name).toBe('Thumbs Up Sign')
-    expect(emojiData.colons).toBe(':+1:')
+    expect(emojiData.colons).toBe(':+1::skin-tone-6:')
     expect(emojiData.native).toBe('👍🏿')
   })
 })
