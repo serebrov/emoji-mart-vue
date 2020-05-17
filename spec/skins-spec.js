@@ -51,3 +51,30 @@ describe('emjois skin', () => {
     expect(emojiDataSkin3.native).toBe('👍🏼')
   })
 })
+
+describe('emjois skin data', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+      skin: 6,
+    },
+  })
+
+  it('emoji skin tone is returned in the emoji data', () => {
+    // Find the Skins component, make sure it is closed.
+    let skins = picker.find(Skins)
+
+    // Find the +1 emoji and make sure skin tone is set to 6.
+    let emojiSkin6 = picker.find('[data-title="+1"]')
+    emojiSkin6.trigger('click')
+
+    let eventsBefore = picker.emitted().select
+    expect(eventsBefore.length).toBe(1)
+    let emojiDataSkin6 = eventsBefore[0][0]
+
+    // Verify skin_tone and colons in emoji properties.
+    expect(emojiDataSkin6.skin_tone).toBe(6)
+    expect(emojiDataSkin6.colons).toBe(':wave::skin-tone-6:')
+  })
+})
