@@ -74,7 +74,7 @@ describe('emjois skin data', () => {
     let emojiDataSkin6 = eventsBefore[0][0]
 
     // Verify skin_tone and colons in emoji properties.
-    expect(emojiDataSkin6.skin_tone).toBe(6)
-    expect(emojiDataSkin6.colons).toBe(':wave::skin-tone-6:')
+    expect(emojiDataSkin6.skin).toBe(6)
+    expect(emojiDataSkin6.colons).toBe(':+1::skin-tone-6:')
   })
 })
