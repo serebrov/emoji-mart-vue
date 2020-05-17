@@ -445,6 +445,7 @@ export class EmojiData {
           skinData[k] = variationData[k]
         }
         delete skinData.skin_variations
+        skinData['skin_tone'] = skinIdx
         this._skins.push(new EmojiData(skinData))
       }
     }
