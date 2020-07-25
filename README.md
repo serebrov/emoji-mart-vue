@@ -647,6 +647,8 @@ To debug tests, run `npm run jest-debug` and then open `chrome://inspect` in Chr
 git checkout master
 # Edit package.json, update version
 vim package.json
+git add package.json
+git commit -m "Updte version to x.x.x"
 
 # Checkout build branch
 git checkout build
@@ -659,7 +661,7 @@ NODE_ENV=production npm run build
 npm run dev:docs
 
 # Add build files
-git add buiid/
+git add dist/
 git add docs/
 git commit -m "Rebuild"
 
