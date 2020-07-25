@@ -141,8 +141,9 @@ exports[`Picker renders correctly 1`] = `
         />
       </span>
       <span
-        class="emoji-mart-anchor"
+        class="emoji-mart-anchor emoji-mart-anchor-selected"
         data-title="Activity"
+        style="color: rgb(174, 101, 197);"
       >
         <div>
           <svg
@@ -163,9 +164,8 @@ exports[`Picker renders correctly 1`] = `
         />
       </span>
       <span
-        class="emoji-mart-anchor emoji-mart-anchor-selected"
+        class="emoji-mart-anchor"
         data-title="Travel & Places"
-        style="color: rgb(174, 101, 197);"
       >
         <div>
           <svg
