@@ -648,7 +648,8 @@ git checkout master
 # Edit package.json, update version
 vim package.json
 git add package.json
-git commit -m "Updte version to x.x.x"
+git commit -m "Update version to x.x.x"
+git push origin HEAD
 
 # Checkout build branch
 git checkout build
