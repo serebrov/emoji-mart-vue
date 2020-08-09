@@ -7,6 +7,7 @@ import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
 import {
   Anchors,
+  Search,
   StaticPicker as Picker,
   Category,
   Preview,
@@ -62,6 +63,35 @@ describe('Picker', () => {
     // StaticPicker change (Symbols and Flags)
     expect(categories.at(9).vm.name).toBe('Symbols')
     expect(categories.at(10).vm.name).toBe('Flags')
+  })
+
+  it('no error when clicking anchor when search is active', (done) => {
+    let search = picker.find(Search)
+    let input = search.find('input')
+    input.element.value = '+1'
+    input.trigger('input')
+
+    picker.vm.$nextTick(() => {
+      let categories = picker.findAll(Category)
+      let searchCategory = categories.at(0)
+      expect(searchCategory.vm.id).toBe('search')
+
+      let anchors = picker.find(Anchors)
+      let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+      let symbols = anchorsCategories.at(8)
+      expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
+      symbols.trigger('click')
+
+      picker.vm.$nextTick(() => {
+        let events = anchors.emitted().click
+        let category = events[0][0]
+        expect(category.id).toBe('symbols')
+        // Category didn't not change (search as active)
+        expect(anchors.vm.activeCategory.id).toBe('recent')
+
+        done()
+      })
+    })
   })
 })
 

@@ -246,11 +246,7 @@ export default {
             this.$refs.scroll.scrollTop = top
           }
         }
-      if (this.searchEmojis) {
-        this.onSearch(null)
-        this.$refs.search.clear()
-        this.$nextTick(scrollToComponent)
-      } else if (this.infiniteScroll) {
+      if (this.infiniteScroll) {
         scrollToComponent()
       } else {
         this.activeCategory = this.filteredCategories[i]
