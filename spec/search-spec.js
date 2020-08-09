@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
-import { Picker, Category, Search } from '../src/components'
+import { Picker, Category, Search, Anchors } from '../src/components'
 
 describe('search', () => {
   let index = new EmojiIndex(data)
@@ -45,6 +45,34 @@ describe('search', () => {
   it('has emoji index', () => {
     let search = picker.find(Search)
     expect(search.vm.emojiIndex).toBe(index)
+  })
+
+  it('no error when clicking anchor when search is active', (done) => {
+    let search = picker.find(Search)
+    let input = search.find('input')
+    input.element.value = '+1'
+    input.trigger('input')
+
+    picker.vm.$nextTick(() => {
+      let categories = picker.findAll(Category)
+      let searchCategory = categories.at(0)
+      expect(searchCategory.vm.id).toBe('search')
+
+      let anchors = picker.find(Anchors)
+      let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+      let symbols = anchorsCategories.at(8)
+      expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
+      symbols.trigger('click')
+
+      picker.vm.$nextTick(() => {
+        let events = anchors.emitted().click
+        let category = events[0][0]
+        expect(category.id).toBe('symbols')
+        expect(anchors.vm.activeCategory.id).toBe('symbols')
+
+        done()
+      })
+    })
   })
 })
 
