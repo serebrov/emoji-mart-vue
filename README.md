@@ -238,7 +238,7 @@ categories: {
   search: 'Search Results',
   recent: 'Frequently Used',
   smileys: 'Smileys & Emoticon',
-  people: 'Smileys & People',
+  people: 'People & Body',
   nature: 'Animals & Nature',
   foods: 'Food & Drink',
   activity: 'Activity',
