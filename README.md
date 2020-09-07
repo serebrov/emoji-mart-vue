@@ -237,6 +237,7 @@ notfound: 'No Emoji Found',
 categories: {
   search: 'Search Results',
   recent: 'Frequently Used',
+  smileys: 'Smileys & Emoticon,
   people: 'Smileys & People',
   nature: 'Animals & Nature',
   foods: 'Food & Drink',
