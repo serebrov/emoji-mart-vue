@@ -247,6 +247,14 @@ export class EmojiIndex {
     return emoji
   }
 
+  firstEmoji() {
+    let emoji = this._emojis[Object.keys(this._emojis)[0]]
+    if (!emoji) {
+      throw new Error('Can not get first emoji')
+    }
+    return emoji
+  }
+
   hasEmoji(emojiId) {
     if (this._data.aliases.hasOwnProperty(emojiId)) {
       emojiId = this._data.aliases[emojiId]

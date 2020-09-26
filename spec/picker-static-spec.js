@@ -127,6 +127,26 @@ describe('categories', () => {
   })
 })
 
+describe('categories exclude preview emoji', () => {
+  let index = new EmojiIndex(data, {
+    exclude: ['places'],
+  })
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+    },
+  })
+
+  it('will not throw an error if default emoji is not available', () => {
+    expect(picker.vm.emoji).toEqual('department_store')
+    // When `emoji` (that is emoji id used for idleEmoji) is not available,
+    // like in this case, since we excluded 'places' category that contains
+    // the default `department_store` emoji.
+    // In this case, picker logs en error and uses first emoji available.
+    expect(picker.vm.idleEmoji.id).toEqual('100')
+  })
+})
+
 describe('anchors', () => {
   let index = new EmojiIndex(data, {
     custom: [
