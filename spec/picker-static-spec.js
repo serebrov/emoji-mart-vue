@@ -129,7 +129,7 @@ describe('categories', () => {
 
 describe('categories exclude preview emoji', () => {
   let index = new EmojiIndex(data, {
-    exclude: ['places']
+    exclude: ['places'],
   })
   const picker = mount(Picker, {
     propsData: {
