@@ -147,6 +147,27 @@ describe('categories exclude preview emoji', () => {
   })
 })
 
+describe('categories include allows to select and order categories', () => {
+  let index = new EmojiIndex(data, {
+    // Note: the 'recent' category is always first.
+    include: ['nature', 'smileys', 'recent'],
+  })
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+    },
+  })
+
+  it('will not throw an error if default emoji is not available', () => {
+    let categories = picker.findAll(Category)
+    expect(categories.length).toBe(4)
+    expect(categories.at(0).vm.name).toBe('Search')
+    expect(categories.at(1).vm.name).toBe('Recent')
+    expect(categories.at(2).vm.name).toBe('Animals & Nature')
+    expect(categories.at(3).vm.name).toBe('Smileys & Emotion')
+  })
+})
+
 describe('anchors', () => {
   let index = new EmojiIndex(data, {
     custom: [
