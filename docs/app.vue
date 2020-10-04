@@ -130,6 +130,12 @@
     <div class="row">
       <Picker emoji="department_store" :data="indexI18n" :i18n="i18n" />
     </div>
+
+    <div class="row"></div>
+    <h2>Custom order example</h2>
+    <div class="row">
+      <Picker :data="indexInclude" />
+    </div>
   </div>
 </template>
 
@@ -201,11 +207,16 @@ const indexI18n = new EmojiIndex(data, {
   ],
 })
 
+const indexInclude = new EmojiIndex(data, {
+  include: ['nature', 'smileys', 'recent'],
+})
+
 export default {
   data() {
     return {
       index: index,
       indexFiltered: indexFiltered,
+      indexInclude: indexInclude,
       indexI18n: indexI18n,
       i18n: i18n,
       activeSet: 'native',
