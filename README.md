@@ -51,7 +51,7 @@ Here is the list of [releases](https://github.com/serebrov/emoji-mart-vue/releas
 ### Picker
 
 ```js
-import data from '../data/all.json'
+import data from 'emoji-mart-vue-fast/data/all.json'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast'
 let emojiIndex = new EmojiIndex(data)
 ```
@@ -392,7 +392,7 @@ import { Emoji, EmojiIndex } from 'emoji-mart-vue-fast'
 <emoji :data="index" :emoji="santaEmojiObject" :size="32" />
 
 <script>
-import data from '../data/all.json'
+import data from 'emoji-mart-vue-fast/data/all.json'
 let index = new EmojiIndex(data)
 
 export default {
