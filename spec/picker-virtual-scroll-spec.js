@@ -8,7 +8,7 @@ import {
     Preview,
     Emoji,
 } from '../src/components'
-import { VirtualScrollPicker as Picker } from '../src/components/VirtualScrollPicker'
+import { default as Picker } from '../src/components/VirtualScrollPicker'
 
 describe('Picker', () => {
     let index = new EmojiIndex(data)

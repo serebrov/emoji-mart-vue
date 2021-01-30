@@ -11,7 +11,7 @@ This was the reason to fork and change it, the demo is [here](https://serebrov.g
 Major changes are:
 
 - Reworked emoji index class: use same index (so same data) for all components.
-- Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
+- Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down when we render a component per emoji.
 - Frozen objects with emoji data to disable Vue change tracking
 - Do not create `EmojiIndex` globally, before it was loaded (along with the emoji data) even when it was not actually used
 - Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
