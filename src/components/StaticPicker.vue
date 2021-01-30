@@ -91,26 +91,6 @@ import Category from './category'
 import Preview from './preview'
 import Search from './search'
 
-/*
- * Note about `buffer` setting for DynamicScroller: this is a
- * fix for #49 - when clicking on the "Flags" category for the first
- * time, the category is not scrolled to the top of the component.
- * This is because the last category size is not calculated yet and
- * virtual scroller takes 'minItemSize' as category height.
- *
- * Virtual scroller (RecycleScroller component) uses `buffer` value
- * to  decide how many components to render intitially depending on
- * the scroll area size + buffer*2 (and all categories initially
- * have min size, 60px).
- *
- * By increasing buffer to 400px, we make the scroller to perform
- * size calculation for all categories and the following
- * scrollToItem() calls work correctly.
- */
-
-import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
-// import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
-
 const I18N = {
   search: 'Search',
   notfound: 'No Emoji Found',
@@ -288,8 +268,6 @@ export default {
     Category,
     Preview,
     Search,
-    DynamicScroller,
-    DynamicScrollerItem,
   },
 }
 </script>
