@@ -40,9 +40,9 @@
         :emoji-props="emojiProps"
       />
       <category
-        v-for="category in filteredCategories"
+        v-for="(category, idx) in filteredCategories"
         v-show="!searchEmojis && (infiniteScroll || category == activeCategory)"
-        ref="categories"
+        :ref="'categories_' + idx"
         :key="category.id"
         :data="data"
         :i18n="mergedI18n"
@@ -201,7 +201,7 @@ export default {
         activeCategory = this.filteredCategories[0]
       for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
         let category = this.filteredCategories[i],
-          component = this.$refs.categories[i]
+          component = this.$refs['categories_' + i]
         // The `-50` offset switches active category (selected in the
         // anchors bar) a bit eariler, before it actually reaches the top.
         if (component && component.$el.offsetTop - 50 > scrollTop) {
@@ -217,7 +217,7 @@ export default {
         return
       }
       let i = this.filteredCategories.indexOf(category),
-        component = this.$refs.categories[i],
+        component = this.$refs['categories_' + i],
         scrollToComponent = () => {
           if (component) {
             let top = component.$el.offsetTop
