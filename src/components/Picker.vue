@@ -155,21 +155,8 @@ export default {
     },
     filteredCategories() {
       return this.categories.filter((category) => {
-        let isIncluded =
-          this.include && this.include.length
-            ? this.include.indexOf(category.id) > -1
-            : true
-        let isExcluded =
-          this.exclude && this.exclude.length
-            ? this.exclude.indexOf(category.id) > -1
-            : false
         let hasEmojis = category.emojis.length > 0
-        if (this.emojisToShowFilter) {
-          hasEmojis = category.emojis.some((emoji) => {
-            return this.emojisToShowFilter(this.data.emojis[emoji] || emoji)
-          })
-        }
-        return isIncluded && !isExcluded && hasEmojis
+        return hasEmojis
       })
     },
     mergedI18n() {
