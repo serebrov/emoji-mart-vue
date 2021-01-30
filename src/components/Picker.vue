@@ -225,6 +225,10 @@ export default {
       this.activeCategory = activeCategory
     },
     onAnchorClick(category) {
+      if (this.searchEmojis) {
+        // No categories are shown when search is active.
+        return
+      }
       let i = this.filteredCategories.indexOf(category),
         component = this.$refs.categories[i],
         scrollToComponent = () => {
