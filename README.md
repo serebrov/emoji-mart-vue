@@ -40,6 +40,11 @@ Breaking change in v8:
   <br><img src="https://cloud.githubusercontent.com/assets/436043/17186519/9e71e8fe-5403-11e6-9314-21365c56a601.png">
 </div>
 
+## Demo app
+
+Live demo app: https://serebrov.github.io/emoji-mart-vue/
+Demo application code is [under the ./docs folder](./docs).
+
 ## Installation
 
 Install from npm: `npm install --save emoji-mart-vue-fast`.
@@ -51,6 +56,8 @@ Here is the list of [releases](https://github.com/serebrov/emoji-mart-vue/releas
 ## Vue 3 Support
 
 Component works with Vue 3, [here is a simple demo app](https://github.com/serebrov/emoji-mart-vue3-demo).
+
+Live demo: https://serebrov.github.io/emoji-mart-vue3-demo/.
 
 See also: [#88](https://github.com/serebrov/emoji-mart-vue/issues/88).
 
