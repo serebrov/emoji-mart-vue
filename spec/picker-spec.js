@@ -1,6 +1,3 @@
-// NOTE: this is a full copy of the picker-spec.js
-// The main change is in import - 'StaticPicker as Picker'
-// Other changes are marked with `// StaticPicker change` comments.
 import { mount } from '@vue/test-utils'
 
 import data from '../data/all.json'
