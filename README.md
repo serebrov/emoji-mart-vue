@@ -29,6 +29,9 @@ Breaking change in v7: switched to Unicode v12 emoji set which results in severa
 - Removed 'messenger' set - it was [merged](https://github.com/iamcal/emoji-data/blob/master/CHANGES.md#2020-01-10--v500) into 'facebook' set
 - Changed emoji categories: removed 'Smileys & People', added 'Smileys & Emotions' and 'People & Body' instead
 
+Breaking change in v8:
+- The `StaticPicker` component is now default (exported as `Picker`), previous default component renamed to `VirtualScrollPicker`
+
 > The original project has been forked from [emoji-mart](https://www.npmjs.com/package/emoji-mart) which was written for React
 
 <div align="center">
@@ -44,6 +47,12 @@ Install from npm: `npm install --save emoji-mart-vue-fast`.
 It is also possible to install directly from github (could be useful for forks): `npm install --save serebrov/emoji-mart-vue#5.4.9.`
 
 Here is the list of [releases](https://github.com/serebrov/emoji-mart-vue/releases).
+
+## Vue 3 Support
+
+Component works with Vue 3, [here is a simple demo app](https://github.com/serebrov/emoji-mart-vue3-demo).
+
+See also: #88.
 
 ## Quick Example
 
