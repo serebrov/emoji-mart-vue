@@ -279,7 +279,6 @@ export default {
   },
   components: {
     Picker,
-    StaticPicker,
     Emoji,
     QBtn,
     QDialog,
