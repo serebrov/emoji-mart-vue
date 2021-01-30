@@ -69,7 +69,7 @@
     "stats": "webpack --config ./spec/webpack.config.js --json > spec/stats.json",
     "size-limit": "size-limit",
     "test": "NODE_ENV=test jest && size-limit",
-    "jest": "jest --detectOpenHandles --forceExit --coverage",
+    "jest": "jest --detectOpenHandles --forceExit --runInBand --coverage",
     "jest-debug": "node --inspect=0.0.0.0:9230 --inspect-brk node_modules/.bin/jest --runInBand",
     "jest-clear": "jest --clearCache",
     "prettier-check": "prettier --check \"{src,spec}/**/*.js\"",

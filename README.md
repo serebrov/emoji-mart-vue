@@ -11,8 +11,7 @@ This was the reason to fork and change it, the demo is [here](https://serebrov.g
 Major changes are:
 
 - Reworked emoji index class: use same index (so same data) for all components.
-- Added [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller) for emoji categories (note: there is `StaticPicker` version that doesn't use virtual scroller)
-- Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down even with virtual scrolling when we render a component per emoji.
+- Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down when we render a component per emoji.
 - Frozen objects with emoji data to disable Vue change tracking
 - Do not create `EmojiIndex` globally, before it was loaded (along with the emoji data) even when it was not actually used
 - Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
@@ -427,13 +426,18 @@ let index = new EmojiIndex(data, {
 }
 ```
 
-### StaticPicker
+### VirtualScrollPicker
 
-Same as `Picker`, but doesn't use [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller).
-It is a bit slower, but easier to customize (especially, if you need a custom scroll bar style).
+Same as `Picker`, but uses [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller).
+It is a bit faster, but more complex to customize (especially, if you need a custom scroll bar style).
 
-Note: `vue-virtual-scroller` also may lead to rendering problems when `Picker` is used inside the dialog (in particluar, QDialog from Quasar Framework).
-The `StaticPicker` might also be useful here, see #57 for other workarounds (disable animation, trigger vue-virtual-scroller update after rendering).
+```
+// Import the VirtualScrollPicker, usage and properties are the same as for Picker
+import { VirtualScrollPicker } from "emoji-mart-vue-fast/src/components/VirtualScrollPicker";
+```
+
+Note: `vue-virtual-scroller` also may lead to rendering problems when `VirtualScrollPicker` is used inside the dialog (in particluar, QDialog from Quasar Framework).
+See #57 for other workarounds (disable animation, trigger vue-virtual-scroller update after rendering).
 
 ### Emoji
 

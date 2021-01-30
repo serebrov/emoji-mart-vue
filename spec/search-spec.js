@@ -47,32 +47,32 @@ describe('search', () => {
     expect(search.vm.emojiIndex).toBe(index)
   })
 
-  it('no error when clicking anchor when search is active', (done) => {
+  it('no error when clicking anchor when search is active', async () => {
     let search = picker.find(Search)
     let input = search.find('input')
     input.element.value = '+1'
     input.trigger('input')
 
-    picker.vm.$nextTick(() => {
-      let categories = picker.findAll(Category)
-      let searchCategory = categories.at(0)
-      expect(searchCategory.vm.id).toBe('search')
+    await picker.vm.$nextTick()
 
-      let anchors = picker.find(Anchors)
-      let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
-      let symbols = anchorsCategories.at(8)
-      expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
-      symbols.trigger('click')
+    let categories = picker.findAll(Category)
+    let searchCategory = categories.at(0)
+    expect(searchCategory.vm.id).toBe('search')
 
-      picker.vm.$nextTick(() => {
-        let events = anchors.emitted().click
-        let category = events[0][0]
-        expect(category.id).toBe('symbols')
-        expect(anchors.vm.activeCategory.id).toBe('symbols')
+    let anchors = picker.find(Anchors)
+    let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+    let symbols = anchorsCategories.at(8)
+    expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
+    symbols.trigger('click')
 
-        done()
-      })
-    })
+    await picker.vm.$nextTick()
+
+    let events = anchors.emitted().click
+    let category = events[0][0]
+    expect(category.id).toBe('symbols')
+
+    // Category does not change when the search is active.
+    expect(anchors.vm.activeCategory.id).toBe('recent')
   })
 })
 
