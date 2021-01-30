@@ -52,7 +52,7 @@ Here is the list of [releases](https://github.com/serebrov/emoji-mart-vue/releas
 
 Component works with Vue 3, [here is a simple demo app](https://github.com/serebrov/emoji-mart-vue3-demo).
 
-See also: #88.
+See also: [#88](https://github.com/serebrov/emoji-mart-vue/issues/88).
 
 ## Quick Example
 
