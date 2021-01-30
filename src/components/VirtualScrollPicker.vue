@@ -1,5 +1,5 @@
 <template>
-  <div class="emoji-mart emoji-mart-static" :style="customStyles">
+  <div class="emoji-mart" :style="customStyles">
     <div class="emoji-mart-bar emoji-mart-bar-anchors" v-if="showCategories">
       <anchors
         :data="data"
@@ -29,29 +29,43 @@
       />
     </slot>
 
-    <div class="emoji-mart-scroll" ref="scroll" @scroll="onScroll">
-      <category
-        v-show="searchEmojis"
-        :data="data"
-        :i18n="mergedI18n"
-        id="search"
-        name="Search"
-        :emojis="searchEmojis"
-        :emoji-props="emojiProps"
-      />
-      <category
-        v-for="category in filteredCategories"
-        v-show="!searchEmojis && (infiniteScroll || category == activeCategory)"
-        ref="categories"
-        :key="category.id"
-        :data="data"
-        :i18n="mergedI18n"
-        :id="category.id"
-        :name="category.name"
-        :emojis="category.emojis"
-        :emoji-props="emojiProps"
-      />
-    </div>
+    <category
+      v-show="searchEmojis"
+      class="emoji-mart-search-results"
+      :data="data"
+      :i18n="mergedI18n"
+      id="search"
+      name="Search"
+      :emojis="searchEmojis"
+      :emoji-props="emojiProps"
+    />
+    <DynamicScroller
+      v-show="!searchEmojis"
+      ref="dynScroller"
+      :items="scrollerCategories"
+      :min-item-size="60"
+      class="scroller"
+      :buffer="400"
+      key-field="id"
+      :emit-update="true"
+      @update="onScrollUpdate"
+    >
+      <template slot-scope="{ item, active, index }">
+        <DynamicScrollerItem :item="item" :active="active" :data-index="index">
+          <category
+            v-show="item.show"
+            ref="categories"
+            :key="item.category.id"
+            :data="item.data"
+            :i18n="item.mergedI18n"
+            :id="item.category.id"
+            :name="item.category.name"
+            :emojis="item.category.emojis"
+            :emoji-props="item.emojiProps"
+          />
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
 
     <slot
       name="previewTemplate"
@@ -173,23 +187,20 @@ export default {
     calculateWidth() {
       return this.perLine * (this.emojiSize + 12) + 12 + 2 + measureScrollbar()
     },
-    filteredCategories() {
-      return this.categories.filter((category) => {
-        let isIncluded =
-          this.include && this.include.length
-            ? this.include.indexOf(category.id) > -1
-            : true
-        let isExcluded =
-          this.exclude && this.exclude.length
-            ? this.exclude.indexOf(category.id) > -1
-            : false
-        let hasEmojis = category.emojis.length > 0
-        if (this.emojisToShowFilter) {
-          hasEmojis = category.emojis.some((emoji) => {
-            return this.emojisToShowFilter(this.data.emojis[emoji] || emoji)
-          })
+    scrollerCategories() {
+      let id = 0
+      return this.categories.map((category) => {
+        return {
+          id: id++,
+          category: category,
+          show:
+            !this.searchEmojis &&
+            (this.infiniteScroll || category == this.activeCategory),
+          mergedI18n: this.mergedI18n,
+          data: this.data,
+          emojisLength: category.emojis.length,
+          emojiProps: this.emojiProps,
         }
-        return isIncluded && !isExcluded && hasEmojis
       })
     },
     mergedI18n() {
@@ -222,45 +233,22 @@ export default {
     this.skipScrollUpdate = false
   },
   methods: {
-    onScroll() {
-      if (this.infiniteScroll && !this.waitingForPaint) {
-        this.waitingForPaint = true
-        window.requestAnimationFrame(this.onScrollPaint.bind(this))
+    onScrollUpdate(startIndex, endIndex) {
+      if (this.skipScrollUpdate) {
+        this.skipScrollUpdate = false
+      } else {
+        // The `endIndex-2` seems to work, but this depends on the internals
+        // of the virtual scroller, I didn't observe it to be less than 0,
+        // but just for the case, we aslo have a fallback to `0` here.
+        let activeIndex = endIndex - 2 > 0 ? endIndex - 2 : 0
+        this.activeCategory = this.categories[activeIndex]
       }
-    },
-    onScrollPaint() {
-      this.waitingForPaint = false
-      let scrollTop = this.$refs.scroll.scrollTop,
-        activeCategory = this.filteredCategories[0]
-      for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
-        let category = this.filteredCategories[i],
-          component = this.$refs.categories[i]
-        // The `-50` offset switches active category (selected in the
-        // anchors bar) a bit eariler, before it actually reaches the top.
-        if (component && component.$el.offsetTop - 50 > scrollTop) {
-          break
-        }
-        activeCategory = category
-      }
-      this.activeCategory = activeCategory
     },
     onAnchorClick(category) {
-      let i = this.filteredCategories.indexOf(category),
-        component = this.$refs.categories[i],
-        scrollToComponent = () => {
-          if (component) {
-            let top = component.$el.offsetTop
-            if (category.first) {
-              top = 0
-            }
-            this.$refs.scroll.scrollTop = top
-          }
-        }
-      if (this.infiniteScroll) {
-        scrollToComponent()
-      } else {
-        this.activeCategory = this.filteredCategories[i]
-      }
+      let i = this.categories.indexOf(category)
+      this.$refs.dynScroller.scrollToItem(i)
+      this.activeCategory = this.categories[i]
+      this.skipScrollUpdate = true
     },
     onSearch(value) {
       let emojis = this.data.search(value, this.maxSearchResults)
