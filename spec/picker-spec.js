@@ -8,7 +8,7 @@ import { EmojiIndex } from '../src/utils/emoji-data'
 import {
   Anchors,
   Search,
-  StaticPicker as Picker,
+  Picker,
   Category,
   Preview,
   Emoji,
@@ -137,6 +137,7 @@ describe('categories exclude preview emoji', () => {
     },
   })
 
+  // Note: the error is printed into console.
   it('will not throw an error if default emoji is not available', () => {
     expect(picker.vm.emoji).toEqual('department_store')
     // When `emoji` (that is emoji id used for idleEmoji) is not available,
@@ -158,6 +159,7 @@ describe('categories include allows to select and order categories', () => {
     },
   })
 
+  // Note: the error is printed into console.
   it('will not throw an error if default emoji is not available', () => {
     let categories = picker.findAll(Category)
     expect(categories.length).toBe(4)
