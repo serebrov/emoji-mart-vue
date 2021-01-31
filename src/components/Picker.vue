@@ -197,11 +197,11 @@ export default {
     },
     onScrollPaint() {
       this.waitingForPaint = false
-      let scrollTop = this.$refs.scroll.scrollTop,
-        activeCategory = this.filteredCategories[0]
+      let scrollTop = this.$refs.scroll.scrollTop
+      let activeCategory = this.filteredCategories[0]
       for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
-        let category = this.filteredCategories[i],
-          component = this.$refs['categories_' + i]
+        let category = this.filteredCategories[i]
+        let component = this.getCategoryComponent(i)
         // The `-50` offset switches active category (selected in the
         // anchors bar) a bit eariler, before it actually reaches the top.
         if (component && component.$el.offsetTop - 50 > scrollTop) {
@@ -216,17 +216,17 @@ export default {
         // No categories are shown when search is active.
         return
       }
-      let i = this.filteredCategories.indexOf(category),
-        component = this.$refs['categories_' + i],
-        scrollToComponent = () => {
-          if (component) {
-            let top = component.$el.offsetTop
-            if (category.first) {
-              top = 0
-            }
-            this.$refs.scroll.scrollTop = top
+      let i = this.filteredCategories.indexOf(category)
+      let component = this.getCategoryComponent(i)
+      let scrollToComponent = () => {
+        if (component) {
+          let top = component.$el.offsetTop
+          if (category.first) {
+            top = 0
           }
+          this.$refs.scroll.scrollTop = top
         }
+      }
       if (this.infiniteScroll) {
         scrollToComponent()
       } else {
@@ -252,6 +252,15 @@ export default {
       store.update({ skin })
 
       this.$emit('skin-change', skin)
+    },
+    getCategoryComponent(index) {
+      let component = this.$refs['categories_' + index]
+      if ('0' in component) {
+        // Vue 2 has $refs under v-for as an array.
+        return component['0']
+      }
+      // Vue 3 does not support $refs as array.
+      return component
     },
   },
   components: {
