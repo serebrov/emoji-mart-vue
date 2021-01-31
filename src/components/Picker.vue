@@ -255,7 +255,7 @@ export default {
     },
     getCategoryComponent(index) {
       let component = this.$refs['categories_' + index]
-      if ('0' in component) {
+      if (component && '0' in component) {
         // Vue 2 has $refs under v-for as an array.
         return component['0']
       }
