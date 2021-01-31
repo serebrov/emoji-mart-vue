@@ -42,10 +42,7 @@ describe('Picker', () => {
   })
 
   it('renders 10 categories', () => {
-    // Due to the virtual scroller, not all the categories
-    // are rendered at once
     let categories = picker.findAll(Category)
-    // StaticPicker change (8 -> 10)
     expect(categories.length).toBe(11)
     // Hidden category with search results
     expect(categories.at(0).vm.name).toBe('Search')
@@ -57,7 +54,6 @@ describe('Picker', () => {
     expect(categories.at(6).vm.name).toBe('Activities')
     expect(categories.at(7).vm.name).toBe('Travel & Places')
     expect(categories.at(8).vm.name).toBe('Objects')
-    // StaticPicker change (Symbols and Flags)
     expect(categories.at(9).vm.name).toBe('Symbols')
     expect(categories.at(10).vm.name).toBe('Flags')
   })
@@ -207,21 +203,31 @@ describe('anchors', () => {
     ])
   })
 
-  it('can be clicked to scroll to the category', () => {
+  it('can be clicked to scroll to the category', async () => {
     let anchors = picker.find(Anchors)
 
     let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
     let symbols = anchorsCategories.at(8)
     expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
 
+    // The `recent` category is selected initially.
+    expect(picker.vm.activeCategory.id).toBe('recent')
+    expect(anchors.vm.activeCategory.id).toBe('recent')
+
     symbols.trigger('click')
     let events = anchors.emitted().click
     expect(events.length).toBe(1)
+
     let category = events[0][0]
     expect(category.id).toBe('symbols')
     expect(category.name).toBe('Symbols')
 
-    // StaticPicker change - the check below fails (although works in demo app)
+    await picker.vm.$nextTick()
+
+    // Picker change - the check below fails (although works in demo app)
+    // scrollTop if 0 for all categories and activeCategory is changed in the
+    // onScroll handler, need to find a way to thes this.
+    // expect(picker.vm.activeCategory.id).toBe('symbols')
     // expect(anchors.vm.activeCategory.id).toBe('symbols')
   })
 })
