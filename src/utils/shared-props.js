@@ -26,6 +26,10 @@ const EmojiProps = {
     type: Number,
     default: null,
   },
+  tag: {
+    type: String,
+    default: 'span',
+  },
 }
 
 const PickerProps = {

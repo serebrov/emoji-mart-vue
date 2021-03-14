@@ -1,6 +1,12 @@
 <template>
   <div class="emoji-mart-search">
-    <input type="text" :placeholder="i18n.search" v-model="value">
+    <input
+        type="text"
+        :placeholder="i18n.search"
+        role="textbox"
+        aria-label="Search for an emoji"
+        aria-describedby="emoji-picker-search-description"
+        v-model="value">
   </div>
 </template>
 

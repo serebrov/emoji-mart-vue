@@ -500,6 +500,10 @@ export class EmojiData {
       y = Math.round(multiply * this._data.sheet_y * 100) / 100
     return `${x}% ${y}%`
   }
+
+  ariaLabel() {
+    return [this.native].concat(this.short_names).filter(Boolean).join(', ')
+  }
 }
 
 export class EmojiView {
@@ -523,6 +527,7 @@ export class EmojiView {
     this.cssStyle = this._cssStyle(emojiSize)
     this.content = this._content()
     this.title = emojiTooltip === true ? emoji.short_name : null
+    this.ariaLabel = emoji.ariaLabel()
 
     Object.freeze(this)
   }

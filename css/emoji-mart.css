@@ -22,6 +22,9 @@
   position: relative;
   display: inline-block;
   font-size: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
 }
 
 .emoji-mart-emoji span {
@@ -99,6 +102,9 @@
   padding: 12px 4px;
   overflow: hidden;
   transition: color .1s ease-out;
+  border: none;
+  background: none;
+  box-shadow: none;
 }
 .emoji-mart-anchor:hover,
 .emoji-mart-anchor-selected {
@@ -192,8 +198,9 @@
   /* position: -webkit-sticky; */
 }
 
-.emoji-mart-category-label span {
+.emoji-mart-category-label h3 {
   display: block;
+  font-size: 16px;
   width: 100%;
   font-weight: 500;
   padding: 5px 6px;

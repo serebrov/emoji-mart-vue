@@ -1,5 +1,5 @@
 <template>
-  <div class="emoji-mart emoji-mart-static" :style="customStyles">
+  <section class="emoji-mart emoji-mart-static" :style="customStyles">
     <div class="emoji-mart-bar emoji-mart-bar-anchors" v-if="showCategories">
       <anchors
         :data="data"
@@ -29,28 +29,41 @@
       />
     </slot>
 
-    <div class="emoji-mart-scroll" ref="scroll" @scroll="onScroll">
-      <category
-        v-show="searchEmojis"
-        :data="data"
-        :i18n="mergedI18n"
-        id="search"
-        name="Search"
-        :emojis="searchEmojis"
-        :emoji-props="emojiProps"
-      />
-      <category
-        v-for="(category, idx) in filteredCategories"
-        v-show="!searchEmojis && (infiniteScroll || category == activeCategory)"
-        :ref="'categories_' + idx"
-        :key="category.id"
-        :data="data"
-        :i18n="mergedI18n"
-        :id="category.id"
-        :name="category.name"
-        :emojis="category.emojis"
-        :emoji-props="emojiProps"
-      />
+    <div
+      role="tabpanel"
+      class="emoji-mart-scroll"
+      ref="scroll"
+      @scroll="onScroll"
+    >
+      <div
+         id="emoji-mart-list"
+         role="list"
+         aria-expanded="true">
+        <category
+          v-show="searchEmojis"
+          role="rowgroup"
+          :data="data"
+          :i18n="mergedI18n"
+          id="search"
+          name="Search"
+          :emojis="searchEmojis"
+          :emoji-props="emojiProps"
+        />
+        <category
+          v-for="(category, idx) in filteredCategories"
+          v-show="
+            !searchEmojis && (infiniteScroll || category == activeCategory)
+          "
+          :ref="'categories_' + idx"
+          :key="category.id"
+          :data="data"
+          :i18n="mergedI18n"
+          :id="category.id"
+          :name="category.name"
+          :emojis="category.emojis"
+          :emoji-props="emojiProps"
+        />
+      </div>
     </div>
 
     <slot
@@ -77,7 +90,7 @@
         />
       </div>
     </slot>
-  </div>
+  </section>
 </template>
 
 <script>
