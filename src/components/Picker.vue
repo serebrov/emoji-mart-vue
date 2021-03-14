@@ -26,6 +26,8 @@
         :auto-focus="autoFocus"
         :on-search="onSearch"
         @search="onSearch"
+        @arrowLeft="onArrowLeft"
+        @arrowRight="onArrowRight"
       />
     </slot>
 
@@ -35,10 +37,7 @@
       ref="scroll"
       @scroll="onScroll"
     >
-      <div
-         id="emoji-mart-list"
-         role="list"
-         aria-expanded="true">
+      <div id="emoji-mart-list" role="listbox" aria-expanded="true">
         <category
           v-show="searchEmojis"
           role="rowgroup"
@@ -136,6 +135,8 @@ export default {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       activeCategory: null,
       previewEmoji: null,
+      previewEmojiCategoryIdx: 0,
+      previewEmojiIdx: -1,
       searchEmojis: null,
     }
   },
@@ -153,6 +154,8 @@ export default {
         set: this.set,
         emojiTooltip: this.emojiTooltip,
         emojiSize: this.emojiSize,
+        selectedEmoji: this.previewEmoji,
+        selectedEmojiCategory: this.previewEmojiCategory,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this),
@@ -187,6 +190,12 @@ export default {
         console.error(e)
         return this.data.firstEmoji()
       }
+    },
+    previewEmojiCategory() {
+      if (this.previewEmojiCategoryIdx >= 0) {
+        return this.categories[this.previewEmojiCategoryIdx]
+      }
+      return null
     },
   },
   created() {
@@ -252,9 +261,41 @@ export default {
     },
     onEmojiEnter(emoji) {
       this.previewEmoji = emoji
+      this.previewEmojiIdx = -1
+      this.previewEmojiCategoryIdx = -1
     },
     onEmojiLeave(emoji) {
       this.previewEmoji = null
+    },
+    onArrowLeft() {
+      if (this.previewEmojiIdx > 0) {
+        this.previewEmojiIdx -= 1
+      } else {
+        this.previewEmojiCategoryIdx -= 1
+        if (this.previewEmojiCategoryIdx < 0) {
+          this.previewEmojiCategoryIdx = 0
+        } else {
+          this.previewEmojiIdx =
+            this.categories[this.previewEmojiCategoryIdx].emojis.length - 1
+        }
+      }
+      this.updatePreviewEmoji()
+    },
+    onArrowRight() {
+      if (
+        this.previewEmojiIdx <
+        this.emojisLength(this.previewEmojiCategoryIdx) - 1
+      ) {
+        this.previewEmojiIdx += 1
+      } else {
+        this.previewEmojiCategoryIdx += 1
+        if (this.previewEmojiCategoryIdx >= this.categories.length) {
+          this.previewEmojiCategoryIdx = this.categories.length - 1
+        } else {
+          this.previewEmojiIdx = 0
+        }
+      }
+      this.updatePreviewEmoji()
     },
     onEmojiClick(emoji) {
       this.$emit('select', emoji)
@@ -274,6 +315,27 @@ export default {
       }
       // Vue 3 does not support $refs as array.
       return component
+    },
+    updatePreviewEmoji() {
+      if (this.searchEmojis) {
+        this.previewEmoji = this.data.emoji(
+          this.searchEmojis[this.previewEmojiIdx],
+        )
+      } else {
+        this.previewEmoji = this.categories[
+          this.previewEmojiCategoryIdx
+        ].emojis[this.previewEmojiIdx]
+      }
+    },
+    emojisLength(categoryIdx) {
+      if (this.searchEmojis) {
+        return this.searchEmojis.length
+      } else {
+        if (categoryIdx == -1) {
+          return 0
+        }
+        return this.categories[categoryIdx].emojis.length
+      }
     },
   },
   components: {

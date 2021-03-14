@@ -24,15 +24,14 @@
         :key="emojiObject.id"
         :title="emojiView.title"
         class="emoji-mart-emoji"
+        :class="activeClass(emojiObject)"
         @mouseenter="emojiProps.onEnter(emojiView.getEmoji())"
         @mouseleave="emojiProps.onLeave(emojiView.getEmoji())"
         @click="emojiProps.onClick(emojiView.getEmoji())"
       >
-        <span
-          :class="emojiView.cssClass"
-          :style="emojiView.cssStyle"
-          >{{ emojiView.content }}</span
-        >
+        <span :class="emojiView.cssClass" :style="emojiView.cssStyle">{{
+          emojiView.content
+        }}</span>
       </button>
     </template>
 
@@ -77,6 +76,23 @@ export default {
     emojiProps: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    activeClass: function(emojiObject) {
+      if (!this.emojiProps.selectedEmoji) {
+        return ''
+      }
+      if (!this.emojiProps.selectedEmojiCategory) {
+        return ''
+      }
+      if (
+        this.emojiProps.selectedEmoji.id == emojiObject.id &&
+        this.emojiProps.selectedEmojiCategory.id == this.id
+      ) {
+        return 'emoji-mart-emoji-selected'
+      }
+      return ''
     },
   },
   computed: {
