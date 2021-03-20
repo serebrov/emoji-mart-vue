@@ -86,10 +86,10 @@ import store from '../utils/store'
 import frequently from '../utils/frequently'
 import { deepMerge, measureScrollbar } from '../utils'
 import { PickerProps } from '../utils/shared-props'
-import Anchors from './anchors'
-import Category from './category'
-import Preview from './preview'
-import Search from './search'
+import Anchors from './anchors.vue'
+import Category from './category.vue'
+import Preview from './preview.vue'
+import Search from './search.vue'
 
 const I18N = {
   search: 'Search',
