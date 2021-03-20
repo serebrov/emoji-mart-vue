@@ -130,7 +130,7 @@ describe('Emoji size', () => {
   it('has no size by default', () => {
     expect(emoji.vm.size).toBe(null)
     expect(emoji.vm.view.cssStyle).toEqual({
-      backgroundPosition: '94.64% 3.57%',
+      backgroundPosition: '94.74% 12.28%',
     })
   })
 
@@ -138,7 +138,7 @@ describe('Emoji size', () => {
     emoji.setProps({ size: 32 })
     expect(emoji.vm.size).toBe(32)
     expect(emoji.vm.view.cssStyle).toEqual({
-      backgroundPosition: '94.64% 3.57%',
+      backgroundPosition: '94.74% 12.28%',
       height: '32px',
       width: '32px',
     })
