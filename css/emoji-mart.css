@@ -46,16 +46,16 @@
   background-size: 5700%;
 }
 .emoji-type-image.emoji-set-apple {
-  background-image: url("https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png");
+  background-image: url("https://unpkg.com/emoji-datasource-apple@6.0.1/img/apple/sheets-256/64.png");
 }
 .emoji-type-image.emoji-set-facebook {
-  background-image: url("https://unpkg.com/emoji-datasource-facebook@5.0.1/img/facebook/sheets-256/64.png");
+  background-image: url("https://unpkg.com/emoji-datasource-facebook@6.0.1/img/facebook/sheets-256/64.png");
 }
 .emoji-type-image.emoji-set-google {
-  background-image: url("https://unpkg.com/emoji-datasource-google@5.0.1/img/google/sheets-256/64.png");
+  background-image: url("https://unpkg.com/emoji-datasource-google@6.0.1/img/google/sheets-256/64.png");
 }
 .emoji-type-image.emoji-set-twitter {
-  background-image: url("https://unpkg.com/emoji-datasource-twitter@5.0.1/img/twitter/sheets-256/64.png");
+  background-image: url("https://unpkg.com/emoji-datasource-twitter@6.0.1/img/twitter/sheets-256/64.png");
 }
 
 .emoji-mart-bar {
