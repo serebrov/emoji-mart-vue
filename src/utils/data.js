@@ -41,39 +41,6 @@ const buildSearch = (emoji) => {
   return search.join(',')
 }
 
-const compress = (emoji) => {
-  emoji.short_names = emoji.short_names.filter((short_name) => {
-    return short_name !== emoji.short_name
-  })
-  delete emoji.short_name
-
-  emoji.sheet = [emoji.sheet_x, emoji.sheet_y]
-  delete emoji.sheet_x
-  delete emoji.sheet_y
-
-  emoji.added_in = parseInt(emoji.added_in)
-  if (emoji.added_in === 6) {
-    delete emoji.added_in
-  }
-
-  for (let key in mapping) {
-    emoji[mapping[key]] = emoji[key]
-    delete emoji[key]
-  }
-
-  for (let key in emoji) {
-    let value = emoji[key]
-
-    if (Array.isArray(value) && !value.length) {
-      delete emoji[key]
-    } else if (typeof value === 'string' && !value.length) {
-      delete emoji[key]
-    } else if (value === null) {
-      delete emoji[key]
-    }
-  }
-}
-
 function deepFreeze(object) {
   // Retrieve the property names defined on object
   var propNames = Object.getOwnPropertyNames(object)
@@ -119,4 +86,4 @@ const uncompress = (data) => {
   return data
 }
 
-export { buildSearch, compress, uncompress }
+export { buildSearch, uncompress }

@@ -2,7 +2,7 @@ var fs = require('fs'),
   emojiLib = require('emojilib'),
   inflection = require('inflection')
 
-var { compress } = require('../src/utils/data')
+var { compress } = require('./compress')
 
 var categories = [
   ['Smileys & Emotion', 'smileys'],
