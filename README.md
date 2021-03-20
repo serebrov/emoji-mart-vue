@@ -667,6 +667,11 @@ export default {
 
 Major changes comparing to the original emoji-mart-vue:
 
+- [2021-03-20, v9] Updated to emojis v13, thanks @sgtaziz!
+- Updated to emojis v12 (see the breaking change note below)
+
+Performance improvements:
+
 - Reworked emoji index class: use same index (so same data) for all components.
 - Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down when we render a component per emoji.
 - Frozen objects with emoji data to disable Vue change tracking
@@ -676,7 +681,6 @@ Major changes comparing to the original emoji-mart-vue:
 - Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
 - Updated to babel 7
 - Added tests
-- Updated to emojis v12 (see the breaking change note below)
 
 Breaking change in v6: removed `Emoji` and `Picker` [wrappers](#convenience-wrappers), renamed `NimbleEmoji` to `Emoji` and `NimblePicker` to `Picker`.
 See the `Convenience Wrappers` section below for details.
