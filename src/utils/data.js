@@ -119,4 +119,4 @@ const uncompress = (data) => {
   return data
 }
 
-module.exports = { buildSearch, compress, uncompress }
+export { buildSearch, compress, uncompress }
