@@ -28,6 +28,7 @@
         @search="onSearch"
         @arrowLeft="onArrowLeft"
         @arrowRight="onArrowRight"
+        @enter="onEnter"
       />
     </slot>
 
@@ -296,6 +297,10 @@ export default {
         }
       }
       this.updatePreviewEmoji()
+    },
+    onEnter(emoji) {
+      this.$emit('select', this.previewEmoji)
+      frequently.add(emoji)
     },
     onEmojiClick(emoji) {
       this.$emit('select', emoji)

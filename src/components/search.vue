@@ -57,7 +57,7 @@ export default {
       type: Function,
       required: false,
     },
-    onArrowEnter: {
+    onEnter: {
       type: Function,
       required: false,
     },
