@@ -301,6 +301,10 @@ export default {
       this.updatePreviewEmoji()
     },
     onArrowDown() {
+      if (this.previewEmojiIdx == -1) {
+        return this.onArrowRight()
+      }
+
       const categoryLength = this.categories[this.previewEmojiCategoryIdx]
         .emojis.length
       let diff = 10
@@ -315,9 +319,13 @@ export default {
     onArrowUp() {
       let diff = 10
       if (this.previewEmojiIdx - diff < 0) {
-        const prevCategoryLastRowLength = this.categories[this.previewEmojiCategoryIdx-1]
-          .emojis.length % 10
-        diff = this.previewEmojiIdx + prevCategoryLastRowLength
+        if (this.previewEmojiCategoryIdx > 0) {
+          const prevCategoryLastRowLength =
+            this.categories[this.previewEmojiCategoryIdx - 1].emojis.length % 10
+          diff = this.previewEmojiIdx + prevCategoryLastRowLength
+        } else {
+          diff = 0
+        }
       }
       for (let i = 0; i < diff; i++) {
         this.onArrowLeft()
@@ -326,7 +334,7 @@ export default {
     },
     onEnter(emoji) {
       this.$emit('select', this.previewEmoji)
-      frequently.add(emoji)
+      frequently.add(this.previewEmoji)
     },
     onEmojiClick(emoji) {
       this.$emit('select', emoji)
