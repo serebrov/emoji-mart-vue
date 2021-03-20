@@ -28,6 +28,8 @@
         @search="onSearch"
         @arrowLeft="onArrowLeft"
         @arrowRight="onArrowRight"
+        @arrowDown="onArrowDown"
+        @arrowUp="onArrowUp"
         @enter="onEnter"
       />
     </slot>
@@ -295,6 +297,30 @@ export default {
         } else {
           this.previewEmojiIdx = 0
         }
+      }
+      this.updatePreviewEmoji()
+    },
+    onArrowDown() {
+      const categoryLength = this.categories[this.previewEmojiCategoryIdx]
+        .emojis.length
+      let diff = 10
+      if (this.previewEmojiIdx + diff > categoryLength) {
+        diff = categoryLength - this.previewEmojiIdx
+      }
+      for (let i = 0; i < diff; i++) {
+        this.onArrowRight()
+      }
+      this.updatePreviewEmoji()
+    },
+    onArrowUp() {
+      let diff = 10
+      if (this.previewEmojiIdx - diff < 0) {
+        const prevCategoryLastRowLength = this.categories[this.previewEmojiCategoryIdx-1]
+          .emojis.length % 10
+        diff = this.previewEmojiIdx + prevCategoryLastRowLength
+      }
+      for (let i = 0; i < diff; i++) {
+        this.onArrowLeft()
       }
       this.updatePreviewEmoji()
     },
