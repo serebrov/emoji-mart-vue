@@ -337,7 +337,7 @@ describe('emjoiSize', () => {
     let emojiSpan = emoji.element.childNodes[0]
     expect(emojiSpan.style['width']).toBe('24px')
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 23.21% 67.86%; width: 24px; height: 24px;',
+      'background-position: 22.81% 49.12%; width: 24px; height: 24px;',
     )
   })
 
@@ -347,7 +347,7 @@ describe('emjoiSize', () => {
     // The inner span with applied inline style.
     let emojiSpan = emoji.element.childNodes[0]
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 23.21% 67.86%; width: 20px; height: 20px;',
+      'background-position: 22.81% 49.12%; width: 20px; height: 20px;',
     )
   })
 
@@ -358,7 +358,7 @@ describe('emjoiSize', () => {
     let emojiSpan = emoji.element.childNodes[0]
     // Font-size is 80% of width/height value.
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 23.21% 67.86%; font-size: 19.2px;',
+      'background-position: 22.81% 49.12%; font-size: 19.2px;',
     )
   })
 
@@ -369,7 +369,7 @@ describe('emjoiSize', () => {
     let emojiSpan = emoji.element.childNodes[0]
     // Font-size is 80% of width/height value.
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 23.21% 67.86%; font-size: 16px;',
+      'background-position: 22.81% 49.12%; font-size: 16px;',
     )
   })
 })
