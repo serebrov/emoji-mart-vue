@@ -16,7 +16,7 @@
       v-model="value"
     />
     <span class="hidden" id="emoji-picker-search-description"
-      >Use the left and right arrow keys to navigate the emoji search
+      >Use the left, right, up and down arrow keys to navigate the emoji search
       results.</span
     >
   </div>
