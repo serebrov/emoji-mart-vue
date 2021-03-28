@@ -48,8 +48,8 @@
 
 <script>
 
-import Emoji from './Emoji'
-import Skins from './skins'
+import Emoji from './Emoji.vue'
+import Skins from './skins.vue'
 
 export default {
   props: {

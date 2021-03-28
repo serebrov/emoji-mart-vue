@@ -50,7 +50,7 @@
 
 <script>
 import { EmojiView } from '../utils/emoji-data'
-import Emoji from './Emoji'
+import Emoji from './Emoji.vue'
 
 export default {
   props: {

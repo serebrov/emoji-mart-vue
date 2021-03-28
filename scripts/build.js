@@ -2,7 +2,7 @@ var fs = require('fs'),
   emojiLib = require('emojilib'),
   inflection = require('inflection')
 
-var { compress } = require('../src/utils/data')
+var { compress } = require('./compress')
 
 var categories = [
   ['Smileys & Emotion', 'smileys'],
@@ -79,9 +79,15 @@ module.exports = (options) => {
     datum.emoticons = datum.texts || []
     datum.text = datum.text || ''
     delete datum.texts
+    
+    const unified = datum.unified.split('-')
+    let emojiChar = ''
+    unified.forEach((val) => {
+      emojiChar += String.fromCodePoint('0x' + val)
+    })
 
-    if (emojiLib.lib[datum.short_name]) {
-      datum.keywords = emojiLib.lib[datum.short_name].keywords
+    if (emojiLib[emojiChar]) {
+      datum.keywords = emojiLib[emojiChar]
     }
 
     if (datum.category != 'Skin Tones') {

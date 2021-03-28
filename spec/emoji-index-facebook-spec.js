@@ -12,7 +12,7 @@ describe('#EmojiIndex', () => {
           short_names: ['pineapple'],
           name: 'Pineapple',
           unified: '1f34d',
-          added_in: '2.0',
+          added_in: '6.0',
           emoticons: undefined,
           // The has_img_xxx are deleted from specific files
           // (as we assume that we using only one data file and
@@ -22,11 +22,11 @@ describe('#EmojiIndex', () => {
           has_img_facebook: undefined,
           has_img_google: undefined,
           has_img_twitter: undefined,
-          keywords: ['fruit', 'nature', 'food'],
+          keywords: ['pineapple', 'fruit', 'nature', 'food'],
           non_qualified: undefined,
           search: 'pineapple,fruit,nature,food',
           sheet_x: 6,
-          sheet_y: 37,
+          sheet_y: 31,
           text: '',
           unified: '1F34D',
         }),
