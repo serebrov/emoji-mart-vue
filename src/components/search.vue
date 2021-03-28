@@ -8,10 +8,10 @@
       aria-owns="emoji-mart-list"
       aria-label="Search for an emoji"
       aria-describedby="emoji-mart-search-description"
-      @keydown.left="() => $emit('arrowLeft')"
+      @keydown.left="($event) => $emit('arrowLeft', $event)"
       @keydown.right="() => $emit('arrowRight')"
       @keydown.down="() => $emit('arrowDown')"
-      @keydown.up="() => $emit('arrowUp')"
+      @keydown.up="($event) => $emit('arrowUp', $event)"
       @keydown.enter="() => $emit('enter')"
       v-model="value"
     />

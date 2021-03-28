@@ -270,7 +270,8 @@ export default {
     onEmojiLeave(emoji) {
       this.previewEmoji = null
     },
-    onArrowLeft() {
+    onArrowLeft($event) {
+      const oldIdx = this.previewEmojiIdx
       if (this.previewEmojiIdx > 0) {
         this.previewEmojiIdx -= 1
       } else {
@@ -282,6 +283,10 @@ export default {
             this.filteredCategories[this.previewEmojiCategoryIdx].emojis
               .length - 1
         }
+      }
+      if ($event && this.previewEmojiIdx !== oldIdx) {
+         // Prevent cursor movement inside the input
+         $event.preventDefault()
       }
       this.updatePreviewEmoji()
     },
@@ -318,7 +323,7 @@ export default {
       }
       this.updatePreviewEmoji()
     },
-    onArrowUp() {
+    onArrowUp($event) {
       let diff = 10
       if (this.previewEmojiIdx - diff < 0) {
         if (this.previewEmojiCategoryIdx > 0) {
@@ -333,6 +338,8 @@ export default {
       for (let i = 0; i < diff; i++) {
         this.onArrowLeft()
       }
+      // Prevent cursor movement inside the input
+      $event.preventDefault()
       this.updatePreviewEmoji()
     },
     onEnter(emoji) {
@@ -359,20 +366,9 @@ export default {
       return component
     },
     updatePreviewEmoji() {
-      // if (this.searchEmojis) {
-      //   this.previewEmoji = this.data.emoji(
-      //     this.searchEmojis[this.previewEmojiIdx],
-      //   )
-      // } else {
       this.previewEmoji = this.filteredCategories[
         this.previewEmojiCategoryIdx
       ].emojis[this.previewEmojiIdx]
-      console.log(
-        this.previewEmojiCategoryIdx,
-        this.previewEmojiIdx,
-        this.previewEmoji.native,
-      )
-      // }
 
       const emojiEl = document.querySelector('.emoji-mart-emoji-selected')
       const scrollEl = document.querySelector('.emoji-mart-scroll')
