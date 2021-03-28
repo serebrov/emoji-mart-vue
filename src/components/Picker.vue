@@ -365,6 +365,20 @@ export default {
           this.previewEmojiCategoryIdx
         ].emojis[this.previewEmojiIdx]
       }
+
+      const emojiEl = document.querySelector('.emoji-mart-emoji-selected')
+      const scrollEl = document.querySelector('.emoji-mart-scroll')
+      const scrollHeight = scrollEl.offsetTop - scrollEl.offsetHeight
+      if (
+        emojiEl &&
+        emojiEl.offsetTop + emojiEl.offsetHeight >
+          scrollHeight + scrollEl.scrollTop
+      ) {
+        scrollEl.scrollTop += emojiEl.offsetHeight
+      }
+      if (emojiEl && emojiEl.offsetTop < scrollEl.scrollTop) {
+        scrollEl.scrollTop -= emojiEl.offsetHeight
+      }
     },
     emojisLength(categoryIdx) {
       if (this.searchEmojis) {
