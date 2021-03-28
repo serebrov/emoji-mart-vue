@@ -5,7 +5,7 @@
         :data="data"
         :i18n="mergedI18n"
         :color="color"
-        :categories="categories"
+        :categories="_categories"
         :active-category="activeCategory"
         @click="onAnchorClick"
       />
@@ -42,20 +42,8 @@
     >
       <div id="emoji-mart-list" role="listbox" aria-expanded="true">
         <category
-          v-show="searchEmojis"
-          role="rowgroup"
-          :data="data"
-          :i18n="mergedI18n"
-          id="search"
-          name="Search"
-          :emojis="searchEmojis"
-          :emoji-props="emojiProps"
-        />
-        <category
           v-for="(category, idx) in filteredCategories"
-          v-show="
-            !searchEmojis && (infiniteScroll || category == activeCategory)
-          "
+          v-show="infiniteScroll || category == activeCategory"
           :ref="'categories_' + idx"
           :key="category.id"
           :data="data"
@@ -173,7 +161,16 @@ export default {
       return this.perLine * (this.emojiSize + 12) + 12 + 2 + measureScrollbar()
     },
     filteredCategories() {
-      return this.categories.filter((category) => {
+      if (this.searchEmojis) {
+        return [
+          {
+            id: 'search',
+            name: 'Search',
+            emojis: this.searchEmojis,
+          },
+        ]
+      }
+      return this._categories.filter((category) => {
         let hasEmojis = category.emojis.length > 0
         return hasEmojis
       })
@@ -196,21 +193,21 @@ export default {
     },
     previewEmojiCategory() {
       if (this.previewEmojiCategoryIdx >= 0) {
-        return this.categories[this.previewEmojiCategoryIdx]
+        return this.filteredCategories[this.previewEmojiCategoryIdx]
       }
       return null
     },
   },
   created() {
-    this.categories = []
-    this.categories.push(...this.data.categories())
-    this.categories = this.categories.filter((category) => {
+    this._categories = []
+    this._categories.push(...this.data.categories())
+    this._categories = this._categories.filter((category) => {
       return category.emojis.length > 0
     })
 
-    this.categories[0].first = true
-    Object.freeze(this.categories)
-    this.activeCategory = this.categories[0]
+    this._categories[0].first = true
+    Object.freeze(this._categories)
+    this.activeCategory = this._categories[0]
     this.skipScrollUpdate = false
   },
   methods: {
@@ -261,6 +258,9 @@ export default {
     onSearch(value) {
       let emojis = this.data.search(value, this.maxSearchResults)
       this.searchEmojis = emojis
+      this.previewEmojiCategoryIdx = 0
+      this.previewEmojiIdx = 0
+      this.updatePreviewEmoji()
     },
     onEmojiEnter(emoji) {
       this.previewEmoji = emoji
@@ -279,7 +279,8 @@ export default {
           this.previewEmojiCategoryIdx = 0
         } else {
           this.previewEmojiIdx =
-            this.categories[this.previewEmojiCategoryIdx].emojis.length - 1
+            this.filteredCategories[this.previewEmojiCategoryIdx].emojis
+              .length - 1
         }
       }
       this.updatePreviewEmoji()
@@ -292,8 +293,8 @@ export default {
         this.previewEmojiIdx += 1
       } else {
         this.previewEmojiCategoryIdx += 1
-        if (this.previewEmojiCategoryIdx >= this.categories.length) {
-          this.previewEmojiCategoryIdx = this.categories.length - 1
+        if (this.previewEmojiCategoryIdx >= this.filteredCategories.length) {
+          this.previewEmojiCategoryIdx = this.filteredCategories.length - 1
         } else {
           this.previewEmojiIdx = 0
         }
@@ -305,8 +306,9 @@ export default {
         return this.onArrowRight()
       }
 
-      const categoryLength = this.categories[this.previewEmojiCategoryIdx]
-        .emojis.length
+      const categoryLength = this.filteredCategories[
+        this.previewEmojiCategoryIdx
+      ].emojis.length
       let diff = 10
       if (this.previewEmojiIdx + diff > categoryLength) {
         diff = categoryLength - this.previewEmojiIdx
@@ -321,7 +323,8 @@ export default {
       if (this.previewEmojiIdx - diff < 0) {
         if (this.previewEmojiCategoryIdx > 0) {
           const prevCategoryLastRowLength =
-            this.categories[this.previewEmojiCategoryIdx - 1].emojis.length % 10
+            this.filteredCategories[this.previewEmojiCategoryIdx - 1].emojis
+              .length % 10
           diff = this.previewEmojiIdx + prevCategoryLastRowLength
         } else {
           diff = 0
@@ -356,15 +359,20 @@ export default {
       return component
     },
     updatePreviewEmoji() {
-      if (this.searchEmojis) {
-        this.previewEmoji = this.data.emoji(
-          this.searchEmojis[this.previewEmojiIdx],
-        )
-      } else {
-        this.previewEmoji = this.categories[
-          this.previewEmojiCategoryIdx
-        ].emojis[this.previewEmojiIdx]
-      }
+      // if (this.searchEmojis) {
+      //   this.previewEmoji = this.data.emoji(
+      //     this.searchEmojis[this.previewEmojiIdx],
+      //   )
+      // } else {
+      this.previewEmoji = this.filteredCategories[
+        this.previewEmojiCategoryIdx
+      ].emojis[this.previewEmojiIdx]
+      console.log(
+        this.previewEmojiCategoryIdx,
+        this.previewEmojiIdx,
+        this.previewEmoji.native,
+      )
+      // }
 
       const emojiEl = document.querySelector('.emoji-mart-emoji-selected')
       const scrollEl = document.querySelector('.emoji-mart-scroll')
@@ -381,14 +389,14 @@ export default {
       }
     },
     emojisLength(categoryIdx) {
-      if (this.searchEmojis) {
-        return this.searchEmojis.length
-      } else {
-        if (categoryIdx == -1) {
-          return 0
-        }
-        return this.categories[categoryIdx].emojis.length
+      // if (this.searchEmojis) {
+      //   return this.searchEmojis.length
+      // } else {
+      if (categoryIdx == -1) {
+        return 0
       }
+      return this.filteredCategories[categoryIdx].emojis.length
+      // }
     },
   },
   components: {
