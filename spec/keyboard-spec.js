@@ -59,6 +59,49 @@ describe('Picker keyboard control', () => {
     expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
   })
 
+  it('Arrow right selects emoji on the right', () => {
+    expect(picker.vm.previewEmoji).toEqual(null)
+
+    const search = picker.find(Search)
+    const input = search.find('input')
+    input.trigger('click')
+
+    input.trigger('keydown.right')
+    expect(picker.vm.previewEmoji.native).toEqual('👍')
+    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+
+    input.trigger('keydown.right')
+    expect(picker.vm.previewEmoji.native).toEqual('😀')
+    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+
+    input.trigger('keydown.right')
+    expect(picker.vm.previewEmoji.native).toEqual('😘')
+    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+  })
+
+  it('Arrow left selects emoji on the left', () => {
+    expect(picker.vm.previewEmoji).toEqual(null)
+
+    const search = picker.find(Search)
+    const input = search.find('input')
+
+    input.trigger('click')
+    input.trigger('keydown.right')
+    input.trigger('keydown.right')
+    input.trigger('keydown.right')
+
+    expect(picker.vm.previewEmoji.native).toEqual('😘')
+    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+
+    input.trigger('keydown.left')
+    expect(picker.vm.previewEmoji.native).toEqual('😀')
+    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+
+    input.trigger('keydown.left')
+    expect(picker.vm.previewEmoji.native).toEqual('👍')
+    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+  })
+
   it('Enter selects the emoji', () => {
     expect(picker.vm.previewEmoji).toEqual(null)
 
