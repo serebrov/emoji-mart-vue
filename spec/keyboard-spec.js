@@ -127,5 +127,4 @@ describe('Picker keyboard control', () => {
     expect(emojiData.colons).toBe(':grinning:')
     expect(emojiData.native).toBe('😀')
   })
-
 })
