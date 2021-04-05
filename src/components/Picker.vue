@@ -40,7 +40,12 @@
       ref="scroll"
       @scroll="onScroll"
     >
-      <div id="emoji-mart-list" role="listbox" aria-expanded="true">
+      <div
+        id="emoji-mart-list"
+        ref="scrollContent"
+        role="listbox"
+        aria-expanded="true"
+      >
         <category
           v-for="(category, idx) in filteredCategories"
           v-show="infiniteScroll || category == activeCategory"
@@ -371,8 +376,8 @@ export default {
       ].emojis[this.previewEmojiIdx]
 
       // Scroll the view if the `previewEmoji` goes out of the visible area.
-      const emojiEl = document.querySelector('.emoji-mart-emoji-selected')
-      const scrollEl = document.querySelector('.emoji-mart-scroll')
+      const scrollEl = this.$refs.scroll
+      const emojiEl = scrollEl.querySelector('.emoji-mart-emoji-selected')
 
       if (!scrollEl) return
 
