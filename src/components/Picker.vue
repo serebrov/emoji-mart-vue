@@ -285,8 +285,8 @@ export default {
         }
       }
       if ($event && this.previewEmojiIdx !== oldIdx) {
-         // Prevent cursor movement inside the input
-         $event.preventDefault()
+        // Prevent cursor movement inside the input
+        $event.preventDefault()
       }
       this.updatePreviewEmoji()
     },
@@ -370,6 +370,7 @@ export default {
         this.previewEmojiCategoryIdx
       ].emojis[this.previewEmojiIdx]
 
+      // Scroll the view if the `previewEmoji` goes out of the visible area.
       const emojiEl = document.querySelector('.emoji-mart-emoji-selected')
       const scrollEl = document.querySelector('.emoji-mart-scroll')
 
@@ -388,14 +389,10 @@ export default {
       }
     },
     emojisLength(categoryIdx) {
-      // if (this.searchEmojis) {
-      //   return this.searchEmojis.length
-      // } else {
       if (categoryIdx == -1) {
         return 0
       }
       return this.filteredCategories[categoryIdx].emojis.length
-      // }
     },
   },
   components: {
