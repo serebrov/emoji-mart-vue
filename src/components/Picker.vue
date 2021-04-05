@@ -165,6 +165,11 @@ export default {
     calculateWidth() {
       return this.perLine * (this.emojiSize + 12) + 12 + 2 + measureScrollbar()
     },
+    // emojisPerRow() {
+    //   const listEl = this.$refs.scrollContent
+    //   const emojiEl = listEl.querySelector('.emoji-mart-emoji')
+    //   return Math.floor(listEl.offsetWidth / emojiEl.offsetWidth)
+    // },
     filteredCategories() {
       if (this.searchEmojis) {
         return [
@@ -319,7 +324,8 @@ export default {
       const categoryLength = this.filteredCategories[
         this.previewEmojiCategoryIdx
       ].emojis.length
-      let diff = 10
+
+      let diff = this.perLine
       if (this.previewEmojiIdx + diff > categoryLength) {
         diff = categoryLength - this.previewEmojiIdx
       }
@@ -329,7 +335,7 @@ export default {
       this.updatePreviewEmoji()
     },
     onArrowUp($event) {
-      let diff = 10
+      let diff = this.perLine
       if (this.previewEmojiIdx - diff < 0) {
         if (this.previewEmojiCategoryIdx > 0) {
           const prevCategoryLastRowLength =
