@@ -411,8 +411,6 @@ export default {
       const scrollEl = this.$refs.scroll
       const emojiEl = scrollEl.querySelector('.emoji-mart-emoji-selected')
 
-      if (!scrollEl) return
-
       const scrollHeight = scrollEl.offsetTop - scrollEl.offsetHeight
       if (
         emojiEl &&
