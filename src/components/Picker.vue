@@ -326,8 +326,22 @@ export default {
       ].emojis.length
 
       let diff = this.perLine
+      // If we jump to the next category and current category
+      // has the last row shorter than `perLine`, use the
+      // last row length as diff, so we go straight down,
+      // for example:
+      //
+      //   1 2 3 4 5 6
+      //   7 8 9
+      //   A B C D E F
+      //
+      // If we go down from `8`, we need to move 3 emojis right
+      // to lend at `B` (and 3 is the length of the last row of
+      // this category).
+      // And if we used 6 instead (row length, `perLine`), we would
+      // lend up at `E`.
       if (this.previewEmojiIdx + diff > categoryLength) {
-        diff = categoryLength - this.previewEmojiIdx
+        diff = categoryLength % this.perLine
       }
       for (let i = 0; i < diff; i++) {
         this.onArrowRight()
@@ -338,10 +352,22 @@ export default {
       let diff = this.perLine
       if (this.previewEmojiIdx - diff < 0) {
         if (this.previewEmojiCategoryIdx > 0) {
+          // If the previous category is shorter and does not extend to
+          // the end of row, use the last row length as diff, so
+          // we go straight up, for example:
+          //
+          //   1 2 3 4 5
+          //   6 7 8
+          //   9 A B C D
+          //
+          // If we go up from `A`, we need to move 3 emojis left to get
+          // to `7` (and 3 is the length of the last row of the previous
+          // category).
           const prevCategoryLastRowLength =
             this.filteredCategories[this.previewEmojiCategoryIdx - 1].emojis
-              .length % 10
-          diff = this.previewEmojiIdx + prevCategoryLastRowLength
+              .length % this.perLine
+          // diff = this.previewEmojiIdx + prevCategoryLastRowLength
+          diff = prevCategoryLastRowLength
         } else {
           diff = 0
         }
