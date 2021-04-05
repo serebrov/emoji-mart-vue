@@ -28,7 +28,7 @@ describe('Picker keyboard control', () => {
     expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.down')
-    expect(picker.vm.previewEmoji.native).toEqual('😒')
+    expect(picker.vm.previewEmoji.native).toEqual('😞')
     expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.down')
@@ -51,7 +51,7 @@ describe('Picker keyboard control', () => {
     expect(picker.vm.previewEmojiCategory.id).toEqual('smileys')
 
     input.trigger('keydown.up')
-    expect(picker.vm.previewEmoji.native).toEqual('😒')
+    expect(picker.vm.previewEmoji.native).toEqual('😞')
     expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.up')
