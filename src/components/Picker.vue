@@ -372,6 +372,9 @@ export default {
 
       const emojiEl = document.querySelector('.emoji-mart-emoji-selected')
       const scrollEl = document.querySelector('.emoji-mart-scroll')
+
+      if (!scrollEl) return
+
       const scrollHeight = scrollEl.offsetTop - scrollEl.offsetHeight
       if (
         emojiEl &&

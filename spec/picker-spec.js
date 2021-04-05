@@ -43,19 +43,19 @@ describe('Picker', () => {
 
   it('renders 10 categories', () => {
     let categories = picker.findAll(Category)
-    expect(categories.length).toBe(11)
-    // Hidden category with search results
-    expect(categories.at(0).vm.name).toBe('Search')
-    expect(categories.at(1).vm.name).toBe('Recent')
-    expect(categories.at(2).vm.name).toBe('Smileys & Emotion')
-    expect(categories.at(3).vm.name).toBe('People & Body')
-    expect(categories.at(4).vm.name).toBe('Animals & Nature')
-    expect(categories.at(5).vm.name).toBe('Food & Drink')
-    expect(categories.at(6).vm.name).toBe('Activities')
-    expect(categories.at(7).vm.name).toBe('Travel & Places')
-    expect(categories.at(8).vm.name).toBe('Objects')
-    expect(categories.at(9).vm.name).toBe('Symbols')
-    expect(categories.at(10).vm.name).toBe('Flags')
+    expect(categories.length).toBe(10)
+    // // Hidden category with search results
+    // expect(categories.at(0).vm.name).toBe('Search')
+    expect(categories.at(0).vm.name).toBe('Recent')
+    expect(categories.at(1).vm.name).toBe('Smileys & Emotion')
+    expect(categories.at(2).vm.name).toBe('People & Body')
+    expect(categories.at(3).vm.name).toBe('Animals & Nature')
+    expect(categories.at(4).vm.name).toBe('Food & Drink')
+    expect(categories.at(5).vm.name).toBe('Activities')
+    expect(categories.at(6).vm.name).toBe('Travel & Places')
+    expect(categories.at(7).vm.name).toBe('Objects')
+    expect(categories.at(8).vm.name).toBe('Symbols')
+    expect(categories.at(9).vm.name).toBe('Flags')
   })
 
   it('no error when clicking anchor when search is active', (done) => {
@@ -70,7 +70,7 @@ describe('Picker', () => {
       expect(searchCategory.vm.id).toBe('search')
 
       let anchors = picker.find(Anchors)
-      let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+      let anchorsCategories = anchors.findAll('.emoji-mart-anchor')
       let symbols = anchorsCategories.at(8)
       expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
       symbols.trigger('click')
@@ -105,18 +105,15 @@ describe('categories', () => {
 
   it('will not show some based upon our filter', () => {
     let categories = picker.findAll(Category)
-    expect(categories.length).toBe(3)
-    // Hidden category with search results
-    expect(categories.at(0).vm.name).toBe('Search')
-    expect(categories.at(0).vm.id).toBe('search')
+    expect(categories.length).toBe(2)
     // Visible cateogires - Flags and Activity
-    expect(categories.at(1).vm.name).toBe('Activities')
-    expect(categories.at(1).vm.id).toBe('activity')
+    expect(categories.at(0).vm.name).toBe('Activities')
+    expect(categories.at(0).vm.id).toBe('activity')
     // only 1 emoji from Activities matches
-    expect(categories.at(1).vm.emojis.length).toBe(1)
-    expect(categories.at(2).vm.name).toBe('Flags')
-    expect(categories.at(2).vm.id).toBe('flags')
-    expect(categories.at(2).vm.emojis.length).toBe(250)
+    expect(categories.at(0).vm.emojis.length).toBe(1)
+    expect(categories.at(1).vm.name).toBe('Flags')
+    expect(categories.at(1).vm.id).toBe('flags')
+    expect(categories.at(1).vm.emojis.length).toBe(250)
   })
 })
 
@@ -155,11 +152,10 @@ describe('categories include allows to select and order categories', () => {
   // Note: the error is printed into console.
   it('will not throw an error if default emoji is not available', () => {
     let categories = picker.findAll(Category)
-    expect(categories.length).toBe(4)
-    expect(categories.at(0).vm.name).toBe('Search')
-    expect(categories.at(1).vm.name).toBe('Recent')
-    expect(categories.at(2).vm.name).toBe('Animals & Nature')
-    expect(categories.at(3).vm.name).toBe('Smileys & Emotion')
+    expect(categories.length).toBe(3)
+    expect(categories.at(0).vm.name).toBe('Recent')
+    expect(categories.at(1).vm.name).toBe('Animals & Nature')
+    expect(categories.at(2).vm.name).toBe('Smileys & Emotion')
   })
 })
 
@@ -183,7 +179,7 @@ describe('anchors', () => {
 
   it('contains all categories', () => {
     let anchors = picker.find(Anchors)
-    let categories = anchors.findAll('span.emoji-mart-anchor')
+    let categories = anchors.findAll('.emoji-mart-anchor')
     let names = []
     for (let idx = 0; idx < categories.length; idx++) {
       names.push(categories.at(idx).element.attributes['data-title'].value)
@@ -206,7 +202,7 @@ describe('anchors', () => {
   it('can be clicked to scroll to the category', async () => {
     let anchors = picker.find(Anchors)
 
-    let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+    let anchorsCategories = anchors.findAll('.emoji-mart-anchor')
     let symbols = anchorsCategories.at(8)
     expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
 
