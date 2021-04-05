@@ -60,7 +60,7 @@ describe('search', () => {
     expect(searchCategory.vm.id).toBe('search')
 
     let anchors = picker.find(Anchors)
-    let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+    let anchorsCategories = anchors.findAll('.emoji-mart-anchor')
     let symbols = anchorsCategories.at(8)
     expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
     symbols.trigger('click')
