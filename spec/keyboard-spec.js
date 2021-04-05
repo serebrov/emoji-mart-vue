@@ -59,4 +59,30 @@ describe('Picker keyboard control', () => {
     expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
   })
 
+  it('Enter selects the emoji', () => {
+    expect(picker.vm.previewEmoji).toEqual(null)
+
+    const search = picker.find(Search)
+    const input = search.find('input')
+    input.trigger('click')
+
+    input.trigger('keydown.down')
+    input.trigger('keydown.down')
+    input.trigger('keydown.down')
+
+    expect(picker.vm.previewEmoji.native).toEqual('😀')
+    expect(picker.vm.previewEmojiCategory.id).toEqual('smileys')
+
+    input.trigger('keydown.enter')
+
+    let events = picker.emitted().select
+    expect(events.length).toBe(1)
+    let emojiData = events[0][0]
+    expect(emojiData).toBe(index.emoji('grinning'))
+    expect(emojiData.id).toBe('grinning')
+    expect(emojiData.name).toBe('Grinning Face')
+    expect(emojiData.colons).toBe(':grinning:')
+    expect(emojiData.native).toBe('😀')
+  })
+
 })
