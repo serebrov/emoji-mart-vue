@@ -2,6 +2,7 @@
 
 exports[`Emoji native renders correctly native emoji 1`] = `
 <span
+  aria-label="☝️, point_up"
   class="emoji-mart-emoji"
 >
   <span
@@ -14,6 +15,7 @@ exports[`Emoji native renders correctly native emoji 1`] = `
 
 exports[`Emoji renders correctly 1`] = `
 <span
+  aria-label="☝️, point_up"
   class="emoji-mart-emoji"
 >
   <span
@@ -27,6 +29,7 @@ exports[`Emoji renders correctly 1`] = `
 
 exports[`Emoji renders correctly native emoji 1`] = `
 <span
+  aria-label="☝️, point_up"
   class="emoji-mart-emoji"
 >
   <span
