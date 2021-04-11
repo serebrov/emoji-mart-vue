@@ -16,7 +16,12 @@ export class PickerView {
     this.activeCategory = this._categories[0]
     this.searchEmojis = null
 
+    // Preview emoji, shown on mouse over or when we move
+    // with arrow keys.
     this.previewEmoji = null
+    // Indexes are used to keep the position when moving
+    // with arrows: current category and current emoji
+    // inside the category.
     this.previewEmojiCategoryIdx = 0
     this.previewEmojiIdx = -1
   }
@@ -109,13 +114,18 @@ export class PickerView {
   }
 
   onArrowLeft() {
+    // Moving left, decrease emoji index.
     if (this.previewEmojiIdx > 0) {
       this.previewEmojiIdx -= 1
     } else {
+      // If emoji index is zero, go to the previous category.
       this.previewEmojiCategoryIdx -= 1
       if (this.previewEmojiCategoryIdx < 0) {
+        // If we reached first category, keep it.
         this.previewEmojiCategoryIdx = 0
       } else {
+        // Update emoji index - we moved to the previous category,
+        // get the last emoji in it.
         this.previewEmojiIdx =
           this.filteredCategories[this.previewEmojiCategoryIdx].emojis.length -
           1
@@ -129,12 +139,17 @@ export class PickerView {
       this.previewEmojiIdx <
       this.emojisLength(this.previewEmojiCategoryIdx) - 1
     ) {
+      // Moving right within category, increase emoji index.
       this.previewEmojiIdx += 1
     } else {
+      // Go to the next category.
       this.previewEmojiCategoryIdx += 1
       if (this.previewEmojiCategoryIdx >= this.filteredCategories.length) {
+        // If we reached the last category - keep it.
         this.previewEmojiCategoryIdx = this.filteredCategories.length - 1
       } else {
+        // If we moved to the next category, update emoji index to the
+        // first emoji in the new category.
         this.previewEmojiIdx = 0
       }
     }
@@ -142,6 +157,9 @@ export class PickerView {
   }
 
   onArrowDown() {
+
+    // If we are out of the emoji control (index is -1), select the first
+    // emoji in the first category by calling `onArrowRight`.
     if (this.previewEmojiIdx == -1) {
       return this.onArrowRight()
     }
@@ -149,11 +167,14 @@ export class PickerView {
     const categoryLength = this.filteredCategories[this.previewEmojiCategoryIdx]
       .emojis.length
 
+    // When moving down, we can move `_perLine` icons right to
+    // jump to the same position in the next row.
     let diff = this._perLine
-    // If we jump to the next category and current category
-    // has the last row shorter than `_perLine`, use the
-    // last row length as diff, so we go straight down,
-    // for example:
+
+    // Unless if we are on the last row of the category and
+    // there are less then `_perLine` emojis in it.
+    // In this case we use the last row length as diff
+    // so we go straight down, for example:
     //
     //   1 2 3 4 5 6
     //   7 8 9
@@ -165,6 +186,7 @@ export class PickerView {
     // And if we used 6 instead (row length, `_perLine`), we would
     // lend up at `E`.
     if (this.previewEmojiIdx + diff > categoryLength) {
+      // Calculate the last row length.
       diff = categoryLength % this._perLine
     }
     for (let i = 0; i < diff; i++) {
@@ -174,11 +196,16 @@ export class PickerView {
   }
 
   onArrowUp() {
+    // Similar to `onArrowDown`, to move up we can move left
+    // by `_perLine` number of emojis.
     let diff = this._perLine
+
     if (this.previewEmojiIdx - diff < 0) {
       if (this.previewEmojiCategoryIdx > 0) {
-        // If the previous category is shorter and does not extend to
-        // the end of row, use the last row length as diff, so
+        // Unless if we are on the first line of the category and
+        // the last line in the previous category is shorter than
+        // `_perLine`.
+        // In this case we use the last row length as diff, so
         // we go straight up, for example:
         //
         //   1 2 3 4 5
