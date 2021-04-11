@@ -207,7 +207,7 @@ describe('anchors', () => {
     expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
 
     // The `recent` category is selected initially.
-    expect(picker.vm.activeCategory.id).toBe('recent')
+    expect(picker.vm.view.activeCategory.id).toBe('recent')
     expect(anchors.vm.activeCategory.id).toBe('recent')
 
     symbols.trigger('click')
@@ -223,7 +223,7 @@ describe('anchors', () => {
     // Picker change - the check below fails (although works in demo app)
     // scrollTop if 0 for all categories and activeCategory is changed in the
     // onScroll handler, need to find a way to thes this.
-    // expect(picker.vm.activeCategory.id).toBe('symbols')
+    // expect(picker.vm.view.activeCategory.id).toBe('symbols')
     // expect(anchors.vm.activeCategory.id).toBe('symbols')
   })
 })

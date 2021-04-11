@@ -17,27 +17,27 @@ describe('Picker keyboard control', () => {
   })
 
   it('Arrow down selects emoji below', () => {
-    expect(picker.vm.previewEmoji).toEqual(null)
+    expect(picker.vm.view.previewEmoji).toEqual(null)
 
     const search = picker.find(Search)
     const input = search.find('input')
     input.trigger('click')
 
     input.trigger('keydown.down')
-    expect(picker.vm.previewEmoji.native).toEqual('👍')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('👍')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.down')
-    expect(picker.vm.previewEmoji.native).toEqual('😞')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😞')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.down')
-    expect(picker.vm.previewEmoji.native).toEqual('😀')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('smileys')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😀')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('smileys')
   })
 
   it('Arrow down selects emoji above', () => {
-    expect(picker.vm.previewEmoji).toEqual(null)
+    expect(picker.vm.view.previewEmoji).toEqual(null)
 
     const search = picker.find(Search)
     const input = search.find('input')
@@ -47,40 +47,40 @@ describe('Picker keyboard control', () => {
     input.trigger('keydown.down')
     input.trigger('keydown.down')
 
-    expect(picker.vm.previewEmoji.native).toEqual('😀')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('smileys')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😀')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('smileys')
 
     input.trigger('keydown.up')
-    expect(picker.vm.previewEmoji.native).toEqual('😞')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😞')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.up')
-    expect(picker.vm.previewEmoji.native).toEqual('👍')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('👍')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
   })
 
   it('Arrow right selects emoji on the right', () => {
-    expect(picker.vm.previewEmoji).toEqual(null)
+    expect(picker.vm.view.previewEmoji).toEqual(null)
 
     const search = picker.find(Search)
     const input = search.find('input')
     input.trigger('click')
 
     input.trigger('keydown.right')
-    expect(picker.vm.previewEmoji.native).toEqual('👍')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('👍')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.right')
-    expect(picker.vm.previewEmoji.native).toEqual('😀')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😀')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.right')
-    expect(picker.vm.previewEmoji.native).toEqual('😘')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😘')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
   })
 
   it('Arrow left selects emoji on the left', () => {
-    expect(picker.vm.previewEmoji).toEqual(null)
+    expect(picker.vm.view.previewEmoji).toEqual(null)
 
     const search = picker.find(Search)
     const input = search.find('input')
@@ -90,20 +90,20 @@ describe('Picker keyboard control', () => {
     input.trigger('keydown.right')
     input.trigger('keydown.right')
 
-    expect(picker.vm.previewEmoji.native).toEqual('😘')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😘')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.left')
-    expect(picker.vm.previewEmoji.native).toEqual('😀')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😀')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
 
     input.trigger('keydown.left')
-    expect(picker.vm.previewEmoji.native).toEqual('👍')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('recent')
+    expect(picker.vm.view.previewEmoji.native).toEqual('👍')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('recent')
   })
 
   it('Enter selects the emoji', () => {
-    expect(picker.vm.previewEmoji).toEqual(null)
+    expect(picker.vm.view.previewEmoji).toEqual(null)
 
     const search = picker.find(Search)
     const input = search.find('input')
@@ -113,8 +113,8 @@ describe('Picker keyboard control', () => {
     input.trigger('keydown.down')
     input.trigger('keydown.down')
 
-    expect(picker.vm.previewEmoji.native).toEqual('😀')
-    expect(picker.vm.previewEmojiCategory.id).toEqual('smileys')
+    expect(picker.vm.view.previewEmoji.native).toEqual('😀')
+    expect(picker.vm.view.previewEmojiCategory.id).toEqual('smileys')
 
     input.trigger('keydown.enter')
 
