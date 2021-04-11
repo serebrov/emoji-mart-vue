@@ -407,21 +407,23 @@ export default {
         this.previewEmojiCategoryIdx
       ].emojis[this.previewEmojiIdx]
 
-      // Scroll the view if the `previewEmoji` goes out of the visible area.
-      const scrollEl = this.$refs.scroll
-      const emojiEl = scrollEl.querySelector('.emoji-mart-emoji-selected')
+      this.$nextTick(() => {
+        // Scroll the view if the `previewEmoji` goes out of the visible area.
+        const scrollEl = this.$refs.scroll
+        const emojiEl = scrollEl.querySelector('.emoji-mart-emoji-selected')
 
-      const scrollHeight = scrollEl.offsetTop - scrollEl.offsetHeight
-      if (
-        emojiEl &&
-        emojiEl.offsetTop + emojiEl.offsetHeight >
-          scrollHeight + scrollEl.scrollTop
-      ) {
-        scrollEl.scrollTop += emojiEl.offsetHeight
-      }
-      if (emojiEl && emojiEl.offsetTop < scrollEl.scrollTop) {
-        scrollEl.scrollTop -= emojiEl.offsetHeight
-      }
+        const scrollHeight = scrollEl.offsetTop - scrollEl.offsetHeight
+        if (
+          emojiEl &&
+          emojiEl.offsetTop + emojiEl.offsetHeight >
+            scrollHeight + scrollEl.scrollTop
+        ) {
+          scrollEl.scrollTop += emojiEl.offsetHeight
+        }
+        if (emojiEl && emojiEl.offsetTop < scrollEl.scrollTop) {
+          scrollEl.scrollTop -= emojiEl.offsetHeight
+        }
+      })
     },
     emojisLength(categoryIdx) {
       if (categoryIdx == -1) {
