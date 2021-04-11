@@ -5,8 +5,8 @@
         :data="data"
         :i18n="mergedI18n"
         :color="color"
-        :categories="_categories"
-        :active-category="activeCategory"
+        :categories="view.allCategories"
+        :active-category="view.activeCategory"
         @click="onAnchorClick"
       />
     </div>
@@ -47,8 +47,8 @@
         aria-expanded="true"
       >
         <category
-          v-for="(category, idx) in filteredCategories"
-          v-show="infiniteScroll || category == activeCategory"
+          v-for="(category, idx) in view.filteredCategories"
+          v-show="infiniteScroll || category == view.activeCategory"
           :ref="'categories_' + idx"
           :key="category.id"
           :data="data"
@@ -65,7 +65,7 @@
       name="previewTemplate"
       :data="data"
       :title="title"
-      :emoji="previewEmoji"
+      :emoji="view.previewEmoji"
       :idle-emoji="idleEmoji"
       :show-skin-tones="showSkinTones"
       :emoji-props="emojiProps"
@@ -76,7 +76,7 @@
         <preview
           :data="data"
           :title="title"
-          :emoji="previewEmoji"
+          :emoji="view.previewEmoji"
           :idle-emoji="idleEmoji"
           :show-skin-tones="showSkinTones"
           :emoji-props="emojiProps"
@@ -94,6 +94,7 @@ import store from '../utils/store'
 import frequently from '../utils/frequently'
 import { deepMerge, measureScrollbar } from '../utils'
 import { PickerProps } from '../utils/shared-props'
+import { PickerView } from '../utils/picker'
 import Anchors from './anchors.vue'
 import Category from './category.vue'
 import Preview from './preview.vue'
@@ -129,11 +130,7 @@ export default {
   data() {
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
-      activeCategory: null,
-      previewEmoji: null,
-      previewEmojiCategoryIdx: 0,
-      previewEmojiIdx: -1,
-      searchEmojis: null,
+      view: this.view,
     }
   },
   computed: {
@@ -150,8 +147,8 @@ export default {
         set: this.set,
         emojiTooltip: this.emojiTooltip,
         emojiSize: this.emojiSize,
-        selectedEmoji: this.previewEmoji,
-        selectedEmojiCategory: this.previewEmojiCategory,
+        selectedEmoji: this.view.previewEmoji,
+        selectedEmojiCategory: this.view.previewEmojiCategory,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this),
@@ -171,19 +168,7 @@ export default {
     //   return Math.floor(listEl.offsetWidth / emojiEl.offsetWidth)
     // },
     filteredCategories() {
-      if (this.searchEmojis) {
-        return [
-          {
-            id: 'search',
-            name: 'Search',
-            emojis: this.searchEmojis,
-          },
-        ]
-      }
-      return this._categories.filter((category) => {
-        let hasEmojis = category.emojis.length > 0
-        return hasEmojis
-      })
+      return this.view.filteredCategories
     },
     mergedI18n() {
       return Object.freeze(deepMerge(I18N, this.i18n))
@@ -201,24 +186,9 @@ export default {
         return this.data.firstEmoji()
       }
     },
-    previewEmojiCategory() {
-      if (this.previewEmojiCategoryIdx >= 0) {
-        return this.filteredCategories[this.previewEmojiCategoryIdx]
-      }
-      return null
-    },
   },
   created() {
-    this._categories = []
-    this._categories.push(...this.data.categories())
-    this._categories = this._categories.filter((category) => {
-      return category.emojis.length > 0
-    })
-
-    this._categories[0].first = true
-    Object.freeze(this._categories)
-    this.activeCategory = this._categories[0]
-    this.skipScrollUpdate = false
+    this.view = new PickerView(this)
   },
   methods: {
     onScroll() {
@@ -229,159 +199,42 @@ export default {
     },
     onScrollPaint() {
       this.waitingForPaint = false
-      let scrollTop = this.$refs.scroll.scrollTop
-      let activeCategory = this.filteredCategories[0]
-      for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
-        let category = this.filteredCategories[i]
-        let component = this.getCategoryComponent(i)
-        // The `-50` offset switches active category (selected in the
-        // anchors bar) a bit eariler, before it actually reaches the top.
-        if (component && component.$el.offsetTop - 50 > scrollTop) {
-          break
-        }
-        activeCategory = category
-      }
-      this.activeCategory = activeCategory
+      this.view.onScroll()
     },
     onAnchorClick(category) {
-      if (this.searchEmojis) {
-        // No categories are shown when search is active.
-        return
-      }
-      let i = this.filteredCategories.indexOf(category)
-      let component = this.getCategoryComponent(i)
-      let scrollToComponent = () => {
-        if (component) {
-          let top = component.$el.offsetTop
-          if (category.first) {
-            top = 0
-          }
-          this.$refs.scroll.scrollTop = top
-        }
-      }
-      if (this.infiniteScroll) {
-        scrollToComponent()
-      } else {
-        this.activeCategory = this.filteredCategories[i]
-      }
+      this.view.onAnchorClick(category)
     },
     onSearch(value) {
-      let emojis = this.data.search(value, this.maxSearchResults)
-      this.searchEmojis = emojis
-      this.previewEmojiCategoryIdx = 0
-      this.previewEmojiIdx = 0
-      this.updatePreviewEmoji()
+      this.view.onSearch(value)
     },
     onEmojiEnter(emoji) {
-      this.previewEmoji = emoji
-      this.previewEmojiIdx = -1
-      this.previewEmojiCategoryIdx = -1
+      this.view.onEmojiEnter(emoji)
     },
     onEmojiLeave(emoji) {
-      this.previewEmoji = null
+      this.view.onEmojiLeave(emoji)
     },
     onArrowLeft($event) {
-      const oldIdx = this.previewEmojiIdx
-      if (this.previewEmojiIdx > 0) {
-        this.previewEmojiIdx -= 1
-      } else {
-        this.previewEmojiCategoryIdx -= 1
-        if (this.previewEmojiCategoryIdx < 0) {
-          this.previewEmojiCategoryIdx = 0
-        } else {
-          this.previewEmojiIdx =
-            this.filteredCategories[this.previewEmojiCategoryIdx].emojis
-              .length - 1
-        }
-      }
-      if ($event && this.previewEmojiIdx !== oldIdx) {
+      const oldIdx = this.view.previewEmojiIdx
+      this.view.onArrowLeft()
+      if ($event && this.view.previewEmojiIdx !== oldIdx) {
         // Prevent cursor movement inside the input
         $event.preventDefault()
       }
-      this.updatePreviewEmoji()
     },
     onArrowRight() {
-      if (
-        this.previewEmojiIdx <
-        this.emojisLength(this.previewEmojiCategoryIdx) - 1
-      ) {
-        this.previewEmojiIdx += 1
-      } else {
-        this.previewEmojiCategoryIdx += 1
-        if (this.previewEmojiCategoryIdx >= this.filteredCategories.length) {
-          this.previewEmojiCategoryIdx = this.filteredCategories.length - 1
-        } else {
-          this.previewEmojiIdx = 0
-        }
-      }
-      this.updatePreviewEmoji()
+      this.view.onArrowRight()
     },
     onArrowDown() {
-      if (this.previewEmojiIdx == -1) {
-        return this.onArrowRight()
-      }
-
-      const categoryLength = this.filteredCategories[
-        this.previewEmojiCategoryIdx
-      ].emojis.length
-
-      let diff = this.perLine
-      // If we jump to the next category and current category
-      // has the last row shorter than `perLine`, use the
-      // last row length as diff, so we go straight down,
-      // for example:
-      //
-      //   1 2 3 4 5 6
-      //   7 8 9
-      //   A B C D E F
-      //
-      // If we go down from `8`, we need to move 3 emojis right
-      // to lend at `B` (and 3 is the length of the last row of
-      // this category).
-      // And if we used 6 instead (row length, `perLine`), we would
-      // lend up at `E`.
-      if (this.previewEmojiIdx + diff > categoryLength) {
-        diff = categoryLength % this.perLine
-      }
-      for (let i = 0; i < diff; i++) {
-        this.onArrowRight()
-      }
-      this.updatePreviewEmoji()
+      this.view.onArrowDown()
     },
     onArrowUp($event) {
-      let diff = this.perLine
-      if (this.previewEmojiIdx - diff < 0) {
-        if (this.previewEmojiCategoryIdx > 0) {
-          // If the previous category is shorter and does not extend to
-          // the end of row, use the last row length as diff, so
-          // we go straight up, for example:
-          //
-          //   1 2 3 4 5
-          //   6 7 8
-          //   9 A B C D
-          //
-          // If we go up from `A`, we need to move 3 emojis left to get
-          // to `7` (and 3 is the length of the last row of the previous
-          // category).
-          const prevCategoryLastRowLength =
-            this.filteredCategories[this.previewEmojiCategoryIdx - 1].emojis
-              .length % this.perLine
-          // diff = this.previewEmojiIdx + prevCategoryLastRowLength
-          diff = prevCategoryLastRowLength
-        } else {
-          diff = 0
-        }
-      }
-      for (let i = 0; i < diff; i++) {
-        this.onArrowLeft()
-      }
+      this.view.onArrowUp()
       // Prevent cursor movement inside the input
       $event.preventDefault()
-      this.updatePreviewEmoji()
     },
     onEnter(emoji) {
-      this.$emit('select', this.previewEmoji)
-      frequently.add(this.previewEmoji)
+      this.$emit('select', this.view.previewEmoji)
+      frequently.add(this.view.previewEmoji)
     },
     onEmojiClick(emoji) {
       this.$emit('select', emoji)
@@ -401,35 +254,6 @@ export default {
       }
       // Vue 3 does not support $refs as array.
       return component
-    },
-    updatePreviewEmoji() {
-      this.previewEmoji = this.filteredCategories[
-        this.previewEmojiCategoryIdx
-      ].emojis[this.previewEmojiIdx]
-
-      this.$nextTick(() => {
-        // Scroll the view if the `previewEmoji` goes out of the visible area.
-        const scrollEl = this.$refs.scroll
-        const emojiEl = scrollEl.querySelector('.emoji-mart-emoji-selected')
-
-        const scrollHeight = scrollEl.offsetTop - scrollEl.offsetHeight
-        if (
-          emojiEl &&
-          emojiEl.offsetTop + emojiEl.offsetHeight >
-            scrollHeight + scrollEl.scrollTop
-        ) {
-          scrollEl.scrollTop += emojiEl.offsetHeight
-        }
-        if (emojiEl && emojiEl.offsetTop < scrollEl.scrollTop) {
-          scrollEl.scrollTop -= emojiEl.offsetHeight
-        }
-      })
-    },
-    emojisLength(categoryIdx) {
-      if (categoryIdx == -1) {
-        return 0
-      }
-      return this.filteredCategories[categoryIdx].emojis.length
     },
   },
   components: {
