@@ -422,18 +422,10 @@ let index = new EmojiIndex(data, {
 }
 ```
 
-### VirtualScrollPicker
+#### Keyboard Controls
 
-Same as `Picker`, but uses [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller).
-It is a bit faster, but more complex to customize (especially, if you need a custom scroll bar style).
-
-```
-// Import the VirtualScrollPicker, usage and properties are the same as for Picker
-import { VirtualScrollPicker } from "emoji-mart-vue-fast/src/components/VirtualScrollPicker";
-```
-
-Note: `vue-virtual-scroller` also may lead to rendering problems when `VirtualScrollPicker` is used inside the dialog (in particluar, QDialog from Quasar Framework).
-See #57 for other workarounds (disable animation, trigger vue-virtual-scroller update after rendering).
+When the cursor is in the search field, the `Picker` component allows to select the emoji with arrow keys.
+The selection is confirm with enter, which will emit the `selected` event (same as when the emoji is clicked with mouse).
 
 ### Emoji
 
@@ -473,6 +465,7 @@ export default {
 | **backgroundImageFn**                        |          | `` ((set, sheetSize) => `https://unpkg.com/emoji-datasource@3.0.0/sheet_${set}_${sheetSize}.png`) `` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
 | **skin**                                     |          | `1`                                                                                                  | Skin color: `1, 2, 3, 4, 5, 6`                                                                                     |
 | **tooltip**                                  |          | `false`                                                                                              | Show emoji short name when hovering (title)                                                                        |
+| **tag**                                      |          | `span`                                                                                               | HTML tag to use, `span` by default, set to `button` for clickable emojis.                                          |
 
 | Event          | Description             |
 | -------------- | ----------------------- |
@@ -667,6 +660,7 @@ export default {
 
 Major changes comparing to the original emoji-mart-vue:
 
+- [2021-04-17, v10] Accessibility properties and keyboard controls
 - [2021-03-20, v9] Updated to emojis v13, thanks @sgtaziz!
 - Updated to emojis v12 (see the breaking change note below)
 
