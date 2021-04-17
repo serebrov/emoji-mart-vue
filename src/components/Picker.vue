@@ -1,12 +1,12 @@
 <template>
-  <div class="emoji-mart emoji-mart-static" :style="customStyles">
+  <section class="emoji-mart emoji-mart-static" :style="customStyles">
     <div class="emoji-mart-bar emoji-mart-bar-anchors" v-if="showCategories">
       <anchors
         :data="data"
         :i18n="mergedI18n"
         :color="color"
-        :categories="categories"
-        :active-category="activeCategory"
+        :categories="view.allCategories"
+        :active-category="view.activeCategory"
         @click="onAnchorClick"
       />
     </div>
@@ -26,38 +26,46 @@
         :auto-focus="autoFocus"
         :on-search="onSearch"
         @search="onSearch"
+        @arrowLeft="onArrowLeft"
+        @arrowRight="onArrowRight"
+        @arrowDown="onArrowDown"
+        @arrowUp="onArrowUp"
+        @enter="onEnter"
       />
     </slot>
 
-    <div class="emoji-mart-scroll" ref="scroll" @scroll="onScroll">
-      <category
-        v-show="searchEmojis"
-        :data="data"
-        :i18n="mergedI18n"
-        id="search"
-        name="Search"
-        :emojis="searchEmojis"
-        :emoji-props="emojiProps"
-      />
-      <category
-        v-for="(category, idx) in filteredCategories"
-        v-show="!searchEmojis && (infiniteScroll || category == activeCategory)"
-        :ref="'categories_' + idx"
-        :key="category.id"
-        :data="data"
-        :i18n="mergedI18n"
-        :id="category.id"
-        :name="category.name"
-        :emojis="category.emojis"
-        :emoji-props="emojiProps"
-      />
+    <div
+      role="tabpanel"
+      class="emoji-mart-scroll"
+      ref="scroll"
+      @scroll="onScroll"
+    >
+      <div
+        id="emoji-mart-list"
+        ref="scrollContent"
+        role="listbox"
+        aria-expanded="true"
+      >
+        <category
+          v-for="(category, idx) in view.filteredCategories"
+          v-show="infiniteScroll || category == view.activeCategory"
+          :ref="'categories_' + idx"
+          :key="category.id"
+          :data="data"
+          :i18n="mergedI18n"
+          :id="category.id"
+          :name="category.name"
+          :emojis="category.emojis"
+          :emoji-props="emojiProps"
+        />
+      </div>
     </div>
 
     <slot
       name="previewTemplate"
       :data="data"
       :title="title"
-      :emoji="previewEmoji"
+      :emoji="view.previewEmoji"
       :idle-emoji="idleEmoji"
       :show-skin-tones="showSkinTones"
       :emoji-props="emojiProps"
@@ -68,7 +76,7 @@
         <preview
           :data="data"
           :title="title"
-          :emoji="previewEmoji"
+          :emoji="view.previewEmoji"
           :idle-emoji="idleEmoji"
           :show-skin-tones="showSkinTones"
           :emoji-props="emojiProps"
@@ -77,7 +85,7 @@
         />
       </div>
     </slot>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -86,6 +94,7 @@ import store from '../utils/store'
 import frequently from '../utils/frequently'
 import { deepMerge, measureScrollbar } from '../utils'
 import { PickerProps } from '../utils/shared-props'
+import { PickerView } from '../utils/picker'
 import Anchors from './anchors.vue'
 import Category from './category.vue'
 import Preview from './preview.vue'
@@ -121,9 +130,7 @@ export default {
   data() {
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
-      activeCategory: null,
-      previewEmoji: null,
-      searchEmojis: null,
+      view: new PickerView(this),
     }
   },
   computed: {
@@ -140,6 +147,8 @@ export default {
         set: this.set,
         emojiTooltip: this.emojiTooltip,
         emojiSize: this.emojiSize,
+        selectedEmoji: this.view.previewEmoji,
+        selectedEmojiCategory: this.view.previewEmojiCategory,
         onEnter: this.onEmojiEnter.bind(this),
         onLeave: this.onEmojiLeave.bind(this),
         onClick: this.onEmojiClick.bind(this),
@@ -153,11 +162,13 @@ export default {
     calculateWidth() {
       return this.perLine * (this.emojiSize + 12) + 12 + 2 + measureScrollbar()
     },
+    // emojisPerRow() {
+    //   const listEl = this.$refs.scrollContent
+    //   const emojiEl = listEl.querySelector('.emoji-mart-emoji')
+    //   return Math.floor(listEl.offsetWidth / emojiEl.offsetWidth)
+    // },
     filteredCategories() {
-      return this.categories.filter((category) => {
-        let hasEmojis = category.emojis.length > 0
-        return hasEmojis
-      })
+      return this.view.filteredCategories
     },
     mergedI18n() {
       return Object.freeze(deepMerge(I18N, this.i18n))
@@ -176,18 +187,6 @@ export default {
       }
     },
   },
-  created() {
-    this.categories = []
-    this.categories.push(...this.data.categories())
-    this.categories = this.categories.filter((category) => {
-      return category.emojis.length > 0
-    })
-
-    this.categories[0].first = true
-    Object.freeze(this.categories)
-    this.activeCategory = this.categories[0]
-    this.skipScrollUpdate = false
-  },
   methods: {
     onScroll() {
       if (this.infiniteScroll && !this.waitingForPaint) {
@@ -197,51 +196,42 @@ export default {
     },
     onScrollPaint() {
       this.waitingForPaint = false
-      let scrollTop = this.$refs.scroll.scrollTop
-      let activeCategory = this.filteredCategories[0]
-      for (let i = 0, l = this.filteredCategories.length; i < l; i++) {
-        let category = this.filteredCategories[i]
-        let component = this.getCategoryComponent(i)
-        // The `-50` offset switches active category (selected in the
-        // anchors bar) a bit eariler, before it actually reaches the top.
-        if (component && component.$el.offsetTop - 50 > scrollTop) {
-          break
-        }
-        activeCategory = category
-      }
-      this.activeCategory = activeCategory
+      this.view.onScroll()
     },
     onAnchorClick(category) {
-      if (this.searchEmojis) {
-        // No categories are shown when search is active.
-        return
-      }
-      let i = this.filteredCategories.indexOf(category)
-      let component = this.getCategoryComponent(i)
-      let scrollToComponent = () => {
-        if (component) {
-          let top = component.$el.offsetTop
-          if (category.first) {
-            top = 0
-          }
-          this.$refs.scroll.scrollTop = top
-        }
-      }
-      if (this.infiniteScroll) {
-        scrollToComponent()
-      } else {
-        this.activeCategory = this.filteredCategories[i]
-      }
+      this.view.onAnchorClick(category)
     },
     onSearch(value) {
-      let emojis = this.data.search(value, this.maxSearchResults)
-      this.searchEmojis = emojis
+      this.view.onSearch(value)
     },
     onEmojiEnter(emoji) {
-      this.previewEmoji = emoji
+      this.view.onEmojiEnter(emoji)
     },
     onEmojiLeave(emoji) {
-      this.previewEmoji = null
+      this.view.onEmojiLeave(emoji)
+    },
+    onArrowLeft($event) {
+      const oldIdx = this.view.previewEmojiIdx
+      this.view.onArrowLeft()
+      if ($event && this.view.previewEmojiIdx !== oldIdx) {
+        // Prevent cursor movement inside the input
+        $event.preventDefault()
+      }
+    },
+    onArrowRight() {
+      this.view.onArrowRight()
+    },
+    onArrowDown() {
+      this.view.onArrowDown()
+    },
+    onArrowUp($event) {
+      this.view.onArrowUp()
+      // Prevent cursor movement inside the input
+      $event.preventDefault()
+    },
+    onEnter(emoji) {
+      this.$emit('select', this.view.previewEmoji)
+      frequently.add(this.view.previewEmoji)
     },
     onEmojiClick(emoji) {
       this.$emit('select', emoji)

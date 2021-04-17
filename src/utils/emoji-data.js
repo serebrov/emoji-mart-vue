@@ -500,6 +500,13 @@ export class EmojiData {
       y = Math.round(multiply * this._data.sheet_y * 100) / 100
     return `${x}% ${y}%`
   }
+
+  ariaLabel() {
+    return [this.native]
+      .concat(this.short_names)
+      .filter(Boolean)
+      .join(', ')
+  }
 }
 
 export class EmojiView {
@@ -523,6 +530,7 @@ export class EmojiView {
     this.cssStyle = this._cssStyle(emojiSize)
     this.content = this._content()
     this.title = emojiTooltip === true ? emoji.short_name : null
+    this.ariaLabel = emoji.ariaLabel()
 
     Object.freeze(this)
   }
@@ -560,9 +568,9 @@ export class EmojiView {
         // Set font-size for native emoji.
         cssStyle = Object.assign(cssStyle, {
           // font-size is used for native emoji which we need
-          // to scale with 0.8 factor to have them look approximately
-          // the same size as image-based emojl.
-          fontSize: Math.round(emojiSize * 0.8 * 10) / 10 + 'px',
+          // to scale with 0.95 factor to have them look approximately
+          // the same size as image-based emoji.
+          fontSize: Math.round(emojiSize * 0.95 * 10) / 10 + 'px',
         })
       } else {
         // Set width/height for image emoji.

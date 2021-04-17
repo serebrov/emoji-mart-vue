@@ -145,7 +145,7 @@ describe('anchors', () => {
 
   it('contains all categories', () => {
     let anchors = picker.find(Anchors)
-    let categories = anchors.findAll('span.emoji-mart-anchor')
+    let categories = anchors.findAll('.emoji-mart-anchor')
     let names = []
     for (let idx = 0; idx < categories.length; idx++) {
       names.push(categories.at(idx).element.attributes['data-title'].value)
@@ -168,7 +168,7 @@ describe('anchors', () => {
   it('can be clicked to scroll to the category', () => {
     let anchors = picker.find(Anchors)
 
-    let anchorsCategories = anchors.findAll('span.emoji-mart-anchor')
+    let anchorsCategories = anchors.findAll('.emoji-mart-anchor')
     let symbols = anchorsCategories.at(8)
     expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
 
@@ -307,9 +307,9 @@ describe('emjoiSize', () => {
     let emoji = picker.find('[data-title="+1"]')
     // The inner span with applied inline style.
     let emojiSpan = emoji.element.childNodes[0]
-    // Font-size is 80% of width/height value.
+    // Font-size is 95% of width/height value.
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 22.81% 49.12%; font-size: 19.2px;',
+      'background-position: 22.81% 49.12%; font-size: 22.8px;',
     )
   })
 
@@ -318,9 +318,9 @@ describe('emjoiSize', () => {
     let emoji = picker.find('[data-title="+1"]')
     // The inner span with applied inline style.
     let emojiSpan = emoji.element.childNodes[0]
-    // Font-size is 80% of width/height value.
+    // Font-size is 95% of width/height value.
     expect(emojiSpan.style.cssText).toBe(
-      'background-position: 22.81% 49.12%; font-size: 16px;',
+      'background-position: 22.81% 49.12%; font-size: 19px;',
     )
   })
 })

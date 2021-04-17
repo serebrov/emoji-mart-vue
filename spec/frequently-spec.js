@@ -14,8 +14,8 @@ describe('Picker frequnt category', () => {
 
   it('Has default emojis initially', () => {
     let categories = picker.findAll(Category)
-    expect(categories.at(1).vm.name).toBe('Recent')
-    expect(categories.at(1).vm.emojis.length).toBe(16)
+    expect(categories.at(0).vm.name).toBe('Recent')
+    expect(categories.at(0).vm.emojis.length).toBe(16)
 
     const DEFAULTS = [
       '+1',
@@ -36,8 +36,8 @@ describe('Picker frequnt category', () => {
       'hankey',
     ]
 
-    for (let idx in categories.at(1).vm.emojis) {
-      let emoji = categories.at(1).vm.emojis[idx]
+    for (let idx in categories.at(0).vm.emojis) {
+      let emoji = categories.at(0).vm.emojis[idx]
       expect(emoji.id).toBe(DEFAULTS[idx])
     }
   })
@@ -93,7 +93,7 @@ describe('Picker frequnt category', () => {
     // Wait for picker to be rendered.
     picker.vm.$nextTick(() => {
       let categories = newPicker.findAll(Category)
-      let recent = categories.at(1).vm
+      let recent = categories.at(0).vm
 
       expect(recent.emojis[0].id).toBe('nerd_face')
       expect(recent.emojis[1].id).toBe('space_invader')
