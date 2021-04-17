@@ -157,7 +157,6 @@ export class PickerView {
   }
 
   onArrowDown() {
-
     // If we are out of the emoji control (index is -1), select the first
     // emoji in the first category by calling `onArrowRight`.
     if (this.previewEmojiIdx == -1) {
