@@ -171,6 +171,18 @@ export class PickerView {
     // jump to the same position in the next row.
     let diff = this._perLine
 
+    // TODO: previewCategory should match activeCategory
+    // (so it would be both highlighted in UI and used
+    // when we start moving with arrows after clicking
+    // the category).
+
+    // Note: probably we can alwasy take current row length
+    // as a `diff` - it will fit both case of any row and
+    // special case of the last row.
+    // Note: it can be also easier to update indexes
+    // directly here instead of calling onArrowRight.
+    // Same is true for `onArrowUp`.
+
     // Unless if we are on the last row of the category and
     // there are less then `_perLine` emojis in it.
     // In this case we use the last row length as diff

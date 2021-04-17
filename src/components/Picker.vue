@@ -130,7 +130,7 @@ export default {
   data() {
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
-      view: this.view,
+      view: new PickerView(this),
     }
   },
   computed: {
@@ -186,9 +186,6 @@ export default {
         return this.data.firstEmoji()
       }
     },
-  },
-  created() {
-    this.view = new PickerView(this)
   },
   methods: {
     onScroll() {
