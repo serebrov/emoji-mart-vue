@@ -464,7 +464,7 @@
   pointer-events: none;
   z-index: -1;
 }
-.hidden {
+.emoji-mart-search .hidden {
   display: none;
   visibility: hidden;
 }
