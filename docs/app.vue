@@ -154,6 +154,18 @@
     <div class="row">
       <Picker :data="indexInclude" />
     </div>
+
+    <div class="row"></div>
+    <h2>Small picker example</h2>
+    <div class="row row-small-picker">
+      <Picker
+        :data="index"
+        :native="native"
+        :set="activeSet"
+        :emojiSize="12"
+        :perLine="5"
+      />
+    </div>
   </div>
 </template>
 
@@ -385,5 +397,25 @@ h2 {
   top: 20px;
   right: 30px;
   cursor: pointer;
+}
+
+.row-small-picker >>> .emoji-mart-anchors svg {
+  width: 9px;
+  height: 9px;
+}
+.row-small-picker >>> .emoji-mart-title-label {
+  font-size: 9px;
+}
+.row-small-picker >>> .emoji-mart-preview-data {
+  left: 40px;
+  font-size: 9px;
+}
+.row-small-picker >>> .emoji-mart-preview-name {
+  font-size: 9px;
+}
+.row-small-picker >>> .emoji-mart-preview-emoji .emoji-type-native {
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
 }
 </style>
