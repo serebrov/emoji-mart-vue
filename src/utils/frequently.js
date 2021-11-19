@@ -48,7 +48,7 @@ function get(maxNumber) {
 
     let defaultLength = Math.min(maxNumber, DEFAULTS.length)
     for (let i = 0; i < defaultLength; i++) {
-      defaults[DEFAULTS[i]] = defaultLength - i
+      defaults[DEFAULTS[i]] = parseInt((defaultLength - i) / 4, 10) + 1
       result.push(DEFAULTS[i])
     }
 
