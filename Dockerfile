@@ -5,7 +5,7 @@ WORKDIR /src
 RUN npm install -g codecov
 
 COPY package.json /src
-COPY yarn.lock /src
-RUN yarn install
+COPY package-lock.json /src
+RUN npm install
 
 COPY . /src
