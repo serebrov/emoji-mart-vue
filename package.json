@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@babel/runtime": "^7.16.3",
-    "vue-virtual-scroller": "^1.0.0-rc.2"
+    "vue-virtual-scroller": "^1.0.10"
   },
   "peerDependencies": {
     "vue": ">2.0.0"
