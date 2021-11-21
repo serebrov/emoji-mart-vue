@@ -11,7 +11,7 @@ export default (function createClass() {
     }
   }
 
-  return function(Constructor, protoProps, staticProps) {
+  return function (Constructor, protoProps, staticProps) {
     if (protoProps) defineProperties(Constructor.prototype, protoProps)
     if (staticProps) defineProperties(Constructor, staticProps)
     return Constructor

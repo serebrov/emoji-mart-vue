@@ -19,7 +19,7 @@ describe('Picker keyboard control', () => {
   it('Arrow down selects emoji below', () => {
     expect(picker.vm.view.previewEmoji).toEqual(null)
 
-    const search = picker.find(Search)
+    const search = picker.findComponent(Search)
     const input = search.find('input')
     input.trigger('click')
 
@@ -39,7 +39,7 @@ describe('Picker keyboard control', () => {
   it('Arrow down selects emoji above', () => {
     expect(picker.vm.view.previewEmoji).toEqual(null)
 
-    const search = picker.find(Search)
+    const search = picker.findComponent(Search)
     const input = search.find('input')
 
     input.trigger('click')
@@ -62,7 +62,7 @@ describe('Picker keyboard control', () => {
   it('Arrow right selects emoji on the right', () => {
     expect(picker.vm.view.previewEmoji).toEqual(null)
 
-    const search = picker.find(Search)
+    const search = picker.findComponent(Search)
     const input = search.find('input')
     input.trigger('click')
 
@@ -82,7 +82,7 @@ describe('Picker keyboard control', () => {
   it('Arrow left selects emoji on the left', () => {
     expect(picker.vm.view.previewEmoji).toEqual(null)
 
-    const search = picker.find(Search)
+    const search = picker.findComponent(Search)
     const input = search.find('input')
 
     input.trigger('click')
@@ -105,7 +105,7 @@ describe('Picker keyboard control', () => {
   it('Enter selects the emoji', () => {
     expect(picker.vm.view.previewEmoji).toEqual(null)
 
-    const search = picker.find(Search)
+    const search = picker.findComponent(Search)
     const input = search.find('input')
     input.trigger('click')
 

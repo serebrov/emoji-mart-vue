@@ -502,10 +502,7 @@ export class EmojiData {
   }
 
   ariaLabel() {
-    return [this.native]
-      .concat(this.short_names)
-      .filter(Boolean)
-      .join(', ')
+    return [this.native].concat(this.short_names).filter(Boolean).join(', ')
   }
 }
 

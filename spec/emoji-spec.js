@@ -14,7 +14,6 @@ describe('Emoji', () => {
   })
 
   it('works', () => {
-    expect(emoji.isVueInstance()).toBeTruthy()
     expect(emoji.html()).toContain('emoji-set-apple emoji-type-image')
     expect(emoji.vm.emojiObject.id).toBe('point_up')
   })
@@ -23,8 +22,8 @@ describe('Emoji', () => {
     expect(emoji.element).toMatchSnapshot()
   })
 
-  test('renders correctly native emoji', () => {
-    emoji.setProps({ native: true })
+  test('renders correctly native emoji', async () => {
+    await emoji.setProps({ native: true })
     expect(emoji.element).toMatchSnapshot()
   })
 
@@ -107,13 +106,13 @@ describe('Emoji title', () => {
     expect(emoji.vm.title).toBe(null)
   })
 
-  it('has short name as a title if tooltip property is set to true', () => {
-    emoji.setProps({ tooltip: true })
+  it('has short name as a title if tooltip property is set to true', async () => {
+    await emoji.setProps({ tooltip: true })
     expect(emoji.vm.title).toBe('point_up')
   })
 
-  it('does not have title if tooltop property is set to false', () => {
-    emoji.setProps({ tooltip: false })
+  it('does not have title if tooltop property is set to false', async () => {
+    await emoji.setProps({ tooltip: false })
     expect(emoji.vm.title).toBe(null)
   })
 })
@@ -134,8 +133,8 @@ describe('Emoji size', () => {
     })
   })
 
-  it('size can be set', () => {
-    emoji.setProps({ size: 32 })
+  it('size can be set', async () => {
+    await emoji.setProps({ size: 32 })
     expect(emoji.vm.size).toBe(32)
     expect(emoji.vm.view.cssStyle).toEqual({
       backgroundPosition: '94.74% 12.28%',

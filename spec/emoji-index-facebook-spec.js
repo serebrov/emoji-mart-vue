@@ -2,7 +2,7 @@ import { EmojiIndex, EmojiData, EmojiView } from '../src/utils/emoji-data'
 import data from '../data/facebook.json'
 
 describe('#EmojiIndex', () => {
-  describe('search', function() {
+  describe('search', function () {
     it('should find pineapple emoji by id', () => {
       const emojiIndex = new EmojiIndex(data)
       let emojis = emojiIndex.search('pineapple')

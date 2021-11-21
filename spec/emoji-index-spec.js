@@ -2,7 +2,7 @@ import { EmojiIndex, EmojiData, EmojiView } from '../src/utils/emoji-data'
 import data from '../data/all.json'
 
 describe('#EmojiIndex', () => {
-  describe('search', function() {
+  describe('search', function () {
     it('should find pineapple emoji by id', () => {
       const emojiIndex = new EmojiIndex(data)
       let emojis = emojiIndex.search('pineapple')
@@ -68,7 +68,7 @@ describe('#EmojiIndex', () => {
     })
   })
 
-  describe('categories', function() {
+  describe('categories', function () {
     it('should return categories', () => {
       const emojiIndex = new EmojiIndex(data)
       const categories = emojiIndex.categories()
