@@ -723,17 +723,9 @@ To debug tests, run `npm run jest-debug` and then open `chrome://inspect` in Chr
 ```sh
 # Checkout master branch, update version
 git checkout master
-# Edit package.json, update version
+# Edit package.json, update `version` field
 vim package.json
 git add package.json
-git commit -m "Update version to x.x.x"
-git push origin HEAD
-
-# Checkout build branch
-git checkout build
-
-# Merge latest master into it
-git merge master
 
 # Build
 NODE_ENV=production npm run build
@@ -742,14 +734,14 @@ npm run dev:docs
 # Add build files
 git add dist/
 git add docs/
-git commit -m "Rebuild"
 
-# Push changes
+# Commit and push changes.
+git commit -m "Update version to X.Y.Z"
 git push origin HEAD
 
 # Tag the new release (same as package.json version), add the description for tag
 # Hint: refer PRs with #17 (PR id) to later have links to PRs in github releases
-git tag 3.1.1 -a
+git tag X.Y.Z -a
 
 # Push the tags
 git push origin --tags
