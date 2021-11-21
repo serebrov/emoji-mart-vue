@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/serebrov/emoji-mart-vue.svg?branch=master)](https://travis-ci.org/serebrov/emoji-mart-vue)
+[![Build Status - CircleCI](https://circleci.com/gh/serebrov/emoji-mart-vue/tree/master.svg?style=svg)](https://circleci.com/gh/serebrov/emoji-mart-vue/tree/master)
 
 [![codecov](https://codecov.io/gh/serebrov/emoji-mart-vue/branch/master/graph/badge.svg)](https://codecov.io/gh/serebrov/emoji-mart-vue)
 
