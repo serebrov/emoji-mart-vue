@@ -13,13 +13,13 @@ describe('emjois skin', () => {
     },
   })
 
-  it('emoji skin tone can be changed dynamically', () => {
+  it('emoji skin tone can be changed dynamically', async () => {
     // Find the Skins component, make sure it is closed.
-    let skins = picker.find(Skins)
+    let skins = picker.findComponent(Skins)
     expect(skins.vm.opened).toEqual(false)
     // Find the +1 emoji and make sure skin tone is set to 6.
     let emojiSkin6 = picker.find('[data-title="+1"]')
-    emojiSkin6.trigger('click')
+    await emojiSkin6.trigger('click')
     let eventsBefore = picker.emitted().select
     expect(eventsBefore.length).toBe(1)
     let emojiDataSkin6 = eventsBefore[0][0]
@@ -28,12 +28,12 @@ describe('emjois skin', () => {
 
     // Click the Skins component, it should be open now.
     let skin_6 = skins.find('.emoji-mart-skin-tone-6')
-    skin_6.trigger('click')
+    await skin_6.trigger('click')
     expect(skins.vm.opened).toEqual(true)
 
     // Click the skin 2 option.
     let skin_3 = skins.find('.emoji-mart-skin-tone-3')
-    skin_3.trigger('click')
+    await skin_3.trigger('click')
 
     // Check that 'change' event was emmited.
     let skinEvents = skins.emitted().change
@@ -43,7 +43,7 @@ describe('emjois skin', () => {
 
     // Find the +1 emoji and make sure skin tone has changed for the picker.
     let emojiSkin3 = picker.find('[data-title="+1"]')
-    emojiSkin3.trigger('click')
+    await emojiSkin3.trigger('click')
     let eventsAfter = picker.emitted().select
     expect(eventsAfter.length).toBe(2)
     let emojiDataSkin3 = eventsAfter[1][0]
@@ -63,7 +63,7 @@ describe('emjois skin data', () => {
 
   it('emoji skin tone is returned in the emoji data', () => {
     // Find the Skins component, make sure it is closed.
-    let skins = picker.find(Skins)
+    let skins = picker.findComponent(Skins)
 
     // Find the +1 emoji and make sure skin tone is set to 6.
     let emojiSkin6 = picker.find('[data-title="+1"]')

@@ -20,7 +20,6 @@ describe('Picker', () => {
   })
 
   it('works', () => {
-    expect(picker.isVueInstance()).toBeTruthy()
     expect(picker.html()).toContain('woman-gesturing-ok')
   })
 
@@ -42,7 +41,7 @@ describe('Picker', () => {
   })
 
   it('renders 10 categories', () => {
-    let categories = picker.findAll(Category)
+    let categories = picker.findAllComponents(Category)
     expect(categories.length).toBe(10)
     // // Hidden category with search results
     // expect(categories.at(0).vm.name).toBe('Search')
@@ -59,17 +58,17 @@ describe('Picker', () => {
   })
 
   it('no error when clicking anchor when search is active', (done) => {
-    let search = picker.find(Search)
+    let search = picker.findComponent(Search)
     let input = search.find('input')
     input.element.value = '+1'
     input.trigger('input')
 
     picker.vm.$nextTick(() => {
-      let categories = picker.findAll(Category)
+      let categories = picker.findAllComponents(Category)
       let searchCategory = categories.at(0)
       expect(searchCategory.vm.id).toBe('search')
 
-      let anchors = picker.find(Anchors)
+      let anchors = picker.findComponent(Anchors)
       let anchorsCategories = anchors.findAll('.emoji-mart-anchor')
       let symbols = anchorsCategories.at(8)
       expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
@@ -104,7 +103,7 @@ describe('categories', () => {
   })
 
   it('will not show some based upon our filter', () => {
-    let categories = picker.findAll(Category)
+    let categories = picker.findAllComponents(Category)
     expect(categories.length).toBe(2)
     // Visible cateogires - Flags and Activity
     expect(categories.at(0).vm.name).toBe('Activities')
@@ -151,7 +150,7 @@ describe('categories include allows to select and order categories', () => {
 
   // Note: the error is printed into console.
   it('will not throw an error if default emoji is not available', () => {
-    let categories = picker.findAll(Category)
+    let categories = picker.findAllComponents(Category)
     expect(categories.length).toBe(3)
     expect(categories.at(0).vm.name).toBe('Recent')
     expect(categories.at(1).vm.name).toBe('Animals & Nature')
@@ -178,7 +177,7 @@ describe('anchors', () => {
   })
 
   it('contains all categories', () => {
-    let anchors = picker.find(Anchors)
+    let anchors = picker.findComponent(Anchors)
     let categories = anchors.findAll('.emoji-mart-anchor')
     let names = []
     for (let idx = 0; idx < categories.length; idx++) {
@@ -200,7 +199,7 @@ describe('anchors', () => {
   })
 
   it('can be clicked to scroll to the category', async () => {
-    let anchors = picker.find(Anchors)
+    let anchors = picker.findComponent(Anchors)
 
     let anchorsCategories = anchors.findAll('.emoji-mart-anchor')
     let symbols = anchorsCategories.at(8)
@@ -275,22 +274,31 @@ describe('emjois skin', () => {
   })
 })
 
-describe('emjoi tooltip', () => {
+describe('emjoi tooltip is true', () => {
   let index = new EmojiIndex(data)
   const picker = mount(Picker, {
     propsData: {
       data: index,
+      emojiTooltip: true,
     },
   })
 
   it('emoji title is set to emoji id when emojiTooltip is true', () => {
-    picker.setProps({ emojiTooltip: true })
     let emoji = picker.find('[data-title="+1"]')
     expect(emoji.element.title).toBe('+1')
   })
+})
+
+describe('emjoi tooltip is false', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+      emojiTooltip: false,
+    },
+  })
 
   it('emoji title is not set when emojiTooltip is false', () => {
-    picker.setProps({ emojiTooltip: false })
     let emoji = picker.find('[data-title="+1"]')
     expect(emoji.element.title).toBe('')
   })
@@ -306,15 +314,15 @@ describe('emjoi preview', () => {
   })
 
   it('preview shows point_up when no emoji is hovered', () => {
-    let emoji = picker.find(Preview).find(Emoji)
+    let emoji = picker.findComponent(Preview).findComponent(Emoji)
     expect(emoji.vm.emojiObject.id).toBe('point_up')
   })
 
-  it('preview shows the hovered emoji', () => {
+  it('preview shows the hovered emoji', async () => {
     let emoji = picker.find('[data-title="+1"]')
-    emoji.trigger('mouseenter')
+    await emoji.trigger('mouseenter')
 
-    let previewEmoji = picker.find(Preview).find(Emoji)
+    let previewEmoji = picker.findComponent(Preview).findComponent(Emoji)
     expect(previewEmoji.vm.emojiObject.id).toBe('+1')
   })
 })
@@ -337,8 +345,8 @@ describe('emjoiSize', () => {
     )
   })
 
-  it('emojiSize can be changed', () => {
-    picker.setProps({ emojiSize: 20 })
+  it('emojiSize can be changed', async () => {
+    await picker.setProps({ emojiSize: 20 })
     let emoji = picker.find('[data-title="+1"]')
     // The inner span with applied inline style.
     let emojiSpan = emoji.element.childNodes[0]
@@ -347,8 +355,8 @@ describe('emjoiSize', () => {
     )
   })
 
-  it('native emoji font size is 19.2px by default', () => {
-    picker.setProps({ emojiSize: 24, native: true })
+  it('native emoji font size is 19.2px by default', async () => {
+    await picker.setProps({ emojiSize: 24, native: true })
     let emoji = picker.find('[data-title="+1"]')
     // The inner span with applied inline style.
     let emojiSpan = emoji.element.childNodes[0]
@@ -358,8 +366,8 @@ describe('emjoiSize', () => {
     )
   })
 
-  it('native emoji font size is smaller when emojiSize is smaller', () => {
-    picker.setProps({ emojiSize: 20, native: true })
+  it('native emoji font size is smaller when emojiSize is smaller', async () => {
+    await picker.setProps({ emojiSize: 20, native: true })
     let emoji = picker.find('[data-title="+1"]')
     // The inner span with applied inline style.
     let emojiSpan = emoji.element.childNodes[0]
