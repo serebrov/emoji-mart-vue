@@ -41,7 +41,20 @@
       />
     </div>
 
-    <div class="row">{{ emojisOutput }}</div>
+    <div class="row">
+      <emoji
+        v-for="emo in selectedEmojis"
+        :data="index"
+        :emoji="emo"
+        :set="activeSet"
+        :native="native"
+        :size="32"
+      />
+    </div>
+
+    <div class="row">
+      {{ emojisOutput }}
+    </div>
 
     <div class="row-small">
       <iframe
@@ -60,7 +73,7 @@
     </div>
 
     <q-dialog v-model="emojiPickerDialog">
-      <template v-slot:body style="height:450px">
+      <template v-slot:body style="height: 450px">
         <picker :data="index" :emojiSize="24" :native="true"></picker>
       </template>
     </q-dialog>
@@ -69,7 +82,7 @@
     <h2>Custom Dialog Example</h2>
     <div class="row">
       <button @click="emojiPickerCustomDialog = true">
-        Open Cuttom Dialog
+        Open Custom Dialog
       </button>
     </div>
 
@@ -79,9 +92,7 @@
           <div class="popup-close">
             <a @click="emojiPickerCustomDialog = false">X</a>
           </div>
-          <h2>
-            Emoji Selector
-          </h2>
+          <h2>Emoji Selector</h2>
           <picker :data="index" :emojiSize="24" :native="true"></picker>
         </div>
       </div>
@@ -256,6 +267,7 @@ export default {
       emojiPickerDialog: false,
       emojiPickerCustomDialog: false,
       emojisOutput: '',
+      selectedEmojis: [],
       flagsVisible: true,
     }
   },
@@ -286,7 +298,12 @@ export default {
       }
     },
     showEmoji(emoji) {
-      this.emojisOutput = this.emojisOutput + emoji.native
+      this.selectedEmojis.push(emoji)
+      if (emoji.native) {
+        this.emojisOutput = this.emojisOutput + emoji.native
+      } else {
+        this.emojisOutput = this.emojisOutput + '?'
+      }
     },
   },
   components: {
