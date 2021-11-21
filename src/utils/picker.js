@@ -163,8 +163,8 @@ export class PickerView {
       return this.onArrowRight()
     }
 
-    const categoryLength = this.filteredCategories[this.previewEmojiCategoryIdx]
-      .emojis.length
+    const categoryLength =
+      this.filteredCategories[this.previewEmojiCategoryIdx].emojis.length
 
     // When moving down, we can move `_perLine` icons right to
     // jump to the same position in the next row.
@@ -242,9 +242,10 @@ export class PickerView {
   }
 
   updatePreviewEmoji() {
-    this.previewEmoji = this.filteredCategories[
-      this.previewEmojiCategoryIdx
-    ].emojis[this.previewEmojiIdx]
+    this.previewEmoji =
+      this.filteredCategories[this.previewEmojiCategoryIdx].emojis[
+        this.previewEmojiIdx
+      ]
 
     this._vm.$nextTick(() => {
       // Scroll the view if the `previewEmoji` goes out of the visible area.

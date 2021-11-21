@@ -89,9 +89,7 @@ module.exports = Object.assign(
 
     plugins: [
       new webpack.DefinePlugin({
-        EMOJI_DATASOURCE_VERSION: `'${
-          pack.devDependencies['emoji-datasource']
-        }'`,
+        EMOJI_DATASOURCE_VERSION: `'${pack.devDependencies['emoji-datasource']}'`,
       }),
       new VueLoaderPlugin(),
     ],

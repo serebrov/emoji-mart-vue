@@ -8,7 +8,7 @@
 var isWindowAvailable = typeof window !== 'undefined'
 
 isWindowAvailable &&
-  (function() {
+  (function () {
     var lastTime = 0
     var vendors = ['ms', 'moz', 'webkit', 'o']
 
@@ -21,10 +21,10 @@ isWindowAvailable &&
     }
 
     if (!window.requestAnimationFrame)
-      window.requestAnimationFrame = function(callback, element) {
+      window.requestAnimationFrame = function (callback, element) {
         var currTime = new Date().getTime()
         var timeToCall = Math.max(0, 16 - (currTime - lastTime))
-        var id = window.setTimeout(function() {
+        var id = window.setTimeout(function () {
           callback(currTime + timeToCall)
         }, timeToCall)
 
@@ -33,7 +33,7 @@ isWindowAvailable &&
       }
 
     if (!window.cancelAnimationFrame)
-      window.cancelAnimationFrame = function(id) {
+      window.cancelAnimationFrame = function (id) {
         clearTimeout(id)
       }
   })()
