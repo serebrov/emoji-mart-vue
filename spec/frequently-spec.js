@@ -76,7 +76,7 @@ describe('Picker frequnt category', () => {
         sob: 2,
         sunglasses: 1,
         heart: 1,
-        poop: 1,
+        hankey: 1,
         nerd_face: 25,
         space_invader: 24,
         robot_face: 23,
