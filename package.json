@@ -40,7 +40,7 @@
     "css-loader": "^6.5.1",
     "emoji-datasource": "6.0.1",
     "emojilib": "^3.0.1",
-    "inflection": "1.10.0",
+    "inflection": "1.13.1",
     "jest": "^27.4.5",
     "jest-serializer-vue": "^2.0.2",
     "jest-transform-stub": "^2.0.0",
