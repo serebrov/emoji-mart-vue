@@ -60,7 +60,7 @@ import data from "emoji-mart-vue-fast/data/all.json";
 // Import default CSS
 import "emoji-mart-vue-fast/css/emoji-mart.css";
 
-import { Picker, EmojiIndex } from "emoji-mart-vue-fast";
+import { Picker, EmojiIndex } from "emoji-mart-vue-fast/src";
 
 // Create emoji data index.
 // We can change it (for example, filter by category) before passing to the component.
