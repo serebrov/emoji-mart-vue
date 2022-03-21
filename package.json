@@ -21,7 +21,7 @@
   "homepage": "https://github.com/serebrov/emoji-mart-vue",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "@babel/runtime": "^7.16.3",
+    "@babel/runtime": "^7.17.8",
     "vue-virtual-scroller": "^1.0.10"
   },
   "peerDependencies": {
