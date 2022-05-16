@@ -3,6 +3,7 @@
     <button
       v-for="category in categories"
       role="tab"
+      type="button"
       :aria-label="category.name"
       :aria-selected="category.id == activeCategory.id"
       :key="category.id"
