@@ -20,6 +20,7 @@ exports[`Picker renders correctly 1`] = `
         data-title="Frequently Used"
         role="tab"
         style="color: rgb(174, 101, 197);"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -50,6 +51,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="Smileys & Emotion"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -80,6 +82,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="People & Body"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -115,6 +118,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="Animals & Nature"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -145,6 +149,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="Food & Drink"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -172,6 +177,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="Activity"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -199,6 +205,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="Travel & Places"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -229,6 +236,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="Objects"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -259,6 +267,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="Symbols"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
@@ -286,6 +295,7 @@ exports[`Picker renders correctly 1`] = `
         class="emoji-mart-anchor"
         data-title="Flags"
         role="tab"
+        type="button"
       >
         <div
           aria-hidden="true"
