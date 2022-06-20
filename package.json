@@ -45,7 +45,7 @@
     "jest-serializer-vue": "^2.0.2",
     "jest-transform-stub": "^2.0.0",
     "postcss-loader": "^6.2.1",
-    "prettier": "^2.4.1",
+    "prettier": "^2.7.1",
     "quasar-framework": "^0.17.20",
     "size-limit": "^7.0.3",
     "url-loader": "^4.1.1",
