@@ -90,7 +90,10 @@ module.exports = (options) => {
       datum.keywords = emojiLib[emojiChar]
     }
 
-    if (datum.category != 'Skin Tones') {
+    if (datum.subcategory != 'skin-tone') {
+      /* Datum subcategory has to be added, as emoji-datasource has changed the skin-tone's
+       category to 'component' instead of 'skin tones'
+      */
       categoryIndex = categoriesIndex[category]
       if (!data.categories[categoryIndex]) {
         throw Error(`Missing category: ${categoryIndex}, ${category}`)

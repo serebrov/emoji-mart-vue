@@ -44,6 +44,7 @@
     <div class="row">
       <emoji
         v-for="emo in selectedEmojis"
+        :key = "emo"
         :data="index"
         :emoji="emo"
         :set="activeSet"
@@ -280,7 +281,7 @@ export default {
       let emoji = index.findEmoji(':smile:')
       // Note, that position in the emoji sheet is calculated by
       // `emoji` object
-      let style = `background-position: ${emoji.getPosition()}; background-image: url(https://unpkg.com/emoji-datasource-twitter@6.0.1/img/twitter/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5700%`
+      let style = `background-position: ${emoji.getPosition()}; background-image: url(https://unpkg.com/emoji-datasource-twitter@14.0.0/img/twitter/sheets-256/64.png); width: 24px; height: 24px; display: inline-block; background-size: 5700%`
       return `<div class='emoji' style="${style}"></div>`
     },
     santaEmojiObject() {

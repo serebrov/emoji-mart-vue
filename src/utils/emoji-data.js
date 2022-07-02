@@ -1,8 +1,9 @@
 import { intersect, unifiedToNative } from './index'
 import { uncompress, buildSearch } from './data'
 import frequently from './frequently'
+import { blockStatement } from '@babel/types'
 
-const SHEET_COLUMNS = 57
+const SHEET_COLUMNS = 61
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
 // Skin tones
 const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
@@ -495,9 +496,9 @@ export class EmojiData {
   }
 
   getPosition() {
-    let multiply = 100 / SHEET_COLUMNS,
-      x = Math.round(multiply * this._data.sheet_x * 100) / 100,
-      y = Math.round(multiply * this._data.sheet_y * 100) / 100
+    let adjustedColumns = SHEET_COLUMNS - 1,
+      x = +(((100 / adjustedColumns) * this._data.sheet_x).toFixed(2)),
+      y = +(((100 / adjustedColumns) * this._data.sheet_y).toFixed(2))
     return `${x}% ${y}%`
   }
 
@@ -557,6 +558,7 @@ export class EmojiView {
       }
     } else if (this._hasEmoji() && !this._isNative()) {
       cssStyle = {
+        backgroundSize: `${100 * SHEET_COLUMNS}% ${100 * SHEET_COLUMNS}%`,
         backgroundPosition: this.getEmoji().getPosition(),
       }
     }
