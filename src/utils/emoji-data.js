@@ -1,7 +1,6 @@
 import { intersect, unifiedToNative } from './index'
 import { uncompress, buildSearch } from './data'
 import frequently from './frequently'
-import { blockStatement } from '@babel/types'
 
 const SHEET_COLUMNS = 61
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
@@ -497,8 +496,8 @@ export class EmojiData {
 
   getPosition() {
     let adjustedColumns = SHEET_COLUMNS - 1,
-      x = +(((100 / adjustedColumns) * this._data.sheet_x).toFixed(2)),
-      y = +(((100 / adjustedColumns) * this._data.sheet_y).toFixed(2))
+      x = +((100 / adjustedColumns) * this._data.sheet_x).toFixed(2),
+      y = +((100 / adjustedColumns) * this._data.sheet_y).toFixed(2)
     return `${x}% ${y}%`
   }
 

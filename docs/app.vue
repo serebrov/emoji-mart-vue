@@ -44,7 +44,7 @@
     <div class="row">
       <emoji
         v-for="emo in selectedEmojis"
-        :key = "emo"
+        :key="emo"
         :data="index"
         :emoji="emo"
         :set="activeSet"

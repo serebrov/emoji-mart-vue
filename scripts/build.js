@@ -79,7 +79,7 @@ module.exports = (options) => {
     datum.emoticons = datum.texts || []
     datum.text = datum.text || ''
     delete datum.texts
-    
+
     const unified = datum.unified.split('-')
     let emojiChar = ''
     unified.forEach((val) => {
