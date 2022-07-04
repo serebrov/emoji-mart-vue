@@ -48,7 +48,7 @@
   /* Emoji sheet has 56 columns, see also utils/emoji-data.js, SHEET_COLUMNS variable */
   /* Here we use (56+1) * 100% to avoid visible edges of nearby icons when scaling for different
    * screen sizes */
-  background-size: 5700%;
+  background-size: 6100%;
 }
 .emoji-type-image.emoji-set-apple {
   background-image: url('https://unpkg.com/emoji-datasource-apple@14.0.0/img/apple/sheets-256/64.png');

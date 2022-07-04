@@ -557,7 +557,6 @@ export class EmojiView {
       }
     } else if (this._hasEmoji() && !this._isNative()) {
       cssStyle = {
-        backgroundSize: `${100 * SHEET_COLUMNS}% ${100 * SHEET_COLUMNS}%`,
         backgroundPosition: this.getEmoji().getPosition(),
       }
     }
