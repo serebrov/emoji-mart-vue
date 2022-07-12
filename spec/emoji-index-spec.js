@@ -25,7 +25,7 @@ describe('#EmojiIndex', () => {
           sheet_y: 13,
           text: '',
           unified: '1F34D',
-          subcategory: "food-fruit",
+          subcategory: 'food-fruit',
         }),
       ])
 

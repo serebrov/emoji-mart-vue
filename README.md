@@ -721,6 +721,8 @@ Run tests with `npm run jest`.
 
 To debug tests, run `npm run jest-debug` and then open `chrome://inspect` in Chrome and open the node inspector client from there.
 
+Code formatting with prettier: `npm run prettier`.
+
 ## Building
 
 ```sh
