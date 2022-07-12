@@ -37,7 +37,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^28.1.2",
     "babel-loader": "^8.2.3",
-    "css-loader": "^6.5.1",
+    "css-loader": "^6.7.1",
     "emoji-datasource": "14.0.0",
     "emojilib": "^3.0.6",
     "inflection": "1.13.1",
