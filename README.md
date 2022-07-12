@@ -663,8 +663,9 @@ export default {
 
 Major changes comparing to the original emoji-mart-vue:
 
+- [2022-07-12, v11] Updated to emojis v14, thanks [@Hystersis](https://github.com/Hystersis)!
 - [2021-04-17, v10] Accessibility properties and keyboard controls
-- [2021-03-20, v9] Updated to emojis v13, thanks @sgtaziz!
+- [2021-03-20, v9] Updated to emojis v13, thanks [@sgtaziz](https://github.com/sgtaziz)!
 - Updated to emojis v12 (see the breaking change note below)
 
 Performance improvements:
