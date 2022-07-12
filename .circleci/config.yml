@@ -5,6 +5,7 @@ jobs:
    steps:
      - checkout
      - run: docker build -t emoji-mart-vue:latest .
+     - run: docker run emoji-mart-vue:latest bash -c "NODE_ENV=production npm run build"
      - run: docker run emoji-mart-vue:latest npm run prettier-check
      # The CODECOV_TOKEN is in travis repository settings
      - run: docker run emoji-mart-vue:latest bash -c "npm run jest && codecov -t $CODECOV_TOKEN"
