@@ -22,9 +22,10 @@ describe('#EmojiIndex', () => {
           non_qualified: undefined,
           search: 'pineapple,fruit,nature,food',
           sheet_x: 6,
-          sheet_y: 31,
+          sheet_y: 13,
           text: '',
           unified: '1F34D',
+          subcategory: "food-fruit",
         }),
       ])
 
