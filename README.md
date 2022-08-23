@@ -663,7 +663,7 @@ export default {
 
 Major changes comparing to the original emoji-mart-vue:
 
-- [2022-07-12, v11] Updated to emojis v14, thanks [@Hystersis](https://github.com/Hystersis)!
+- [2022-07-12, v11] Updated to emojis v14, thanks [@Hysterelius](https://github.com/Hysterelius)!
 - [2021-04-17, v10] Accessibility properties and keyboard controls
 - [2021-03-20, v9] Updated to emojis v13, thanks [@sgtaziz](https://github.com/sgtaziz)!
 - Updated to emojis v12 (see the breaking change note below)
@@ -715,6 +715,20 @@ npx http-server ./docs
 ```
 
 And open [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
+
+### Updating emoji
+
+Update `emoji-datasource` in `package.json`.
+
+Run `npm install` to update packages.
+
+Rebuild data with `npm run build`.
+
+If needed, update sheet columns in `src/utils/emoji-data.js` to reflect `emoji-datasource` (usually found [here](https://github.com/missive/emoji-mart/blob/5d04680c0503410752256ed1f744166ac48ee219/packages/emoji-mart-data/build.js#L43)).
+
+Update tests with `npm run jest -- -u`, then run tests and prettier (below).
+
+Push changes to GitHub.
 
 ## Tests
 
