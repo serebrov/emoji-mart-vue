@@ -7,6 +7,7 @@ const presets = [
         // "chrome": "1"
       },
       useBuiltIns: "usage",
+      corejs: 3
     },
   ],
 ];
