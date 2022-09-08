@@ -1,6 +1,6 @@
 {
   "name": "emoji-mart-vue-fast",
-  "version": "11.1.1",
+  "version": "11.2.0",
   "description": "Customizable Slack-like emoji picker for VueJS, fast version",
   "main": "dist/emoji-mart.js",
   "repository": {
@@ -56,7 +56,7 @@
     "vue-template-compiler": "^2.6.14",
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.5.0"
+    "webpack-dev-server": "^4.11.0"
   },
   "scripts": {
     "clean": "rm -rf dist/",
