@@ -1,6 +1,6 @@
 {
   "name": "emoji-mart-vue-fast",
-  "version": "11.2.0",
+  "version": "12.0.0",
   "description": "Customizable Slack-like emoji picker for VueJS, fast version",
   "main": "dist/emoji-mart.js",
   "repository": {
@@ -13,7 +13,7 @@
     "emoji",
     "picker"
   ],
-  "author": "Etienne Lemay",
+  "author": "Borys Serebrov",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/serebrov/emoji-mart-vue/issues"
@@ -21,8 +21,7 @@
   "homepage": "https://github.com/serebrov/emoji-mart-vue",
   "dependencies": {
     "@babel/runtime": "^7.18.6",
-    "core-js": "^3.23.5",
-    "vue-virtual-scroller": "^1.0.10"
+    "core-js": "^3.23.5"
   },
   "peerDependencies": {
     "vue": ">2.0.0"
