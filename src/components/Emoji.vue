@@ -28,6 +28,7 @@ export default {
       required: true,
     },
   },
+  emits: ["click"],
   computed: {
     view() {
       return new EmojiView(
