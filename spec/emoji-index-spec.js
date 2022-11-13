@@ -11,7 +11,7 @@ describe('#EmojiIndex', () => {
         new EmojiData({
           short_names: ['pineapple'],
           name: 'Pineapple',
-          unified: '1f34d',
+          unified: '1F34D',
           added_in: '6.0',
           emoticons: undefined,
           has_img_apple: true,
@@ -24,7 +24,6 @@ describe('#EmojiIndex', () => {
           sheet_x: 6,
           sheet_y: 13,
           text: '',
-          unified: '1F34D',
           subcategory: 'food-fruit',
         }),
       ])
