@@ -96,6 +96,39 @@ export default {
 </style>
 ```
 
+## Changelog
+
+Major changes comparing to the original emoji-mart-vue:
+
+- [2022-07-12, v11] Updated to emojis v14, thanks [@Hysterelius](https://github.com/Hysterelius)!
+- [2021-04-17, v10] Accessibility properties and keyboard controls
+- [2021-03-20, v9] Updated to emojis v13, thanks [@sgtaziz](https://github.com/sgtaziz)!
+- Updated to emojis v12 (see the breaking change note below)
+
+Performance improvements:
+
+- Reworked emoji index class: use same index (so same data) for all components.
+- Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down when we render a component per emoji.
+- Frozen objects with emoji data to disable Vue change tracking
+- Do not create `EmojiIndex` globally, before it was loaded (along with the emoji data) even when it was not actually used
+- Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
+- Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
+- Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
+- Updated to babel 7
+- Added tests
+
+Breaking change in v6: removed `Emoji` and `Picker` [wrappers](#convenience-wrappers), renamed `NimbleEmoji` to `Emoji` and `NimblePicker` to `Picker`.
+See the `Convenience Wrappers` section below for details.
+
+Breaking change in v7: switched to Unicode v12 emoji set which results in several breaking changes:
+- Removed 'emojione' set (removed from [emoji-datasource](https://github.com/iamcal/emoji-data) by [JoyPixels request](https://github.com/iamcal/emoji-data/blob/master/CHANGES.md#2018-07-05--v410))
+- Removed 'messenger' set - it was [merged](https://github.com/iamcal/emoji-data/blob/master/CHANGES.md#2020-01-10--v500) into 'facebook' set
+- Changed emoji categories: removed 'Smileys & People', added 'Smileys & Emotions' and 'People & Body' instead
+
+Breaking change in v8:
+- The `StaticPicker` component is now default (exported as `Picker`), previous default component renamed to `VirtualScrollPicker`
+
+
 ## Not opinionated
 
 **Emoji Mart** doesn’t automatically insert anything into a text input, nor does it show or hide itself. It simply returns an `emoji` object. It’s up to the developer to mount/unmount (it’s fast!) and position the picker. You can use the returned object as props for the `EmojiMart.Emoji` component. You could also use `emoji.colons` to insert text into a textarea or `emoji.native` to use the emoji.
@@ -591,10 +624,10 @@ Apple / Google / Twitter / Facebook
 
 ## Convenience Wrappers
 
-Below are convenience wrappers for `Emoji` and `Picker` components that make usage simpler.
-These were present before in the project source, but, since they are using `all.json` for data, that resulted in bigger bundle sizes (as `all.json` was also included into the any app that is using emoji picker, even if it doesn't need `all.json`).
+The original project had convenience wrappers for `Emoji` and `Picker` components that make the usage a bit simpler.
+But, since they are using `all.json` for data, that resulted in bigger bundle sizes as `all.json` was also included into the any app that is using emoji picker, even if it doesn't need all kinds of emojis.
 
-So the components were removed and included here as an example.
+Original components were removed and included here as an example.
 
 Picker component wrapper with default settings:
 
@@ -658,39 +691,6 @@ export default {
 }
 </script>
 ```
-
-## Changelog
-
-Major changes comparing to the original emoji-mart-vue:
-
-- [2022-07-12, v11] Updated to emojis v14, thanks [@Hysterelius](https://github.com/Hysterelius)!
-- [2021-04-17, v10] Accessibility properties and keyboard controls
-- [2021-03-20, v9] Updated to emojis v13, thanks [@sgtaziz](https://github.com/sgtaziz)!
-- Updated to emojis v12 (see the breaking change note below)
-
-Performance improvements:
-
-- Reworked emoji index class: use same index (so same data) for all components.
-- Render emojis in categories without `Emoji` component, there are a lot of emojis to render and there is a noticeable slow down when we render a component per emoji.
-- Frozen objects with emoji data to disable Vue change tracking
-- Do not create `EmojiIndex` globally, before it was loaded (along with the emoji data) even when it was not actually used
-- Extract CSS into external file, use less inline styles to reduce the amount of generated HTML
-- Fixes in CSS for native unicode emojis ported from the [original react project](https://github.com/missive/emoji-mart)
-- Excluded ./data/all.json from the js bundle (it was always loaded within the bundle even if it is not needed)
-- Updated to babel 7
-- Added tests
-
-Breaking change in v6: removed `Emoji` and `Picker` [wrappers](#convenience-wrappers), renamed `NimbleEmoji` to `Emoji` and `NimblePicker` to `Picker`.
-See the `Convenience Wrappers` section below for details.
-
-Breaking change in v7: switched to Unicode v12 emoji set which results in several breaking changes:
-- Removed 'emojione' set (removed from [emoji-datasource](https://github.com/iamcal/emoji-data) by [JoyPixels request](https://github.com/iamcal/emoji-data/blob/master/CHANGES.md#2018-07-05--v410))
-- Removed 'messenger' set - it was [merged](https://github.com/iamcal/emoji-data/blob/master/CHANGES.md#2020-01-10--v500) into 'facebook' set
-- Changed emoji categories: removed 'Smileys & People', added 'Smileys & Emotions' and 'People & Body' instead
-
-Breaking change in v8:
-- The `StaticPicker` component is now default (exported as `Picker`), previous default component renamed to `VirtualScrollPicker`
-
 
 ## Development
 
