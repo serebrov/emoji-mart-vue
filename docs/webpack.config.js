@@ -3,8 +3,8 @@ var pack = require('../package.json')
 var webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-var PROD = process.env.NODE_ENV === 'production'
-var TEST = process.env.NODE_ENV === 'test'
+// var PROD = process.env.NODE_ENV === 'production'
+// var TEST = process.env.NODE_ENV === 'test'
 
 var config = {
   entry: path.resolve('docs/index.js'),
