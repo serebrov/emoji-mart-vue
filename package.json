@@ -39,7 +39,7 @@
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "emoji-datasource": "14.0.0",
-    "emojilib": "^3.0.6",
+    "emojilib": "^3.0.7",
     "inflection": "1.13.4",
     "jest": "^27.5.1",
     "jest-serializer-vue": "^2.0.2",
