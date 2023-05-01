@@ -230,7 +230,12 @@ export default {
       // Prevent cursor movement inside the input
       $event.preventDefault()
     },
-    onEnter(emoji) {
+    onEnter() {
+      if (!this.view.previewEmoji) {
+        // We may press "Enter" when nothing is selected,
+        // for example, if we search for "asdf".
+        return
+      }
       this.$emit('select', this.view.previewEmoji)
       frequently.add(this.view.previewEmoji)
     },
