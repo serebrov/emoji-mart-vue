@@ -74,6 +74,19 @@ describe('search', () => {
     // Category does not change when the search is active.
     expect(anchors.vm.activeCategory.id).toBe('recent')
   })
+
+  it('the text select event is not propagated', () => {
+    // Note: the issue related to this test is not reproduced in Vue 2,
+    // so I am not sure if the test really works (if we remove the fix,
+    // the test will still pass).
+    let search = picker.findComponent(Search)
+    let input = search.find('input')
+    input.element.value = 'zxcvb'
+    input.trigger('select')
+
+    let events = picker.emitted().select
+    expect(events).toBeUndefined()
+  })
 })
 
 describe('search no focus', () => {

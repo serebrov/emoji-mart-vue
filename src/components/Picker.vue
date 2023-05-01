@@ -31,6 +31,7 @@
         @arrowDown="onArrowDown"
         @arrowUp="onArrowUp"
         @enter="onEnter"
+        @select="onTextSelect"
       />
     </slot>
 
@@ -236,6 +237,13 @@ export default {
     onEmojiClick(emoji) {
       this.$emit('select', emoji)
       frequently.add(emoji)
+    },
+    onTextSelect($event) {
+      // Prevent default text select event.
+      // In Vue 3 it goes through the component and triggers the `select`
+      // event that is supposed to be emmited only with emoji.
+      // (there is no such problem in Vue 2).
+      $event.stopPropagation()
     },
     onSkinChange(skin) {
       this.activeSkin = skin
