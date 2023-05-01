@@ -75,6 +75,27 @@ describe('search', () => {
     expect(anchors.vm.activeCategory.id).toBe('recent')
   })
 
+  it('no error on Enter when nothing was found', async () => {
+    let search = picker.findComponent(Search)
+    let input = search.find('input')
+    input.element.value = 'zxcvb'
+
+    await input.trigger('input')
+    await input.trigger('keydown.enter')
+
+    // Verify that we did not emit the select event.
+    // In this case the `zxcvb` search is expected to find nothing,
+    // so we have no emoji for the `select` event
+    let events = picker.emitted().select
+    expect(events).toBeUndefined()
+
+    // Make sure the search results are empty.
+    let categories = picker.findAllComponents(Category)
+    let searchCategory = categories.at(0)
+    expect(searchCategory.vm.id).toBe('search')
+    expect(searchCategory.vm.emojiObjects.length).toBe(0)
+  })
+
   it('the text select event is not propagated', () => {
     // Note: the issue related to this test is not reproduced in Vue 2,
     // so I am not sure if the test really works (if we remove the fix,
