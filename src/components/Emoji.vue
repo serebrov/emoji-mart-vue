@@ -28,7 +28,7 @@ export default {
       required: true,
     },
   },
-  emits: ["click"],
+  emits: ["click", "mouseenter", "mouseleave"],
   computed: {
     view() {
       return new EmojiView(
