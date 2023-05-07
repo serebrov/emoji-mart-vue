@@ -47,6 +47,14 @@
         role="listbox"
         aria-expanded="true"
       >
+        <emoji
+          v-if="selectedEmoji"
+          :data="data"
+          :emoji="selectedEmoji"
+          :size="32"
+          @click="onUnselectEmoji"
+        />
+
         <category
           v-for="(category, idx) in view.filteredCategories"
           v-show="infiniteScroll || category == view.activeCategory"
@@ -83,6 +91,7 @@
           :emoji-props="emojiProps"
           :skin-props="skinProps"
           :on-skin-change="onSkinChange"
+          @click="onUnselectEmoji"
         />
       </div>
     </slot>
@@ -100,6 +109,7 @@ import Anchors from './anchors.vue'
 import Category from './category.vue'
 import Preview from './preview.vue'
 import Search from './search.vue'
+import Emoji from './emoji.vue'
 
 const I18N = {
   search: 'Search',
@@ -132,6 +142,7 @@ export default {
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       view: new PickerView(this),
+      selectedEmoji: undefined,
     }
   },
   computed: {
@@ -175,6 +186,9 @@ export default {
       return Object.freeze(deepMerge(I18N, this.i18n))
     },
     idleEmoji() {
+      if (this.selectedEmoji) {
+        return this.selectedEmoji
+      }
       try {
         return this.data.emoji(this.emoji)
       } catch (e) {
@@ -236,12 +250,32 @@ export default {
         // for example, if we search for "asdf".
         return
       }
+      if (this.selectable) {
+        if (this.selectedEmoji == this.view.previewEmoji) {
+          this.$emit('unselect', this.view.previewEmoji)
+          this.selectedEmoji = undefined
+          return
+        }
+        this.selectedEmoji = this.view.previewEmoji
+      }
       this.$emit('select', this.view.previewEmoji)
       frequently.add(this.view.previewEmoji)
     },
     onEmojiClick(emoji) {
+      if (this.selectable) {
+        if (this.selectedEmoji == emoji) {
+          this.$emit('unselect', emoji)
+          this.selectedEmoji = undefined
+          return
+        }
+        this.selectedEmoji = emoji
+      }
       this.$emit('select', emoji)
       frequently.add(emoji)
+    },
+    onUnselectEmoji() {
+      this.$emit('unselect', this.selectedEmoji)
+      this.selectedEmoji = undefined
     },
     onTextSelect($event) {
       // Prevent default text select event.
@@ -271,6 +305,7 @@ export default {
     Category,
     Preview,
     Search,
+    Emoji,
   },
 }
 </script>

@@ -113,6 +113,10 @@ const PickerProps = {
       return {}
     },
   },
+  selectable: {
+    type: Boolean,
+    default: false,
+  },
 }
 
 export { EmojiProps, PickerProps }

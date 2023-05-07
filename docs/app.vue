@@ -68,6 +68,31 @@
     </div>
 
     <div class="row"></div>
+    <h2>Selectable Example</h2>
+    <div class="row">
+      <emoji
+        v-if="selectedEmoji"
+        :data="index"
+        :emoji="selectedEmoji"
+        :size="32"
+      />
+      <emoji v-else :data="index" emoji=":dotted_line_face:" :size="32" />
+    </div>
+    <div class="row">
+      <picker
+        :data="index"
+        :set="activeSet"
+        :native="native"
+        :selectable="true"
+        :emojiTooltip="true"
+        :title="title"
+        :emojiSize="30"
+        @select="selectableSelectEmoji"
+        @unselect="selectableUnselectEmoji"
+      />
+    </div>
+
+    <div class="row"></div>
     <h2>QDialog Example</h2>
     <div class="row">
       <q-btn label="Open QDialog" @click="emojiPickerDialog = true" />
@@ -270,6 +295,7 @@ export default {
       emojisOutput: '',
       selectedEmojis: [],
       flagsVisible: true,
+      selectedEmoji: undefined,
     }
   },
   computed: {
@@ -305,6 +331,12 @@ export default {
       } else {
         this.emojisOutput = this.emojisOutput + '?'
       }
+    },
+    selectableSelectEmoji(emoji) {
+      this.selectedEmoji = emoji
+    },
+    selectableUnselectEmoji(emoji) {
+      this.selectedEmoji = undefined
     },
   },
   components: {
