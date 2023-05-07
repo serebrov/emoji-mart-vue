@@ -77,6 +77,14 @@
         :size="32"
       />
       <emoji v-else :data="index" emoji=":dotted_line_face:" :size="32" />
+      <emoji
+        v-if="selectedEmoji"
+        @click="selectableUnselectEmoji"
+        class="emoji-delete"
+        :data="index"
+        emoji=":x:"
+        :size="16"
+      />
     </div>
     <div class="row">
       <picker
@@ -467,5 +475,9 @@ h2 {
   font-size: 12px;
   width: 12px;
   height: 12px;
+}
+.emoji-delete {
+  vertical-align: top;
+  margin-left: -10px;
 }
 </style>
