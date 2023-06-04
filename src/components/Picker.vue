@@ -47,12 +47,13 @@
         role="listbox"
         aria-expanded="true"
       >
-        <emoji
+        <SelectedEmoji
           v-if="selectedEmoji"
           :data="data"
+          :i18n="mergedI18n"
           :emoji="selectedEmoji"
-          :size="32"
-          @click="onUnselectEmoji"
+          @click="onEmojiClick"
+          @remove="onUnselectEmoji"
         />
 
         <category
@@ -110,10 +111,12 @@ import Category from './category.vue'
 import Preview from './preview.vue'
 import Search from './search.vue'
 import Emoji from './emoji.vue'
+import SelectedEmoji from './selectedEmoji.vue'
 
 const I18N = {
   search: 'Search',
   notfound: 'No Emoji Found',
+  selected: 'Selected',
   categories: {
     search: 'Search Results',
     recent: 'Frequently Used',
@@ -186,9 +189,6 @@ export default {
       return Object.freeze(deepMerge(I18N, this.i18n))
     },
     idleEmoji() {
-      if (this.selectedEmoji) {
-        return this.selectedEmoji
-      }
       try {
         return this.data.emoji(this.emoji)
       } catch (e) {
@@ -251,6 +251,8 @@ export default {
         return
       }
       if (this.selectable) {
+        // When 'selectable' mode is on, selecting the same emoji
+        // will uneslect it.
         if (this.selectedEmoji == this.view.previewEmoji) {
           this.$emit('unselect', this.view.previewEmoji)
           this.selectedEmoji = undefined
@@ -306,6 +308,7 @@ export default {
     Preview,
     Search,
     Emoji,
+    SelectedEmoji,
   },
 }
 </script>
