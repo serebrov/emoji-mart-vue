@@ -9,6 +9,7 @@
           :native="emojiProps.native"
           :skin="emojiProps.skin"
           :set="emojiProps.set"
+          @click="onClick()"
         />
       </div>
 
@@ -31,6 +32,7 @@
         :native="emojiProps.native"
         :skin="emojiProps.skin"
         :set="emojiProps.set"
+        @click="onClick()"
       />
     </div>
 
@@ -85,6 +87,7 @@ export default {
       required: true
     }
   },
+  emits: ["click"],
   computed: {
     emojiData() {
       if (this.emoji) {
@@ -99,6 +102,12 @@ export default {
     emojiEmoticons() {
       return this.emojiData.emoticons
     }
+  },
+  methods: {
+    onClick() {
+      console.log('preview click', this.emojiObject)
+      this.$emit('click', this.emojiObject)
+    },
   },
   components: {
     Emoji,

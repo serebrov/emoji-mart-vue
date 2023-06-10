@@ -468,3 +468,8 @@
   display: none;
   visibility: hidden;
 }
+.emoji-delete {
+  vertical-align: top;
+  margin-left: -21px;
+  margin-top: -3px;
+}

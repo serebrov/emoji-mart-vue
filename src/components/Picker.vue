@@ -47,6 +47,15 @@
         role="listbox"
         aria-expanded="true"
       >
+        <SelectedEmoji
+          v-if="selectedEmoji"
+          :data="data"
+          :i18n="mergedI18n"
+          :emoji="selectedEmoji"
+          @click="onEmojiClick"
+          @remove="onUnselectEmoji"
+        />
+
         <category
           v-for="(category, idx) in view.filteredCategories"
           v-show="infiniteScroll || category == view.activeCategory"
@@ -83,6 +92,7 @@
           :emoji-props="emojiProps"
           :skin-props="skinProps"
           :on-skin-change="onSkinChange"
+          @click="onUnselectEmoji"
         />
       </div>
     </slot>
@@ -100,10 +110,12 @@ import Anchors from './anchors.vue'
 import Category from './category.vue'
 import Preview from './preview.vue'
 import Search from './search.vue'
+import SelectedEmoji from './selectedEmoji.vue'
 
 const I18N = {
   search: 'Search',
   notfound: 'No Emoji Found',
+  selected: 'Selected',
   categories: {
     search: 'Search Results',
     recent: 'Frequently Used',
@@ -236,12 +248,24 @@ export default {
         // for example, if we search for "asdf".
         return
       }
+      if (this.selectedEmoji == this.view.previewEmoji) {
+        // Selecting the same emoji will uneslect it.
+        this.$emit('unselect', this.selectedEmoji)
+        return
+      }
       this.$emit('select', this.view.previewEmoji)
       frequently.add(this.view.previewEmoji)
     },
     onEmojiClick(emoji) {
+      if (this.selectedEmoji == emoji) {
+        this.$emit('unselect', emoji)
+        return
+      }
       this.$emit('select', emoji)
       frequently.add(emoji)
+    },
+    onUnselectEmoji() {
+      this.$emit('unselect', this.selectedEmoji)
     },
     onTextSelect($event) {
       // Prevent default text select event.
@@ -271,6 +295,7 @@ export default {
     Category,
     Preview,
     Search,
+    SelectedEmoji,
   },
 }
 </script>

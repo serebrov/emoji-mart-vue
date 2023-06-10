@@ -113,6 +113,10 @@ const PickerProps = {
       return {}
     },
   },
+  selectedEmoji: {
+    type: Object,
+    default: undefined,
+  },
 }
 
 export { EmojiProps, PickerProps }

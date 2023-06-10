@@ -194,11 +194,60 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 | **pickerStyles**   |          |                    | Inline styles applied to the root element. Useful for positioning                                    |
 | **title**          |          | `Emoji Mart™`      | The title shown when no emojis are hovered                                                           |
 | **infiniteScroll** |          | `true`             | Scroll continuously through the categories                                                           |
+| **selectedEmoji**  |          | `undefined`        | Display "Selected" category with emoji passed as 'selectedEmoji'                                     |
 
 | Event           | Description             |
 | --------------- | ----------------------- |
 | **select**      | Params: `(emoji) => {}` |
 | **skin-change** | Params: `(skin) => {}`  |
+
+#### Selectable picker
+
+Selectable picker added in #253 and allows using `Picker` component as a selector to select and unselect a single emoji.
+
+Here is an example:
+
+```javascript
+<template>
+  <div>
+  <emoji v-if="selectedEmoji" :data="index" :emoji="selectedEmoji" :size="32" />
+  <picker
+    :data="index"
+    :selectedEmoji="selectedEmoji"
+    @select="selectableSelectEmoji"
+    @unselect="selectableUnselectEmoji"
+  />
+  </div>
+</template>
+
+<script>
+import data from 'emoji-mart-vue-fast/data/all.json'
+import 'emoji-mart-vue-fast/css/emoji-mart.css'
+import { Picker, Emoji, EmojiIndex } from 'emoji-mart-vue-fast'
+
+export default {
+  data() {
+    return {
+      index: new EmojiIndex(data),
+      emoji: 'point_up',
+      selectedEmoji: undefined,
+    }
+  },
+  methods: {
+    selectableSelectEmoji(emoji) {
+      this.selectedEmoji = emoji
+    },
+    selectableUnselectEmoji(emoji) {
+      this.selectedEmoji = undefined
+    },
+  },
+  components: {
+    Picker,
+    Emoji,
+  },
+}
+</script>
+```
 
 #### Picker Usage And Native Emoji vs Images
 
