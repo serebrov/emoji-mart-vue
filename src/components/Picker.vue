@@ -110,7 +110,7 @@ import Anchors from './anchors.vue'
 import Category from './category.vue'
 import Preview from './preview.vue'
 import Search from './search.vue'
-import Emoji from './emoji.vue'
+import Emoji from './Emoji.vue'
 import SelectedEmoji from './selectedEmoji.vue'
 
 const I18N = {

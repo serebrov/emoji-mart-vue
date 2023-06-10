@@ -4,7 +4,13 @@
       <h3 class="emoji-mart-category-label">{{ i18n.selected }}</h3>
     </div>
 
-    <emoji :data="data" :emoji="emoji" :size="32" @click="onClick" />
+    <emoji
+      class="emoji-selected"
+      :data="data"
+      :emoji="emoji"
+      :size="32"
+      @click="onClick"
+    />
     <emoji
       @click="onRemove"
       class="emoji-delete"
@@ -16,7 +22,7 @@
 </template>
 
 <script>
-import Emoji from './emoji.vue'
+import Emoji from './Emoji.vue'
 
 export default {
   props: {
