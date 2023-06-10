@@ -8,6 +8,7 @@ import {
   Picker,
   Category,
   Preview,
+  SelectedEmoji,
   Emoji,
 } from '../src/components'
 
@@ -131,7 +132,9 @@ describe('categories exclude preview emoji', () => {
   // The error is printed into console.
   expect(consoleErrorMock.mock.calls.length).toEqual(2)
   const error = consoleErrorMock.mock.calls[0][0]
-  expect(error).toEqual('Default preview emoji `department_store` is not available, check the Picker `emoji` property')
+  expect(error).toEqual(
+    'Default preview emoji `department_store` is not available, check the Picker `emoji` property',
+  )
   const error2 = consoleErrorMock.mock.calls[1][0]
   expect(error2.message).toContain('Can not find emoji by id: department_store')
   consoleErrorMock.mockRestore()
@@ -161,7 +164,9 @@ describe('categories include allows to select and order categories', () => {
 
   // The error is printed into console.
   const error = consoleErrorMock.mock.calls[0][0]
-  expect(error).toEqual('Default preview emoji `department_store` is not available, check the Picker `emoji` property')
+  expect(error).toEqual(
+    'Default preview emoji `department_store` is not available, check the Picker `emoji` property',
+  )
   const error2 = consoleErrorMock.mock.calls[1][0]
   expect(error2.message).toContain('Can not find emoji by id: department_store')
   consoleErrorMock.mockRestore()
@@ -392,5 +397,81 @@ describe('emjoiSize', () => {
     expect(emojiSpan.style.cssText).toBe(
       'background-position: 20% 83.33%; font-size: 19px;',
     )
+  })
+})
+
+describe('selectable emjoi', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+      selectable: true,
+    },
+  })
+
+  it('selectable emoji is displayed', async () => {
+    let emoji = picker.find('[data-title="grinning"]')
+    await emoji.trigger('click')
+
+    let selectedEmoji = picker.findComponent(SelectedEmoji)
+
+    expect(selectedEmoji.exists()).toBe(true)
+    expect(selectedEmoji.vm.emoji.id).toBe('grinning')
+
+    let label = picker.find('.emoji-mart-category-label')
+    expect(label.text()).toEqual('Selected')
+  })
+
+  it('selectable emoji removed when clicked', async () => {
+    let emoji = picker.find('[data-title="heart_eyes"]')
+    await emoji.trigger('click')
+
+    let selectedEmoji = picker.findComponent(SelectedEmoji)
+    await selectedEmoji.find('.emoji-selected').trigger('click')
+
+    // Selected emoji emitted the 'click' event
+    let events = selectedEmoji.emitted().click
+    expect(events.length).toBe(1)
+    let emojiData = events[0][0]
+    expect(emojiData).toBe(index.emoji('heart_eyes'))
+
+    // Selected emoji is not displayed (Picker removed it)
+    let selectedEmojiAfter = picker.findComponent(SelectedEmoji)
+    expect(selectedEmojiAfter.exists()).toBe(false)
+  })
+
+  it('selectable emoji removed when x icon clicked', async () => {
+    let emoji = picker.find('[data-title="heart_eyes"]')
+    await emoji.trigger('click')
+
+    let selectedEmoji = picker.findComponent(SelectedEmoji)
+    await selectedEmoji.find('.emoji-delete').trigger('click')
+
+    // Selected emoji emitted the 'remove' event
+    let events = selectedEmoji.emitted().remove
+    expect(events.length).toBe(1)
+    let emojiData = events[0][0]
+    expect(emojiData).toBe(index.emoji('heart_eyes'))
+
+    // Selected emoji is not displayed (Picker removed it)
+    let selectedEmojiAfter = picker.findComponent(SelectedEmoji)
+    expect(selectedEmojiAfter.exists()).toBe(false)
+  })
+})
+
+describe('selectable emjoi absent by default', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+    },
+  })
+
+  it('selectable emoji is not displayed', () => {
+    let emoji = picker.find('[data-title="grinning"]')
+    emoji.trigger('click')
+
+    let selectedEmoji = picker.findComponent(SelectedEmoji)
+    expect(selectedEmoji.exists()).toBe(false)
   })
 })
