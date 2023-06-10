@@ -117,6 +117,8 @@ describe('categories', () => {
 })
 
 describe('categories exclude preview emoji', () => {
+  const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation()
+
   let index = new EmojiIndex(data, {
     exclude: ['places'],
   })
@@ -126,7 +128,14 @@ describe('categories exclude preview emoji', () => {
     },
   })
 
-  // Note: the error is printed into console.
+  // The error is printed into console.
+  expect(consoleErrorMock.mock.calls.length).toEqual(2)
+  const error = consoleErrorMock.mock.calls[0][0]
+  expect(error).toEqual('Default preview emoji `department_store` is not available, check the Picker `emoji` property')
+  const error2 = consoleErrorMock.mock.calls[1][0]
+  expect(error2.message).toContain('Can not find emoji by id: department_store')
+  consoleErrorMock.mockRestore()
+
   it('will not throw an error if default emoji is not available', () => {
     expect(picker.vm.emoji).toEqual('department_store')
     // When `emoji` (that is emoji id used for idleEmoji) is not available,
@@ -138,6 +147,8 @@ describe('categories exclude preview emoji', () => {
 })
 
 describe('categories include allows to select and order categories', () => {
+  const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation()
+
   let index = new EmojiIndex(data, {
     // Note: the 'recent' category is always first.
     include: ['nature', 'smileys', 'recent'],
@@ -148,7 +159,13 @@ describe('categories include allows to select and order categories', () => {
     },
   })
 
-  // Note: the error is printed into console.
+  // The error is printed into console.
+  const error = consoleErrorMock.mock.calls[0][0]
+  expect(error).toEqual('Default preview emoji `department_store` is not available, check the Picker `emoji` property')
+  const error2 = consoleErrorMock.mock.calls[1][0]
+  expect(error2.message).toContain('Can not find emoji by id: department_store')
+  consoleErrorMock.mockRestore()
+
   it('will not throw an error if default emoji is not available', () => {
     let categories = picker.findAllComponents(Category)
     expect(categories.length).toBe(3)
