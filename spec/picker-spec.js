@@ -402,17 +402,15 @@ describe('emjoiSize', () => {
 
 describe('selectable emjoi', () => {
   let index = new EmojiIndex(data)
+  // The selected emoji is passed ouside the component.
   const picker = mount(Picker, {
     propsData: {
       data: index,
-      selectable: true,
+      selectedEmoji: index.emoji('grinning'),
     },
   })
 
   it('selectable emoji is displayed', async () => {
-    let emoji = picker.find('[data-title="grinning"]')
-    await emoji.trigger('click')
-
     let selectedEmoji = picker.findComponent(SelectedEmoji)
 
     expect(selectedEmoji.exists()).toBe(true)
@@ -423,9 +421,6 @@ describe('selectable emjoi', () => {
   })
 
   it('selectable emoji removed when clicked', async () => {
-    let emoji = picker.find('[data-title="heart_eyes"]')
-    await emoji.trigger('click')
-
     let selectedEmoji = picker.findComponent(SelectedEmoji)
     await selectedEmoji.find('.emoji-selected').trigger('click')
 
@@ -433,17 +428,16 @@ describe('selectable emjoi', () => {
     let events = selectedEmoji.emitted().click
     expect(events.length).toBe(1)
     let emojiData = events[0][0]
-    expect(emojiData).toBe(index.emoji('heart_eyes'))
+    expect(emojiData.id).toBe('grinning')
 
-    // Selected emoji is not displayed (Picker removed it)
-    let selectedEmojiAfter = picker.findComponent(SelectedEmoji)
-    expect(selectedEmojiAfter.exists()).toBe(false)
+    // Vefiy picker 'unselect' event.
+    events = picker.emitted().unselect
+    expect(events.length).toBe(1)
+    emojiData = events[0][0]
+    expect(emojiData.id).toBe('grinning')
   })
 
   it('selectable emoji removed when x icon clicked', async () => {
-    let emoji = picker.find('[data-title="heart_eyes"]')
-    await emoji.trigger('click')
-
     let selectedEmoji = picker.findComponent(SelectedEmoji)
     await selectedEmoji.find('.emoji-delete').trigger('click')
 
@@ -451,11 +445,7 @@ describe('selectable emjoi', () => {
     let events = selectedEmoji.emitted().remove
     expect(events.length).toBe(1)
     let emojiData = events[0][0]
-    expect(emojiData).toBe(index.emoji('heart_eyes'))
-
-    // Selected emoji is not displayed (Picker removed it)
-    let selectedEmojiAfter = picker.findComponent(SelectedEmoji)
-    expect(selectedEmojiAfter.exists()).toBe(false)
+    expect(emojiData).toBe(index.emoji('grinning'))
   })
 })
 

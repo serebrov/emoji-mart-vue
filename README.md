@@ -194,7 +194,7 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 | **pickerStyles**   |          |                    | Inline styles applied to the root element. Useful for positioning                                    |
 | **title**          |          | `Emoji Mart™`      | The title shown when no emojis are hovered                                                           |
 | **infiniteScroll** |          | `true`             | Scroll continuously through the categories                                                           |
-| **selectable**     |          | `false`            | Display "Selected" category with emoji passed as 'emoji', see "Selectable picker" section            |
+| **selectedEmoji**  |          | `undefined`        | Display "Selected" category with emoji passed as 'selectedEmoji'                                     |
 
 | Event           | Description             |
 | --------------- | ----------------------- |
@@ -213,8 +213,7 @@ Here is an example:
   <emoji v-if="selectedEmoji" :data="index" :emoji="selectedEmoji" :size="32" />
   <picker
     :data="index"
-    :emoji="selectedEmoji"
-    :selectable="true"
+    :selectedEmoji="selectedEmoji"
     @select="selectableSelectEmoji"
     @unselect="selectableUnselectEmoji"
   />

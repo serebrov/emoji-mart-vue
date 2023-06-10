@@ -144,7 +144,6 @@ export default {
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,
       view: new PickerView(this),
-      selectedEmoji: undefined,
     }
   },
   computed: {
@@ -249,34 +248,24 @@ export default {
         // for example, if we search for "asdf".
         return
       }
-      if (this.selectable) {
-        // When 'selectable' mode is on, selecting the same emoji
-        // will uneslect it.
-        if (this.selectedEmoji == this.view.previewEmoji) {
-          this.$emit('unselect', this.view.previewEmoji)
-          this.selectedEmoji = undefined
-          return
-        }
-        this.selectedEmoji = this.view.previewEmoji
+      if (this.selectedEmoji == this.view.previewEmoji) {
+        // Selecting the same emoji will uneslect it.
+        this.$emit('unselect', this.selectedEmoji)
+        return
       }
       this.$emit('select', this.view.previewEmoji)
       frequently.add(this.view.previewEmoji)
     },
     onEmojiClick(emoji) {
-      if (this.selectable) {
-        if (this.selectedEmoji == emoji) {
-          this.$emit('unselect', emoji)
-          this.selectedEmoji = undefined
-          return
-        }
-        this.selectedEmoji = emoji
+      if (this.selectedEmoji == emoji) {
+        this.$emit('unselect', emoji)
+        return
       }
       this.$emit('select', emoji)
       frequently.add(emoji)
     },
     onUnselectEmoji() {
       this.$emit('unselect', this.selectedEmoji)
-      this.selectedEmoji = undefined
     },
     onTextSelect($event) {
       // Prevent default text select event.

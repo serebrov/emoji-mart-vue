@@ -70,6 +70,7 @@
     <div class="row"></div>
     <h2>Selectable Example</h2>
     <div class="row">
+      <button @click="toggleSelectable">Show / hide the picker</button>
       <emoji
         v-if="selectedEmoji"
         :data="index"
@@ -80,13 +81,10 @@
     </div>
     <div class="row">
       <picker
+        v-if="selectableVisible"
         :data="index"
-        :set="activeSet"
-        :native="native"
         :selectable="true"
-        :emojiTooltip="true"
-        :title="title"
-        :emojiSize="30"
+        :selectedEmoji="selectedEmoji"
         @select="selectableSelectEmoji"
         @unselect="selectableUnselectEmoji"
       />
@@ -296,6 +294,7 @@ export default {
       selectedEmojis: [],
       flagsVisible: true,
       selectedEmoji: undefined,
+      selectableVisible: false,
     }
   },
   computed: {
@@ -337,6 +336,9 @@ export default {
     },
     selectableUnselectEmoji(emoji) {
       this.selectedEmoji = undefined
+    },
+    toggleSelectable() {
+      this.selectableVisible = !this.selectableVisible
     },
   },
   components: {

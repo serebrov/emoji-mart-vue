@@ -113,9 +113,9 @@ const PickerProps = {
       return {}
     },
   },
-  selectable: {
-    type: Boolean,
-    default: false,
+  selectedEmoji: {
+    type: Object,
+    default: undefined,
   },
 }
 
