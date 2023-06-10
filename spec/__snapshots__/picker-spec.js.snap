@@ -352,6 +352,7 @@ exports[`Picker renders correctly 1`] = `
       id="emoji-mart-list"
       role="listbox"
     >
+       
       <section
         aria-label="Frequently Used"
         class="emoji-mart-category"
