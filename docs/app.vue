@@ -68,6 +68,47 @@
     </div>
 
     <div class="row"></div>
+    <h2>Selectable Example</h2>
+    <div class="row">
+      <button @click="toggleSelectable">Show / hide the picker</button>
+      <emoji
+        v-if="selectedEmoji"
+        :data="index"
+        :emoji="selectedEmoji"
+        :size="32"
+      />
+      <emoji v-else :data="index" emoji=":dotted_line_face:" :size="32" />
+    </div>
+    <div class="row">
+      <picker
+        v-if="selectableVisible"
+        :data="index"
+        @select="selectableSelectEmoji"
+      >
+        <template v-slot:customCategory v-if="selectedEmoji">
+          <div class="emoji-mart-category-label">
+            <h3 class="emoji-mart-category-label">Selected</h3>
+          </div>
+
+          <emoji
+            class="emoji-selected"
+            :data="index"
+            :emoji="selectedEmoji"
+            :size="32"
+            @click="selectableUnselectEmoji"
+          />
+          <emoji
+            class="emoji-delete"
+            :data="index"
+            emoji=":x:"
+            :size="10"
+            @click="selectableUnselectEmoji"
+          />
+        </template>
+      </picker>
+    </div>
+
+    <div class="row"></div>
     <h2>QDialog Example</h2>
     <div class="row">
       <q-btn label="Open QDialog" @click="emojiPickerDialog = true" />
@@ -270,6 +311,8 @@ export default {
       emojisOutput: '',
       selectedEmojis: [],
       flagsVisible: true,
+      selectedEmoji: undefined,
+      selectableVisible: false,
     }
   },
   computed: {
@@ -305,6 +348,15 @@ export default {
       } else {
         this.emojisOutput = this.emojisOutput + '?'
       }
+    },
+    selectableSelectEmoji(emoji) {
+      this.selectedEmoji = emoji
+    },
+    selectableUnselectEmoji(emoji) {
+      this.selectedEmoji = undefined
+    },
+    toggleSelectable() {
+      this.selectableVisible = !this.selectableVisible
     },
   },
   components: {
@@ -435,5 +487,10 @@ h2 {
   font-size: 12px;
   width: 12px;
   height: 12px;
+}
+.emoji-delete {
+  vertical-align: top;
+  margin-left: -21px;
+  margin-top: -3px;
 }
 </style>

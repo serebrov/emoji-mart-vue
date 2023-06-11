@@ -47,6 +47,8 @@
         role="listbox"
         aria-expanded="true"
       >
+        <slot name="customCategory"> </slot>
+
         <category
           v-for="(category, idx) in view.filteredCategories"
           v-show="infiniteScroll || category == view.activeCategory"
