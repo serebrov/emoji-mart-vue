@@ -100,7 +100,7 @@ export default {
 
 Major changes comparing to the original emoji-mart-vue:
 
-- [2023-06-11, v13] Updated to emojis v15, thanks [@susnux](https://github.com/susnux)
+- [2023-06-11, v15] Updated to emojis v15, thanks [@susnux](https://github.com/susnux)
 - [2022-07-12, v11] Updated to emojis v14, thanks [@Hysterelius](https://github.com/Hysterelius)!
 - [2021-04-17, v10] Accessibility properties and keyboard controls
 - [2021-03-20, v9] Updated to emojis v13, thanks [@sgtaziz](https://github.com/sgtaziz)!
