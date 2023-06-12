@@ -37,7 +37,7 @@
     "autoprefixer": "^10.4.14",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.5",
-    "css-loader": "^6.7.1",
+    "css-loader": "^6.8.1",
     "emoji-datasource": "15.0.1",
     "emojilib": "^3.0.10",
     "inflection": "1.13.4",
