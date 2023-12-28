@@ -165,6 +165,8 @@ Note: CSS also includes background images for image-based emoji sets (apple, goo
 }
 ```
 
+Add the `<picker>` component to your template:
+
 ```html
 <picker :data="emojiIndex" set="twitter" />
 <picker :data="emojiIndex" @select="addEmoji" />
