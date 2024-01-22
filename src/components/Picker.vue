@@ -190,6 +190,11 @@ export default {
       }
     },
   },
+  watch: {
+    skin() {
+      this.onSkinChange(this.skin)
+    },
+  },
   methods: {
     onScroll() {
       if (this.infiniteScroll && !this.waitingForPaint) {
