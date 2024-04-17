@@ -62,6 +62,7 @@ export default {
       required: false,
     },
   },
+  emits: ['search', 'enter', 'arrowUp', 'arrowDown', 'arrowRight', 'arrowLeft'],
   data() {
     return {
       value: '',
