@@ -1,6 +1,6 @@
 {
   "name": "emoji-mart-vue-fast",
-  "version": "15.0.1",
+  "version": "15.0.2",
   "description": "Customizable Slack-like emoji picker for VueJS, fast version",
   "main": "dist/emoji-mart.js",
   "repository": {
@@ -64,7 +64,7 @@
     "build:dist": "webpack --config src/webpack.config.js",
     "build:dist-stats": "webpack --config src/webpack.config.js --profile --json > stats.json",
     "build:docs": "webpack --config docs/webpack.config.js",
-    "build": "npm run clean && npm install && npm run build:data && npm run build:dist",
+    "build": "npm run clean && npm install --include=dev && npm run build:data && npm run build:dist",
     "dev:docs": "webpack -w --config docs/webpack.config.js",
     "start": "npm run dev:docs",
     "stats": "webpack --config ./spec/webpack.config.js --json > spec/stats.json",

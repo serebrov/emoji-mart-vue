@@ -755,6 +755,7 @@ vim package.json
 git add package.json
 
 # Build
+nvm use v20
 NODE_ENV=production npm run build
 npm run dev:docs
 
