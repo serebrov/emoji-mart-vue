@@ -130,6 +130,7 @@ export default {
       required: true,
     },
   },
+  emits: ['select', 'skin-change'],
   data() {
     return {
       activeSkin: this.skin || store.get('skin') || this.defaultSkin,

@@ -48,6 +48,7 @@ export default {
       },
     },
   },
+  emits: ['click'],
   created() {
     this.svgs = svgs
   },
