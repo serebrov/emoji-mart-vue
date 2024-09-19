@@ -51,7 +51,7 @@
 
         <category
           v-for="(category, idx) in view.filteredCategories"
-          v-show="infiniteScroll || category == view.activeCategory"
+          v-show="infiniteScroll || category == view.activeCategory || isSearching"
           :ref="'categories_' + idx"
           :key="category.id"
           :data="data"
@@ -189,6 +189,9 @@ export default {
         console.error(e)
         return this.data.firstEmoji()
       }
+    },
+    isSearching() {
+      return this.view.searchEmojis != null;
     },
   },
   watch: {
