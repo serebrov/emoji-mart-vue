@@ -398,3 +398,61 @@ describe('emjoiSize', () => {
     )
   })
 })
+
+describe('infiniteScroll is off', () => {
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+      infiniteScroll: false,
+    },
+  })
+
+  test('renders correctly', () => {
+    expect(picker.element).toMatchSnapshot()
+  })
+
+  it('renders 10 categories', () => {
+    let categories = picker.findAllComponents(Category)
+    expect(categories.length).toBe(10)
+    // // Hidden category with search results
+    // expect(categories.at(0).vm.name).toBe('Search')
+    expect(categories.at(0).vm.name).toBe('Recent')
+    expect(categories.at(0).isVisible()).toBe(true)
+
+    const restCategories = [
+      'Smileys & Emotion',
+      'People & Body',
+      'Animals & Nature',
+      'Food & Drink',
+      'Activities',
+      'Travel & Places',
+      'Objects',
+      'Symbols',
+      'Flags',
+    ]
+    for (let idx = 1; idx < categories.length; idx++) {
+      expect(categories.at(idx).vm.name).toBe(restCategories[idx - 1])
+      expect(categories.at(idx).isVisible()).toBe(false)
+    }
+  })
+
+  it('search results are visible', (done) => {
+    // See https://github.com/serebrov/emoji-mart-vue/pull/298
+    // we had an issue with search results not being displayed
+    // when `infiniteSearch` is disabled.
+    let search = picker.findComponent(Search)
+    let input = search.find('input')
+    input.element.value = '+1'
+    input.trigger('input')
+
+    picker.vm.$nextTick(() => {
+      let categories = picker.findAllComponents(Category)
+      let searchCategory = categories.at(0)
+      expect(searchCategory.vm.id).toBe('search')
+      expect(searchCategory.isVisible()).toBe(true)
+
+      done()
+    })
+  })
+})

@@ -19,6 +19,13 @@
       </template>
     </div>
 
+    <div class="row">
+      Infinite scroll
+      <button @click="infiniteScroll = !infiniteScroll">
+        {{ infiniteScroll ? 'on' : 'off' }} (click to toggle)
+      </button>
+    </div>
+
     <div v-if="isVisible" class="row">
       <picker
         :data="index"
@@ -28,6 +35,7 @@
         :emojiTooltip="true"
         :title="title"
         :emojiSize="30"
+        :infiniteScroll="infiniteScroll"
         @select="showEmoji"
       />
     </div>
@@ -65,6 +73,7 @@ export default {
       emoji: 'point_up',
       title: 'Pick your emoji…',
       isVisible: true,
+      infiniteScroll: true,
       emojisOutput: '',
       selectedEmojis: [],
     }
