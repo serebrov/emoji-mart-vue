@@ -212,6 +212,10 @@ export default {
     },
     onAnchorClick(category) {
       this.view.onAnchorClick(category)
+      // Clear the search when switching categories
+      // otherwise categories switch does not work.
+      // See #136.
+      this.$refs.search.clear()
     },
     onSearch(value) {
       this.view.onSearch(value)

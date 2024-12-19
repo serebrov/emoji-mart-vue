@@ -85,6 +85,37 @@ describe('Picker', () => {
       })
     })
   })
+
+  it('clears search when switching categories', (done) => {
+    let search = picker.findComponent(Search)
+    let input = search.find('input')
+    input.element.value = '+1'
+    input.trigger('input')
+
+    picker.vm.$nextTick(() => {
+      let categories = picker.findAllComponents(Category)
+      let searchCategory = categories.at(0)
+      expect(searchCategory.vm.id).toBe('search')
+
+      let anchors = picker.findComponent(Anchors)
+      let anchorsCategories = anchors.findAll('.emoji-mart-anchor')
+      let symbols = anchorsCategories.at(8)
+      expect(symbols.element.attributes['data-title'].value).toBe('Symbols')
+      symbols.trigger('click')
+
+      picker.vm.$nextTick(() => {
+        let events = anchors.emitted().click
+        let category = events[0][0]
+        expect(category.id).toBe('symbols')
+        expect(anchors.vm.activeCategory.id).toBe('symbols')
+
+        // Verify that the search input is cleared
+        expect(search.vm.value).toBe('')
+
+        done()
+      })
+    })
+  })
 })
 
 describe('categories', () => {
