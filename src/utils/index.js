@@ -30,7 +30,7 @@ function deepMerge(a, b) {
     let originalValue = a[key],
       value = originalValue
 
-    if (b.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(b, key)) {
       value = b[key]
     }
 
