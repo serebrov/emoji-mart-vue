@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils'
+import { ref } from 'vue'
 
 import data from '../data/all.json'
 import { EmojiIndex } from '../src/utils/emoji-data'
@@ -455,4 +456,105 @@ describe('infiniteScroll is off', () => {
       done()
     })
   })
+})
+
+describe('Picker i18n', () => {
+  const i18n = {
+    search: 'My Search',
+    notfound: 'My No Emoji Found',
+    categories: {
+      search: 'My Search Results',
+      recent: 'zero',
+      smileys: 'one',
+      people: 'two',
+      nature: 'three',
+      foods: 'four',
+      activity: 'five',
+      places: 'six',
+      objects: 'seven',
+      symbols: 'eight',
+      flags: 'nine',
+      custom: 'ten',
+    }
+  }
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+       i18n: i18n,
+    },
+  })
+
+  it('i18n works for categories', () => {
+    let categories = picker.findAllComponents(Category)
+    expect(categories.length).toBe(10)
+
+    const categoryLabel = (idx) => {
+      return categories.at(idx).find('.emoji-mart-category-label').text()
+    }
+
+    expect(categoryLabel(0)).toBe('zero')
+    expect(categoryLabel(1)).toBe('one')
+    expect(categoryLabel(2)).toBe('two')
+    expect(categoryLabel(3)).toBe('three')
+    expect(categoryLabel(4)).toBe('four')
+    expect(categoryLabel(5)).toBe('five')
+    expect(categoryLabel(6)).toBe('six')
+    expect(categoryLabel(7)).toBe('seven')
+    expect(categoryLabel(8)).toBe('eight')
+    expect(categoryLabel(9)).toBe('nine')
+  })
+
+  it('i18n works for search label', (done) => {
+    let search = picker.findComponent(Search)
+    let input = search.find('input')
+    // The hint in the search field
+    expect(input.element.placeholder).toBe('My Search')
+
+    input.element.value = '+1'
+    input.trigger('input')
+
+    picker.vm.$nextTick(() => {
+      let categories = picker.findAllComponents(Category)
+      let searchCategory = categories.at(0)
+      expect(searchCategory.find('.emoji-mart-category-label').text()).toBe(
+        'My Search Results'
+      )
+      done()
+    })
+  })
+})
+
+describe('Picker i18n with reactive object', () => {
+  // Create a reactive i18n object
+  const i18n = ref({
+    search: 'My Search',
+    notfound: 'My No Emoji Found',
+    categories: {
+      search: 'My Search Results',
+      recent: 'zero',
+      smileys: 'one',
+    }
+  })
+
+  let index = new EmojiIndex(data)
+  const picker = mount(Picker, {
+    propsData: {
+      data: index,
+       i18n: i18n,
+    },
+  })
+
+  it('i18n works with reactive object', () => {
+    let categories = picker.findAllComponents(Category)
+    expect(categories.length).toBe(10)
+
+    const categoryLabel = (idx) => {
+      return categories.at(idx).find('.emoji-mart-category-label').text()
+    }
+
+    expect(categoryLabel(0)).toBe('zero')
+    expect(categoryLabel(1)).toBe('one')
+  })
+
 })

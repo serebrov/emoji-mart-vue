@@ -325,23 +325,34 @@ Here we can use `emojiIndex.nativeEmoji(emoji_char)` to get the emoji object by 
 
 #### I18n
 
+The `i18n` property is an object that can be used to localize the picker. It contains the following keys:
+
 ```js
-search: 'Search',
-notfound: 'No Emoji Found',
-categories: {
-  search: 'Search Results',
-  recent: 'Frequently Used',
-  smileys: 'Smileys & Emoticon',
-  people: 'People & Body',
-  nature: 'Animals & Nature',
-  foods: 'Food & Drink',
-  activity: 'Activity',
-  places: 'Travel & Places',
-  objects: 'Objects',
-  symbols: 'Symbols',
-  flags: 'Flags',
-  custom: 'Custom',
+<script>
+const i18n = {
+  search: 'My Search',
+  notfound: 'My No Emoji Found',
+  categories: {
+    search: 'My Search Results',
+    recent: 'My Frequently Used',
+    smileys: 'My Smileys & Emoticon',
+    people: 'My People & Body',
+    nature: 'My Animals & Nature',
+    foods: 'My Food & Drink',
+    activity: 'My Activity',
+    places: 'My Travel & Places',
+    objects: 'My Objects',
+    symbols: 'My Symbols',
+    flags: 'My Flags',
+    custom: 'My Custom',
+  }
 }
+</script>
+
+<template>
+  <Picker :i18n="i18n" />
+</template>
+
 ```
 
 #### Sheet sizes
