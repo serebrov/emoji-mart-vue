@@ -475,13 +475,13 @@ describe('Picker i18n', () => {
       symbols: 'eight',
       flags: 'nine',
       custom: 'ten',
-    }
+    },
   }
   let index = new EmojiIndex(data)
   const picker = mount(Picker, {
     propsData: {
       data: index,
-       i18n: i18n,
+      i18n: i18n,
     },
   })
 
@@ -518,7 +518,7 @@ describe('Picker i18n', () => {
       let categories = picker.findAllComponents(Category)
       let searchCategory = categories.at(0)
       expect(searchCategory.find('.emoji-mart-category-label').text()).toBe(
-        'My Search Results'
+        'My Search Results',
       )
       done()
     })
@@ -534,14 +534,14 @@ describe('Picker i18n with reactive object', () => {
       search: 'My Search Results',
       recent: 'zero',
       smileys: 'one',
-    }
+    },
   })
 
   let index = new EmojiIndex(data)
   const picker = mount(Picker, {
     propsData: {
       data: index,
-       i18n: i18n,
+      i18n: i18n,
     },
   })
 
@@ -556,5 +556,4 @@ describe('Picker i18n with reactive object', () => {
     expect(categoryLabel(0)).toBe('zero')
     expect(categoryLabel(1)).toBe('one')
   })
-
 })
